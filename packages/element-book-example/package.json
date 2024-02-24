@@ -10,12 +10,12 @@
         "test:types": "npm run compile"
     },
     "dependencies": {
-        "@augment-vir/browser": "^23.3.4",
+        "@augment-vir/browser": "^23.4.0",
         "element-book": "*",
         "element-vir": "*"
     },
     "devDependencies": {
-        "@augment-vir/node-js": "^23.3.4",
+        "@augment-vir/node-js": "^23.4.0",
         "@open-wc/testing": "^4.0.0",
         "@types/mocha": "^10.0.6",
         "@web/dev-server-esbuild": "^1.0.2",

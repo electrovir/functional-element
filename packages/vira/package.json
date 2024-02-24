@@ -32,19 +32,19 @@
         "test": "virmator test-web"
     },
     "dependencies": {
-        "@augment-vir/browser": "^23.3.4",
-        "@augment-vir/common": "^23.3.4",
+        "@augment-vir/browser": "^23.4.0",
+        "@augment-vir/common": "^23.4.0",
         "colorjs.io": "^0.4.5",
         "date-vir": "^5.1.2",
-        "lit-css-vars": "^3.0.8",
-        "spa-router-vir": "^3.0.3",
-        "type-fest": "^4.10.2"
+        "lit-css-vars": "^3.0.9",
+        "spa-router-vir": "^3.0.4",
+        "type-fest": "^4.10.3"
     },
     "devDependencies": {
-        "@augment-vir/browser-testing": "^23.3.4",
-        "@augment-vir/node-js": "^23.3.4",
+        "@augment-vir/browser-testing": "^23.4.0",
+        "@augment-vir/node-js": "^23.4.0",
         "@open-wc/testing": "^4.0.0",
-        "@types/chai": "^4.3.11",
+        "@types/chai": "^4.3.12",
         "@types/mocha": "^10.0.6",
         "@web/dev-server-esbuild": "^1.0.2",
         "@web/test-runner": "^0.18.0",

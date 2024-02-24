@@ -14,16 +14,16 @@
         "test": "exit 0;"
     },
     "dependencies": {
-        "@augment-vir/common": "^23.3.4",
+        "@augment-vir/common": "^23.4.0",
         "element-book": "*",
         "element-vir": "*",
         "vira": "*"
     },
     "devDependencies": {
-        "@augment-vir/node-js": "^23.3.4",
+        "@augment-vir/node-js": "^23.4.0",
         "esbuild": "^0.20.1",
         "markdown-code-example-inserter": "^1.0.0",
-        "nodemon": "^3.0.3",
+        "nodemon": "^3.1.0",
         "typedoc": "^0.25.8",
         "typescript": "^5.3.3",
         "vite": "^4.5.0",
