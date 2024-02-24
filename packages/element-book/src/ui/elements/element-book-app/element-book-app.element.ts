@@ -53,7 +53,8 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
     },
     styles: css`
         :host {
-            display: block;
+            display: flex;
+            flex-direction: column;
             height: 100%;
             width: 100%;
             font-family: sans-serif;
@@ -66,7 +67,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
         }
 
         .root {
-            height: 100%;
+            flex-grow: 1;
             width: 100%;
             display: flex;
             position: relative;
