@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "module": "ES2020",
+        "outDir": "dist/",
+        "rootDir": "src/"
+    },
+    "exclude": [
+        "configs/",
+        "coverage/",
+        "dist/",
+        "node_modules/"
+    ],
+    "extends": "../../configs/tsconfig.base.json",
+    "references": [
+        {
+            "path": "../element-vir"
+        }
+    ]
+}

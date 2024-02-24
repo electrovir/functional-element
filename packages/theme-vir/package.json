@@ -1,0 +1,58 @@
+{
+    "name": "theme-vir",
+    "version": "20.0.9",
+    "private": true,
+    "description": "Create an entire web theme.",
+    "keywords": [
+        "design",
+        "system",
+        "vir",
+        "elements",
+        "custom",
+        "components",
+        "web",
+        "element-vir"
+    ],
+    "homepage": "https://electrovir.github.io/element-vir/theme-vir",
+    "bugs": {
+        "url": "https://github.com/electrovir/element-vir/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/electrovir/element-vir"
+    },
+    "license": "(MIT or CC0 1.0)",
+    "author": {
+        "name": "electrovir",
+        "url": "https://github.com/electrovir"
+    },
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "compile": "rm -rf dist && tsc -b -f --pretty",
+        "start": "virmator frontend",
+        "test": "virmator test-web"
+    },
+    "dependencies": {
+        "@augment-vir/common": "^23.4.0"
+    },
+    "devDependencies": {
+        "@augment-vir/node-js": "^23.4.0",
+        "@open-wc/testing": "^4.0.0",
+        "@types/mocha": "^10.0.6",
+        "@web/dev-server-esbuild": "^1.0.2",
+        "@web/test-runner": "^0.18.0",
+        "@web/test-runner-commands": "^0.9.0",
+        "@web/test-runner-playwright": "^0.11.0",
+        "@web/test-runner-visual-regression": "^0.9.0",
+        "esbuild": "^0.20.1",
+        "istanbul-smart-text-reporter": "^1.1.4",
+        "typescript": "^5.3.3",
+        "vite": "^4.5.2",
+        "vite-tsconfig-paths": "^4.3.1"
+    },
+    "peerDependencies": {
+        "element-book": ">=17",
+        "element-vir": ">=17"
+    }
+}
