@@ -4,7 +4,9 @@ import {PropertyInitMapBase} from '../declarative-element/properties/element-pro
 
 export type MinimalElementDefinition = {
     tagName: string;
-    elementOptions: DeclarativeElementDefinitionOptions;
+    elementOptions?: DeclarativeElementDefinitionOptions | undefined;
+    /** This is used when wrapping interpolated raw tag name strings. */
+    tagInterpolationKey?: {tagName: string} | undefined;
 };
 
 export type MinimalDefinitionWithInputs = {
@@ -22,11 +24,8 @@ export function isMinimalDefinitionWithInputs(
     );
 }
 
-export function isMinimalElementDefinition(value: unknown): value is MinimalElementDefinition {
+export function hasTagName(value: unknown): value is MinimalElementDefinition {
     return (
-        typedHasProperty(value, 'tagName') &&
-        !!value.tagName &&
-        typeof value.tagName === 'string' &&
-        value.tagName.includes('-')
+        typedHasProperty(value, 'tagName') && !!value.tagName && typeof value.tagName === 'string'
     );
 }

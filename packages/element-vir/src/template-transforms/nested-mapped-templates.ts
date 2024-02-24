@@ -1,7 +1,5 @@
-import {
-    isMinimalDefinitionWithInputs,
-    isMinimalElementDefinition,
-} from './minimal-element-definition';
+import {filterMap, isTruthy} from '@augment-vir/common';
+import {hasTagName, isMinimalDefinitionWithInputs} from './minimal-element-definition';
 import {TemplateTransform} from './template-transform-type';
 
 type WeakMapElementKey = {
@@ -16,17 +14,20 @@ type NestedTemplatesWeakMap = WeakMap<WeakMapElementKey, TemplateAndNested>;
 type TemplatesWeakMap = WeakMap<TemplateStringsArray, TemplateAndNested>;
 
 function extractElementKeys(values: unknown[]): WeakMapElementKey[] {
-    return values
-        .map((value) => {
+    return filterMap(
+        values,
+        (value): WeakMapElementKey | undefined => {
             if (isMinimalDefinitionWithInputs(value)) {
                 return value.definition;
             }
+            if (hasTagName(value)) {
+                return value.tagInterpolationKey || value;
+            }
 
-            return value;
-        })
-        .filter((value): value is WeakMapElementKey => {
-            return isMinimalElementDefinition(value);
-        });
+            return undefined;
+        },
+        isTruthy,
+    );
 }
 
 /**

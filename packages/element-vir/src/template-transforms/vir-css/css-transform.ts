@@ -1,5 +1,5 @@
 import {CSSResultGroup} from '../../lit-exports/all-lit-exports';
-import {MinimalElementDefinition, isMinimalElementDefinition} from '../minimal-element-definition';
+import {MinimalElementDefinition, hasTagName} from '../minimal-element-definition';
 import {TemplateTransform} from '../template-transform-type';
 import {ValueTransformCallback, transformTemplate} from '../transform-template';
 
@@ -10,7 +10,7 @@ function transformCss(
         currentValue,
     ]: Parameters<ValueTransformCallback>
 ): ReturnType<ValueTransformCallback> {
-    if (!isMinimalElementDefinition(currentValue)) {
+    if (!hasTagName(currentValue)) {
         return undefined;
     }
 
