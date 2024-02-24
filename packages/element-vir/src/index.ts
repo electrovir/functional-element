@@ -15,6 +15,7 @@ export * from './declarative-element/directives/render-async.directive';
 export * from './declarative-element/directives/render-if.directive';
 export * from './declarative-element/directives/test-id.directive';
 export * from './declarative-element/is-declarative-element';
+export * from './declarative-element/is-declarative-element-definition';
 export * from './declarative-element/properties/css-properties';
 export * from './declarative-element/properties/css-vars';
 export * from './declarative-element/properties/element-events';
