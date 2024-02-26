@@ -1,7 +1,7 @@
 import {mapObjectValues} from '@augment-vir/common';
 import {BookPageControlTypeEnum, defineBookPage} from 'element-book';
 import {CSSResult, css, html, listen} from 'element-vir';
-import {Element24Icon, ViraInput} from 'vira';
+import {Element24Icon, ViraInput, ViraInputType} from 'vira';
 import {elementsBookPage} from '../elements.book';
 
 export const viraInputBookPage = defineBookPage({
@@ -34,15 +34,13 @@ export const viraInputBookPage = defineBookPage({
         },
     } as const satisfies NonNullable<Parameters<typeof defineBookPage>[0]['controls']>,
     elementExamplesCallback({defineExample}) {
-        function defineInputExample({
-            styles,
-            title,
-            inputs,
-        }: {
+        type Example = {
             styles?: CSSResult;
             title: string;
             inputs: (typeof ViraInput)['inputsType'];
-        }) {
+        };
+
+        function defineInputExample({styles, title, inputs}: Readonly<Example>) {
             defineExample({
                 title,
                 styles: css`
@@ -105,127 +103,137 @@ export const viraInputBookPage = defineBookPage({
             });
         }
 
-        defineInputExample({
-            title: 'basic',
-            inputs: {
-                value: 'default value',
+        const examples: ReadonlyArray<Readonly<Example>> = [
+            {
+                title: 'basic',
+                inputs: {
+                    value: 'default value',
+                },
             },
-        });
-        defineInputExample({
-            title: 'with icon',
-            inputs: {
-                value: '',
-                icon: Element24Icon,
+            {
+                title: 'with icon',
+                inputs: {
+                    value: '',
+                    icon: Element24Icon,
+                },
             },
-        });
-        defineInputExample({
-            title: 'with placeholder',
-            inputs: {
-                value: '',
-                placeholder: 'placeholder here',
+            {
+                title: 'with placeholder',
+                inputs: {
+                    value: '',
+                    placeholder: 'placeholder here',
+                },
             },
-        });
-        defineInputExample({
-            title: 'with suffix',
-            inputs: {
-                value: '42',
-                suffix: 'px',
+            {
+                title: 'with suffix',
+                inputs: {
+                    value: '42',
+                    suffix: 'px',
+                },
             },
-        });
-        defineInputExample({
-            title: 'with clear button',
-            inputs: {
-                value: 'value',
-                placeholder: 'with clear',
-                showClearButton: true,
+            {
+                title: 'with clear button',
+                inputs: {
+                    value: 'value',
+                    placeholder: 'with clear',
+                    showClearButton: true,
+                },
             },
-        });
-        defineInputExample({
-            title: 'disabled',
-            inputs: {
-                value: 'disabled',
-                disabled: true,
+            {
+                title: 'disabled',
+                inputs: {
+                    value: 'disabled',
+                    disabled: true,
+                },
             },
-        });
-        defineInputExample({
-            title: 'numbers only',
-            inputs: {
-                value: '',
-                allowedInputs: /\d/,
+            {
+                title: 'numbers only',
+                inputs: {
+                    value: '',
+                    allowedInputs: /\d/,
+                },
             },
-        });
-        defineInputExample({
-            title: 'numbers blocked',
-            inputs: {
-                value: '',
-                blockedInputs: /\d/,
+            {
+                title: 'numbers blocked',
+                inputs: {
+                    value: '',
+                    blockedInputs: /\d/,
+                },
             },
-        });
-        defineInputExample({
-            title: 'custom width',
-            styles: css`
-                ${ViraInput} {
-                    width: 120px;
-                }
-            `,
-            inputs: {
-                value: '',
-                placeholder: 'width',
-                icon: Element24Icon,
+            {
+                title: 'custom width',
+                styles: css`
+                    ${ViraInput} {
+                        width: 120px;
+                    }
+                `,
+                inputs: {
+                    value: '',
+                    placeholder: 'width',
+                    icon: Element24Icon,
+                },
             },
-        });
-        defineInputExample({
-            title: 'taller height',
-            styles: css`
-                ${ViraInput} {
-                    height: 48px;
-                }
-            `,
-            inputs: {
-                value: '',
-                placeholder: 'taller',
-                icon: Element24Icon,
+            {
+                title: 'taller height',
+                styles: css`
+                    ${ViraInput} {
+                        height: 48px;
+                    }
+                `,
+                inputs: {
+                    value: '',
+                    placeholder: 'taller',
+                    icon: Element24Icon,
+                },
             },
-        });
-        defineInputExample({
-            title: 'shorter height',
-            styles: css`
-                ${ViraInput} {
-                    height: 26px;
-                }
-            `,
-            inputs: {
-                value: '',
-                placeholder: 'shorter',
-                showClearButton: true,
-                icon: Element24Icon,
+            {
+                title: 'shorter height',
+                styles: css`
+                    ${ViraInput} {
+                        height: 26px;
+                    }
+                `,
+                inputs: {
+                    value: '',
+                    placeholder: 'shorter',
+                    showClearButton: true,
+                    icon: Element24Icon,
+                },
             },
-        });
-        defineInputExample({
-            title: 'max width',
-            styles: css`
-                ${ViraInput} {
-                    max-width: 150px;
-                }
-            `,
-            inputs: {
-                // value: 'super long value that exceeds the max width',
-                value: '',
-                placeholder: '42',
+            {
+                title: 'max width',
+                styles: css`
+                    ${ViraInput} {
+                        max-width: 150px;
+                    }
+                `,
+                inputs: {
+                    value: 'super long value that exceeds the max width',
+                    placeholder: '42',
+                },
             },
-        });
-        defineInputExample({
-            title: 'fit text',
-            styles: css`
-                ${ViraInput} {
-                    max-width: 150px;
-                }
-            `,
-            inputs: {
-                value: '',
-                placeholder: '42',
-                fitText: true,
+            {
+                title: 'fit text',
+                styles: css`
+                    ${ViraInput} {
+                        max-width: 150px;
+                    }
+                `,
+                inputs: {
+                    value: '',
+                    placeholder: '42',
+                    fitText: true,
+                },
             },
-        });
+            {
+                title: 'password',
+                inputs: {
+                    value: 'as password',
+                    type: ViraInputType.Password,
+                },
+            },
+        ];
+
+        examples.forEach(defineInputExample);
     },
 });

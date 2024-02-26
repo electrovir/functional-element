@@ -7,7 +7,7 @@ import {
     onResize,
     renderIf,
 } from 'element-vir';
-import {ViraIconSvg} from '../icons';
+import {EyeClosed24Icon, EyeOpen24Icon, ViraIconSvg} from '../icons';
 import {CloseX24Icon} from '../icons/icon-svgs/close-x-24.icon';
 import {noUserSelect, viraAnimationDurations, viraDisabledStyles} from '../styles';
 import {createFocusStyles, viraFocusCssVars} from '../styles/focus';
@@ -23,12 +23,19 @@ import {ViraIcon} from './vira-icon.element';
 
 export * from './shared-text-input-logic';
 
+export enum ViraInputType {
+    Default = 'text',
+    Password = 'password',
+    Email = 'email',
+}
+
 export const ViraInput = defineViraElement<
     {
         icon?: undefined | Pick<ViraIconSvg, 'svgTemplate'>;
         /** A suffix that, if provided, is shown following the user input field. */
         suffix?: string | undefined;
         showClearButton?: boolean | undefined;
+        type?: ViraInputType;
     } & SharedTextInputElementInputs
 >()({
     tagName: 'vira-input',
@@ -43,9 +50,14 @@ export const ViraInput = defineViraElement<
         'vira-input-border-color': '#cccccc',
         'vira-input-focus-border-color': '#59b1ff',
         'vira-input-text-selection-color': '#cfe9ff',
-        'vira-input-clear-button-color': '#aaaaaa',
+
+        'vira-input-action-button-color': '#aaaaaa',
+
         'vira-input-clear-button-hover-color': '#ff0000',
         'vira-input-clear-button-active-color': '#b30000',
+
+        'vira-input-show-password-button-hover-color': '#0a89ff',
+        'vira-input-show-password-button-active-color': '#0261ba',
 
         'vira-input-padding-horizontal': '10px',
         'vira-input-padding-vertical': '6px',
@@ -219,25 +231,39 @@ export const ViraInput = defineViraElement<
                 ${noUserSelect};
             }
 
-            .close-x-button {
+            button {
                 ${noNativeFormStyles};
-                color: ${cssVars['vira-input-clear-button-color'].value};
                 cursor: pointer;
                 display: flex;
-                transition: ${viraAnimationDurations['vira-interaction-animation-duration'].value};
+                transition: color
+                    ${viraAnimationDurations['vira-interaction-animation-duration'].value};
             }
 
-            .close-x-button:hover {
+            .clear-x-button,
+            .show-password-button {
+                color: ${cssVars['vira-input-action-button-color'].value};
+            }
+
+            .clear-x-button:hover {
                 color: ${cssVars['vira-input-clear-button-hover-color'].value};
             }
 
-            .close-x-button:active {
+            .clear-x-button:active {
                 color: ${cssVars['vira-input-clear-button-active-color'].value};
+            }
+
+            .show-password-button:hover {
+                color: ${cssVars['vira-input-show-password-button-hover-color'].value};
+            }
+
+            .show-password-button:active {
+                color: ${cssVars['vira-input-show-password-button-active-color'].value};
             }
         `;
     },
     stateInitStatic: {
         forcedInputWidth: 0,
+        showPassword: false,
     },
     renderCallback: ({inputs, dispatch, state, updateState, events}) => {
         const {filtered: filteredValue} = filterTextInputValue({
@@ -275,6 +301,7 @@ export const ViraInput = defineViraElement<
                     `,
                 )}
                 <input
+                    type=${calculateEffectiveInputType(inputs.type, state.showPassword)}
                     style=${forcedInputWidthStyles}
                     autocomplete=${inputs.disableBrowserHelps ? 'off' : ''}
                     autocorrect=${inputs.disableBrowserHelps ? 'off' : ''}
@@ -301,8 +328,8 @@ export const ViraInput = defineViraElement<
                     !!(inputs.showClearButton && inputs.value),
                     html`
                         <button
-                            class="close-x-button"
-                            title="clear input"
+                            class="clear-x-button"
+                            title="clear"
                             ${listen('click', (event) => {
                                 /** Prevent focus of the input. */
                                 event.stopImmediatePropagation();
@@ -312,6 +339,26 @@ export const ViraInput = defineViraElement<
                             })}
                         >
                             <${ViraIcon.assign({icon: CloseX24Icon})}></${ViraIcon}>
+                        </button>
+                    `,
+                )}
+                ${renderIf(
+                    !!(inputs.type === ViraInputType.Password),
+                    html`
+                        <button
+                            class="show-password-button"
+                            title="show password"
+                            ${listen('click', (event) => {
+                                /** Prevent focus of the input. */
+                                event.stopImmediatePropagation();
+                                event.preventDefault();
+
+                                updateState({showPassword: !state.showPassword});
+                            })}
+                        >
+                            <${ViraIcon.assign({
+                                icon: state.showPassword ? EyeOpen24Icon : EyeClosed24Icon,
+                            })}></${ViraIcon}>
                         </button>
                     `,
                 )}
@@ -331,3 +378,14 @@ export const ViraInput = defineViraElement<
         `;
     },
 });
+
+function calculateEffectiveInputType(
+    type: ViraInputType | undefined,
+    showPassword: boolean,
+): ViraInputType {
+    if (type === ViraInputType.Password && showPassword) {
+        return ViraInputType.Default;
+    }
+
+    return type || ViraInputType.Default;
+}
