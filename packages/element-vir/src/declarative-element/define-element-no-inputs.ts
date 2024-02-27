@@ -30,9 +30,9 @@ import {
     createEventDescriptorMap,
 } from './properties/element-events';
 import {PropertyInitMapBase} from './properties/element-properties';
-import {bindReactiveProperty, createElementUpdaterProxy} from './properties/element-updater-proxy';
 import {FlattenElementVirStateSetup} from './properties/element-vir-state-setup';
 import {HostClassNamesMap, createHostClassNamesMap} from './properties/host-classes';
+import {bindReactiveProperty, createElementPropertyProxy} from './properties/property-proxy';
 import {applyHostClasses, hostClassNamesToStylesInput} from './properties/styles';
 import {RenderParams, createRenderParams} from './render-callback';
 import {createSlotNamesMap} from './slot-names';
@@ -381,10 +381,10 @@ export function defineElementNoInputs<
             {};
 
         public readonly instanceInputs: ThisElementInstance['instanceInputs'] =
-            createElementUpdaterProxy<Readonly<Inputs>>(this, false);
+            createElementPropertyProxy<Readonly<Inputs>>(this, false);
 
         public readonly instanceState: ThisElementInstance['instanceState'] =
-            createElementUpdaterProxy<FlattenElementVirStateSetup<StateInit>>(
+            createElementPropertyProxy<FlattenElementVirStateSetup<StateInit>>(
                 this,
                 !elementOptions.allowPolymorphicState,
             );

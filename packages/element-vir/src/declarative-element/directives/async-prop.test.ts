@@ -9,21 +9,30 @@ import {
 } from '@augment-vir/common';
 import {assert, fixture as renderFixture, waitUntil} from '@open-wc/testing';
 import {assertDefined, assertInstanceOf, assertThrows, assertTypeOf} from 'run-time-assertions';
-import {
-    AsyncPropValue,
-    StaticElementPropertyDescriptor,
-    asyncProp,
-    defineElement,
-    defineElementEvent,
-    defineElementNoInputs,
-    html,
-    isError,
-    isResolved,
-    listen,
-    renderAsync,
-} from '../../index';
+// import {
+//     AsyncPropValue,
+//     StaticElementPropertyDescriptor,
+//     asyncProp,
+//     defineElement,
+//     defineElementEvent,
+//     defineElementNoInputs,
+//     html,
+//     isError,
+//     isResolved,
+//     listen,
+//     renderAsync,
+// } from '../../index';
+import {html} from '../../template-transforms/vir-html/vir-html';
+import {defineElement} from '../define-element';
+import {defineElementNoInputs} from '../define-element-no-inputs';
+import {defineElementEvent} from '../properties/element-events';
+import {StaticElementPropertyDescriptor} from '../properties/element-properties';
 import {ElementVirStateSetup} from '../properties/element-vir-state-setup';
-import {AsyncObservableProp} from './async-prop';
+import {isObservableProp} from '../properties/observable-prop/observable-prop';
+import {AsyncObservableProp, AsyncPropValue, asyncProp} from './async-prop';
+import {isError, isResolved} from './is-resolved.directive';
+import {listen} from './listen.directive';
+import {renderAsync} from './render-async.directive';
 
 describe(asyncProp.name, () => {
     it('should have proper types', () => {
@@ -124,6 +133,11 @@ describe(asyncProp.name, () => {
         >().toEqualTypeOf<AsyncPropValue<SomethingObject>>();
     });
 
+    it('passes isObservableProp', () => {
+        const instance = new AsyncObservableProp();
+        assert.isTrue(isObservableProp(instance));
+    });
+
     it('updates and resolves async prop createPromise and updateTrigger', async () => {
         const startingNumber = 123;
 
@@ -196,7 +210,7 @@ describe(asyncProp.name, () => {
 
         const instance = await renderFixture(html`
             <${ElementWithAsyncProp.assign({
-                promiseUpdateTrigger: undefined,
+                promiseUpdateTrigger: startingNumber,
             })}></${ElementWithAsyncProp}>
         `);
 
@@ -223,7 +237,11 @@ describe(asyncProp.name, () => {
         instance.assignInputs({
             promiseUpdateTrigger: startingNumber,
         });
-        await waitUntil(() => renderCount === 2, 'Render count failed to reach 2');
+        await assertThrows(
+            async () => await waitUntil(() => renderCount === 2),
+            undefined,
+            'should not have rendered again',
+        );
 
         assert.lengthOf(deferredPromiseWrappers, 1);
         assert.instanceOf(instance.instanceState.myAsyncProp.value, Promise);
@@ -232,7 +250,7 @@ describe(asyncProp.name, () => {
         instance.assignInputs({
             promiseUpdateTrigger: 2,
         });
-        await waitUntil(() => renderCount === 3, 'Render count failed to reach 3');
+        await waitUntil(() => renderCount === 2, 'Render count failed to reach 2');
 
         assert.lengthOf(deferredPromiseWrappers, 2);
         assertDefined(deferredPromiseWrappers[1]);
@@ -242,7 +260,7 @@ describe(asyncProp.name, () => {
         const resolutionValue = 3;
         deferredPromiseWrappers[1].resolve(resolutionValue);
 
-        await waitUntil(() => renderCount === 4, 'Render count failed to reach 4');
+        await waitUntil(() => renderCount === 3, 'Render count failed to reach 3');
         const initialPromiseResult = await initialPromise;
 
         assert.lengthOf(deferredPromiseWrappers, 2);
@@ -254,7 +272,7 @@ describe(asyncProp.name, () => {
         instance.assignInputs({
             promiseUpdateTrigger: 4,
         });
-        await waitUntil(() => renderCount === 5, 'Render count failed to reach 5');
+        await waitUntil(() => renderCount === 4, 'Render count failed to reach 4');
 
         assert.lengthOf(deferredPromiseWrappers, 3);
         assertDefined(deferredPromiseWrappers[2]);
@@ -264,7 +282,7 @@ describe(asyncProp.name, () => {
         const rejectionError = new Error('fake error');
         deferredPromiseWrappers[2].reject(rejectionError);
 
-        await waitUntil(() => renderCount === 6, 'Render count failed to reach 6');
+        await waitUntil(() => renderCount === 5, 'Render count failed to reach 5');
 
         assert.lengthOf(deferredPromiseWrappers, 3);
         assert.strictEqual(instance.instanceState.myAsyncProp.value, rejectionError);
@@ -272,7 +290,7 @@ describe(asyncProp.name, () => {
         // force an update; element should re-render and update state
         await clickElement(forceUpdateButton);
 
-        await waitUntil(() => renderCount === 7, 'Render count failed to reach 7');
+        await waitUntil(() => renderCount === 6, 'Render count failed to reach 6');
 
         assert.lengthOf(deferredPromiseWrappers, 4);
         assertDefined(deferredPromiseWrappers[3]);
@@ -288,14 +306,14 @@ describe(asyncProp.name, () => {
         // it shouldn't render after resolution of a previous promise
         deferredPromiseWrappers[3].resolve(5);
 
-        await assertThrows(() => waitUntil(() => renderCount === 8));
+        await assertThrows(() => waitUntil(() => renderCount === 7));
         assert.instanceOf(instance.instanceState.myAsyncProp.value, Promise);
 
         // should render after resolving the current promise
         const finalResolutionValue = 6;
         deferredPromiseWrappers[4].resolve(finalResolutionValue);
 
-        await waitUntil(() => renderCount === 8);
+        await waitUntil(() => renderCount === 7, 'Render count failed to reach 7');
         assert.strictEqual(instance.instanceState.myAsyncProp.value, finalResolutionValue);
 
         // assign an already resolved value; element should update once and immediately use the resolved value

@@ -8,11 +8,11 @@ import {
 } from '@augment-vir/common';
 import {isPromise} from 'run-time-assertions';
 import {ElementVirStateSetup} from '../properties/element-vir-state-setup';
-import {ObservableProp} from '../properties/observable-prop/observable-prop';
-import {createSetterObservableProp} from '../properties/observable-prop/setter-observable-prop';
+import {SetterObservableProp} from '../properties/observable-prop/setter-observable-prop';
 
 export type AsyncPropValue<ValueType> = Error | MaybePromise<Awaited<ValueType>>;
 
+/** Used to distinguish unset values from `undefined` when `undefined` is a valid value. */
 const notSetSymbol = Symbol('not set');
 
 export type AsyncPropTriggerInputBase = JsonCompatibleObject;
@@ -53,85 +53,85 @@ export type AsyncPropInit<
           >;
       };
 
-export type AsyncObservableProp<
+export class AsyncObservableProp<
     ValueType,
     TriggerInput extends AsyncPropTriggerInputBase,
     UpdaterInput,
-> = ObservableProp<AsyncPropValue<ValueType>> & {
-    setNewPromise(newPromise: Promise<Awaited<ValueType>>): void;
-    updateTrigger: AsyncPropUpdateCallback<TriggerInput, UpdaterInput, void>;
-    setResolvedValue(resolvedValue: Awaited<ValueType>): void;
-    /**
-     * Forces the updater callback to re-run with the last given trigger and updaterInput. If this
-     * asyncProp has no updater callback defined, this will result in an error.
-     */
-    forceUpdate: AsyncPropUpdateCallback<TriggerInput, UpdaterInput, void>;
+> extends SetterObservableProp<AsyncPropValue<ValueType>> {
+    protected lastTrigger: TriggerInput | typeof notSetSymbol = notSetSymbol;
+    protected promiseUpdater:
+        | undefined
+        | AsyncPropUpdateCallback<TriggerInput, UpdaterInput, Promise<Awaited<ValueType>>>;
+    protected waitingForValueDeferredPromise: DeferredPromiseWrapper<Awaited<ValueType>>;
+    protected lastSetPromise: Promise<Awaited<ValueType>> | undefined;
     /**
      * The last value that was resolved. This will be undefined if there has never, so far, been a
      * resolved value.
      */
-    latestResolvedValue: ValueType extends Promise<any>
+    public latestResolvedValue: ValueType extends Promise<any>
         ? Awaited<ValueType> | undefined
-        : ValueType;
-};
+        : ValueType = undefined as typeof this.latestResolvedValue;
 
-function setupAsyncProp<
-    ValueType,
-    TriggerInput extends AsyncPropTriggerInputBase = {},
-    UpdaterInput = undefined,
-    InitInput extends AsyncPropInit<ValueType, TriggerInput, UpdaterInput> | undefined = undefined,
->(init?: InitInput): AsyncObservableProp<ValueType, TriggerInput, UpdaterInput> {
-    let lastTrigger: TriggerInput | typeof notSetSymbol = notSetSymbol;
-    let lastSetPromise: Promise<Awaited<ValueType>> | undefined;
-    const promiseUpdater = init && 'updateCallback' in init ? init.updateCallback : undefined;
+    constructor(protected init?: AsyncPropInit<ValueType, TriggerInput, UpdaterInput> | undefined) {
+        const waitingForFirstValue = createDeferredPromiseWrapper<Awaited<ValueType>>();
+        super(waitingForFirstValue.promise);
+        this.waitingForValueDeferredPromise = waitingForFirstValue;
 
-    let waitingForValuePromise: DeferredPromiseWrapper<Awaited<ValueType>> =
-        createDeferredPromiseWrapper();
+        if (!init) {
+            return;
+        }
 
-    const baseObservableProp = createSetterObservableProp<AsyncPropValue<ValueType>>(
-        waitingForValuePromise.promise,
-    );
-
-    function resetWaitingForValuePromise(): void {
-        waitingForValuePromise = createDeferredPromiseWrapper();
-        baseObservableProp.setValue(waitingForValuePromise.promise);
+        if ('defaultValue' in init) {
+            if (isPromise(init.defaultValue)) {
+                this.setPromise(init.defaultValue);
+            } else {
+                this.resolveValue(init.defaultValue);
+            }
+        } else if ('updateCallback' in init) {
+            this.promiseUpdater = init.updateCallback;
+        }
     }
 
-    function resolveValue(value: Awaited<ValueType>) {
-        waitingForValuePromise.resolve(value);
-        baseObservableProp.setValue(value);
-
-        asyncProp.latestResolvedValue = value as typeof asyncProp.latestResolvedValue;
+    protected resetWaitingForValue(): void {
+        this.waitingForValueDeferredPromise = createDeferredPromiseWrapper();
+        this.setValue(this.waitingForValueDeferredPromise.promise);
     }
 
-    function rejectValue(error: Error) {
-        waitingForValuePromise.reject(error);
-        baseObservableProp.setValue(error);
+    protected resolveValue(value: Awaited<ValueType>) {
+        this.waitingForValueDeferredPromise.resolve(value);
+        this.setValue(value);
+
+        this.latestResolvedValue = value as typeof this.latestResolvedValue;
     }
 
-    function setPromise(newPromise: Promise<Awaited<ValueType>>) {
-        if (newPromise === lastSetPromise) {
+    protected rejectValue(error: Error) {
+        this.waitingForValueDeferredPromise.reject(error);
+        this.setValue(error);
+    }
+
+    protected setPromise(newPromise: Promise<Awaited<ValueType>>) {
+        if (newPromise === this.lastSetPromise) {
             /** Abort setting the promise if we already have set this promise. */
             return;
         }
 
-        lastSetPromise = newPromise;
+        this.lastSetPromise = newPromise;
 
-        if (waitingForValuePromise.isSettled()) {
-            resetWaitingForValuePromise();
+        if (this.waitingForValueDeferredPromise.isSettled()) {
+            this.resetWaitingForValue();
         }
 
         newPromise
             .then((value) => {
                 /** Make sure we're still actually waiting for this promise. */
-                if (lastSetPromise === newPromise) {
-                    resolveValue(value);
+                if (this.lastSetPromise === newPromise) {
+                    this.resolveValue(value);
                 }
             })
             .catch((reason: unknown) => {
                 /** Make sure we're still actually waiting for this promise. */
-                if (lastSetPromise === newPromise) {
-                    waitingForValuePromise.promise.catch(() => {
+                if (this.lastSetPromise === newPromise) {
+                    this.waitingForValueDeferredPromise.promise.catch(() => {
                         /**
                          * Don't actually do anything, we just want to make sure the error is
                          * handled so it doesn't throw errors in the browser.
@@ -141,16 +141,20 @@ function setupAsyncProp<
                     const error = ensureError(reason);
                     console.error(error);
 
-                    rejectValue(error);
+                    this.rejectValue(error);
                 }
             });
     }
 
-    function updateTrigger(triggerInput: TriggerInput, updaterInput: UpdaterInput): void {
-        if (!promiseUpdater) {
-            console.error(init);
+    setNewPromise(newPromise: Promise<Awaited<ValueType>>): void {
+        this.setPromise(newPromise);
+    }
+
+    public updateTrigger = ((triggerInput: TriggerInput, updaterInput: UpdaterInput) => {
+        if (!this.promiseUpdater) {
+            console.error(this.init);
             throw new Error(
-                `Trigger was updated for asyncProp but no updateCallback has been defined.`,
+                `asyncProp.updateTrigger was called but no updateCallback was defined.`,
             );
         }
         /**
@@ -163,84 +167,35 @@ function setupAsyncProp<
         const expandedInputs: UpdaterInput = {...updaterInput} as UpdaterInput;
 
         if (
-            lastTrigger === notSetSymbol ||
-            !areJsonEqual(expandedTrigger as any, lastTrigger as any, {
+            this.lastTrigger === notSetSymbol ||
+            !areJsonEqual(expandedTrigger as any, this.lastTrigger as any, {
                 ignoreNonSerializableProperties: true,
             })
         ) {
-            lastTrigger = expandedTrigger;
+            this.lastTrigger = expandedTrigger;
 
-            const newValue = promiseUpdater(lastTrigger, expandedInputs);
+            const newValue = this.promiseUpdater(this.lastTrigger, expandedInputs);
 
-            setPromise(newValue);
+            this.setPromise(newValue);
+        }
+    }) as AsyncPropUpdateCallback<TriggerInput, UpdaterInput, void>;
+
+    public setResolvedValue(resolvedValue: Awaited<ValueType>): void {
+        if (resolvedValue !== this.value) {
+            if (this.waitingForValueDeferredPromise.isSettled()) {
+                this.resetWaitingForValue();
+            }
+            this.resolveValue(resolvedValue);
         }
     }
-
-    function forceUpdate(triggerInput: TriggerInput, updaterInput: UpdaterInput): void {
-        lastTrigger = notSetSymbol;
-        updateTrigger(triggerInput, updaterInput);
-    }
-
-    const extraProperties: Omit<
-        AsyncObservableProp<ValueType, TriggerInput, UpdaterInput>,
-        keyof ObservableProp<AsyncPropValue<ValueType>>
-    > = {
-        latestResolvedValue: (init && 'defaultValue' in init && !isPromise(init.defaultValue)
-            ? init.defaultValue
-            : undefined) as AsyncObservableProp<
-            ValueType,
-            TriggerInput,
-            UpdaterInput
-        >['latestResolvedValue'],
-        setNewPromise(newPromise) {
-            setPromise(newPromise);
-        },
-        setResolvedValue(value) {
-            if (value !== baseObservableProp.value) {
-                if (waitingForValuePromise.isSettled()) {
-                    resetWaitingForValuePromise();
-                }
-                waitingForValuePromise.resolve(value);
-                resolveValue(value);
-            }
-        },
-        updateTrigger: (promiseUpdater
-            ? updateTrigger
-            : () => {
-                  throw new Error(
-                      'Cannot run updateTrigger when updateCallback was not set on the asyncProp.',
-                  );
-              }) as AsyncPropUpdateCallback<TriggerInput, UpdaterInput, void>,
-        forceUpdate: (promiseUpdater
-            ? forceUpdate
-            : () => {
-                  throw new Error(
-                      'Cannot run forceUpdate when updateCallback was not set on the asyncProp.',
-                  );
-              }) as AsyncPropUpdateCallback<TriggerInput, UpdaterInput, void>,
-    };
-
-    const asyncProp = Object.assign(baseObservableProp, extraProperties);
-
-    const initValue: AsyncPropValue<ValueType> =
-        init && 'defaultValue' in init
-            ? init.defaultValue
-            : /** A promise that doesn't resolve because we're waiting for the first value still. */
-              new Promise<Awaited<ValueType>>(() => {});
-
-    if (initValue instanceof Promise) {
-        setPromise(initValue);
-    } else {
-        resolveValue(initValue);
-    }
-
-    if (isPromise(initValue)) {
-        setPromise(initValue);
-    } else {
-        resolveValue(initValue);
-    }
-
-    return asyncProp;
+    /**
+     * Forces the updater callback to re-run with the last given trigger and updaterInput. If this
+     * asyncProp has no updater callback defined, this will result in an error.
+     */
+    public forceUpdate = ((triggerInput: TriggerInput, updaterInput: UpdaterInput) => {
+        this.lastTrigger = notSetSymbol;
+        this.updateTrigger(triggerInput, updaterInput);
+    }) as AsyncPropUpdateCallback<TriggerInput, UpdaterInput, void>;
 }
 
 export function asyncProp<
@@ -252,7 +207,7 @@ export function asyncProp<
 ): ElementVirStateSetup<AsyncObservableProp<ValueType, TriggerInput, UpdaterInput>> {
     return {
         _elementVirStateSetup() {
-            return setupAsyncProp(...args);
+            return new AsyncObservableProp(...args);
         },
     };
 }

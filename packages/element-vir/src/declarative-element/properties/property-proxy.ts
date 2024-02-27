@@ -30,9 +30,9 @@ function assertValidPropertyName<PropertyInitGeneric extends PropertyInitMapBase
     }
 }
 
-export function createElementUpdaterProxy<PropertyInitGeneric extends PropertyInitMapBase>(
+export function createElementPropertyProxy<PropertyInitGeneric extends PropertyInitMapBase>(
     element: DeclarativeElement,
-    verifyExists: boolean,
+    shouldAlreadyExist: boolean,
 ): PropertyInitGeneric {
     /**
      * Lit element updates state and inputs by setting them directly on the element, so we must do
@@ -42,7 +42,7 @@ export function createElementUpdaterProxy<PropertyInitGeneric extends PropertyIn
     const elementAsProps = element as DeclarativeElement & PropertyInitGeneric;
 
     function verifyProperty(propertyKey: PropertyKey) {
-        if (verifyExists) {
+        if (shouldAlreadyExist) {
             assertValidPropertyName(propertyKey, element, element.tagName);
         } else {
             bindReactiveProperty(element, propertyKey);
@@ -78,11 +78,7 @@ export function createElementUpdaterProxy<PropertyInitGeneric extends PropertyIn
             const existingPropertyListener: ObservablePropListener<any> | undefined =
                 element.observablePropertyListenerMap[propertyKey];
 
-            if (
-                oldValue !== newValue &&
-                isObservableProp(oldValue) &&
-                existingPropertyListener?.length
-            ) {
+            if (oldValue !== newValue && isObservableProp(oldValue) && existingPropertyListener) {
                 /** Stop listening to the old value now that we have a new value */
                 oldValue.removeListener(existingPropertyListener);
             }
@@ -90,13 +86,13 @@ export function createElementUpdaterProxy<PropertyInitGeneric extends PropertyIn
             if (isObservableProp(newValue)) {
                 /** If we're using an existing observable property */
                 if (existingPropertyListener) {
-                    newValue.addListener(existingPropertyListener);
+                    newValue.listen(existingPropertyListener);
                 } else {
                     function newListener() {
                         element.requestUpdate();
                     }
                     element.observablePropertyListenerMap[propertyKey] = newListener;
-                    newValue.addListener(newListener);
+                    newValue.listen(newListener);
                 }
             } else if (isObservableProp(oldValue)) {
                 /** Clear out old listener that is no longer used. */
