@@ -46,9 +46,8 @@
         "@augment-vir/common": "^23.4.0",
         "colorjs.io": "0.4.5",
         "lit-css-vars": "^3.0.9",
-        "object-shape-tester": "^2.3.1",
         "spa-router-vir": "^3.0.4",
-        "typed-event-target": "^3.0.2",
+        "typed-event-target": "^3.2.0",
         "vira": "20.0.9"
     },
     "devDependencies": {
@@ -66,7 +65,7 @@
         "markdown-code-example-inserter": "^1.0.0",
         "run-time-assertions": "^1.0.0",
         "type-fest": "^4.10.3",
-        "typedoc": "^0.25.8",
+        "typedoc": "^0.25.9",
         "typescript": "^5.3.3"
     },
     "peerDependencies": {

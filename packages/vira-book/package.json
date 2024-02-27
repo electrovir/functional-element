@@ -24,7 +24,7 @@
         "esbuild": "^0.20.1",
         "markdown-code-example-inserter": "^1.0.0",
         "nodemon": "^3.1.0",
-        "typedoc": "^0.25.8",
+        "typedoc": "^0.25.9",
         "typescript": "^5.3.3",
         "vite": "^4.5.0",
         "vite-tsconfig-paths": "^4.3.1"

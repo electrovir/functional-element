@@ -23,7 +23,7 @@
     "devDependencies": {
         "@types/node": "^20.11.20",
         "markdown-code-example-inserter": "^1.0.0",
-        "typedoc": "^0.25.8",
+        "typedoc": "^0.25.9",
         "typescript": "^5.3.3"
     }
 }
