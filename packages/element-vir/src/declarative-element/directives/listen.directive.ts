@@ -1,3 +1,4 @@
+import {MaybePromise} from '@augment-vir/common';
 import {
     directive,
     Directive,
@@ -8,13 +9,17 @@ import {
 import {DefinedTypedEvent, TypedEvent} from '../../typed-event/typed-event';
 import {extractElement} from './directive-helpers';
 
+type ListenCallbackReturn = MaybePromise<void>;
+
 type PossibleListenerCallbacks<
     TypedEventTypeNameGeneric extends string,
     TypedEventDetailGeneric,
     NativeElementEventNameGeneric extends keyof HTMLElementEventMap,
 > =
-    | ((event: TypedEvent<TypedEventTypeNameGeneric, TypedEventDetailGeneric>) => void)
-    | ((event: HTMLElementEventMap[NativeElementEventNameGeneric]) => void);
+    | ((
+          event: TypedEvent<TypedEventTypeNameGeneric, TypedEventDetailGeneric>,
+      ) => ListenCallbackReturn)
+    | ((event: HTMLElementEventMap[NativeElementEventNameGeneric]) => ListenCallbackReturn);
 
 /**
  * Listen to events. These can be native DOM events (use a string for the inputType argument) or
@@ -32,7 +37,9 @@ export function listen<
     NativeElementEventNameGeneric extends keyof HTMLElementEventMap,
 >(
     eventType: DefinedTypedEvent<TypedEventTypeNameGeneric, TypedEventDetailGeneric>,
-    listener: (event: TypedEvent<TypedEventTypeNameGeneric, TypedEventDetailGeneric>) => void,
+    listener: (
+        event: TypedEvent<TypedEventTypeNameGeneric, TypedEventDetailGeneric>,
+    ) => ListenCallbackReturn,
 ): DirectiveResult<any>;
 export function listen<
     TypedEventTypeNameGeneric extends string,
@@ -40,7 +47,7 @@ export function listen<
     NativeElementEventNameGeneric extends keyof HTMLElementEventMap,
 >(
     eventType: NativeElementEventNameGeneric,
-    listener: (event: HTMLElementEventMap[NativeElementEventNameGeneric]) => void,
+    listener: (event: HTMLElementEventMap[NativeElementEventNameGeneric]) => ListenCallbackReturn,
 ): DirectiveResult<any>;
 export function listen<
     TypedEventTypeNameGeneric extends string,
@@ -62,7 +69,7 @@ export function listen<
 type ListenerMetaData = {
     eventType: string;
     callback: PossibleListenerCallbacks<any, any, any>;
-    listener: (event: any) => void;
+    listener: (event: any) => ListenCallbackReturn;
 };
 
 /**
@@ -93,7 +100,7 @@ const listenDirective = directive(
 
         public createListenerMetaData(
             eventType: string,
-            callback: (event: TypedEvent<string, unknown>) => void,
+            callback: (event: TypedEvent<string, unknown>) => ListenCallbackReturn,
         ): ListenerMetaData {
             return {
                 eventType,
