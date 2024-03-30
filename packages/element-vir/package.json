@@ -1,6 +1,6 @@
 {
     "name": "element-vir",
-    "version": "20.0.9",
+    "version": "21.0.0",
     "keywords": [
         "custom",
         "web",
@@ -35,7 +35,7 @@
         "test": "virmator test-web",
         "test:coverage": "npm run test coverage",
         "test:docs": "virmator docs check",
-        "test:types": "npm run compile"
+        "test:types": "tsc --pretty --noEmit"
     },
     "dependencies": {
         "@augment-vir/common": "^26.2.1",
@@ -44,6 +44,7 @@
         "lit-css-vars": "^3.0.9",
         "lit-html": "^3.1.2",
         "object-shape-tester": "^2.3.2",
+        "observavir": "^1.0.0",
         "run-time-assertions": "^1.2.0",
         "typed-event-target": "^3.2.1"
     },

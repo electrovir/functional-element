@@ -6,7 +6,7 @@ import {
     kebabCaseToCamelCase,
 } from '@augment-vir/common';
 import {defineCssVars} from 'lit-css-vars';
-import {isRunTimeType} from 'run-time-assertions';
+import {hasProperty, isRunTimeType} from 'run-time-assertions';
 import {MinimalDefinitionWithInputs} from '../template-transforms/minimal-element-definition';
 import {css} from '../template-transforms/vir-css/vir-css';
 import {CustomElementTagName} from './custom-tag-name';
@@ -358,6 +358,17 @@ export function defineElementNoInputs<
             }
         }
 
+        public destroy() {
+            Object.values(this.instanceState).forEach((stateValue) => {
+                if (
+                    hasProperty(stateValue, 'destroy') &&
+                    isRunTimeType(stateValue.destroy, 'function')
+                ) {
+                    stateValue.destroy();
+                }
+            });
+        }
+
         public override disconnectedCallback(): void {
             super.disconnectedCallback();
             if (init.cleanupCallback) {
@@ -366,6 +377,7 @@ export function defineElementNoInputs<
                     throw new Error(`cleanupCallback in '${init.tagName}' cannot be asynchronous`);
                 }
             }
+            this.destroy();
             this._initCalled = false;
         }
 

@@ -1,13 +1,6 @@
 import {randomString} from '@augment-vir/common';
 import {defineBookPage} from 'element-book';
-import {
-    createSetterObservableProp,
-    css,
-    defineElementNoInputs,
-    html,
-    listen,
-    onResize,
-} from 'element-vir';
+import {Observable, css, defineElementNoInputs, html, listen, onResize} from 'element-vir';
 import {assign} from 'element-vir/dist/declarative-element/directives/assign.directive';
 import {AsyncChild} from './async-child.element';
 import {TestChildElement} from './child.element';
@@ -68,7 +61,7 @@ export const VirOldTestApp = defineElementNoInputs({
         width: -1,
         showChild: true,
         derp: {hi: 'yo'} as Record<string, string>,
-        myObservable: createSetterObservableProp(5),
+        myObservable: new Observable({defaultValue: 5}),
     },
     renderCallback({state, updateState}) {
         // log here to make sure it's not rendering too often

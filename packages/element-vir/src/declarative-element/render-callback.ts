@@ -57,10 +57,8 @@ export type InitCallback<
     >,
 ) => void;
 
-export type UpdateStateCallback<StateInit extends PropertyInitMapBase> = <
-    const SpecificState extends Partial<Record<keyof StateInit, unknown>>,
->(
-    newState: Partial<AllowElementVirStateSetup<StateInit, SpecificState>>,
+export type UpdateStateCallback<StateInit extends PropertyInitMapBase> = (
+    newState: Partial<AllowElementVirStateSetup<StateInit>>,
 ) => void;
 
 export type RenderParams<

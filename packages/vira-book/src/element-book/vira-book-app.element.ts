@@ -1,6 +1,6 @@
-import {joinUrlParts} from '@augment-vir/common';
 import {ElementBookApp, ElementBookSlotName} from 'element-book';
 import {css, defineElementNoInputs, html} from 'element-vir';
+import {joinUrlParts} from 'url-vir';
 import {allElementBookEntries} from './all-element-book-entries';
 
 export const ViraBookApp = defineElementNoInputs({

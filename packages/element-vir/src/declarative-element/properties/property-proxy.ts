@@ -1,8 +1,12 @@
+import {ObservableListener, isObservableBase} from 'observavir';
 import {property} from '../../lit-exports/all-lit-exports';
 import {DeclarativeElement} from '../declarative-element';
 import {PropertyInitMapBase} from './element-properties';
-import {isElementVirStateSetup} from './element-vir-state-setup';
-import {ObservablePropListener, isObservableProp} from './observable-prop/observable-prop';
+import {isElementVirStateSetup, stateSetupKey} from './element-vir-state-setup';
+
+export type ObservableListenerMap<OriginalPropertyMap extends PropertyInitMapBase> = Partial<
+    Record<keyof OriginalPropertyMap, ObservableListener<any> | undefined>
+>;
 
 /** Binds the given property key as a reactive property on the given element. */
 export function bindReactiveProperty(element: HTMLElement, propertyKey: PropertyKey) {
@@ -59,7 +63,7 @@ export function createElementPropertyProxy<PropertyInitGeneric extends PropertyI
         get: valueGetter,
         set(target, propertyKey: keyof PropertyInitGeneric | symbol, rawNewValue) {
             const newValue = isElementVirStateSetup(rawNewValue)
-                ? rawNewValue._elementVirStateSetup()
+                ? rawNewValue[stateSetupKey]()
                 : rawNewValue;
 
             verifyProperty(propertyKey);
@@ -75,15 +79,15 @@ export function createElementPropertyProxy<PropertyInitGeneric extends PropertyI
                 elementAsProps[propertyKey] = value;
             }
 
-            const existingPropertyListener: ObservablePropListener<any> | undefined =
+            const existingPropertyListener: ObservableListener<any> | undefined =
                 element.observablePropertyListenerMap[propertyKey];
 
-            if (oldValue !== newValue && isObservableProp(oldValue) && existingPropertyListener) {
+            if (oldValue !== newValue && isObservableBase(oldValue) && existingPropertyListener) {
                 /** Stop listening to the old value now that we have a new value */
                 oldValue.removeListener(existingPropertyListener);
             }
 
-            if (isObservableProp(newValue)) {
+            if (isObservableBase(newValue)) {
                 /** If we're using an existing observable property */
                 if (existingPropertyListener) {
                     newValue.listen(existingPropertyListener);
@@ -94,7 +98,7 @@ export function createElementPropertyProxy<PropertyInitGeneric extends PropertyI
                     element.observablePropertyListenerMap[propertyKey] = newListener;
                     newValue.listen(newListener);
                 }
-            } else if (isObservableProp(oldValue)) {
+            } else if (isObservableBase(oldValue)) {
                 /** Clear out old listener that is no longer used. */
                 element.observablePropertyListenerMap[propertyKey] = undefined;
             }

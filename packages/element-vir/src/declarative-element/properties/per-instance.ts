@@ -1,4 +1,4 @@
-import {ElementVirStateSetup} from './element-vir-state-setup';
+import {ElementVirStateSetup, stateSetupKey} from './element-vir-state-setup';
 
 /**
  * A state prop helper that sets up the given callback for each instance of the element that this
@@ -6,7 +6,7 @@ import {ElementVirStateSetup} from './element-vir-state-setup';
  */
 export function perInstance<T>(creationCallback: () => T): T {
     const stateSetup: ElementVirStateSetup<T> = {
-        _elementVirStateSetup: creationCallback,
+        [stateSetupKey]: creationCallback,
     };
 
     return stateSetup as T;

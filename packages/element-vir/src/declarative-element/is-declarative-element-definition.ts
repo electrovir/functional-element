@@ -1,5 +1,5 @@
-import {getObjectTypedKeys, isObject, isTruthy, wrapInTry} from '@augment-vir/common';
-import {AssertionError, hasProperty} from 'run-time-assertions';
+import {getObjectTypedKeys, isTruthy, wrapInTry} from '@augment-vir/common';
+import {AssertionError, hasProperty, isRunTimeType} from 'run-time-assertions';
 import {
     DeclarativeElementDefinition,
     StaticDeclarativeElementProperties,
@@ -30,10 +30,10 @@ export function assertDeclarativeElementDefinition(
     input: unknown,
     failMessage?: string | undefined,
 ): asserts input is DeclarativeElementDefinition {
-    if (!isObject(input)) {
+    if (!isRunTimeType(input, 'function')) {
         throw new AssertionError(
             [
-                'input is not an object',
+                'input is not an element constructor',
                 failMessage,
             ]
                 .filter(isTruthy)

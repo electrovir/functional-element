@@ -1,3 +1,5 @@
+export * from 'observavir';
+
 export * from './declarative-element/custom-tag-name';
 export * from './declarative-element/declarative-element';
 export * from './declarative-element/declarative-element-init';
@@ -22,10 +24,6 @@ export * from './declarative-element/properties/element-events';
 export * from './declarative-element/properties/element-properties';
 export * from './declarative-element/properties/element-vir-state-setup';
 export * from './declarative-element/properties/host-classes';
-export * from './declarative-element/properties/observable-prop/interval-observable-prop';
-export * from './declarative-element/properties/observable-prop/observable-prop';
-export * from './declarative-element/properties/observable-prop/setter-observable-prop';
-export * from './declarative-element/properties/observable-prop/updatable-observable-prop';
 export * from './declarative-element/properties/per-instance';
 export * from './declarative-element/properties/styles';
 export * from './declarative-element/properties/tag-name';

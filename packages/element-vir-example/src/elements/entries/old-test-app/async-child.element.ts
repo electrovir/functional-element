@@ -26,7 +26,7 @@ export const AsyncChild = defineElement<{
     },
     renderCallback({state, inputs}) {
         console.info('rendering async child');
-        state.loadThing.updateTrigger({
+        state.loadThing.update({
             ...inputs,
             circularReference,
         });
@@ -45,21 +45,21 @@ export const AsyncChild = defineElement<{
             </button>
             <button
                 ${listen('click', () => {
-                    state.loadThing.setNewPromise(waitValue(1_500, 42));
+                    state.loadThing.setValue(waitValue(1_500, 42));
                 })}
             >
                 New Number Promise
             </button>
             <button
                 ${listen('click', () => {
-                    state.loadThing.setNewPromise(sameNumberPromise);
+                    state.loadThing.setValue(sameNumberPromise);
                 })}
             >
                 Same Number Promise
             </button>
             <button
                 ${listen('click', () => {
-                    state.loadThing.setResolvedValue(Math.random());
+                    state.loadThing.setValue(Math.random());
                 })}
             >
                 New Resolved Value

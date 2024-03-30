@@ -1,5 +1,5 @@
 import {assert} from '@open-wc/testing';
-import {createSetterObservableProp} from 'element-vir';
+import {Observable} from 'element-vir';
 import {assertTypeOf} from 'run-time-assertions';
 import {BookPageControlTypeEnum, definePageControl} from './book-page-controls';
 import {defineBookPage, defineBookPageWithGlobals} from './define-book-page';
@@ -34,7 +34,7 @@ describe(defineBookPage.name, () => {
                 defineExample({
                     title: 'example with observable property state',
                     stateInitStatic: {
-                        observable: createSetterObservableProp<number | undefined>(undefined),
+                        observable: new Observable<number | undefined>({defaultValue: undefined}),
                     },
                     descriptionParagraphs: [
                         'yo',

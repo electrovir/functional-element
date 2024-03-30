@@ -268,9 +268,7 @@ export const MyWithEvents = defineElementNoInputs({
     },
     renderCallback({dispatch, events}) {
         return html`
-            <button ${listen('click', () => dispatch(new events.logoutClick(undefined)))}>
-                log out
-            </button>
+            <button ${listen('click', () => dispatch(new events.logoutClick()))}>log out</button>
             <button ${listen('click', () => dispatch(new events.randomNumber(Math.random())))}>
                 generate random number
             </button>
@@ -630,13 +628,13 @@ export const MyWithAsyncProp = defineElement<{endpoint: string}>()({
             },
         }),
     },
-    renderCallback({inputs, state, updateState}) {
+    renderCallback({inputs, state}) {
         /**
          * This causes the a promise which automatically updates the state.data prop once the
          * promise resolves. It only creates a new promise if the first input, the trigger, value
          * changes from previous calls.
          */
-        state.data.updateTrigger(inputs);
+        state.data.update(inputs);
         return html`
             Here's the data:
             <br />

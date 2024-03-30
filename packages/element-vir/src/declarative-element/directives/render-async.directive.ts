@@ -1,5 +1,5 @@
 import {extractErrorMessage, isPromiseLike} from '@augment-vir/common';
-import {AsyncObservableProp} from './async-prop';
+import {AsyncProp} from './async-prop';
 
 // overload for when resolutionRender and errorRender are both provided
 export function renderAsync<
@@ -8,7 +8,7 @@ export function renderAsync<
     ResolutionRenderResult = never,
     ErrorRenderResult = never,
 >(
-    asyncProp: AsyncObservableProp<T, any, any>,
+    asyncProp: Pick<AsyncProp<T, any>, 'value'>,
     fallback: FallbackResult,
     resolutionRender: (resolved: Awaited<T>) => ResolutionRenderResult,
     errorRender: (error: Error) => ErrorRenderResult,
@@ -20,7 +20,7 @@ export function renderAsync<
     ResolutionRenderResult = never,
     ErrorRenderResult = never,
 >(
-    asyncProp: AsyncObservableProp<T, any, any>,
+    asyncProp: Pick<AsyncProp<T, any>, 'value'>,
     fallback: FallbackResult,
     resolutionRender: (resolved: Awaited<T>) => ResolutionRenderResult,
     errorRender?: undefined,
@@ -32,7 +32,7 @@ export function renderAsync<
     ResolutionRenderResult = never,
     ErrorRenderResult = never,
 >(
-    asyncProp: AsyncObservableProp<T, any, any>,
+    asyncProp: Pick<AsyncProp<T, any>, 'value'>,
     fallback: FallbackResult,
     resolutionRender: undefined,
     errorRender: (error: Error) => ErrorRenderResult,
@@ -44,7 +44,7 @@ export function renderAsync<
     ResolutionRenderResult = never,
     ErrorRenderResult = never,
 >(
-    asyncProp: AsyncObservableProp<T, any, any>,
+    asyncProp: Pick<AsyncProp<T, any>, 'value'>,
     fallback: FallbackResult,
     resolutionRender?: undefined,
     errorRender?: undefined,
@@ -56,7 +56,7 @@ export function renderAsync<
     ResolutionRenderResult = never,
     ErrorRenderResult = never,
 >(
-    asyncProp: AsyncObservableProp<T, any, any>,
+    asyncProp: Pick<AsyncProp<T, any>, 'value'>,
     /** This value will be rendered if the async prop has not settled yet. */
     fallback: FallbackResult,
     resolutionRender?: ((resolved: Awaited<T>) => ResolutionRenderResult) | undefined,

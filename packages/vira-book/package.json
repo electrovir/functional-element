@@ -1,6 +1,6 @@
 {
     "name": "@electrovir/vira-book",
-    "version": "20.0.9",
+    "version": "21.0.0",
     "private": true,
     "license": "(MIT or CC0 1.0)",
     "author": {
@@ -17,6 +17,7 @@
         "@augment-vir/common": "^26.2.1",
         "element-book": "*",
         "element-vir": "*",
+        "url-vir": "^1.1.0",
         "vira": "*"
     },
     "devDependencies": {

@@ -1,11 +1,11 @@
 import {isObject} from '@augment-vir/common';
 import {PropertyInitMapBase} from './element-properties';
 
-export type ElementVirStateSetup<InnerValue> = {
-    _elementVirStateSetup(): InnerValue;
-};
+export const stateSetupKey = Symbol('element-vir-state-setup');
 
-const checkKey: keyof ElementVirStateSetup<unknown> = '_elementVirStateSetup';
+export type ElementVirStateSetup<InnerValue> = {
+    [key in typeof stateSetupKey]: () => InnerValue;
+};
 
 export function isElementVirStateSetup<T = unknown>(
     input: unknown,
@@ -14,8 +14,13 @@ export function isElementVirStateSetup<T = unknown>(
         return false;
     }
 
-    return checkKey in input;
+    return stateSetupKey in input;
 }
+
+export type UnwrapElementVirStateSetup<T> = T extends ElementVirStateSetup<infer U> ? U : T;
+export type MaybeElementVirStateSetup<T> =
+    | UnwrapElementVirStateSetup<T>
+    | ElementVirStateSetup<UnwrapElementVirStateSetup<T>>;
 
 export type FlattenElementVirStateSetup<OriginalObject extends PropertyInitMapBase> = {
     [Prop in keyof OriginalObject]: Extract<
@@ -30,19 +35,6 @@ export type FlattenElementVirStateSetup<OriginalObject extends PropertyInitMapBa
           : OriginalObject[Prop];
 };
 
-export type AllowElementVirStateSetup<
-    OriginalObject extends PropertyInitMapBase,
-    CurrentType extends Record<keyof OriginalObject, unknown>,
-> = {
-    [Prop in keyof CurrentType]: Prop extends keyof OriginalObject
-        ? Extract<OriginalObject[Prop], ElementVirStateSetup<any>> extends never
-            ? OriginalObject[Prop]
-            : Extract<OriginalObject[Prop], ElementVirStateSetup<any>> extends ElementVirStateSetup<
-                    infer SetValue
-                >
-              ? CurrentType[Prop] extends ElementVirStateSetup<SetValue>
-                  ? CurrentType[Prop]
-                  : SetValue
-              : OriginalObject[Prop]
-        : never;
+export type AllowElementVirStateSetup<OriginalObject extends PropertyInitMapBase> = {
+    [Prop in keyof OriginalObject]: MaybeElementVirStateSetup<OriginalObject[Prop]>;
 };

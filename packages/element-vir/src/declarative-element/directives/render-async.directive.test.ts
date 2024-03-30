@@ -3,7 +3,7 @@ import {createDeferredPromiseWrapper} from '@augment-vir/common';
 import {assert, fixture as render, waitUntil} from '@open-wc/testing';
 import {assertInstanceOf, assertTypeOf} from 'run-time-assertions';
 import {
-    AsyncPropValue,
+    AsyncValue,
     asyncProp,
     defineElement,
     defineElementEvent,
@@ -22,10 +22,10 @@ describe(asyncProp.name, () => {
             myAsyncProp: asyncProp<number>(),
         },
         events: {
-            previousAsyncProp: defineElementEvent<AsyncPropValue<number>>(),
+            previousAsyncProp: defineElementEvent<AsyncValue<number>>(),
         },
         renderCallback({state, inputs, dispatch, events}) {
-            state.myAsyncProp.setNewPromise(inputs.setAsyncProp);
+            state.myAsyncProp.setValue(inputs.setAsyncProp);
 
             dispatch(new events.previousAsyncProp(state.myAsyncProp.value));
 
@@ -44,27 +44,27 @@ describe(asyncProp.name, () => {
     });
 
     async function setupAsyncPropTest() {
-        const allAsyncPropValues: AsyncPropValue<number>[] = [];
+        const allAsyncValues: AsyncValue<number>[] = [];
 
         const deferredPromise = createDeferredPromiseWrapper<number>();
 
         const instance = await render(html`
             <${elementWithAsyncProp.assign({setAsyncProp: deferredPromise.promise})}
                 ${listen(elementWithAsyncProp.events.previousAsyncProp, (event) => {
-                    allAsyncPropValues.push(event.detail);
+                    allAsyncValues.push(event.detail);
                 })}
             ></${elementWithAsyncProp}>
         `);
         assertInstanceOf(instance, elementWithAsyncProp);
-        assert.lengthOf(allAsyncPropValues, 1);
-        assert.instanceOf(allAsyncPropValues[0], Promise);
+        assert.lengthOf(allAsyncValues, 1);
+        assert.instanceOf(allAsyncValues[0], Promise);
 
         // wait for the event to propagate
-        await waitUntil(() => allAsyncPropValues.length === 1);
+        await waitUntil(() => allAsyncValues.length === 1);
 
-        assert.lengthOf(allAsyncPropValues, 1);
+        assert.lengthOf(allAsyncValues, 1);
 
-        return {allAsyncPropValues, instance, deferredPromise};
+        return {allAsyncValues, instance, deferredPromise};
     }
 
     it('should have proper types', () => {
@@ -76,9 +76,7 @@ describe(asyncProp.name, () => {
                 asyncProp: asyncProp<SomethingObject, any>(),
             },
             renderCallback({state}) {
-                assertTypeOf(state.asyncProp.value).toEqualTypeOf<
-                    AsyncPropValue<SomethingObject>
-                >();
+                assertTypeOf(state.asyncProp.value).toEqualTypeOf<AsyncValue<SomethingObject>>();
                 return html`
                     ${renderAsync(
                         state.asyncProp,
@@ -96,7 +94,7 @@ describe(asyncProp.name, () => {
     });
 
     it('should render the resolution callback', async () => {
-        const {instance, deferredPromise, allAsyncPropValues} = await setupAsyncPropTest();
+        const {instance, deferredPromise, allAsyncValues} = await setupAsyncPropTest();
 
         const randomValue = Math.random() * 100;
 
@@ -105,7 +103,7 @@ describe(asyncProp.name, () => {
         deferredPromise.resolve(randomValue);
 
         // wait for the event to propagate
-        await waitUntil(() => allAsyncPropValues.length > 1);
+        await waitUntil(() => allAsyncValues.length > 1);
 
         assert.strictEqual(extractText(instance), `Got ${randomValue.toFixed()}`);
     });

@@ -1,16 +1,10 @@
 import {randomInteger} from '@augment-vir/common';
 import {defineBookPage} from 'element-book';
-import {
-    createSetterObservableProp,
-    defineElement,
-    defineElementNoInputs,
-    html,
-    listen,
-} from 'element-vir';
+import {Observable, defineElement, defineElementNoInputs, html, listen} from 'element-vir';
 
-const myObservableProp = createSetterObservableProp(5);
+const myObservable = new Observable({defaultValue: 5});
 
-const VirObservablePropsTestParent = defineElementNoInputs({
+const VirObservablesTestParent = defineElementNoInputs({
     tagName: 'vir-observable-prop-input-test-parent',
     stateInitStatic: {
         renderCount: 0,
@@ -20,14 +14,14 @@ const VirObservablePropsTestParent = defineElementNoInputs({
         return html`
             <p>Parent render count (should not change): ${state.renderCount}</p>
             <p>
-                <${VirObservablePropsTestChild.assign({
-                    observableProp: myObservableProp,
-                })}></${VirObservablePropsTestChild}>
+                <${VirObservablesTestChild.assign({
+                    observableProp: myObservable,
+                })}></${VirObservablesTestChild}>
             </p>
             <p>
                 <button
                     ${listen('click', () => {
-                        myObservableProp.setValue(randomInteger({min: 1, max: 100}));
+                        myObservable.setValue(randomInteger({min: 1, max: 100}));
                     })}
                 >
                     trigger update from parent
@@ -36,7 +30,7 @@ const VirObservablePropsTestParent = defineElementNoInputs({
         `;
     },
 });
-const VirObservablePropsTestChild = defineElement<{observableProp: typeof myObservableProp}>()({
+const VirObservablesTestChild = defineElement<{observableProp: typeof myObservable}>()({
     tagName: 'vir-observable-prop-input-test-child',
     stateInitStatic: {
         renderCount: 0,
@@ -67,7 +61,7 @@ export const observablePropInputTestPage = defineBookPage({
             title: 'test',
             renderCallback() {
                 return html`
-                    <${VirObservablePropsTestParent}></${VirObservablePropsTestParent}>
+                    <${VirObservablesTestParent}></${VirObservablesTestParent}>
                 `;
             },
         });

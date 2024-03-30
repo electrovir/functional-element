@@ -1,6 +1,8 @@
-import {AnyFunction, randomString} from '@augment-vir/common';
-import {assert} from '@open-wc/testing';
-import {assertTypeOf} from 'run-time-assertions';
+import {AnyFunction, randomString, waitUntilTruthy} from '@augment-vir/common';
+import {assert, fixture} from '@open-wc/testing';
+import {IntervalObservable} from 'observavir';
+import {assertInstanceOf, assertThrows, assertTypeOf} from 'run-time-assertions';
+import {html} from '../template-transforms/vir-html/vir-html';
 import {defineElementNoInputs} from './define-element-no-inputs';
 
 describe(defineElementNoInputs.name, () => {
@@ -96,5 +98,44 @@ describe(defineElementNoInputs.name, () => {
         function acceptHost(host: (typeof MyElement)['instanceType']) {
             return {};
         }
+    });
+
+    it('destroys all state props', async () => {
+        let count = 0;
+
+        const MyElement = defineElementNoInputs({
+            tagName: `some-tag-${randomString()}`,
+            stateInitStatic: {
+                intervalObservable: new IntervalObservable({
+                    defaultParams: undefined,
+                    intervalDuration: {
+                        milliseconds: 100,
+                    },
+                    updateCallback() {
+                        count++;
+                        return 'hi';
+                    },
+                }),
+            },
+            renderCallback() {
+                return '';
+            },
+        });
+
+        const rendered = await fixture(html`
+            <${MyElement}></${MyElement}>
+        `);
+
+        assertInstanceOf(rendered, MyElement);
+        await waitUntilTruthy(() => count > 10);
+
+        rendered.destroy();
+        const countAfterDestroy = count;
+
+        await assertThrows(() =>
+            waitUntilTruthy(() => count > countAfterDestroy + 10, undefined, {
+                timeout: {milliseconds: 3_000},
+            }),
+        );
     });
 });

@@ -1,6 +1,6 @@
 {
     "name": "@electrovir/element-vir-mono-repo",
-    "version": "20.0.9",
+    "version": "21.0.0",
     "private": true,
     "license": "(MIT or CC0 1.0)",
     "author": {
@@ -12,12 +12,12 @@
     ],
     "scripts": {
         "build:pages": "npm run --workspace @electrovir/scripts build",
-        "compile": "mono-vir for-each \"rm -rf dist && rm -f tsconfig.tsbuildinfo && tsc -b --pretty\"",
+        "compile": "mono-vir for-each \"tsc -b -f --pretty\"",
         "docs": "mono-vir for-each-async npm run --if-present docs",
         "format": "virmator format",
         "publish": "virmator publish \"npm run compile && npm run --workspace @electrovir/scripts update:deps && npm i && npm run test:all\"",
         "test": "mono-vir for-each-async npm test",
-        "test:all": "concurrently -c auto -m 90% --kill-others-on-fail --colors --names tests,spelling,format,docs,build \"npm run test:coverage\" \"npm run test:spelling\" \"npm run test:format\" \"npm run test:docs\" \"npm run build:pages\"",
+        "test:all": "npm run compile && concurrently -c auto -m 90% --kill-others-on-fail --colors --names tests,spelling,format,docs,build \"npm run test:coverage\" \"npm run test:spelling\" \"npm run test:format\" \"npm run test:docs\" \"npm run build:pages\"",
         "test:coverage": "npm run test coverage",
         "test:deps": "virmator deps check",
         "test:docs": "mono-vir for-each-async npm run --if-present test:docs",

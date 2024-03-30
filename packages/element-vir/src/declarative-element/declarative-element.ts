@@ -11,7 +11,7 @@ import {EventDescriptorMap, EventsInitMap} from './properties/element-events';
 import {ElementPropertyDescriptorMap, PropertyInitMapBase} from './properties/element-properties';
 import {FlattenElementVirStateSetup} from './properties/element-vir-state-setup';
 import {HostClassNamesMap} from './properties/host-classes';
-import {ObservablePropListenerMap} from './properties/observable-prop/observable-prop';
+import {ObservableListenerMap} from './properties/property-proxy';
 import type {RenderCallback, RenderParams, UpdateStateCallback} from './render-callback';
 import {SlotNameMap} from './slot-names';
 
@@ -230,9 +230,10 @@ export abstract class DeclarativeElement<
     public abstract _lastRenderedProps: Readonly<
         Pick<RenderParams<any, Inputs, StateInit, any, any, any, any>, 'inputs' | 'state'>
     >;
+    public abstract destroy(): void;
     public abstract override render(): unknown;
     public abstract readonly instanceState: FlattenElementVirStateSetup<StateInit>;
-    public abstract readonly observablePropertyListenerMap: ObservablePropListenerMap<
+    public abstract readonly observablePropertyListenerMap: ObservableListenerMap<
         StateInit & Inputs
     >;
     public abstract readonly instanceInputs: Inputs;

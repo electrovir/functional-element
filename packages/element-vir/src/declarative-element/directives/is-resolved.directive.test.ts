@@ -1,6 +1,6 @@
 import {itCases} from '@augment-vir/browser-testing';
 import {assert} from '@open-wc/testing';
-import {AsyncPropValue} from './async-prop';
+import {AsyncValue} from './async-prop';
 import {isError, isResolved, resolvedOrUndefined} from './is-resolved.directive';
 
 describe(isResolved.name, () => {
@@ -27,7 +27,7 @@ describe(isResolved.name, () => {
 
 describe(isError.name, () => {
     it('does not block isResolved', () => {
-        const myValue = {} as AsyncPropValue<{something: 'crazy'}>;
+        const myValue = {} as AsyncValue<{something: 'crazy'}>;
 
         if (isError(myValue)) {
             throw myValue;

@@ -25,13 +25,13 @@ export const MyWithAsyncProp = defineElement<{endpoint: string}>()({
             },
         }),
     },
-    renderCallback({inputs, state, updateState}) {
+    renderCallback({inputs, state}) {
         /**
          * This causes the a promise which automatically updates the state.data prop once the
          * promise resolves. It only creates a new promise if the first input, the trigger, value
          * changes from previous calls.
          */
-        state.data.updateTrigger(inputs);
+        state.data.update(inputs);
         return html`
             Here's the data:
             <br />

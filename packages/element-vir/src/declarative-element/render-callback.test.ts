@@ -2,18 +2,18 @@ import {assert} from '@open-wc/testing';
 import {SingleCssVarDefinition} from 'lit-css-vars';
 import {assertTypeOf} from 'run-time-assertions';
 import {
-    AsyncObservableProp,
-    ObservableProp,
+    AsyncProp,
+    Observable,
     RenderCallback,
     TypedEvent,
     asyncProp,
     createEventDescriptorMap,
     createRenderParams,
-    createSetterObservableProp,
     defineElementEvent,
     defineElementNoInputs,
     html,
 } from '../index';
+import {MaybeElementVirStateSetup} from './properties/element-vir-state-setup';
 
 describe('RenderParams', () => {
     it('should produce proper types', () => {
@@ -29,7 +29,7 @@ describe('RenderParams', () => {
                 }),
                 myAsyncProp2: asyncProp({defaultValue: Promise.resolve(3)}),
                 myAsyncProp3: asyncProp({defaultValue: 3}),
-                myNumber: undefined as undefined | ObservableProp<number>,
+                myNumber: undefined as undefined | Observable<number>,
             },
             cssVars: {
                 'test-element-my-thing': '4px',
@@ -40,7 +40,7 @@ describe('RenderParams', () => {
             },
             renderCallback({events, state, updateState, cssVars}) {
                 if (state.myNumber == undefined) {
-                    updateState({myNumber: createSetterObservableProp(6)});
+                    updateState({myNumber: new Observable({defaultValue: 6})});
                 }
 
                 assertTypeOf(
@@ -59,17 +59,23 @@ describe('RenderParams', () => {
                     Promise<number> | number | Error
                 >();
 
-                assertTypeOf<
-                    Exclude<Parameters<typeof updateState>[0]['myAsyncProp'], undefined>
-                >().toEqualTypeOf<AsyncObservableProp<number, MyAsyncPropTriggerType, undefined>>();
+                updateState({
+                    myAsyncProp: asyncProp(),
+                });
 
-                state.myAsyncProp.updateTrigger({input: 'hi'});
+                assertTypeOf<
+                    NonNullable<Parameters<typeof updateState>[0]['myAsyncProp']>
+                >().toEqualTypeOf<
+                    MaybeElementVirStateSetup<AsyncProp<number, MyAsyncPropTriggerType>>
+                >();
+
+                state.myAsyncProp.update({input: 'hi'});
 
                 updateState({
                     myAsyncProp: asyncProp({defaultValue: 5}),
                 });
 
-                state.myAsyncProp.updateTrigger({input: undefined});
+                state.myAsyncProp.update({input: undefined});
 
                 new testEventThing(4);
                 // @ts-expect-error
@@ -126,7 +132,7 @@ describe('UpdateStateCallback', () => {
         });
 
         function acceptStateFromElementDefinition(state: (typeof customElement)['stateType']) {
-            state.doThing.setResolvedValue('yo');
+            state.doThing.setValue('yo');
         }
     });
 });
