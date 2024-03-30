@@ -1,6 +1,7 @@
 import {waitForAnimationFrame} from '@augment-vir/browser';
-import {areJsonEqual, extractErrorMessage, isTruthy} from '@augment-vir/common';
+import {extractErrorMessage, isTruthy} from '@augment-vir/common';
 import {css, defineElement, defineElementEvent, html, listen} from 'element-vir';
+import {isJsonEqual} from 'run-time-assertions';
 import {
     ControlsWrapper,
     createNewControls,
@@ -116,7 +117,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
         function areRoutesNew(newRouteInput: Partial<BookFullRoute>) {
             const newRoute = mergeRoutes(newRouteInput);
 
-            return !areJsonEqual(state.currentRoute, newRoute);
+            return !isJsonEqual(state.currentRoute, newRoute);
         }
 
         function updateWindowTitle(topNodeTitle: string | undefined) {
@@ -152,7 +153,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
 
             if (
                 inputs.elementBookRoutePaths &&
-                !areJsonEqual(inputs.elementBookRoutePaths, state.currentRoute.paths)
+                !isJsonEqual(inputs.elementBookRoutePaths, state.currentRoute.paths)
             ) {
                 dispatch(new events.pathUpdate(newRoute.paths ?? []));
             }
@@ -161,7 +162,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
         try {
             if (
                 inputs.elementBookRoutePaths &&
-                !areJsonEqual(inputs.elementBookRoutePaths, state.currentRoute.paths)
+                !isJsonEqual(inputs.elementBookRoutePaths, state.currentRoute.paths)
             ) {
                 updateRoutes({paths: inputs.elementBookRoutePaths as any});
             }
@@ -182,7 +183,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
             const inputThemeConfig: ThemeConfig = {
                 themeColor: inputs.themeColor,
             };
-            if (!areJsonEqual(inputThemeConfig, state.colors?.config)) {
+            if (!isJsonEqual(inputThemeConfig, state.colors?.config)) {
                 const newTheme = createTheme(inputThemeConfig);
                 updateState({
                     colors: {

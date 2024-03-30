@@ -1,12 +1,11 @@
 import {
-    areJsonEqual,
     createDeferredPromiseWrapper,
     DeferredPromiseWrapper,
     ensureError,
     JsonCompatibleObject,
     MaybePromise,
 } from '@augment-vir/common';
-import {isPromise} from 'run-time-assertions';
+import {isLooseJsonEqual, isPromise} from 'run-time-assertions';
 import {ElementVirStateSetup} from '../properties/element-vir-state-setup';
 import {SetterObservableProp} from '../properties/observable-prop/setter-observable-prop';
 
@@ -168,9 +167,7 @@ export class AsyncObservableProp<
 
         if (
             this.lastTrigger === notSetSymbol ||
-            !areJsonEqual(expandedTrigger as any, this.lastTrigger as any, {
-                ignoreNonSerializableProperties: true,
-            })
+            !isLooseJsonEqual(expandedTrigger as any, this.lastTrigger as any)
         ) {
             this.lastTrigger = expandedTrigger;
 

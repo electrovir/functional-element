@@ -1,4 +1,4 @@
-import {areJsonEqual} from '@augment-vir/common';
+import {isJsonEqual} from 'run-time-assertions';
 import {BookEntryTypeEnum} from '../../../data/book-entry/book-entry-type';
 import {BookTreeNode} from '../../../data/book-tree/book-tree-node';
 
@@ -14,16 +14,13 @@ export function shouldShowTreeNodeInNav(
         return true;
     }
 
-    const isParentSelected = areJsonEqual(
-        selectedPath,
-        currentNode.fullUrlBreadcrumbs.slice(0, -1),
-    );
+    const isParentSelected = isJsonEqual(selectedPath, currentNode.fullUrlBreadcrumbs.slice(0, -1));
 
     if (isParentSelected) {
         return true;
     }
 
-    const isSiblingSelected = areJsonEqual(
+    const isSiblingSelected = isJsonEqual(
         selectedPath?.slice(0, -1),
         currentNode.fullUrlBreadcrumbs.slice(0, -1),
     );

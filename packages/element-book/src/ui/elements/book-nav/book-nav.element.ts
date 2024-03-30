@@ -1,6 +1,6 @@
 import {checkIfEntirelyInScrollView, waitForAnimationFrame} from '@augment-vir/browser';
-import {areJsonEqual} from '@augment-vir/common';
 import {classMap, css, html, renderIf} from 'element-vir';
+import {isJsonEqual} from 'run-time-assertions';
 import {Element16Icon, ViraIcon} from 'vira';
 import {BookEntryTypeEnum} from '../../../data/book-entry/book-entry-type';
 import {isBookTreeNode} from '../../../data/book-tree/book-tree';
@@ -101,7 +101,7 @@ export const BookNav = defineBookElement<{
                         class=${classMap({
                             'title-row': true,
                             selected: inputs.selectedPath
-                                ? areJsonEqual(inputs.selectedPath, treeNode.fullUrlBreadcrumbs)
+                                ? isJsonEqual(inputs.selectedPath, treeNode.fullUrlBreadcrumbs)
                                 : false,
                         })}
                     >

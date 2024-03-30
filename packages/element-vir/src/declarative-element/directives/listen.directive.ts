@@ -9,7 +9,8 @@ import {
 import {DefinedTypedEvent, TypedEvent} from '../../typed-event/typed-event';
 import {extractElement} from './directive-helpers';
 
-type ListenCallbackReturn = MaybePromise<void>;
+/** We don't care at all what this returns, just allow anything! */
+type ListenCallbackReturn = MaybePromise<any>;
 
 type PossibleListenerCallbacks<
     TypedEventTypeNameGeneric extends string,

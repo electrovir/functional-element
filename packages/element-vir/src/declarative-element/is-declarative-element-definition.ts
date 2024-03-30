@@ -56,11 +56,13 @@ export function assertDeclarativeElementDefinition(
 export function isDeclarativeElementDefinition(
     input: unknown,
 ): input is DeclarativeElementDefinition {
-    return wrapInTry({
-        callback() {
+    return wrapInTry(
+        () => {
             assertDeclarativeElementDefinition(input);
             return true;
         },
-        fallbackValue: false,
-    });
+        {
+            fallbackValue: false,
+        },
+    );
 }

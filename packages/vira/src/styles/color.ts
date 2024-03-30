@@ -11,7 +11,7 @@ export function getAssertedValidColor(input: ColorTypes | undefined) {
     } catch (caught) {
         const stringInput = String(input);
         const inputForMessage: string = stringInput.toLowerCase().match(/\[\s*object\s+object\s*\]/)
-            ? wrapInTry({callback: () => JSON.stringify(input), fallbackValue: stringInput})
+            ? wrapInTry(() => JSON.stringify(input), {fallbackValue: stringInput})
             : stringInput;
         throw new Error(`Invalid color: ${inputForMessage}`);
     }
