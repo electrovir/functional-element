@@ -557,4 +557,21 @@ describe(asyncProp.name, () => {
         // @ts-expect-error
         instance.listen;
     });
+
+    it('does not trigger updates with a function input changing', () => {
+        let callCount = 0;
+        const instance = asyncProp({
+            updateCallback(inputs: {prop1: string; callback: () => any}) {
+                return callCount++;
+            },
+        })[stateSetupKey]();
+
+        instance.update({prop1: 'hi', callback: () => {}});
+        instance.update({prop1: 'hi', callback: () => {}});
+        instance.update({prop1: 'hi', callback: () => {}});
+        instance.update({prop1: 'hi', callback: () => {}});
+        instance.update({prop1: 'bye', callback: () => {}});
+
+        assert.strictEqual(callCount, 2);
+    });
 });
