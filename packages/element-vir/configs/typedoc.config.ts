@@ -15,6 +15,7 @@ export const typeDocConfig: Partial<TypeDocOptions> = {
     excludeInternal: true,
     excludeExternals: true,
     intentionallyNotExported: [
+        '_AsyncPropClass',
         '__class',
     ],
     requiredToBeDocumented: [],

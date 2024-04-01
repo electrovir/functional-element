@@ -17,7 +17,7 @@ import {defineElementEvent} from '../properties/element-events';
 import {StaticElementPropertyDescriptor} from '../properties/element-properties';
 import {ElementVirStateSetup, stateSetupKey} from '../properties/element-vir-state-setup';
 import {AsyncProp, AsyncValue, asyncProp} from './async-prop';
-import {isError, isResolved} from './is-resolved.directive';
+import {isAsyncError, isResolved} from './is-resolved.directive';
 import {listen} from './listen.directive';
 import {renderAsync} from './render-async.directive';
 
@@ -149,7 +149,7 @@ describe(asyncProp.name, () => {
                     circularReference,
                 });
 
-                if (isResolved(state.myAsyncProp.value) && !isError(state.myAsyncProp.value)) {
+                if (isResolved(state.myAsyncProp.value) && !isAsyncError(state.myAsyncProp.value)) {
                     assertTypeOf(state.myAsyncProp.value).toEqualTypeOf<number>();
                 }
 
@@ -437,7 +437,7 @@ describe(asyncProp.name, () => {
                 wasRendered: defineElementEvent<void>(),
             },
             renderCallback({dispatch, events, state}) {
-                if (isResolved(state.myAsyncProp.value) && !isError(state.myAsyncProp.value)) {
+                if (isResolved(state.myAsyncProp.value) && !isAsyncError(state.myAsyncProp.value)) {
                     assertTypeOf(state.myAsyncProp.value).toEqualTypeOf<number | undefined>();
                 }
 

@@ -1,10 +1,11 @@
 import {CallbackObservable, CallbackObservableInit} from 'observavir';
+import {Constructor} from 'type-fest';
 import {ElementVirStateSetup, stateSetupKey} from '../properties/element-vir-state-setup';
 
 export type {AsyncValue} from 'observavir';
 
 /** Class for constructing async props. Should not be referenced directly, use `AsyncProp` instead. */
-export class _AsyncPropClass<Value, Params> extends CallbackObservable<Value, Params> {}
+class _AsyncPropClass<Value, Params> extends CallbackObservable<Value, Params> {}
 
 export type AsyncProp<Value, Params> = Omit<
     _AsyncPropClass<Value, Params>,
@@ -18,6 +19,11 @@ export type AsyncProp<Value, Params> = Omit<
     | 'listenToEvent'
     | 'listen'
 >;
+
+export const AsyncProp: Constructor<
+    AsyncProp<unknown, unknown>,
+    ConstructorParameters<typeof _AsyncPropClass<unknown, unknown>>
+> = _AsyncPropClass;
 
 export function asyncProp<Value, Params = void>(
     init?: CallbackObservableInit<Value, Params>,

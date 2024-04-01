@@ -1,21 +1,35 @@
-import {isPromiseLike} from '@augment-vir/common';
-import {AsyncValue} from './async-prop';
+import {AsyncProp, AsyncValue} from './async-prop';
 
 export function isResolved<Value extends AsyncValue<any>>(
-    asyncPropInput: Value,
-): asyncPropInput is Exclude<Value, Promise<any>> {
-    return !isPromiseLike(asyncPropInput);
+    asyncValue: Value extends AsyncProp<any, any>
+        ? 'Error: pass AsyncProp.value, not AsyncProp itself.'
+        : Value,
+): asyncValue is Exclude<typeof asyncValue, Promise<any>> {
+    if (asyncValue instanceof AsyncProp) {
+        throw new TypeError('Pass AsyncProp.value, not AsyncProp itself.');
+    }
+
+    return !(asyncValue instanceof Promise);
 }
 
-export function isError(asyncPropInput: unknown): asyncPropInput is Error {
-    return asyncPropInput instanceof Error;
+export function isAsyncError<Value extends AsyncValue<any>>(
+    asyncValue: Value extends AsyncProp<any, any>
+        ? 'Error: pass AsyncProp.value, not AsyncProp itself.'
+        : Value,
+): asyncValue is Extract<typeof asyncValue, Error> {
+    if (asyncValue instanceof AsyncProp) {
+        throw new TypeError('Pass AsyncProp.value, not AsyncProp itself.');
+    }
+    return asyncValue instanceof Error;
 }
 
 export function resolvedOrUndefined<Value extends AsyncValue<any>>(
-    asyncPropInput: Value,
-): Exclude<Value, Promise<any>> | undefined {
-    if (isResolved(asyncPropInput)) {
-        return asyncPropInput;
+    asyncValue: Value extends AsyncProp<any, any>
+        ? 'Error: pass AsyncProp.value, not AsyncProp itself.'
+        : Value,
+): Exclude<typeof asyncValue, Promise<any>> | undefined {
+    if (isResolved(asyncValue)) {
+        return asyncValue;
     } else {
         return undefined;
     }
