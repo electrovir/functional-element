@@ -10,6 +10,7 @@ import {
 import {assert, fixture as renderFixture, waitUntil} from '@open-wc/testing';
 import {isObservableBase} from 'observavir';
 import {assertDefined, assertInstanceOf, assertThrows, assertTypeOf} from 'run-time-assertions';
+import {nothing} from '../../lit-exports/all-lit-exports';
 import {html} from '../../template-transforms/vir-html/vir-html';
 import {defineElement} from '../define-element';
 import {defineElementNoInputs} from '../define-element-no-inputs';
@@ -573,5 +574,86 @@ describe(asyncProp.name, () => {
         instance.update({prop1: 'bye', callback: () => {}});
 
         assert.strictEqual(callCount, 2);
+    });
+
+    it('does not automatically read new proxy values', async () => {
+        let callCount = 0;
+
+        const ElementWithProxyAsyncPropInput = defineElement<{inputValue: string}>()({
+            tagName: 'vir-element-with-proxy-async-prop-input',
+            stateInitStatic: {
+                myProp: asyncProp({
+                    updateCallback(inputsProxy: {inputValue: string}) {
+                        callCount++;
+                        return inputsProxy.inputValue;
+                    },
+                }),
+            },
+            initCallback({state, inputs}) {
+                state.myProp.update(inputs);
+            },
+            renderCallback({state}) {
+                if (!isResolved(state.myProp.value)) {
+                    return 'loading';
+                } else if (isAsyncError(state.myProp.value)) {
+                    return 'error';
+                } else {
+                    return state.myProp.value;
+                }
+            },
+        });
+
+        const rendered = await renderFixture(html`
+            <${ElementWithProxyAsyncPropInput.assign({
+                inputValue: 'hello there',
+            })}></${ElementWithProxyAsyncPropInput}>
+        `);
+
+        assertInstanceOf(rendered, ElementWithProxyAsyncPropInput);
+
+        assert.strictEqual(rendered.shadowRoot.textContent, 'hello there');
+        rendered.assignInputs({inputValue: 'new value'});
+        assert.strictEqual(rendered.shadowRoot.textContent, 'hello there');
+        rendered.instanceState.myProp.forceUpdate();
+        assert.strictEqual(rendered.shadowRoot.textContent, 'hello there');
+        assert.strictEqual(callCount, 2);
+    });
+
+    it('ignores ongoing promises if setValue is called', async () => {
+        let resolved = false;
+        const updateDuration = {milliseconds: 500};
+
+        const RaceConditionElement = defineElementNoInputs({
+            tagName: 'vir-element-race-condition-between-set-value-and-promise-resolution',
+            stateInitStatic: {
+                myProp: asyncProp({
+                    async updateCallback() {
+                        await wait(updateDuration.milliseconds);
+                        setTimeout(() => {
+                            resolved = true;
+                        });
+                        return 5;
+                    },
+                }),
+            },
+            renderCallback({state}) {
+                state.myProp.update();
+                return nothing;
+            },
+        });
+
+        const rendered = await renderFixture(html`
+            <${RaceConditionElement}></${RaceConditionElement}>
+        `);
+
+        assertInstanceOf(rendered, RaceConditionElement);
+        assert.instanceOf(rendered.instanceState.myProp.value, Promise);
+
+        rendered.instanceState.myProp.setValue(42);
+
+        assert.isFalse(resolved);
+        await waitUntilTruthy(() => resolved);
+        await wait(updateDuration.milliseconds * 2);
+        assert.strictEqual(rendered.instanceState.myProp.value, 42);
     });
 });
