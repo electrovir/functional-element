@@ -6,6 +6,7 @@ export const ncuConfig: RunOptions = {
     // exclude these
     reject: [
         ...baseNcuConfig.reject,
+        'typescript',
     ],
     // include only these
     filter: [],

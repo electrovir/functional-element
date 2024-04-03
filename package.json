@@ -1,6 +1,6 @@
 {
     "name": "@electrovir/element-vir-mono-repo",
-    "version": "22.0.0",
+    "version": "22.0.1",
     "private": true,
     "license": "(MIT or CC0 1.0)",
     "author": {
@@ -36,7 +36,7 @@
         "prettier-plugin-jsdoc": "^1.3.0",
         "prettier-plugin-multiline-arrays": "^3.0.4",
         "prettier-plugin-organize-imports": "^3.2.4",
-        "prettier-plugin-packagejson": "^2.4.13",
+        "prettier-plugin-packagejson": "^2.4.14",
         "prettier-plugin-sort-json": "^4.0.0",
         "prettier-plugin-toml": "^2.0.1",
         "typedoc": "^0.25.12",
