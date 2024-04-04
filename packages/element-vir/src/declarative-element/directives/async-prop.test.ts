@@ -8,7 +8,7 @@ import {
     waitUntilTruthy,
 } from '@augment-vir/common';
 import {assert, fixture as renderFixture, waitUntil} from '@open-wc/testing';
-import {isObservableBase} from 'observavir';
+import {isObservableBase, noUpdate} from 'observavir';
 import {assertDefined, assertInstanceOf, assertThrows, assertTypeOf} from 'run-time-assertions';
 import {nothing} from '../../lit-exports/all-lit-exports';
 import {html} from '../../template-transforms/vir-html/vir-html';
@@ -655,5 +655,43 @@ describe(asyncProp.name, () => {
         await waitUntilTruthy(() => resolved);
         await wait(updateDuration.milliseconds * 2);
         assert.strictEqual(rendered.instanceState.myProp.value, 42);
+    });
+
+    it('allows noUpdate', async () => {
+        const VirAsyncPropWithNoUpdate = defineElementNoInputs({
+            tagName: 'vir-async-prop-with-update',
+            stateInitStatic: {
+                asyncValues: asyncProp({
+                    async updateCallback({
+                        shouldBypass,
+                        value,
+                    }: {
+                        value: string;
+                        shouldBypass: boolean;
+                    }): Promise<ReadonlyArray<string> | typeof noUpdate> {
+                        if (shouldBypass) {
+                            return noUpdate;
+                        }
+
+                        return Array(10)
+                            .fill(0)
+                            .map(() => value);
+                    },
+                }),
+            },
+            renderCallback: ({state}) => {
+                console.log(state.asyncValues.value);
+                state.asyncValues.update({value: 'hello there', shouldBypass: true});
+                return 'hi';
+            },
+        });
+
+        const rendered = await renderFixture(html`
+            <${VirAsyncPropWithNoUpdate}></${VirAsyncPropWithNoUpdate}>
+        `);
+
+        assertInstanceOf(rendered, VirAsyncPropWithNoUpdate);
+        await waitUntilTruthy(() => rendered._internalRenderCount > 0);
+        assert.instanceOf(rendered.instanceState.asyncValues.value, Promise);
     });
 });
