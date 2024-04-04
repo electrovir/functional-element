@@ -662,13 +662,13 @@ describe(asyncProp.name, () => {
             tagName: 'vir-async-prop-with-update',
             stateInitStatic: {
                 asyncValues: asyncProp({
-                    async updateCallback({
+                    updateCallback({
                         shouldBypass,
                         value,
                     }: {
                         value: string;
                         shouldBypass: boolean;
-                    }): Promise<ReadonlyArray<string> | typeof noUpdate> {
+                    }): ReadonlyArray<string> | typeof noUpdate {
                         if (shouldBypass) {
                             return noUpdate;
                         }

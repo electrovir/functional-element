@@ -1,6 +1,6 @@
 {
     "name": "element-book",
-    "version": "22.0.4",
+    "version": "22.0.5",
     "keywords": [
         "book",
         "design system",
@@ -48,7 +48,7 @@
         "lit-css-vars": "^3.0.9",
         "spa-router-vir": "^3.0.4",
         "typed-event-target": "^3.2.1",
-        "vira": "22.0.4"
+        "vira": "22.0.5"
     },
     "devDependencies": {
         "@augment-vir/browser-testing": "^26.2.1",
