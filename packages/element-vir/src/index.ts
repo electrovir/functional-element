@@ -12,6 +12,7 @@ export * from './declarative-element/directives/directive-helpers';
 export * from './declarative-element/directives/is-resolved.directive';
 export * from './declarative-element/directives/listen.directive';
 export * from './declarative-element/directives/on-dom-created.directive';
+export * from './declarative-element/directives/on-dom-rendered.directive';
 export * from './declarative-element/directives/on-resize.directive';
 export * from './declarative-element/directives/render-async.directive';
 export * from './declarative-element/directives/render-if.directive';

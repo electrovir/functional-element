@@ -22,7 +22,7 @@ export const onDomCreated = directive(
             const newElement = partInfo.element;
             if (newElement !== this.element) {
                 // use requestAnimationFrame here so it can fire property changes outside of a render loop
-                requestAnimationFrame(() => callback(newElement));
+                window.requestAnimationFrame(() => callback(newElement));
                 this.element = newElement;
             }
             return this.render(callback);
