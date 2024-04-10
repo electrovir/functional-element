@@ -34,10 +34,10 @@
         "test": "virmator test-web"
     },
     "dependencies": {
-        "@augment-vir/common": "^26.2.1"
+        "@augment-vir/common": "^26.3.1"
     },
     "devDependencies": {
-        "@augment-vir/node-js": "^26.2.1",
+        "@augment-vir/node-js": "^26.3.1",
         "@open-wc/testing": "^4.0.0",
         "@types/mocha": "^10.0.6",
         "@web/dev-server-esbuild": "^1.0.2",
