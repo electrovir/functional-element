@@ -1,6 +1,6 @@
 {
     "name": "@electrovir/element-vir-mono-repo",
-    "version": "22.0.5",
+    "version": "22.1.0",
     "private": true,
     "license": "(MIT or CC0 1.0)",
     "author": {
@@ -12,7 +12,7 @@
     ],
     "scripts": {
         "build:pages": "npm run --workspace @electrovir/scripts build",
-        "compile": "mono-vir for-each \"tsc -b -f --pretty\"",
+        "compile": "mono-vir for-each \"rm -f tsconfig.tsbuildinfo && rm -rf dist && tsc --pretty\"",
         "docs": "mono-vir for-each-async npm run --if-present docs",
         "format": "virmator format",
         "publish": "virmator publish \"npm run compile && npm run --workspace @electrovir/scripts update:deps && npm i && npm run test:all\"",
