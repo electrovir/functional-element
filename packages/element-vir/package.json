@@ -1,6 +1,6 @@
 {
     "name": "element-vir",
-    "version": "22.1.0",
+    "version": "22.1.1",
     "keywords": [
         "custom",
         "web",
@@ -44,7 +44,7 @@
         "lit-css-vars": "^3.0.9",
         "lit-html": "^3.1.2",
         "object-shape-tester": "^2.3.2",
-        "observavir": "^1.2.0",
+        "observavir": "^2.0.0",
         "run-time-assertions": "^1.2.0",
         "typed-event-target": "^3.2.1"
     },

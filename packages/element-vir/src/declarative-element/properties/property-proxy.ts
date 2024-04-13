@@ -90,13 +90,13 @@ export function createElementPropertyProxy<PropertyInitGeneric extends PropertyI
             if (isObservableBase(newValue)) {
                 /** If we're using an existing observable property */
                 if (existingPropertyListener) {
-                    newValue.listen(existingPropertyListener);
+                    newValue.listen(false, existingPropertyListener);
                 } else {
                     function newListener() {
                         element.requestUpdate();
                     }
                     element.observablePropertyListenerMap[propertyKey] = newListener;
-                    newValue.listen(newListener);
+                    newValue.listen(false, newListener);
                 }
             } else if (isObservableBase(oldValue)) {
                 /** Clear out old listener that is no longer used. */

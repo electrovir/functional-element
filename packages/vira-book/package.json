@@ -1,6 +1,6 @@
 {
     "name": "@electrovir/vira-book",
-    "version": "22.1.0",
+    "version": "22.1.1",
     "private": true,
     "license": "(MIT or CC0 1.0)",
     "author": {
@@ -26,7 +26,7 @@
         "markdown-code-example-inserter": "^1.0.0",
         "nodemon": "^3.1.0",
         "typedoc": "^0.25.13",
-        "typescript": "5.4.5",
+        "typescript": "^5.3.3",
         "vite": "^4.5.0",
         "vite-tsconfig-paths": "^4.3.2"
     }
