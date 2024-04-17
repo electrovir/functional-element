@@ -3,7 +3,7 @@ import {css, html} from 'element-vir';
 import {BookEntryTypeEnum} from '../../../../data/book-entry/book-entry-type';
 import {BookPageControlsValues} from '../../../../data/book-entry/book-page/book-page-controls';
 import {BookTreeNode} from '../../../../data/book-tree/book-tree-node';
-import {BookRouter} from '../../../../routing/book-routing';
+import {BookRouter} from '../../../../routing/book-router';
 import {colorThemeCssVars} from '../../../color-theme/color-theme';
 import {defineBookElement} from '../../define-book-element';
 import {BookElementExampleControls} from './book-element-example-controls.element';

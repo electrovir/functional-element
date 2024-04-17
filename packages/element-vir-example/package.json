@@ -1,6 +1,6 @@
 {
     "name": "@electrovir/element-vir-example",
-    "version": "22.1.1",
+    "version": "22.1.2",
     "private": true,
     "license": "(MIT or CC0 1.0)",
     "author": {
@@ -18,8 +18,8 @@
         "vira": "*"
     },
     "devDependencies": {
-        "@augment-vir/browser-testing": "^26.3.2",
-        "@augment-vir/node-js": "^26.3.2",
+        "@augment-vir/browser-testing": "^26.3.3",
+        "@augment-vir/node-js": "^26.3.3",
         "esbuild": "^0.20.2",
         "markdown-code-example-inserter": "^1.0.0",
         "typedoc": "^0.25.13",

@@ -1,6 +1,6 @@
 {
     "name": "@electrovir/vira-book",
-    "version": "22.1.1",
+    "version": "22.1.2",
     "private": true,
     "license": "(MIT or CC0 1.0)",
     "author": {
@@ -14,14 +14,14 @@
         "test": "exit 0;"
     },
     "dependencies": {
-        "@augment-vir/common": "^26.3.2",
+        "@augment-vir/common": "^26.3.3",
         "element-book": "*",
         "element-vir": "*",
-        "url-vir": "^1.1.1",
+        "url-vir": "^1.4.0",
         "vira": "*"
     },
     "devDependencies": {
-        "@augment-vir/node-js": "^26.3.2",
+        "@augment-vir/node-js": "^26.3.3",
         "esbuild": "^0.20.2",
         "markdown-code-example-inserter": "^1.0.0",
         "nodemon": "^3.1.0",

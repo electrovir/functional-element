@@ -1,6 +1,6 @@
 {
     "name": "@electrovir/element-vir-mono-repo",
-    "version": "22.1.1",
+    "version": "22.1.2",
     "private": true,
     "license": "(MIT or CC0 1.0)",
     "author": {
@@ -27,7 +27,7 @@
     },
     "devDependencies": {
         "cspell": "^8.7.0",
-        "dependency-cruiser": "^16.3.0",
+        "dependency-cruiser": "^16.3.1",
         "esbuild": "^0.20.2",
         "html-spec-tags": "^2.2.0",
         "npm-check-updates": "~16.12.3",

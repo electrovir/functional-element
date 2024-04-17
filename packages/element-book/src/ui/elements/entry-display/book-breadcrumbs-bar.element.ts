@@ -1,11 +1,7 @@
 import {wait} from '@augment-vir/common';
 import {css, html, listen, renderIf} from 'element-vir';
-import {
-    BookFullRoute,
-    BookMainRoute,
-    BookRouter,
-    defaultBookFullRoute,
-} from '../../../routing/book-routing';
+import {BookRouter} from '../../../routing/book-router';
+import {BookFullRoute, BookMainRoute, defaultBookFullRoute} from '../../../routing/book-routing';
 import {colorThemeCssVars} from '../../color-theme/color-theme';
 import {ChangeRouteEvent} from '../../events/change-route.event';
 import {BookBreadcrumbs} from '../book-breadcrumbs.element';
@@ -13,8 +9,8 @@ import {defineBookElement} from '../define-book-element';
 
 export const BookBreadcrumbsBar = defineBookElement<{
     currentSearch: string;
-    currentRoute: BookFullRoute;
-    router: BookRouter | undefined;
+    currentRoute: Readonly<BookFullRoute>;
+    router: Readonly<BookRouter> | undefined;
 }>()({
     tagName: 'book-breadcrumbs-bar',
     styles: css`

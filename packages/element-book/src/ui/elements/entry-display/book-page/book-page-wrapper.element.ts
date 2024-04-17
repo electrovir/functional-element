@@ -6,7 +6,8 @@ import {
     traverseControls,
 } from '../../../../data/book-entry/book-page/controls-wrapper';
 import {BookTreeNode} from '../../../../data/book-tree/book-tree-node';
-import {BookMainRoute, BookRouter} from '../../../../routing/book-routing';
+import {BookRouter} from '../../../../routing/book-router';
+import {BookMainRoute, ValidBookPaths} from '../../../../routing/book-routing';
 import {BookError} from '../../common/book-error.element';
 import {BookRouteLink} from '../../common/book-route-link.element';
 import {defineBookElement} from '../../define-book-element';
@@ -54,10 +55,10 @@ export const BookPageWrapper = defineBookElement<{
                   <h3 class="header-with-icon">${inputs.pageNode.entry.title}</h3>
               `;
 
-        const linkPaths = [
+        const linkPaths: ValidBookPaths = [
             BookMainRoute.Book,
             ...inputs.pageNode.fullUrlBreadcrumbs,
-        ] as const;
+        ];
 
         const error = combineErrors(inputs.pageNode.entry.errors);
         if (error) {

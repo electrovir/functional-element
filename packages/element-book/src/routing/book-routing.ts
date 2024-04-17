@@ -1,4 +1,4 @@
-import {FullRoute, SpaRouter} from 'spa-router-vir';
+import {FullRoute} from 'spa-router-vir';
 
 export enum BookMainRoute {
     Search = 'search',
@@ -7,9 +7,7 @@ export enum BookMainRoute {
 
 export type ValidBookPaths = [BookMainRoute.Search, string] | [BookMainRoute.Book, ...string[]];
 
-export type BookFullRoute = Required<
-    Readonly<FullRoute<ValidBookPaths, undefined | Record<string, string>, undefined>>
->;
+export type BookFullRoute = Required<Readonly<FullRoute<ValidBookPaths, undefined, undefined>>>;
 
 export function extractSearchQuery(paths: Readonly<ValidBookPaths>) {
     if (paths[0] === BookMainRoute.Book) {
@@ -24,8 +22,3 @@ export const defaultBookFullRoute: Readonly<BookFullRoute> = {
     paths: [BookMainRoute.Book],
     search: undefined,
 } as const;
-
-export type BookRouter =
-    BookFullRoute extends FullRoute<infer Paths, infer Search, infer Hash>
-        ? Readonly<SpaRouter<Paths, Search, Hash>>
-        : never;

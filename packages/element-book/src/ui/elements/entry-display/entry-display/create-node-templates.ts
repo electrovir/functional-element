@@ -11,7 +11,7 @@ import {
 } from '../../../../data/book-entry/book-page/controls-wrapper';
 import {isBookTreeNode, traverseToImmediateParent} from '../../../../data/book-tree/book-tree';
 import {BookTreeNode} from '../../../../data/book-tree/book-tree-node';
-import {BookRouter} from '../../../../routing/book-routing';
+import {BookRouter} from '../../../../routing/book-router';
 import {BookError} from '../../common/book-error.element';
 import {BookPageControls} from '../book-page/book-page-controls.element';
 import {BookPageWrapper} from '../book-page/book-page-wrapper.element';

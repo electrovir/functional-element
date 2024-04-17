@@ -1,6 +1,6 @@
 {
     "name": "@electrovir/scripts",
-    "version": "22.1.1",
+    "version": "22.1.2",
     "private": true,
     "license": "(MIT or CC0 1.0)",
     "author": {
@@ -16,8 +16,8 @@
         "update:exports": "ts-node src/vira-scripts/update-all-exports.ts"
     },
     "dependencies": {
-        "@augment-vir/common": "^26.3.2",
-        "@augment-vir/node-js": "^26.3.2",
+        "@augment-vir/common": "^26.3.3",
+        "@augment-vir/node-js": "^26.3.3",
         "prettier": "^3.2.5"
     },
     "devDependencies": {

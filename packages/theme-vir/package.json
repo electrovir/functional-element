@@ -1,6 +1,6 @@
 {
     "name": "theme-vir",
-    "version": "22.1.1",
+    "version": "22.1.2",
     "private": true,
     "description": "Create an entire web theme.",
     "keywords": [
@@ -34,10 +34,10 @@
         "test": "virmator test-web"
     },
     "dependencies": {
-        "@augment-vir/common": "^26.3.2"
+        "@augment-vir/common": "^26.3.3"
     },
     "devDependencies": {
-        "@augment-vir/node-js": "^26.3.2",
+        "@augment-vir/node-js": "^26.3.3",
         "@open-wc/testing": "^4.0.0",
         "@types/mocha": "^10.0.6",
         "@web/dev-server-esbuild": "^1.0.2",

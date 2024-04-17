@@ -1,7 +1,8 @@
 import {css, html} from 'element-vir';
 import {BookEntryTypeEnum} from '../../../../data/book-entry/book-entry-type';
 import {BookTreeNode} from '../../../../data/book-tree/book-tree-node';
-import {BookMainRoute, BookRouter} from '../../../../routing/book-routing';
+import {BookRouter} from '../../../../routing/book-router';
+import {BookMainRoute, ValidBookPaths} from '../../../../routing/book-routing';
 import {colorThemeCssVars} from '../../../color-theme/color-theme';
 import {BookRouteLink} from '../../common/book-route-link.element';
 import {defineBookElement} from '../../define-book-element';
@@ -20,10 +21,10 @@ export const BookElementExampleControls = defineBookElement<{
         }
     `,
     renderCallback({inputs}) {
-        const linkPaths = [
+        const linkPaths: ValidBookPaths = [
             BookMainRoute.Book,
             ...inputs.elementExampleNode.fullUrlBreadcrumbs,
-        ] as const;
+        ];
 
         return html`
             <${BookRouteLink.assign({

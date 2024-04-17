@@ -1,26 +1,29 @@
 import {css, defineElementEvent, html, listen} from 'element-vir';
-import {FullRoute, SpaRouter, shouldMouseEventTriggerRoutes} from 'spa-router-vir';
+import {FullRoute, SpaRouter, shouldClickEventTriggerRouteChange} from 'spa-router-vir';
+import {RequireExactlyOne} from 'type-fest';
 import {defineViraElement} from './define-vira-element';
 
-export const ViraLink = defineViraElement<{
-    /**
-     * A full raw URL link that will navigate the current window away or open a new tab. If this
-     * property is provided for the inputs, don't provide a route property.
-     */
-    link?: {
-        url: string;
-        newTab: boolean;
-    };
-    /**
-     * A route that'll change that current page without navigating the window. If this property is
-     * provided for the inputs, don't provide a link property.
-     */
-    route?: {
-        route: FullRoute;
-        router: Pick<SpaRouter, 'createRoutesUrl'>;
-        scrollToTop?: boolean;
-    };
-}>()({
+export const ViraLink = defineViraElement<
+    RequireExactlyOne<{
+        /**
+         * A full raw URL link that will navigate the current window away or open a new tab. If this
+         * property is provided for the inputs, don't provide a route property.
+         */
+        link: {
+            url: string;
+            newTab: boolean;
+        };
+        /**
+         * A route that'll change that current page without navigating the window. If this property
+         * is provided for the inputs, don't provide a link property.
+         */
+        route: {
+            route: FullRoute<any, any, any>;
+            router: Pick<SpaRouter<any, any, any>, 'createRouteUrl' | 'setRouteOnDirectNavigation'>;
+            scrollToTop?: boolean;
+        };
+    }>
+>()({
     tagName: 'vira-link',
     cssVars: {
         'vira-link-hover-color': 'currentColor',
@@ -52,13 +55,13 @@ export const ViraLink = defineViraElement<{
         routeChange: defineElementEvent<FullRoute>(),
     },
     renderCallback({inputs, dispatch, events}) {
-        function clickCallback(clickEvent: MouseEvent) {
+        function clickCallback(event: MouseEvent) {
             if (!inputs.route) {
                 return;
             }
 
-            if (shouldMouseEventTriggerRoutes(clickEvent)) {
-                clickEvent.preventDefault();
+            if (shouldClickEventTriggerRouteChange(event)) {
+                event.preventDefault();
                 if (inputs.route.scrollToTop) {
                     window.scrollTo(0, 0);
                 }
@@ -76,7 +79,7 @@ export const ViraLink = defineViraElement<{
         } else {
             const linkUrl = inputs.link
                 ? inputs.link.url
-                : inputs.route?.router.createRoutesUrl(inputs.route.route);
+                : inputs.route?.router.createRouteUrl(inputs.route.route);
 
             /** Noopener and noreferrer are needed for security reasons, do not remove! */
             return html`

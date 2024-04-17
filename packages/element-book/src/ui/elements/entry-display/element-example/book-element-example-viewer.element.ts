@@ -4,14 +4,12 @@ import {BookEntryTypeEnum} from '../../../../data/book-entry/book-entry-type';
 import {BookPageControlsValues} from '../../../../data/book-entry/book-page/book-page-controls';
 import {BookTreeNode} from '../../../../data/book-tree/book-tree-node';
 import {unsetInternalState} from '../../../../data/unset';
-import {BookRouter} from '../../../../routing/book-routing';
 import {BookError} from '../../common/book-error.element';
 import {defineBookElement} from '../../define-book-element';
 
 export const BookElementExampleViewer = defineBookElement<{
     elementExampleNode: BookTreeNode<BookEntryTypeEnum.ElementExample>;
     currentPageControls: BookPageControlsValues;
-    router: BookRouter | undefined;
 }>()({
     tagName: 'book-element-example-viewer',
     stateInitStatic: {

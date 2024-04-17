@@ -9,13 +9,12 @@ import {
 } from '../../../data/book-entry/book-page/controls-wrapper';
 import {createBookTreeFromEntries} from '../../../data/book-tree/book-tree';
 import {searchFlattenedNodes} from '../../../data/book-tree/search-nodes';
+import {BookRouter, createBookRouter} from '../../../routing/book-router';
 import {
     BookFullRoute,
-    BookRouter,
     defaultBookFullRoute,
     extractSearchQuery,
 } from '../../../routing/book-routing';
-import {createBookRouter} from '../../../routing/create-book-router';
 import {ColorTheme, colorThemeCssVars, setThemeCssVars} from '../../color-theme/color-theme';
 import {ThemeConfig, createTheme} from '../../color-theme/create-color-theme';
 import {ChangeRouteEvent} from '../../events/change-route.event';
@@ -98,7 +97,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
     },
     cleanupCallback({state, updateState}) {
         if (state.router) {
-            state.router.removeAllRouteListeners();
+            state.router.destroy();
             updateState({router: undefined});
         }
     },
@@ -141,7 +140,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
             const newRoute = mergeRoutes(newRouteInput);
 
             if (state.router) {
-                state.router.setRoutes(newRoute);
+                state.router.setRoute(newRoute);
             } else {
                 updateState({
                     currentRoute: {
@@ -171,13 +170,13 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
                 const router = createBookRouter(inputs.internalRouterConfig.basePath);
                 updateState({router});
 
-                router.addRouteListener(true, (fullRoute) => {
+                router.listen(true, (fullRoute) => {
                     updateState({
                         currentRoute: fullRoute,
                     });
                 });
             } else if (!inputs.internalRouterConfig?.useInternalRouter && state.router) {
-                state.router.removeAllRouteListeners();
+                state.router.destroy();
             }
 
             const inputThemeConfig: ThemeConfig = {
