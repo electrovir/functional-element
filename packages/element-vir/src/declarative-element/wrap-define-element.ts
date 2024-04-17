@@ -59,12 +59,12 @@ export function wrapDefineElement<
     return {
         defineElement: <Inputs extends InputsRequirement>() => {
             return <
-                TagName extends TagNameRequirement,
+                const TagName extends TagNameRequirement,
                 StateInit extends StateInitRequirement,
                 EventsInit extends EventsInitRequirement,
-                HostClassKeys extends BaseCssPropertyName<TagName>,
-                CssVarKeys extends BaseCssPropertyName<TagName>,
-                SlotNames extends ReadonlyArray<string>,
+                const HostClassKeys extends BaseCssPropertyName<TagName>,
+                const CssVarKeys extends BaseCssPropertyName<TagName>,
+                const SlotNames extends ReadonlyArray<string>,
             >(
                 inputs: VerifiedElementInit<
                     TagName,
@@ -93,13 +93,13 @@ export function wrapDefineElement<
             };
         },
         defineElementNoInputs: <
-            TagName extends TagNameRequirement,
+            const TagName extends TagNameRequirement,
             Inputs extends InputsRequirement,
             StateInit extends StateInitRequirement,
             EventsInit extends EventsInitRequirement,
-            HostClassKeys extends BaseCssPropertyName<TagName>,
-            CssVarKeys extends BaseCssPropertyName<TagName>,
-            SlotNames extends ReadonlyArray<string>,
+            const HostClassKeys extends BaseCssPropertyName<TagName>,
+            const CssVarKeys extends BaseCssPropertyName<TagName>,
+            const SlotNames extends ReadonlyArray<string>,
         >(
             inputs: VerifiedElementNoInputsInit<
                 TagName,

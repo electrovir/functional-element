@@ -1,4 +1,5 @@
 import {randomBoolean, randomString} from '@augment-vir/common';
+import {assertTypeOf} from 'run-time-assertions';
 import {defineElement} from './define-element';
 
 describe(defineElement.name, () => {
@@ -163,5 +164,16 @@ describe(defineElement.name, () => {
         function acceptHost(host: (typeof MyElement)['instanceType']) {
             return {};
         }
+    });
+
+    it('preserves slot names', () => {
+        const MyElement = defineElement<{}>()({
+            tagName: 'just-some-element-with-slot-names',
+            slotNames: ['yo'],
+            renderCallback() {
+                return 'hi';
+            },
+        });
+        assertTypeOf(MyElement.slotNames.yo).toEqualTypeOf<'yo'>();
     });
 });

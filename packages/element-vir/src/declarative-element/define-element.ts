@@ -32,12 +32,12 @@ export type VerifiedElementInit<
 
 export function defineElement<Inputs extends PropertyInitMapBase = {}>() {
     return <
-        TagName extends CustomElementTagName,
+        const TagName extends CustomElementTagName,
         StateInit extends PropertyInitMapBase = {},
         EventsInit extends EventsInitMap = {},
-        HostClassKeys extends BaseCssPropertyName<TagName> = `${TagName}-`,
-        CssVarKeys extends BaseCssPropertyName<TagName> = `${TagName}-`,
-        SlotNames extends ReadonlyArray<string> = Readonly<[]>,
+        const HostClassKeys extends BaseCssPropertyName<TagName> = `${TagName}-`,
+        const CssVarKeys extends BaseCssPropertyName<TagName> = `${TagName}-`,
+        const SlotNames extends ReadonlyArray<string> = Readonly<[]>,
     >(
         initInput: VerifiedElementInit<
             TagName,
