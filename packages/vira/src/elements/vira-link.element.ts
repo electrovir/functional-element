@@ -1,5 +1,5 @@
-import {css, defineElementEvent, html, listen} from 'element-vir';
-import {FullRoute, SpaRouter, shouldClickEventTriggerRouteChange} from 'spa-router-vir';
+import {css, html, listen} from 'element-vir';
+import {FullRoute, SpaRouter} from 'spa-router-vir';
 import {RequireExactlyOne} from 'type-fest';
 import {defineViraElement} from './define-vira-element';
 
@@ -51,21 +51,17 @@ export const ViraLink = defineViraElement<
             color: ${cssVars['vira-link-hover-color'].value};
         }
     `,
-    events: {
-        routeChange: defineElementEvent<FullRoute>(),
-    },
-    renderCallback({inputs, dispatch, events}) {
+    renderCallback({inputs}) {
         function clickCallback(event: MouseEvent) {
             if (!inputs.route) {
                 return;
             }
 
-            if (shouldClickEventTriggerRouteChange(event)) {
-                event.preventDefault();
-                if (inputs.route.scrollToTop) {
-                    window.scrollTo(0, 0);
-                }
-                dispatch(new events.routeChange(inputs.route.route));
+            if (
+                inputs.route.router.setRouteOnDirectNavigation(inputs.route.route, event) &&
+                inputs.route.scrollToTop
+            ) {
+                window.scrollTo(0, 0);
             }
         }
 

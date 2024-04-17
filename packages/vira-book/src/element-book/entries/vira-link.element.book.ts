@@ -1,5 +1,5 @@
 import {BookPageControlTypeEnum, defineBookPage, definePageControl} from 'element-book';
-import {css, html, listen, unsafeCSS} from 'element-vir';
+import {css, html, unsafeCSS} from 'element-vir';
 import {ViraLink} from 'vira';
 import {elementsBookPage} from '../elements.book';
 
@@ -38,14 +38,7 @@ export const viraLinkBookPage = defineBookPage({
                     `;
 
                     return html`
-                        <${ViraLink.assign(inputs)}
-                            style=${styles}
-                            ${listen(ViraLink.events.routeChange, (event) => {
-                                console.info(event);
-                            })}
-                        >
-                            My Link
-                        </${ViraLink}>
+                        <${ViraLink.assign(inputs)} style=${styles}>My Link</${ViraLink}>
                     `;
                 },
             });
@@ -69,7 +62,8 @@ export const viraLinkBookPage = defineBookPage({
                         createRouteUrl() {
                             return window.location.href;
                         },
-                        setRouteOnDirectNavigation() {
+                        setRouteOnDirectNavigation(route, event) {
+                            console.info(route, event);
                             return false;
                         },
                     },
