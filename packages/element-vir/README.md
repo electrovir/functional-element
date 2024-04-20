@@ -16,6 +16,8 @@ Uses the power of _native_ JavaScript custom web elements, _native_ JavaScript t
 
 [Works in every major web browser except Internet Explorer.](https://caniuse.com/mdn-api_window_customelements)
 
+Try it out on CodePen! https://codepen.io/electrovir/pen/qBwQYxq
+
 # Install
 
 [Published on npm:](https://www.npmjs.com/package/element-vir)
