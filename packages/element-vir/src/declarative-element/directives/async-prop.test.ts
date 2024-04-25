@@ -680,7 +680,6 @@ describe(asyncProp.name, () => {
                 }),
             },
             renderCallback: ({state}) => {
-                console.log(state.asyncValues.value);
                 state.asyncValues.update({value: 'hello there', shouldBypass: true});
                 return 'hi';
             },

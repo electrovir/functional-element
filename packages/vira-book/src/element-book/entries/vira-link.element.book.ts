@@ -7,7 +7,7 @@ export const viraLinkBookPage = defineBookPage({
     title: ViraLink.tagName,
     parent: elementsBookPage,
     descriptionParagraphs: [
-        'Handles hyperlinks securely or route changes without harming right click functionality.',
+        'Securely handles hyperlinks or route changes without harming right click or modifier+click functionality.',
     ],
     controls: {
         'CSS Color': definePageControl({
