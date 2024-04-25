@@ -6,8 +6,9 @@ on:
             - '**'
 
 jobs:
-    build:
+    tests:
         runs-on: ${{ matrix.os }}
+        name: 'Tests'
         strategy:
             fail-fast: false
             matrix:
