@@ -4,3 +4,4 @@ export * from './elements';
 export * from './icons';
 export * from './re-exports';
 export * from './styles';
+export * from './util';
