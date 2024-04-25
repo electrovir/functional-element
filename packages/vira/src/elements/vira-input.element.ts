@@ -45,6 +45,7 @@ export const ViraInput = defineViraElement<
         'vira-input-clear-button-shown': ({inputs}) => !!inputs.showClearButton,
     },
     cssVars: {
+        'vira-input-background-color': 'white',
         'vira-input-placeholder-color': '#cccccc',
         'vira-input-text-color': '#000000',
         'vira-input-border-color': '#cccccc',
@@ -171,7 +172,7 @@ export const ViraInput = defineViraElement<
                 position: relative;
                 padding: 0 ${cssVars['vira-input-padding-horizontal'].value};
                 border-radius: ${viraCssVars['vira-form-input-border-radius'].value};
-                background-color: transparent;
+                background-color: ${cssVars['vira-input-background-color'].value};
                 /*
                     Border colors are actually applied via the .label-border class. However, we must
                     apply a border here still so that it takes up space.
