@@ -2,15 +2,12 @@ import {css, defineElementEvent, html, listen, onResize} from 'element-vir';
 import {noNativeFormStyles, viraAnimationDurations} from '../styles';
 import {defineViraElement} from './define-vira-element';
 
-export enum ViraCollapsibleSlotNameEnum {
-    Header = 'header',
-}
-
 export const ViraCollapsibleWrapper = defineViraElement<{expanded: boolean}>()({
     tagName: 'vira-collapsible-wrapper',
     hostClasses: {
         'vira-collapsible-wrapper-expanded': ({inputs}) => inputs.expanded,
     },
+    slotNames: ['header'],
     styles: ({hostClasses}) => css`
         :host {
             display: flex;
@@ -43,7 +40,7 @@ export const ViraCollapsibleWrapper = defineViraElement<{expanded: boolean}>()({
     stateInitStatic: {
         contentHeight: 0,
     },
-    renderCallback({state, updateState, dispatch, events, inputs}) {
+    renderCallback({state, slotNames, updateState, dispatch, events, inputs}) {
         const collapsingStyles = inputs.expanded
             ? css`
                   height: ${state.contentHeight}px;
@@ -59,7 +56,7 @@ export const ViraCollapsibleWrapper = defineViraElement<{expanded: boolean}>()({
                     dispatch(new events.expandChange(!inputs.expanded));
                 })}
             >
-                <slot name=${ViraCollapsibleSlotNameEnum.Header}>Header</slot>
+                <slot name=${slotNames.header}>Header</slot>
             </button>
             <div class="collapsing-element" style=${collapsingStyles} disabled="disabled">
                 <div
