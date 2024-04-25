@@ -1,11 +1,11 @@
 import {addPx} from '@augment-vir/common';
 import {css, unsafeCSS} from 'element-vir';
 import {defineCssVars} from 'lit-css-vars';
-import {viraCssVars} from './vira-css-vars';
+import {viraBorders} from './border';
 
 export const viraFocusCssVars = defineCssVars({
-    'vira-focus-outline-color': 'blue',
-    'vira-focus-outline-border-radius': css`calc(${viraCssVars['vira-form-input-border-radius'].value} + 4px)`,
+    'vira-focus-outline-color': '#59b1ff',
+    'vira-focus-outline-border-radius': css`calc(${viraBorders['vira-form-input-radius'].value} + 4px)`,
 });
 
 /**
@@ -15,12 +15,12 @@ export const viraFocusCssVars = defineCssVars({
  * clicking from creating focus styles in Chrome.
  */
 export function createFocusStyles({
-    mainSelector,
+    selector,
     elementBorderSize,
     outlineGap = 2,
-    outlineWidth = 3,
+    outlineWidth = 2,
 }: {
-    mainSelector: string;
+    selector: string;
     /**
      * ElementBorderSize here is used to fix the outline when the element these styles are attached
      * to has a border. The dev must specify that border size here for the offsets to be calculated
@@ -34,7 +34,7 @@ export function createFocusStyles({
     const outlineSpacing = unsafeCSS(addPx(outlineWidth + outlineGap + elementBorderSize));
 
     return css`
-        ${unsafeCSS(mainSelector)}::after {
+        ${unsafeCSS(selector)}::after {
             content: '';
             top: calc(${outlineSpacing} * -1);
             left: calc(${outlineSpacing} * -1);

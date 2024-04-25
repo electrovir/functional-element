@@ -1,11 +1,11 @@
 import {css, html} from 'element-vir';
 import {ViraIconSvg} from '../icons';
 import {noUserSelect} from '../styles';
+import {viraBorders} from '../styles/border';
 import {viraDisabledStyles} from '../styles/disabled';
 import {viraAnimationDurations} from '../styles/durations';
 import {createFocusStyles, viraFocusCssVars} from '../styles/focus';
 import {noNativeFormStyles} from '../styles/native-styles';
-import {viraCssVars} from '../styles/vira-css-vars';
 import {defineViraElement} from './define-vira-element';
 import {ViraIcon} from './vira-icon.element';
 
@@ -96,7 +96,7 @@ export const ViraButton = defineViraElement<{
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            border-radius: ${viraCssVars['vira-form-input-border-radius'].value};
+            border-radius: ${viraBorders['vira-form-input-radius'].value};
             background-color: ${cssVars['vira-button-internal-background-color'].value};
             color: ${cssVars['vira-button-internal-foreground-color'].value};
             padding: ${cssVars['vira-button-padding'].value};
@@ -108,7 +108,7 @@ export const ViraButton = defineViraElement<{
         }
 
         ${createFocusStyles({
-            mainSelector: 'button:focus:focus-visible:not(:active):not([disabled])',
+            selector: 'button:focus:focus-visible:not(:active):not([disabled])',
             elementBorderSize: 2,
         })}
 

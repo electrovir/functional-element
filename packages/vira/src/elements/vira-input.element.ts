@@ -9,10 +9,9 @@ import {
 } from 'element-vir';
 import {EyeClosed24Icon, EyeOpen24Icon, ViraIconSvg} from '../icons';
 import {CloseX24Icon} from '../icons/icon-svgs/close-x-24.icon';
-import {noUserSelect, viraAnimationDurations, viraDisabledStyles} from '../styles';
+import {noUserSelect, viraAnimationDurations, viraBorders, viraDisabledStyles} from '../styles';
 import {createFocusStyles, viraFocusCssVars} from '../styles/focus';
 import {noNativeFormStyles} from '../styles/native-styles';
-import {viraCssVars} from '../styles/vira-css-vars';
 import {defineViraElement} from './define-vira-element';
 import {
     SharedTextInputElementInputs,
@@ -49,7 +48,7 @@ export const ViraInput = defineViraElement<
         'vira-input-placeholder-color': '#cccccc',
         'vira-input-text-color': '#000000',
         'vira-input-border-color': '#cccccc',
-        'vira-input-focus-border-color': '#59b1ff',
+        'vira-input-focus-border-color': viraFocusCssVars['vira-focus-outline-color'].default,
         'vira-input-text-selection-color': '#cfe9ff',
 
         'vira-input-action-button-color': '#aaaaaa',
@@ -149,7 +148,7 @@ export const ViraInput = defineViraElement<
                 left: 0;
                 width: 100%;
                 height: 100%;
-                border-radius: ${viraCssVars['vira-form-input-border-radius'].value};
+                border-radius: ${viraBorders['vira-form-input-radius'].value};
                 z-index: 0;
                 pointer-events: none;
             }
@@ -171,7 +170,7 @@ export const ViraInput = defineViraElement<
                 align-items: center;
                 position: relative;
                 padding: 0 ${cssVars['vira-input-padding-horizontal'].value};
-                border-radius: ${viraCssVars['vira-form-input-border-radius'].value};
+                border-radius: ${viraBorders['vira-form-input-radius'].value};
                 background-color: ${cssVars['vira-input-background-color'].value};
                 /*
                     Border colors are actually applied via the .label-border class. However, we must
@@ -183,8 +182,7 @@ export const ViraInput = defineViraElement<
             }
 
             ${createFocusStyles({
-                mainSelector:
-                    'input:focus:focus-visible:not(:active):not([disabled]) ~ .focus-border',
+                selector: 'input:focus:focus-visible:not(:active):not([disabled]) ~ .focus-border',
                 elementBorderSize: 0,
             })}
 
