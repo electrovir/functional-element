@@ -18,12 +18,12 @@
         "vira": "*"
     },
     "devDependencies": {
-        "@augment-vir/browser-testing": "^26.3.3",
-        "@augment-vir/node-js": "^26.3.3",
+        "@augment-vir/browser-testing": "^27.0.0",
+        "@augment-vir/node-js": "^27.0.0",
         "esbuild": "^0.20.2",
         "markdown-code-example-inserter": "^1.0.0",
         "typedoc": "^0.25.13",
-        "typescript": "5.4.5",
+        "typescript": "5.3.3",
         "vite": "^4.5.0",
         "vite-tsconfig-paths": "^4.3.2"
     }

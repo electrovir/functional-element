@@ -40,7 +40,7 @@
         "prettier-plugin-sort-json": "^4.0.0",
         "prettier-plugin-toml": "^2.0.1",
         "typedoc": "^0.25.13",
-        "typescript": "5.4.5",
+        "typescript": "5.3.3",
         "virmator": "^11.5.2"
     }
 }
