@@ -8,5 +8,6 @@ module.exports = {
     words: [
         ...baseConfig.words,
         'observavir',
+        'listbox',
     ],
 };
