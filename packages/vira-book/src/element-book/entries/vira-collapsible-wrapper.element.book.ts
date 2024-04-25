@@ -1,6 +1,6 @@
 import {defineBookPage} from 'element-book';
 import {css, html, listen, renderIf} from 'element-vir';
-import {ViraCollapsibleSlotNameEnum, ViraCollapsibleWrapper} from 'vira';
+import {ViraCollapsibleWrapper} from 'vira';
 import {elementsBookPage} from '../elements.book';
 
 export const viraCollapsibleBookPage = defineBookPage({
@@ -40,7 +40,7 @@ export const viraCollapsibleBookPage = defineBookPage({
                             >
                                 <div
                                     class="section-header"
-                                    slot=${ViraCollapsibleSlotNameEnum.Header}
+                                    slot=${ViraCollapsibleWrapper.slotNames.header}
                                 >
                                     Section ${index}
                                 </div>
@@ -96,7 +96,7 @@ export const viraCollapsibleBookPage = defineBookPage({
                             >
                                 <div
                                     class="section-header"
-                                    slot=${ViraCollapsibleSlotNameEnum.Header}
+                                    slot=${ViraCollapsibleWrapper.slotNames.header}
                                 >
                                     Section ${index}
                                 </div>
