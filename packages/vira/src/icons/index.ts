@@ -1,5 +1,6 @@
 /** This file is automatically updated by update-icon-exports.ts */
 
+import {Check24Icon} from './icon-svgs/check-24.icon';
 import {CloseX24Icon} from './icon-svgs/close-x-24.icon';
 import {Element16Icon} from './icon-svgs/element-16.icon';
 import {Element24Icon} from './icon-svgs/element-24.icon';
@@ -13,6 +14,7 @@ import {StatusInProgress24Icon} from './icon-svgs/status-in-progress-24.icon';
 import {StatusSuccess24Icon} from './icon-svgs/status-success-24.icon';
 export * from './icon-css-vars';
 export * from './icon-svg';
+export * from './icon-svgs/check-24.icon';
 export * from './icon-svgs/close-x-24.icon';
 export * from './icon-svgs/element-16.icon';
 export * from './icon-svgs/element-24.icon';
@@ -26,6 +28,7 @@ export * from './icon-svgs/status-in-progress-24.icon';
 export * from './icon-svgs/status-success-24.icon';
 
 export const allIconsByName = {
+    Check24Icon,
     CloseX24Icon,
     Element16Icon,
     Element24Icon,
