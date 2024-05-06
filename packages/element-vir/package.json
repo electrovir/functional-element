@@ -33,7 +33,6 @@
         "docs": "virmator docs",
         "start": "cd ../element-vir-example && npm start",
         "test": "virmator test-web",
-        "test:coverage": "npm run test coverage",
         "test:docs": "virmator docs check",
         "test:types": "tsc --pretty --noEmit"
     },

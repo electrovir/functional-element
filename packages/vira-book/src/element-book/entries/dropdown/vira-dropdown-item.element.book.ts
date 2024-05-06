@@ -1,11 +1,11 @@
 import {BookPageControlTypeEnum, defineBookPage, definePageControl} from 'element-book';
-import {CSSResult, HTMLTemplateResult, html} from 'element-vir';
+import {CSSResult, HTMLTemplateResult, css, html} from 'element-vir';
 import {ViraDropdownItem} from 'vira';
 import {dropdownPage} from './vira-dropdown.book';
 
 const examples: ReadonlyArray<{
     title: string;
-    inputs?: typeof ViraDropdownItem.inputsType;
+    inputs: typeof ViraDropdownItem.inputsType;
     customStyle?: CSSResult;
     customTemplate?: HTMLTemplateResult;
 }> = [
@@ -32,6 +32,30 @@ const examples: ReadonlyArray<{
         customTemplate: html`
             <b>This is custom</b>
         `,
+    },
+    {
+        title: 'constrained width',
+        customStyle: css`
+            :host {
+                max-width: 100px;
+            }
+        `,
+        inputs: {
+            label: 'has more text than is possible to fit',
+            selected: true,
+        },
+    },
+    {
+        title: 'stretched width',
+        customStyle: css`
+            ${ViraDropdownItem} {
+                width: 400px;
+            }
+        `,
+        inputs: {
+            label: 'wide',
+            selected: true,
+        },
     },
 ];
 
@@ -60,12 +84,13 @@ export const ViraDropdownItemPage = defineBookPage({
                 stateInitStatic: {
                     selected: example.inputs?.selected || [],
                 },
+                styles: example.customStyle,
                 renderCallback({controls}) {
                     const finalInputs: typeof ViraDropdownItem.inputsType = {
-                        label: controls.Label || example.inputs?.label || '',
+                        label: controls.Label || example.inputs.label,
                         selected: controls.Selected
                             ? controls.Selected === 'all'
-                            : !!example.inputs?.selected,
+                            : example.inputs.selected,
                     };
 
                     if (example.customTemplate) {

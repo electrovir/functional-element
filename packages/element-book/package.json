@@ -36,7 +36,6 @@
         "docs": "virmator docs",
         "start": "cd ../element-book-example && npm start",
         "test": "virmator test-web",
-        "test:coverage": "npm run test coverage",
         "test:docs": "virmator docs check",
         "test:types": "npm run compile",
         "test:watch": "web-test-runner --color --watch --config configs/web-test-runner.config.mjs"

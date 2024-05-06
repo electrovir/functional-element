@@ -1,4 +1,4 @@
-import {PartialAndUndefined, isLengthAtLeast, joinWithFinalConjunction} from '@augment-vir/common';
+import {PartialAndUndefined, joinWithFinalConjunction} from '@augment-vir/common';
 import {NavController, nav, navSelector} from 'device-navigation';
 import {
     classMap,
@@ -9,6 +9,7 @@ import {
     listen,
     nothing,
     perInstance,
+    renderIf,
     testId,
 } from 'element-vir';
 import {assertInstanceOf} from 'run-time-assertions';
@@ -93,19 +94,29 @@ function triggerPopUpState(
     }
 }
 
+export const viraDropdownTestIds = {
+    trigger: 'dropdown-trigger',
+    icon: 'dropdown-icon',
+    prefix: 'dropdown-prefix',
+    options: 'dropdown-options',
+    option: 'individual-option',
+};
+
 export const ViraDropdown = defineViraElement<
     {
         options: ReadonlyArray<Readonly<ViraDropdownOption>>;
         /** The selected id from the given options. */
         selected: ReadonlyArray<PropertyKey>;
     } & PartialAndUndefined<{
+        /** Text to show if nothing is selected. */
+        placeholder: string;
         /**
          * If false, this will behave like a single select dropdown, otherwise you can select
          * multiple.
          */
         isMultiSelect: boolean;
         icon: ViraIconSvg;
-        buttonPrefix: string;
+        selectionPrefix: string;
         isDisabled: boolean;
         /** For debugging purposes only. Very bad for actual production code use. */
         z_debug_forceOpenState: boolean;
@@ -131,21 +142,23 @@ export const ViraDropdown = defineViraElement<
         :host {
             display: inline-flex;
             vertical-align: middle;
-            width: 288px;
+            width: 256px;
             ${viraFocusCssVars['vira-focus-outline-color'].name}: ${cssVars[
                 'vira-dropdown-focus-border-color'
             ].value};
             position: relative;
+            max-width: 100%;
         }
 
         .dropdown-wrapper {
             ${noNativeFormStyles};
             max-width: 100%;
-            border: 1px solid ${cssVars['vira-dropdown-trigger-border-color'].value};
             align-self: stretch;
             flex-grow: 1;
             position: relative;
             border-radius: ${viraBorders['vira-form-input-radius'].value};
+            transition: border-radius
+                ${viraAnimationDurations['vira-interaction-animation-duration'].value};
             outline: none;
         }
 
@@ -154,7 +167,7 @@ export const ViraDropdown = defineViraElement<
             elementBorderSize: 1,
         })}
 
-        .select-selected {
+        .selection-display {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -177,12 +190,12 @@ export const ViraDropdown = defineViraElement<
             transform: rotate(180deg);
         }
 
-        .dropdown-wrapper.open .select-options {
+        .dropdown-wrapper.open .options-wrapper {
             display: flex;
             flex-direction: column;
         }
 
-        .dropdown-wrapper.open {
+        .dropdown-wrapper.open:not(.open-upwards) {
             border-bottom-left-radius: 0;
         }
 
@@ -191,24 +204,24 @@ export const ViraDropdown = defineViraElement<
         }
 
         .dropdown-trigger {
+            border: 1px solid ${cssVars['vira-dropdown-trigger-border-color'].value};
             height: 100%;
             width: 100%;
-            transition: border-radius
-                ${viraAnimationDurations['vira-interaction-animation-duration'].value};
+            transition: inherit;
             box-sizing: border-box;
             display: flex;
             gap: 8px;
             text-align: left;
             align-items: center;
-            padding: 4px;
-            padding-left: 16px;
+            padding: 3px;
+            padding-left: 10px;
             ${noUserSelect};
             border-radius: inherit;
             background-color: ${cssVars['vira-dropdown-trigger-background-color'].value};
             color: ${cssVars['vira-dropdown-text-color'].value};
         }
 
-        .select-options {
+        .options-wrapper {
             pointer-events: auto;
             width: 100%;
             max-height: 100%;
@@ -224,7 +237,7 @@ export const ViraDropdown = defineViraElement<
             ${viraShadows.menuShadow}
         }
 
-        .open-upwards .select-options {
+        .open-upwards .options-wrapper {
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
             ${viraShadows.menuShadowReversed}
@@ -232,7 +245,6 @@ export const ViraDropdown = defineViraElement<
 
         ${hostClasses['vira-dropdown-disabled'].selector} {
             ${viraDisabledStyles}
-
             pointer-events: auto;
         }
 
@@ -245,12 +257,23 @@ export const ViraDropdown = defineViraElement<
             pointer-events: none;
             display: flex;
             flex-direction: column;
+
             /* highest possible z-index */
             z-index: 2147483647;
+            /* space for the caret icon */
+            right: 28px;
+            /* minus the border width */
+            top: calc(100% - 1px);
+        }
+
+        .using-placeholder {
+            opacity: 0.4;
         }
 
         .open-upwards .pop-up-positioner {
             flex-direction: column-reverse;
+            /* minus the border width */
+            bottom: calc(100% - 1px);
         }
 
         .dropdown-item {
@@ -354,27 +377,16 @@ export const ViraDropdown = defineViraElement<
             }
         }
 
-        const selectedOptions: ReadonlyArray<Readonly<ViraDropdownOption>> = inputs.selected.length
-            ? inputs.options.filter((option) => inputs.selected.includes(option.id))
-            : inputs.isMultiSelect || !isLengthAtLeast(inputs.options, 1)
-              ? []
-              : [inputs.options[0]];
+        const selectedOptions: ReadonlyArray<Readonly<ViraDropdownOption>> =
+            filterToSelectedOptions(inputs);
 
         const leadingIconTemplate = inputs.icon
             ? html`
                   <${ViraIcon.assign({
                       icon: inputs.icon,
                   })}
-                      ${testId('dropdown-icon')}
+                      ${testId(viraDropdownTestIds.icon)}
                   ></${ViraIcon}>
-              `
-            : '';
-
-        const prefixTemplate = inputs.buttonPrefix
-            ? html`
-                  <span class="selected-label-prefix" ${testId('dropdown-prefix')}>
-                      ${inputs.buttonPrefix}
-                  </span>
               `
             : '';
 
@@ -393,6 +405,7 @@ export const ViraDropdown = defineViraElement<
                     class="dropdown-item ${classMap({
                         disabled: !!option.disabled,
                     })}"
+                    ${testId(viraDropdownTestIds.option)}
                     title=${ifDefined(option.hoverText || undefined)}
                     role="option"
                     ${option.disabled ? nothing : nav()}
@@ -405,8 +418,8 @@ export const ViraDropdown = defineViraElement<
                     })}
                     ${listen('mouseup', (event) => {
                         /**
-                         * Prevent this mousedown event from propagating to the window, which would
-                         * then trigger the dropdown to close.
+                         * Prevent this event from propagating to the window, which would then
+                         * trigger the dropdown to close.
                          */
                         event.stopPropagation();
 
@@ -434,23 +447,34 @@ export const ViraDropdown = defineViraElement<
 
         const positionerStyles = state.showPopUpResult
             ? state.showPopUpResult.popDown
-                ? /** Dropdown going down styles. */
+                ? /** Dropdown going down position. */
                   css`
-                      top: 100%;
-                      /* -1px to account for border size */
-                      left: -1px;
-                      right: 28px;
                       bottom: -${state.showPopUpResult.positions.diff.bottom}px;
                   `
-                : /** Dropdown going up styles. */
+                : /** Dropdown going up position. */
                   css`
                       top: -${state.showPopUpResult.positions.diff.top}px;
-                      /* -1px to account for border size */
-                      left: -1px;
-                      right: 28px;
-                      bottom: 100%;
                   `
             : undefined;
+
+        function respondToClick() {
+            triggerPopUp({emitEvent: true, open: !state.showPopUpResult});
+        }
+
+        const shouldUsePlaceholder: boolean = !selectedOptions.length;
+
+        const prefixTemplate =
+            inputs.selectionPrefix && !shouldUsePlaceholder
+                ? html`
+                      <span class="selected-label-prefix" ${testId(viraDropdownTestIds.prefix)}>
+                          ${inputs.selectionPrefix}
+                      </span>
+                  `
+                : '';
+
+        const selectionDisplay: string = shouldUsePlaceholder
+            ? inputs.placeholder || ''
+            : selectedOptions.map((item) => item.label).join(', ');
 
         return html`
             <button
@@ -459,40 +483,36 @@ export const ViraDropdown = defineViraElement<
                     open: !!state.showPopUpResult,
                     'open-upwards': !state.showPopUpResult?.popDown,
                 })}"
+                ${testId(viraDropdownTestIds.trigger)}
                 role="listbox"
                 aria-expanded=${!!state.showPopUpResult}
                 ${listen('keydown', (event) => {
-                    if (!state.showPopUpResult) {
-                        if (event.code.startsWith('Arrow')) {
-                            triggerPopUp({emitEvent: true, open: true});
-                        }
+                    if (!state.showPopUpResult && event.code.startsWith('Arrow')) {
+                        triggerPopUp({emitEvent: true, open: true});
                     }
                 })}
                 ${listen('click', (event) => {
                     /** Detail is 0 if it was a keyboard key (like Enter) that triggered this click. */
                     if (event.detail === 0) {
-                        /**
-                         * Prevent this click event from propagating to the window, which would then
-                         * trigger the dropdown to close.
-                         */
-                        event.stopPropagation();
-                        triggerPopUp({emitEvent: true, open: !state.showPopUpResult});
+                        respondToClick();
                     }
                 })}
                 ${listen('mousedown', (event) => {
-                    /**
-                     * Prevent this click event from propagating to the window, which would then
-                     * trigger the dropdown to close.
-                     */
-                    event.stopImmediatePropagation();
-                    event.preventDefault();
-                    triggerPopUp({emitEvent: true, open: !state.showPopUpResult});
+                    /** Ignore any clicks that aren't the main button. */
+                    if (event.button === 0) {
+                        respondToClick();
+                    }
                 })}
             >
                 <div class="dropdown-trigger">
                     ${leadingIconTemplate}
-                    <span class="select-selected">
-                        ${prefixTemplate} ${selectedOptions.map((item) => item.label).join(', ')}
+                    <span
+                        class="selection-display ${classMap({
+                            'using-placeholder': shouldUsePlaceholder,
+                        })}"
+                        title=${ifDefined(shouldUsePlaceholder ? selectionDisplay : undefined)}
+                    >
+                        ${prefixTemplate} ${selectionDisplay}
                     </span>
                     <span class="trigger-icon-wrapper">
                         <${ViraIcon.assign({icon: ChevronUp24Icon})}
@@ -501,11 +521,41 @@ export const ViraDropdown = defineViraElement<
                     </span>
                 </div>
                 <div class="pop-up-positioner" style=${positionerStyles}>
-                    <div class="select-options">
-                        <slot>${optionTemplates}</slot>
-                    </div>
+                    ${renderIf(
+                        !!state.showPopUpResult,
+                        html`
+                            <div class="options-wrapper" ${testId(viraDropdownTestIds.options)}>
+                                <slot>${optionTemplates}</slot>
+                            </div>
+                        `,
+                    )}
                 </div>
             </button>
         `;
     },
 });
+
+export function filterToSelectedOptions({
+    selected,
+    options,
+    isMultiSelect,
+}: Readonly<{
+    selected: ReadonlyArray<PropertyKey>;
+    isMultiSelect?: boolean | undefined;
+    options: ReadonlyArray<Readonly<ViraDropdownOption>>;
+}>): ViraDropdownOption[] {
+    if (selected.length && options.length) {
+        const selectedOptions = options.filter((option) => selected.includes(option.id));
+
+        if (selectedOptions.length > 1 && !isMultiSelect) {
+            console.error(
+                `${ViraDropdown.tagName} has multiple selections but \`isMultiSelect\` is not \`true\`. Truncating to the first selection.`,
+            );
+            return selectedOptions.slice(0, 1);
+        } else {
+            return selectedOptions;
+        }
+    } else {
+        return [];
+    }
+}

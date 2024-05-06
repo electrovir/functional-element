@@ -12,6 +12,7 @@ const baseConfig = getWebTestRunnerConfigWithCoveragePercent({
 const webTestRunnerConfig = {
     ...baseConfig,
     port: 8103,
+    concurrency: 1,
 };
 
 export default webTestRunnerConfig;

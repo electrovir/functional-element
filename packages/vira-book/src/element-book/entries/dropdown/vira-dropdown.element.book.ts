@@ -1,7 +1,7 @@
 import {isTruthy} from '@augment-vir/common';
 import {BookPageControlTypeEnum, defineBookPage, definePageControl} from 'element-book';
-import {CSSResult, html, listen} from 'element-vir';
-import {ViraDropdown, ViraDropdownOption, allIconsByName} from 'vira';
+import {CSSResult, css, html, listen} from 'element-vir';
+import {Element24Icon, ViraDropdown, ViraDropdownOption, allIconsByName} from 'vira';
 import {dropdownPage} from './vira-dropdown.book';
 
 const exampleDropdownOptions: ReadonlyArray<Readonly<ViraDropdownOption>> = [
@@ -68,7 +68,7 @@ const examples: ReadonlyArray<{
     {
         title: 'with custom template',
         inputs: {
-            selected: [8],
+            selected: [],
             options: [
                 ...exampleDropdownOptions,
                 {
@@ -88,7 +88,7 @@ const examples: ReadonlyArray<{
     {
         title: 'with disabled item',
         inputs: {
-            selected: [8],
+            selected: [],
             options: [
                 ...exampleDropdownOptions,
                 {
@@ -99,13 +99,41 @@ const examples: ReadonlyArray<{
             ],
         },
     },
-    // {
-    //     title: 'forced open',
-    //     inputs: {
-    //         z_debug_forceOpenState: true,
-    //         selected: [1],
-    //     },
-    // },
+    {
+        title: 'constrained width',
+        customStyle: css`
+            :host {
+                max-width: 150px;
+            }
+        `,
+    },
+    {
+        title: 'stretched width',
+        customStyle: css`
+            ${ViraDropdown} {
+                width: 400px;
+            }
+        `,
+    },
+    {
+        title: 'without a placeholder',
+        inputs: {
+            placeholder: undefined,
+        },
+    },
+    {
+        title: 'with a prefix',
+        inputs: {
+            selectionPrefix: 'Pre:',
+            selected: [1],
+        },
+    },
+    {
+        title: 'with an icon',
+        inputs: {
+            icon: Element24Icon,
+        },
+    },
 ];
 
 export const viraDropdownPage = defineBookPage({
@@ -159,6 +187,10 @@ export const viraDropdownPage = defineBookPage({
             ],
             initValue: '',
         }),
+        Placeholder: definePageControl({
+            controlType: BookPageControlTypeEnum.Text,
+            initValue: 'Select something',
+        }),
     },
     elementExamplesCallback({defineExample}) {
         examples.forEach((example) => {
@@ -167,8 +199,13 @@ export const viraDropdownPage = defineBookPage({
                 stateInitStatic: {
                     selected: example.inputs?.selected || [],
                 },
+                styles: example.customStyle,
                 renderCallback({state, updateState, controls}) {
                     const finalInputs: typeof ViraDropdown.inputsType = {
+                        placeholder:
+                            example.inputs && 'placeholder' in example.inputs
+                                ? example.inputs.placeholder
+                                : controls.Placeholder,
                         options: example.inputs?.options || exampleDropdownOptions,
                         selected: controls.Selected
                             ? [
@@ -177,7 +214,7 @@ export const viraDropdownPage = defineBookPage({
                                   )?.id,
                               ].filter(isTruthy)
                             : state.selected,
-                        buttonPrefix: controls.Prefix || example.inputs?.buttonPrefix,
+                        selectionPrefix: controls.Prefix || example.inputs?.selectionPrefix,
                         isDisabled: controls.Disabled
                             ? controls.Disabled === 'all'
                             : example.inputs?.isDisabled,
