@@ -1,4 +1,4 @@
-import {PartialAndUndefined, joinWithFinalConjunction} from '@augment-vir/common';
+import {PartialAndUndefined} from '@augment-vir/common';
 import {NavController, nav, navSelector} from 'device-navigation';
 import {
     classMap,
@@ -13,86 +13,32 @@ import {
     testId,
 } from 'element-vir';
 import {assertInstanceOf} from 'run-time-assertions';
-import {ViraIconSvg} from '../icons/icon-svg';
-import {ChevronUp24Icon} from '../icons/index';
+import {ViraIconSvg} from '../../icons/icon-svg';
+import {ChevronUp24Icon} from '../../icons/index';
 import {
     noNativeFormStyles,
     noUserSelect,
     viraAnimationDurations,
     viraDisabledStyles,
-} from '../styles';
-import {viraBorders} from '../styles/border';
-import {createFocusStyles, viraFocusCssVars} from '../styles/focus';
-import {viraShadows} from '../styles/shadows';
+} from '../../styles';
+import {viraBorders} from '../../styles/border';
+import {createFocusStyles, viraFocusCssVars} from '../../styles/focus';
+import {viraShadows} from '../../styles/shadows';
 import {
     HidePopUpEvent,
     NavSelectEvent,
     PopUpManager,
     ShowPopUpResult,
-} from '../util/pop-up-manager';
-import {defineViraElement} from './define-vira-element';
+} from '../../util/pop-up-manager';
+import {defineViraElement} from '../define-vira-element';
+import {ViraIcon} from '../vira-icon.element';
+import {
+    assertUniqueIdProps,
+    createNewSelection,
+    filterToSelectedOptions,
+    triggerPopUpState,
+} from './dropdown-helpers';
 import {ViraDropdownItem, ViraDropdownOption} from './vira-dropdown-item.element';
-import {ViraIcon} from './vira-icon.element';
-
-function assertUniqueIdProps(options: ReadonlyArray<Readonly<{id: PropertyKey}>>) {
-    const usedIds: Record<PropertyKey, boolean> = {};
-    const duplicateIds: PropertyKey[] = [];
-    options.forEach((option) => {
-        if (usedIds[option.id]) {
-            duplicateIds.push(option.id);
-        } else {
-            usedIds[option.id] = true;
-        }
-    });
-
-    if (duplicateIds.length) {
-        throw new Error(
-            `Duplicate option ids were given to ViraDropdown: ${joinWithFinalConjunction(duplicateIds)}`,
-        );
-    }
-}
-
-function createNewSelection(
-    id: PropertyKey,
-    currentSelection: ReadonlyArray<PropertyKey>,
-    isMultiSelect: boolean,
-): PropertyKey[] {
-    if (isMultiSelect) {
-        return currentSelection.includes(id)
-            ? currentSelection.filter((entry) => entry !== id)
-            : [
-                  ...currentSelection,
-                  id,
-              ];
-    } else {
-        return [id];
-    }
-}
-
-function triggerPopUpState(
-    {open, emitEvent}: {open: boolean; emitEvent: boolean},
-    {
-        updateState,
-        popUpManager,
-        dispatch,
-        host,
-    }: {
-        updateState: (params: {showPopUpResult: ShowPopUpResult | undefined}) => void;
-        popUpManager: PopUpManager;
-        dispatch: (open: boolean) => void;
-        host: HTMLElement;
-    },
-) {
-    if (open) {
-        updateState({showPopUpResult: popUpManager.showPopUp(host)});
-    } else {
-        popUpManager.removePopUp();
-    }
-
-    if (emitEvent) {
-        dispatch(open);
-    }
-}
 
 export const viraDropdownTestIds = {
     trigger: 'dropdown-trigger',
@@ -534,28 +480,3 @@ export const ViraDropdown = defineViraElement<
         `;
     },
 });
-
-export function filterToSelectedOptions({
-    selected,
-    options,
-    isMultiSelect,
-}: Readonly<{
-    selected: ReadonlyArray<PropertyKey>;
-    isMultiSelect?: boolean | undefined;
-    options: ReadonlyArray<Readonly<ViraDropdownOption>>;
-}>): ViraDropdownOption[] {
-    if (selected.length && options.length) {
-        const selectedOptions = options.filter((option) => selected.includes(option.id));
-
-        if (selectedOptions.length > 1 && !isMultiSelect) {
-            console.error(
-                `${ViraDropdown.tagName} has multiple selections but \`isMultiSelect\` is not \`true\`. Truncating to the first selection.`,
-            );
-            return selectedOptions.slice(0, 1);
-        } else {
-            return selectedOptions;
-        }
-    } else {
-        return [];
-    }
-}

@@ -1,10 +1,10 @@
 import {PartialAndUndefined} from '@augment-vir/common';
 import {css, html, HTMLTemplateResult} from 'element-vir';
-import {Check24Icon} from '../icons/icon-svgs/check-24.icon';
-import {noUserSelect, viraAnimationDurations} from '../styles';
-import {viraBorders} from '../styles/border';
-import {defineViraElement} from './define-vira-element';
-import {ViraIcon} from './vira-icon.element';
+import {Check24Icon} from '../../icons/icon-svgs/check-24.icon';
+import {noUserSelect, viraAnimationDurations} from '../../styles';
+import {viraBorders} from '../../styles/border';
+import {defineViraElement} from '../define-vira-element';
+import {ViraIcon} from '../vira-icon.element';
 
 export type ViraDropdownOption = {
     /** Each `id` must be unique across all options. */
