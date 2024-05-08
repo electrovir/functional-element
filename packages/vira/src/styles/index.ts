@@ -5,6 +5,7 @@ export * from './color';
 export * from './disabled';
 export * from './durations';
 export * from './focus';
+export * from './form-themes';
 export * from './native-styles';
 export * from './scrollbar';
 export * from './shadows';

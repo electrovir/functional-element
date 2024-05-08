@@ -87,6 +87,7 @@ export class PopUpManager {
         supportNavigation: true,
     };
     private cleanupCallbacks: (() => void)[] = [];
+    private lastRootElement: HTMLElement | undefined;
 
     constructor(options?: Partial<PopUpManagerOptions> | undefined) {
         this.options = {...this.options, ...options};
@@ -103,7 +104,14 @@ export class PopUpManager {
             }),
             listenToGlobal(
                 'mousedown',
-                () => {
+                (event) => {
+                    if (
+                        this.lastRootElement &&
+                        event.composedPath().includes(this.lastRootElement)
+                    ) {
+                        /** Ignore clicks that came from the pop up host itself. */
+                        return;
+                    }
                     this.removePopUp();
                 },
                 {passive: true},
@@ -185,6 +193,7 @@ export class PopUpManager {
         rootElement: HTMLElement,
         options?: Partial<PopUpManagerOptions> | undefined,
     ): ShowPopUpResult {
+        this.lastRootElement = rootElement;
         const currentOptions = {...this.options, ...options};
         const container = findOverflowParent(rootElement);
         assertInstanceOf(container, HTMLElement);

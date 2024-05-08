@@ -1,6 +1,6 @@
 {
     "name": "element-book",
-    "version": "22.1.3",
+    "version": "22.2.0",
     "keywords": [
         "book",
         "design system",
@@ -36,7 +36,6 @@
         "docs": "virmator docs",
         "start": "cd ../element-book-example && npm start",
         "test": "virmator test-web",
-        "test:coverage": "npm run test coverage",
         "test:docs": "virmator docs check",
         "test:types": "npm run compile",
         "test:watch": "web-test-runner --color --watch --config configs/web-test-runner.config.mjs"
@@ -48,7 +47,7 @@
         "lit-css-vars": "^3.0.9",
         "spa-router-vir": "^4.0.3",
         "typed-event-target": "^3.4.0",
-        "vira": "22.1.3"
+        "vira": "22.2.0"
     },
     "devDependencies": {
         "@augment-vir/browser-testing": "^27.0.0",
