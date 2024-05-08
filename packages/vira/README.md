@@ -2,6 +2,6 @@
 
 The Vira design system.
 
-https://electrovir.github.io/element-vir/vira/book/
+https://electrovir.github.io/element-vir/vira
 
 WIP.
