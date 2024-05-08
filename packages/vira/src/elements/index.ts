@@ -2,6 +2,7 @@
 
 export * from './define-vira-element';
 export * from './dropdown/vira-dropdown-item.element';
+export * from './dropdown/vira-dropdown-options.element';
 export * from './dropdown/vira-dropdown.element';
 export * from './vira-button.element';
 export * from './vira-collapsible-wrapper.element';

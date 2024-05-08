@@ -1,5 +1,5 @@
 import {PartialAndUndefined} from '@augment-vir/common';
-import {NavController, nav, navSelector} from 'device-navigation';
+import {NavController} from 'device-navigation';
 import {
     classMap,
     css,
@@ -7,7 +7,6 @@ import {
     html,
     ifDefined,
     listen,
-    nothing,
     perInstance,
     renderIf,
     testId,
@@ -23,6 +22,7 @@ import {
 } from '../../styles';
 import {viraBorders} from '../../styles/border';
 import {createFocusStyles, viraFocusCssVars} from '../../styles/focus';
+import {viraFormCssVars} from '../../styles/form-themes';
 import {viraShadows} from '../../styles/shadows';
 import {
     HidePopUpEvent,
@@ -38,14 +38,14 @@ import {
     filterToSelectedOptions,
     triggerPopUpState,
 } from './dropdown-helpers';
-import {ViraDropdownItem, ViraDropdownOption} from './vira-dropdown-item.element';
+import {ViraDropdownOption} from './vira-dropdown-item.element';
+import {ViraDropdownOptions} from './vira-dropdown-options.element';
 
 export const viraDropdownTestIds = {
     trigger: 'dropdown-trigger',
     icon: 'dropdown-icon',
     prefix: 'dropdown-prefix',
     options: 'dropdown-options',
-    option: 'individual-option',
 };
 
 export const ViraDropdown = defineViraElement<
@@ -72,25 +72,13 @@ export const ViraDropdown = defineViraElement<
     hostClasses: {
         'vira-dropdown-disabled': ({inputs}) => !!inputs.isDisabled,
     },
-    /** Default colors meet APCA contrast for small body text: https://www.myndex.com/APCA/ */
-    cssVars: {
-        'vira-dropdown-trigger-background-color': 'white',
-        'vira-dropdown-trigger-border-color': '#cccccc',
-
-        'vira-dropdown-text-color': '#000000',
-        'vira-dropdown-background-color': 'white',
-        'vira-dropdown-focus-border-color': viraFocusCssVars['vira-focus-outline-color'].default,
-        'vira-dropdown-border-color': '#cccccc',
-        'vira-dropdown-item-hover-background-color': '#d2eaff',
-        'vira-dropdown-item-hover-text-color': '#000000',
-    },
-    styles: ({hostClasses, cssVars}) => css`
+    styles: ({hostClasses}) => css`
         :host {
             display: inline-flex;
             vertical-align: middle;
             width: 256px;
-            ${viraFocusCssVars['vira-focus-outline-color'].name}: ${cssVars[
-                'vira-dropdown-focus-border-color'
+            ${viraFocusCssVars['vira-focus-outline-color'].name}: ${viraFormCssVars[
+                'vira-form-focus-color'
             ].value};
             position: relative;
             max-width: 100%;
@@ -136,11 +124,6 @@ export const ViraDropdown = defineViraElement<
             transform: rotate(180deg);
         }
 
-        .dropdown-wrapper.open .options-wrapper {
-            display: flex;
-            flex-direction: column;
-        }
-
         .dropdown-wrapper.open:not(.open-upwards) {
             border-bottom-left-radius: 0;
         }
@@ -150,7 +133,7 @@ export const ViraDropdown = defineViraElement<
         }
 
         .dropdown-trigger {
-            border: 1px solid ${cssVars['vira-dropdown-trigger-border-color'].value};
+            border: 1px solid ${viraFormCssVars['vira-form-border-color'].value};
             height: 100%;
             width: 100%;
             transition: inherit;
@@ -163,27 +146,11 @@ export const ViraDropdown = defineViraElement<
             padding-left: 10px;
             ${noUserSelect};
             border-radius: inherit;
-            background-color: ${cssVars['vira-dropdown-trigger-background-color'].value};
-            color: ${cssVars['vira-dropdown-text-color'].value};
+            background-color: ${viraFormCssVars['vira-form-background-color'].value};
+            color: ${viraFormCssVars['vira-form-foreground-color'].value};
         }
 
-        .options-wrapper {
-            pointer-events: auto;
-            width: 100%;
-            max-height: 100%;
-            overflow-y: auto;
-            display: none;
-            z-index: 99;
-            border-radius: ${viraBorders['vira-form-input-radius'].value};
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-            background-color: ${cssVars['vira-dropdown-background-color'].value};
-            border: 1px solid ${cssVars['vira-dropdown-border-color'].value};
-            color: ${cssVars['vira-dropdown-text-color'].value};
-            ${viraShadows.menuShadow}
-        }
-
-        .open-upwards .options-wrapper {
+        .open-upwards ${ViraDropdownOptions} {
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
             ${viraShadows.menuShadowReversed}
@@ -220,25 +187,6 @@ export const ViraDropdown = defineViraElement<
             flex-direction: column-reverse;
             /* minus the border width */
             bottom: calc(100% - 1px);
-        }
-
-        .dropdown-item {
-            background-color: white;
-            outline: none;
-        }
-
-        ${navSelector.css.selected('.dropdown-item:not(.disabled)')} {
-            background-color: ${cssVars['vira-dropdown-item-hover-background-color'].value};
-            outline: none;
-        }
-
-        ${ViraDropdownItem} {
-            pointer-events: none;
-        }
-
-        .dropdown-item.disabled {
-            ${viraDisabledStyles};
-            pointer-events: auto;
         }
     `,
     events: {
@@ -336,61 +284,6 @@ export const ViraDropdown = defineViraElement<
               `
             : '';
 
-        const optionTemplates = inputs.options.map((option) => {
-            const innerTemplate =
-                option.template ||
-                html`
-                    <${ViraDropdownItem.assign({
-                        label: option.label,
-                        selected: selectedOptions.includes(option),
-                    })}></${ViraDropdownItem}>
-                `;
-
-            return html`
-                <div
-                    class="dropdown-item ${classMap({
-                        disabled: !!option.disabled,
-                    })}"
-                    ${testId(viraDropdownTestIds.option)}
-                    title=${ifDefined(option.hoverText || undefined)}
-                    role="option"
-                    ${option.disabled ? nothing : nav()}
-                    ${listen('mousedown', (event) => {
-                        /**
-                         * Prevent this mousedown event from propagating to the window, which would
-                         * then trigger the dropdown to close.
-                         */
-                        event.stopPropagation();
-                    })}
-                    ${listen('mouseup', (event) => {
-                        /**
-                         * Prevent this event from propagating to the window, which would then
-                         * trigger the dropdown to close.
-                         */
-                        event.stopPropagation();
-
-                        if (!option.disabled) {
-                            /** Only close upon option selection if the dropdown is not multi select. */
-                            if (!inputs.isMultiSelect) {
-                                triggerPopUp({emitEvent: true, open: false});
-                            }
-                            dispatch(
-                                new events.selectedChange(
-                                    createNewSelection(
-                                        option.id,
-                                        inputs.selected,
-                                        !!inputs.isMultiSelect,
-                                    ),
-                                ),
-                            );
-                        }
-                    })}
-                >
-                    ${innerTemplate}
-                </div>
-            `;
-        });
-
         const positionerStyles = state.showPopUpResult
             ? state.showPopUpResult.popDown
                 ? /** Dropdown going down position. */
@@ -470,9 +363,30 @@ export const ViraDropdown = defineViraElement<
                     ${renderIf(
                         !!state.showPopUpResult,
                         html`
-                            <div class="options-wrapper" ${testId(viraDropdownTestIds.options)}>
-                                <slot>${optionTemplates}</slot>
-                            </div>
+                            <${ViraDropdownOptions.assign({
+                                options: inputs.options,
+                                selectedOptions,
+                            })}
+                                ${listen(ViraDropdownOptions.events.selectionChange, (event) => {
+                                    /**
+                                     * Only close upon option selection if the dropdown is not multi
+                                     * select.
+                                     */
+                                    if (!inputs.isMultiSelect) {
+                                        triggerPopUp({emitEvent: true, open: false});
+                                    }
+                                    dispatch(
+                                        new events.selectedChange(
+                                            createNewSelection(
+                                                event.detail.id,
+                                                inputs.selected,
+                                                !!inputs.isMultiSelect,
+                                            ),
+                                        ),
+                                    );
+                                })}
+                                ${testId(viraDropdownTestIds.options)}
+                            ></${ViraDropdownOptions}>
                         `,
                     )}
                 </div>

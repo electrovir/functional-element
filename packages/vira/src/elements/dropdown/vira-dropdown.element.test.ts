@@ -1,4 +1,4 @@
-import {waitForAnimationFrame} from '@augment-vir/browser';
+import {queryThroughShadow, waitForAnimationFrame} from '@augment-vir/browser';
 import {clickElement, extractText} from '@augment-vir/browser-testing';
 import {mapObjectValues, randomString, waitUntilTruthy} from '@augment-vir/common';
 import {assert, fixture, waitUntil} from '@open-wc/testing';
@@ -6,6 +6,7 @@ import {html, listen, testIdBy} from 'element-vir';
 import {assertDefined, assertInstanceOf} from 'run-time-assertions';
 import {Element24Icon} from '../../icons/index';
 import {mockOptions} from './dropdown.mock';
+import {viraDropdownOptionsTestIds} from './vira-dropdown-options.element';
 import {ViraDropdown, viraDropdownTestIds} from './vira-dropdown.element';
 
 async function setupDropdownTest(inputs?: Partial<(typeof ViraDropdown)['inputsType']>) {
@@ -96,9 +97,12 @@ describe(ViraDropdown.tagName, () => {
         const {instance, toggle, events, queryByTestId} = await setupDropdownTest();
 
         await toggle();
-        const options = Array.from(
-            instance.shadowRoot.querySelectorAll(testIdBy(viraDropdownTestIds.option)),
-        );
+        const options = queryThroughShadow({
+            element: instance,
+            query: testIdBy(viraDropdownOptionsTestIds.option),
+            all: true,
+        });
+
         assert.lengthOf(options, mockOptions.length);
         assertDefined(options[1]);
         await clickElement(options[1]);
