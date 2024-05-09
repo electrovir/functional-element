@@ -248,7 +248,7 @@ describe(asyncProp.name, () => {
         const initialPromiseResult = await initialPromise;
 
         assert.lengthOf(deferredPromiseWrappers, 2);
-        assert.strictEqual(instance.instanceState.myAsyncProp.value, resolutionValue);
+        assert.strictEqual<unknown>(instance.instanceState.myAsyncProp.value, resolutionValue);
         assert.strictEqual(initialPromiseResult, resolutionValue);
         assert.strictEqual(instance.instanceState.myAsyncProp.lastResolvedValue, resolutionValue);
 
@@ -269,7 +269,7 @@ describe(asyncProp.name, () => {
         await waitUntil(() => renderCount === 5, 'Render count failed to reach 5');
 
         assert.lengthOf(deferredPromiseWrappers, 3);
-        assert.strictEqual(instance.instanceState.myAsyncProp.value, rejectionError);
+        assert.strictEqual<unknown>(instance.instanceState.myAsyncProp.value, rejectionError);
 
         // force an update; element should re-render and update state
         await clickElement(forceUpdateButton);
@@ -298,7 +298,7 @@ describe(asyncProp.name, () => {
         deferredPromiseWrappers[4].resolve(finalResolutionValue);
 
         await waitUntil(() => renderCount === 7, 'Render count failed to reach 7');
-        assert.strictEqual(instance.instanceState.myAsyncProp.value, finalResolutionValue);
+        assert.strictEqual<unknown>(instance.instanceState.myAsyncProp.value, finalResolutionValue);
 
         // assign an already resolved value; element should update once and immediately use the resolved value
         await clickElement(assignResolvedButton);
@@ -654,7 +654,7 @@ describe(asyncProp.name, () => {
         assert.isFalse(resolved);
         await waitUntilTruthy(() => resolved);
         await wait(updateDuration.milliseconds * 2);
-        assert.strictEqual(rendered.instanceState.myProp.value, 42);
+        assert.strictEqual<unknown>(rendered.instanceState.myProp.value, 42);
     });
 
     it('allows noUpdate', async () => {

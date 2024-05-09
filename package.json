@@ -1,6 +1,6 @@
 {
     "name": "@electrovir/element-vir-mono-repo",
-    "version": "22.2.1",
+    "version": "22.2.2",
     "private": true,
     "license": "(MIT or CC0 1.0)",
     "author": {
@@ -25,9 +25,9 @@
         "test:types": "npm run compile"
     },
     "devDependencies": {
-        "cspell": "^8.7.0",
-        "dependency-cruiser": "^16.3.1",
-        "esbuild": "^0.20.2",
+        "cspell": "^8.8.0",
+        "dependency-cruiser": "^16.3.2",
+        "esbuild": "^0.21.1",
         "html-spec-tags": "^2.2.0",
         "npm-check-updates": "~16.12.3",
         "prettier": "3.2.5",
@@ -39,7 +39,10 @@
         "prettier-plugin-sort-json": "^4.0.0",
         "prettier-plugin-toml": "^2.0.1",
         "typedoc": "^0.25.13",
-        "typescript": "5.3.3",
+        "typescript": "5.4.5",
         "virmator": "^11.5.2"
+    },
+    "overrides": {
+        "@web/dev-server-rollup": "0.6.1"
     }
 }
