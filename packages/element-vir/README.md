@@ -361,7 +361,7 @@ export const MyWithCustomEvents = defineElementNoInputs({
 
 Host classes can be defined and used with type safety. Host classes are used to provide alternative styles for custom elements. They are purely driven by CSS and are thus applied to the the `class` HTML attribute.
 
-Host classes are defined by passing an object to `hostClasses` at element definition time. Each property name in the `hostClasses` object creates a host class name (note that host class names must start with the element's tag name). Each value in the `hostClasses` object defines behavior for teh host class:
+Host classes are defined by passing an object to `hostClasses` at element definition time. Each property name in the `hostClasses` object creates a host class name (note that host class names must start with the element's tag name). Each value in the `hostClasses` object defines behavior for the host class:
 
 -   if the value is a callback, that host class will automatically be applied if the callback returns true after a render is executed.
 -   if the value is `false`, the host class is never automatically applied, it must be manually applied by consumers.

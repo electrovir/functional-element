@@ -2,27 +2,33 @@
     "name": "@electrovir/element-vir-mono-repo",
     "version": "22.2.2",
     "private": true,
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/electrovir/element-vir.git"
+    },
     "license": "(MIT or CC0 1.0)",
     "author": {
         "name": "electrovir",
         "url": "https://github.com/electrovir"
     },
+    "type": "module",
     "workspaces": [
         "packages/*"
     ],
     "scripts": {
-        "build:pages": "npm run --workspace @electrovir/scripts build",
-        "compile": "mono-vir for-each \"rm -f tsconfig.tsbuildinfo && rm -rf dist && tsc --pretty\"",
-        "docs": "mono-vir for-each-async npm run --if-present docs",
+        "build": "npm run --workspace @electrovir/scripts build",
+        "compile": "virmator compile",
         "format": "virmator format",
-        "publish": "virmator publish \"npm run compile && npm run --workspace @electrovir/scripts update:deps && npm i && npm run test:all\"",
-        "test": "mono-vir for-each npm test",
-        "test:all": "npm run compile && concurrently -c auto -m 90% --kill-others-on-fail --colors --names tests,spelling,format,docs,build \"npm run test\" \"npm run test:spelling\" \"npm run test:format\" \"npm run test:docs\" \"npm run build:pages\"",
+        "lint": "virmator lint fix",
+        "publish": "virmator publish npm run test:all",
+        "test": "mono-vir for-each-async npm run test",
+        "test:all": "npm run compile && concurrently --colors --kill-others-on-fail -c auto --names tests,spelling,format,docs,deps,lint,build \"npm run test\" \"npm run test:spelling\" \"npm run test:format\" \"npm run test:docs\" \"npm run test:deps\" \"npm run test:lint\" \"npm run build\"",
         "test:deps": "virmator deps check",
-        "test:docs": "mono-vir for-each-async npm run --if-present test:docs",
+        "test:docs": "virmator docs check",
         "test:format": "virmator format check",
+        "test:lint": "virmator lint",
         "test:spelling": "virmator spellcheck",
-        "test:types": "npm run compile"
+        "test:update": "mono-vir for-each-async npm run test:update"
     },
     "devDependencies": {
         "cspell": "^8.8.0",
@@ -40,7 +46,10 @@
         "prettier-plugin-toml": "^2.0.1",
         "typedoc": "^0.25.13",
         "typescript": "5.4.5",
-        "virmator": "^11.5.2"
+        "virmator": "^13.4.1"
+    },
+    "engines": {
+        "node": ">=22"
     },
     "overrides": {
         "@web/dev-server-rollup": "0.6.1"
