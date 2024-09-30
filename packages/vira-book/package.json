@@ -7,11 +7,12 @@
         "name": "electrovir",
         "url": "https://github.com/electrovir"
     },
+    "type": "module",
     "scripts": {
-        "build:pages": "virmator frontend build",
-        "compile": "rm -rf dist && tsc -b -f --pretty",
+        "build": "virmator frontend build",
+        "compile": "virmator compile",
         "start": "virmator frontend",
-        "test": "exit 0;"
+        "test": "exit 0"
     },
     "dependencies": {
         "@augment-vir/common": "^28.0.0",
@@ -29,5 +30,8 @@
         "typescript": "^5.3.3",
         "vite": "^4.5.0",
         "vite-tsconfig-paths": "^4.3.2"
+    },
+    "engines": {
+        "node": ">=22"
     }
 }
