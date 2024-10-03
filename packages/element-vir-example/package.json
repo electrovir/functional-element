@@ -18,14 +18,12 @@
         "vira": "*"
     },
     "devDependencies": {
-        "@augment-vir/browser-testing": "^28.0.0",
-        "@augment-vir/node-js": "^28.0.0",
-        "esbuild": "^0.21.1",
-        "markdown-code-example-inserter": "^1.0.0",
-        "typedoc": "^0.25.13",
-        "typescript": "5.4.5",
-        "vite": "^4.5.0",
-        "vite-tsconfig-paths": "^4.3.2"
+        "esbuild": "^0.24.0",
+        "markdown-code-example-inserter": "^3.0.0",
+        "typedoc": "^0.26.8",
+        "typescript": "5.6.3",
+        "vite": "^5.4.8",
+        "vite-tsconfig-paths": "^5.0.1"
     },
     "engines": {
         "node": ">=22"

@@ -1,6 +1,5 @@
-import {itCases} from '@augment-vir/browser-testing';
-import {assert} from '@open-wc/testing';
-import {assertThrows, assertTypeOf} from 'run-time-assertions';
+import {assert} from '@augment-vir/assert';
+import {describe, it, itCases} from '@augment-vir/test';
 import {stateSetupKey} from '../properties/element-vir-state-setup';
 import {AsyncValue, asyncProp} from './async-prop';
 import {isAsyncError, isResolved, resolvedOrUndefined} from './is-resolved.directive';
@@ -30,14 +29,14 @@ describe(isResolved.name, () => {
         const exampleAsyncProp = asyncProp({defaultValue: Promise.resolve('hi')})[stateSetupKey]();
 
         if (isResolved(exampleAsyncProp.value)) {
-            assertTypeOf(exampleAsyncProp.value).toEqualTypeOf<string | Error>();
+            assert.tsType(exampleAsyncProp.value).equals<string | Error>();
         }
     });
 
     it("can't accidentally be passed AsyncProp instead of AsyncValue", () => {
         const exampleAsyncProp = asyncProp({defaultValue: Promise.resolve('hi')})[stateSetupKey]();
 
-        assertThrows(
+        assert.throws(
             () => {
                 // @ts-expect-error: AsyncProp cannot be passed into `isResolved`
                 isResolved(exampleAsyncProp);
@@ -54,7 +53,7 @@ describe(isAsyncError.name, () => {
         const myValue = {} as AsyncValue<{something: 'crazy'}>;
 
         if (isAsyncError(myValue)) {
-            assertTypeOf(myValue).toEqualTypeOf<Error>();
+            assert.tsType(myValue).equals<Error>();
             throw myValue;
         } else if (isResolved(myValue)) {
             assert.isObject(myValue);
@@ -64,7 +63,7 @@ describe(isAsyncError.name, () => {
     it('fails if passed an AsyncProp', () => {
         const exampleAsyncProp = asyncProp({defaultValue: Promise.resolve('hi')})[stateSetupKey]();
 
-        assertThrows(
+        assert.throws(
             () => {
                 // @ts-expect-error: AsyncProp cannot be passed into `isAsyncError`
                 isAsyncError(exampleAsyncProp);

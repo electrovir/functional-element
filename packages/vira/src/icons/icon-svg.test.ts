@@ -1,15 +1,15 @@
-import {assert, fixture as renderFixture} from '@open-wc/testing';
+import {assert} from '@augment-vir/assert';
+import {describe, it, testWeb} from '@augment-vir/test';
 import Color from 'colorjs.io';
 import {html} from 'element-vir';
-import {assertInstanceOf, assertThrows} from 'run-time-assertions';
-import {rgbCssColorFormat} from '../styles/color';
-import {ColorTypeEnum, extractIconColor} from './icon-color.test-helper';
-import {createColoredIcon} from './icon-svg';
-import {Element24Icon} from './icon-svgs/element-24.icon';
+import {rgbCssColorFormat} from '../styles/color.js';
+import {ColorTypeEnum, extractIconColor} from './icon-color.test-helper.js';
+import {createColoredIcon} from './icon-svg.js';
+import {Element24Icon} from './icon-svgs/element-24.icon.js';
 
 describe(createColoredIcon.name, () => {
     it('fails if a given color is invalid', () => {
-        assertThrows(() =>
+        assert.throws(() =>
             createColoredIcon(Element24Icon, {'vira-icon-fill-color': '" onclick="doThing()"'}),
         );
     });
@@ -19,14 +19,14 @@ describe(createColoredIcon.name, () => {
         const coloredIcon = createColoredIcon(Element24Icon, {
             'vira-icon-stroke-color': testColor.toString({format: rgbCssColorFormat}),
         });
-        const rendered = await renderFixture(html`
+        const rendered = await testWeb.render(html`
             ${coloredIcon.svgTemplate}
         `);
         const pathElement = rendered.querySelector('path');
-        assertInstanceOf(pathElement, SVGPathElement);
+        assert.instanceOf(pathElement, SVGPathElement);
 
         const appliedColor = extractIconColor(pathElement, ColorTypeEnum.Stroke);
 
-        assert.strictEqual(appliedColor, testColor.toString({format: rgbCssColorFormat}));
+        assert.strictEquals(appliedColor, testColor.toString({format: rgbCssColorFormat}));
     });
 });

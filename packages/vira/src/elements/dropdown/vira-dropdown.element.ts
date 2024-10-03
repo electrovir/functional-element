@@ -1,4 +1,5 @@
-import {PartialAndUndefined} from '@augment-vir/common';
+import {assert} from '@augment-vir/assert';
+import {PartialWithUndefined} from '@augment-vir/common';
 import {NavController} from 'device-navigation';
 import {
     classMap,
@@ -11,7 +12,6 @@ import {
     renderIf,
     testId,
 } from 'element-vir';
-import {assertInstanceOf} from 'run-time-assertions';
 import {ViraIconSvg} from '../../icons/icon-svg';
 import {ChevronUp24Icon} from '../../icons/index';
 import {
@@ -53,7 +53,7 @@ export const ViraDropdown = defineViraElement<
         options: ReadonlyArray<Readonly<ViraDropdownOption>>;
         /** The selected id from the given options. */
         selected: ReadonlyArray<PropertyKey>;
-    } & PartialAndUndefined<{
+    } & PartialWithUndefined<{
         /** Text to show if nothing is selected. */
         placeholder: string;
         /**
@@ -209,7 +209,7 @@ export const ViraDropdown = defineViraElement<
             if (!inputs.isDisabled) {
                 const dropdownWrapper = host.shadowRoot.querySelector('.dropdown-wrapper');
 
-                assertInstanceOf(
+                assert.instanceOf(
                     dropdownWrapper,
                     HTMLButtonElement,
                     'failed to find dropdown wrapper child',

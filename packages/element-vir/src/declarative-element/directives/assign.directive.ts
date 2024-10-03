@@ -18,10 +18,8 @@ export type ElementDefinitionWithInputsType<
  *
  * @deprecated Instead of using this directive, assign inputs directly on the element's
  *   interpolation opening tag interpolation.
- * @example
- *     html`<${MyElement} ${assign(MyElement, {value: 1})}>...`
- *     should be
- *     html`<${MyElement.assign({value: 1})}>...`
+ * @example html`<${MyElement} ${assign(MyElement, {value: 1})}>...` should be
+ * html`<${MyElement.assign({value: 1})}>...`
  */
 export function assign<const SpecificDeclarativeElement extends ElementDefinitionWithInputsType>(
     declarativeElement: SpecificDeclarativeElement,
@@ -34,10 +32,8 @@ export function assign<const SpecificDeclarativeElement extends ElementDefinitio
  *
  * @deprecated Instead of using this directive, assign inputs directly on the element's
  *   interpolation opening tag interpolation.
- * @example
- *     html`<${MyElement} ${assign(MyElement, {value: 1})}>...`
- *     should be
- *     html`<${MyElement.assign({value: 1})}>...`
+ * @example html`<${MyElement} ${assign(MyElement, {value: 1})}>...` should be
+ * html`<${MyElement.assign({value: 1})}>...`
  */
 export function assign<
     const SpecificDeclarativeElement extends ElementDefinitionWithInputsType,
@@ -48,10 +44,8 @@ export function assign<
  *
  * @deprecated Instead of using this directive, assign inputs directly on the element's
  *   interpolation opening tag interpolation.
- * @example
- *     html`<${MyElement} ${assign(MyElement, {value: 1})}>...`
- *     should be
- *     html`<${MyElement.assign({value: 1})}>...`
+ * @example html`<${MyElement} ${assign(MyElement, {value: 1})}>...` should be
+ * html`<${MyElement.assign({value: 1})}>...`
  */
 export function assign<const SpecificDeclarativeElement extends ElementDefinitionWithInputsType>(
     declarativeElementOrInputs: SpecificDeclarativeElement,

@@ -1,8 +1,9 @@
-import {PropertyValueType, SetOptionalAndNullable, isTruthy} from '@augment-vir/common';
+import {check} from '@augment-vir/assert';
+import {SetOptionalAndNullable, Values} from '@augment-vir/common';
 import {PropertyInitMapBase} from 'element-vir';
 import {GlobalValues} from '../../../ui/elements/element-book-app/global-values';
 import {InfiniteRecursionLimiter} from '../../../util/type';
-import {BookEntryTypeEnum} from '../book-entry-type';
+import {BookEntryType} from '../book-entry-type';
 import {titleToUrlBreadcrumb} from '../url-breadcrumbs';
 import {BookElementExample, BookElementExampleInit, BookPage} from './book-page';
 import {BookPageControlsInitBase} from './book-page-controls';
@@ -94,7 +95,7 @@ export function defineBookPage<
 ): BookPage<GlobalValuesType, ParentPage, ControlsInit> {
     const page: BookPage<GlobalValuesType, ParentPage, ControlsInit> = {
         ...pageInit,
-        entryType: BookEntryTypeEnum.Page,
+        entryType: BookEntryType.Page,
         elementExamples: {},
         descriptionParagraphs: pageInit.descriptionParagraphs ?? [],
         controls: pageInit.controls ?? ({} as ControlsInit),
@@ -108,7 +109,7 @@ export function defineBookPage<
             defineExample(elementExampleInit) {
                 const newExample: BookElementExample<any, any, any> = {
                     ...elementExampleInit,
-                    entryType: BookEntryTypeEnum.ElementExample,
+                    entryType: BookEntryType.ElementExample,
                     parent: page,
                     descriptionParagraphs: elementExampleInit.descriptionParagraphs ?? [],
                     errors: [
@@ -116,12 +117,13 @@ export function defineBookPage<
                             new Error(
                                 `Example title '${elementExampleInit.title}' in page '${pageInit.title}' is already taken.`,
                             ),
-                    ].filter(isTruthy),
+                    ].filter(check.isTruthy),
                 };
                 alreadyTakenElementExampleNames.add(elementExampleInit.title);
 
-                page.elementExamples[titleToUrlBreadcrumb(newExample.title)] =
-                    newExample as PropertyValueType<(typeof page)['elementExamples']>;
+                page.elementExamples[titleToUrlBreadcrumb(newExample.title)] = newExample as Values<
+                    (typeof page)['elementExamples']
+                >;
             },
         });
     }

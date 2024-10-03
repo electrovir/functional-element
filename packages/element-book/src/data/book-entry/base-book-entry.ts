@@ -1,4 +1,4 @@
-import {BookEntryTypeEnum} from './book-entry-type';
+import {BookEntryType} from './book-entry-type.js';
 
 export type BaseBookEntry = {
     /**
@@ -6,7 +6,7 @@ export type BaseBookEntry = {
      * unique within a given entry's parent.
      */
     title: string;
-    entryType: BookEntryTypeEnum;
+    entryType: BookEntryType;
     /**
      * The parent page. A value of undefined here indicates that the entry should be at the top
      * level of the element book.

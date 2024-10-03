@@ -1,6 +1,6 @@
+import {check} from '@augment-vir/assert';
 import {css, html} from 'element-vir';
-import {isRunTimeType} from 'run-time-assertions';
-import {defineBookElement} from '../define-book-element';
+import {defineBookElement} from '../define-book-element.js';
 
 export const BookError = defineBookElement<{message: string | ReadonlyArray<string>}>()({
     tagName: 'book-error',
@@ -18,9 +18,7 @@ export const BookError = defineBookElement<{message: string | ReadonlyArray<stri
         }
     `,
     renderCallback({inputs}) {
-        const paragraphs = isRunTimeType(inputs.message, 'array')
-            ? inputs.message
-            : [inputs.message];
+        const paragraphs = check.isArray(inputs.message) ? inputs.message : [inputs.message];
 
         return paragraphs.map(
             (paragraph) => html`

@@ -1,7 +1,7 @@
-import {PartialAndUndefined, mapObjectValues} from '@augment-vir/common';
+import {PartialWithUndefined, mapObjectValues} from '@augment-vir/common';
 import {isBookTreeNode} from '../../book-tree/book-tree';
 import {BookTreeNode} from '../../book-tree/book-tree-node';
-import {BookEntryTypeEnum} from '../book-entry-type';
+import {BookEntryType} from '../book-entry-type';
 import {BookPageControlsValues} from './book-page-controls';
 
 export type ControlsWrapper = {
@@ -75,11 +75,11 @@ export function createNewControls(
 
 export function updateTreeControls(
     node: BookTreeNode,
-    existingControls: PartialAndUndefined<ControlsWrapper> | undefined,
+    existingControls: PartialWithUndefined<ControlsWrapper> | undefined,
 ): ControlsWrapper {
     const controls =
         existingControls?.controls ||
-        (isBookTreeNode(node, BookEntryTypeEnum.Page)
+        (isBookTreeNode(node, BookEntryType.Page)
             ? mapObjectValues(node.entry.controls, (name, setup) => {
                   return setup.initValue;
               })

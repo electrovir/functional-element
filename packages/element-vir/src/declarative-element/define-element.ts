@@ -1,4 +1,4 @@
-import {isRunTimeType} from 'run-time-assertions';
+import {check} from '@augment-vir/assert';
 import {CustomElementTagName} from './custom-tag-name';
 import {DeclarativeElementDefinition} from './declarative-element';
 import {DeclarativeElementInit} from './declarative-element-init';
@@ -69,7 +69,7 @@ export function defineElement<Inputs extends PropertyInitMapBase = {}>() {
                   SlotNames
               > = initInput;
 
-        if (!isRunTimeType(init, 'object')) {
+        if (!check.isObject(init)) {
             throw new Error('Cannot define element with non-object init: ${init}');
         }
 

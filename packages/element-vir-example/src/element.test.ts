@@ -1,4 +1,5 @@
 import {getObjectTypedKeys, randomString} from '@augment-vir/common';
+import {describe, it} from '@augment-vir/test';
 import {
     DeclarativeElement,
     DeclarativeElementDefinition,
@@ -14,14 +15,13 @@ import {
     html,
     listen,
 } from 'element-vir';
-import {assertThrows} from 'run-time-assertions';
 import {TestChildElement} from './elements/entries/old-test-app/child.element';
 import {VirOldTestApp} from './elements/entries/old-test-app/vir-old-test-app.element';
 import {VirTestBookApp} from './elements/vir-test-book-app.element';
 
 describe('test elements', () => {
     it('has proper types', () => {
-        assertThrows(() => {
+        assert.throws(() => {
             defineElementNoInputs({
                 tagName: 'invalid-derp-whatever',
                 hostClasses: {
@@ -84,7 +84,7 @@ describe('test elements', () => {
         // @ts-expect-error
         WithHostClassesAndCssVars.cssVars.derp;
 
-        assertThrows(() => {
+        assert.throws(() => {
             // @ts-expect-error: missing tagName
             defineElementNoInputs({
                 renderCallback(): TemplateResult {
@@ -139,7 +139,7 @@ describe('test elements', () => {
             },
         });
 
-        assertThrows(() =>
+        assert.throws(() =>
             defineElementNoInputs({
                 // @ts-expect-error: tag name must have dashes in it
                 tagName: 'invalidTagNameMissingDash',
@@ -172,7 +172,7 @@ describe('test elements', () => {
             },
         });
 
-        assertThrows(() =>
+        assert.throws(() =>
             // @ts-expect-error: missing renderCallback
             defineElementNoInputs({
                 tagName: 'element-vir-test-element-no-render',

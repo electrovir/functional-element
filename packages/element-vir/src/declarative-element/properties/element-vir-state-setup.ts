@@ -1,4 +1,4 @@
-import {isObject} from '@augment-vir/common';
+import {check} from '@augment-vir/assert';
 import {PropertyInitMapBase} from './element-properties';
 
 export const stateSetupKey = Symbol('element-vir-state-setup');
@@ -10,7 +10,7 @@ export type ElementVirStateSetup<InnerValue> = {
 export function isElementVirStateSetup<T = unknown>(
     input: unknown,
 ): input is ElementVirStateSetup<T> {
-    if (!isObject(input)) {
+    if (!check.isObject(input)) {
         return false;
     }
 

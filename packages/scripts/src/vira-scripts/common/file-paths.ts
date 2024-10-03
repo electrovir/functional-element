@@ -1,4 +1,4 @@
-import {readDirRecursive, toPosixPath} from '@augment-vir/node-js';
+import {readDirRecursive, toPosixPath} from '@augment-vir/node';
 import {existsSync} from 'fs';
 import {stat} from 'fs/promises';
 import {join, relative} from 'path';

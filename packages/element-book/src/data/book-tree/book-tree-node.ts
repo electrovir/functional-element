@@ -1,6 +1,6 @@
-import {PropertyValueType} from '@augment-vir/common';
-import {BookEntry} from '../book-entry/book-entry';
-import {AnyBookEntryType, BookEntryTypeEnum} from '../book-entry/book-entry-type';
+import {Values} from '@augment-vir/common';
+import {AnyBookEntryType, BookEntryType} from '../book-entry/book-entry-type.js';
+import {BookEntry} from '../book-entry/book-entry.js';
 
 export const isBookTreeNodeMarker = '_isBookTreeNode';
 
@@ -18,8 +18,8 @@ type InternalBookTreeNodeType<Entry> = {
     manuallyAdded: boolean;
 };
 
-export type BookTreeNode<EntryTypes extends BookEntryTypeEnum = AnyBookEntryType> =
-    | PropertyValueType<{
+export type BookTreeNode<EntryTypes extends BookEntryType = AnyBookEntryType> =
+    | Values<{
           [EntryType in EntryTypes]: InternalBookTreeNodeType<
               Extract<BookEntry, {entryType: EntryType}>
           >;
@@ -27,6 +27,6 @@ export type BookTreeNode<EntryTypes extends BookEntryTypeEnum = AnyBookEntryType
     | (AnyBookEntryType extends EntryTypes ? InternalBookTreeNodeType<BookEntry> : never);
 
 export type BookTree = Readonly<{
-    tree: Readonly<BookTreeNode<BookEntryTypeEnum.Root>>;
+    tree: Readonly<BookTreeNode<BookEntryType.Root>>;
     flattenedNodes: ReadonlyArray<Readonly<BookTreeNode>>;
 }>;

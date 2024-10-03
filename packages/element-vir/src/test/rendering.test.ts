@@ -1,6 +1,6 @@
-import {assert, fixture} from '@open-wc/testing';
+import {assert} from '@augment-vir/assert';
+import {describe, it, testWeb} from '@augment-vir/test';
 import {HtmlSpecTagName, htmlSpecConstructorsByTagName} from 'html-spec-tags';
-import {assertInstanceOf} from 'run-time-assertions';
 import {html} from '../template-transforms/vir-html/vir-html';
 
 describe('rendering', () => {
@@ -13,7 +13,7 @@ describe('rendering', () => {
             'tr',
         ];
 
-        const topLevelDiv = await fixture(html`
+        const topLevelDiv = await testWeb.render(html`
             <div>
                 ${tagNames.map((tagName) => {
                     return html`
@@ -28,7 +28,7 @@ describe('rendering', () => {
         tagNames.forEach((tagName) => {
             const expectedConstructor = htmlSpecConstructorsByTagName[tagName];
             const element = topLevelDiv.querySelector(tagName);
-            assertInstanceOf(
+            assert.instanceOf(
                 element,
                 expectedConstructor,
                 `'${tagName}' should have produced a '${expectedConstructor.name}' element but produced '${element?.constructor.name}' element.`,

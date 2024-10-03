@@ -1,6 +1,6 @@
+import {assert} from '@augment-vir/assert';
 import {randomString} from '@augment-vir/common';
-import {assert, fixture as renderFixture} from '@open-wc/testing';
-import {assertInstanceOf} from 'run-time-assertions';
+import {describe, it, testWeb} from '@augment-vir/test';
 import {html} from '../../template-transforms/vir-html/vir-html';
 import {testId, testIdAttributeName} from './test-id.directive';
 
@@ -8,12 +8,12 @@ describe(testId.name, () => {
     it('attaches a the given test id', async () => {
         const testIdValue = randomString();
 
-        const fixture = await renderFixture(html`
+        const fixture = await testWeb.render(html`
             <div ${testId(testIdValue)}>text</div>
         `);
 
-        assertInstanceOf(fixture, HTMLDivElement);
+        assert.instanceOf(fixture, HTMLDivElement);
 
-        assert.strictEqual(fixture.getAttribute(testIdAttributeName), testIdValue);
+        assert.strictEquals(fixture.getAttribute(testIdAttributeName), testIdValue);
     });
 });

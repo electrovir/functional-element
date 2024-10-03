@@ -1,26 +1,20 @@
-import {clickElement} from '@augment-vir/browser-testing';
-import {
-    DeferredPromiseWrapper,
-    createDeferredPromiseWrapper,
-    randomString,
-    typedMap,
-    wait,
-    waitUntilTruthy,
-} from '@augment-vir/common';
-import {assert, fixture as renderFixture, waitUntil} from '@open-wc/testing';
+import {assert, waitUntil} from '@augment-vir/assert';
+import {DeferredPromise, randomString, typedMap, wait} from '@augment-vir/common';
+import {describe, it, testWeb} from '@augment-vir/test';
 import {isObservableBase, noUpdate} from 'observavir';
-import {assertDefined, assertInstanceOf, assertThrows, assertTypeOf} from 'run-time-assertions';
-import {nothing} from '../../lit-exports/all-lit-exports';
-import {html} from '../../template-transforms/vir-html/vir-html';
-import {defineElement} from '../define-element';
-import {defineElementNoInputs} from '../define-element-no-inputs';
-import {defineElementEvent} from '../properties/element-events';
-import {StaticElementPropertyDescriptor} from '../properties/element-properties';
-import {ElementVirStateSetup, stateSetupKey} from '../properties/element-vir-state-setup';
-import {AsyncProp, AsyncValue, asyncProp} from './async-prop';
-import {isAsyncError, isResolved} from './is-resolved.directive';
-import {listen} from './listen.directive';
-import {renderAsync} from './render-async.directive';
+import {nothing} from '../../lit-exports/all-lit-exports.js';
+import {html} from '../../template-transforms/vir-html/vir-html.js';
+import {defineElementNoInputs} from '../define-element-no-inputs.js';
+import {defineElement} from '../define-element.js';
+import {defineElementEvent} from '../properties/element-events.js';
+import {StaticElementPropertyDescriptor} from '../properties/element-properties.js';
+import {ElementVirStateSetup, stateSetupKey} from '../properties/element-vir-state-setup.js';
+import {AsyncProp, AsyncValue, asyncProp} from './async-prop.js';
+import {isAsyncError, isResolved} from './is-resolved.directive.js';
+import {listen} from './listen.directive.js';
+import {renderAsync} from './render-async.directive.js';
+
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 
 describe(asyncProp.name, () => {
     it('should have proper types', () => {
@@ -35,12 +29,14 @@ describe(asyncProp.name, () => {
 
         asyncProp({
             async updateCallback(trigger: {callback: number}) {
+                await wait({milliseconds: 0});
                 return 'five';
             },
         });
 
         asyncProp({
             async updateCallback(trigger: {callback: () => number}) {
+                await wait({milliseconds: 0});
                 return 'five';
             },
         });
@@ -76,14 +72,14 @@ describe(asyncProp.name, () => {
                 updateState({
                     syncProp: {
                         value: 'yo',
-                        // @ts-expect-error
+                        // @ts-expect-error: invalid extra property
                         hello: 'yo',
                     },
                 });
 
                 state.myAsyncProp.update({
                     ...exampleTrigger,
-                    // @ts-expect-error
+                    // @ts-expect-error: invalid extra property
                     hello: 'yo',
                 });
                 state.myAsyncPropAgain.update({...exampleTrigger, goodbye: 4, hello: 'hi'});
@@ -96,25 +92,29 @@ describe(asyncProp.name, () => {
 
                 state.myAsyncPropAgain.setValue(Promise.resolve({} as any));
 
-                assertTypeOf(state.myAsyncProp.value).toEqualTypeOf<AsyncValue<SomethingObject>>();
+                assert.tsType(state.myAsyncProp.value).equals<AsyncValue<SomethingObject>>();
                 return html``;
             },
         });
 
-        assertTypeOf(elementWithAsyncProp.stateInitStatic.myAsyncProp).toEqualTypeOf<
-            StaticElementPropertyDescriptor<
-                string,
-                ElementVirStateSetup<AsyncProp<SomethingObject, TriggerType>>
-            >
-        >();
+        assert
+            .tsType(elementWithAsyncProp.stateInitStatic.myAsyncProp)
+            .equals<
+                StaticElementPropertyDescriptor<
+                    string,
+                    ElementVirStateSetup<AsyncProp<SomethingObject, TriggerType>>
+                >
+            >();
 
-        assertTypeOf<
-            (typeof elementWithAsyncProp)['stateType']['myAsyncProp']['value']
-        >().toEqualTypeOf<AsyncValue<SomethingObject>>();
+        assert
+            .tsType<(typeof elementWithAsyncProp)['stateType']['myAsyncProp']['value']>()
+            .equals<AsyncValue<SomethingObject>>();
 
-        assertTypeOf<
-            (typeof elementWithAsyncProp)['instanceType']['instanceState']['myAsyncProp']['value']
-        >().toEqualTypeOf<AsyncValue<SomethingObject>>();
+        assert
+            .tsType<
+                (typeof elementWithAsyncProp)['instanceType']['instanceState']['myAsyncProp']['value']
+            >()
+            .equals<AsyncValue<SomethingObject>>();
     });
 
     it('passes isObservableBase', () => {
@@ -126,7 +126,7 @@ describe(asyncProp.name, () => {
         const startingNumber = 123;
 
         // render the element
-        const deferredPromiseWrappers: DeferredPromiseWrapper<number>[] = [];
+        const deferredPromiseWrappers: DeferredPromise<number>[] = [];
         let renderCount: number = 0;
         const circularReference = {derp: '' as any};
         circularReference.derp = circularReference;
@@ -138,7 +138,7 @@ describe(asyncProp.name, () => {
             stateInitStatic: {
                 myAsyncProp: asyncProp({
                     updateCallback({newNumber}: {newNumber: number; circularReference: any}) {
-                        const newDeferredPromise = createDeferredPromiseWrapper<typeof newNumber>();
+                        const newDeferredPromise = new DeferredPromise<typeof newNumber>();
                         deferredPromiseWrappers.push(newDeferredPromise);
                         return newDeferredPromise.promise;
                     },
@@ -151,7 +151,7 @@ describe(asyncProp.name, () => {
                 });
 
                 if (isResolved(state.myAsyncProp.value) && !isAsyncError(state.myAsyncProp.value)) {
-                    assertTypeOf(state.myAsyncProp.value).toEqualTypeOf<number>();
+                    assert.tsType(state.myAsyncProp.value).equals<number>();
                 }
 
                 renderCount++;
@@ -160,7 +160,7 @@ describe(asyncProp.name, () => {
                     <button
                         id="new-promise"
                         ${listen('click', () => {
-                            const newDeferredPromise = createDeferredPromiseWrapper<number>();
+                            const newDeferredPromise = new DeferredPromise<number>();
 
                             state.myAsyncProp.setValue(newDeferredPromise.promise);
 
@@ -192,14 +192,14 @@ describe(asyncProp.name, () => {
             },
         });
 
-        const instance = await renderFixture(html`
+        const instance = await testWeb.render(html`
             <${ElementWithAsyncProp.assign({
                 promiseUpdateTrigger: startingNumber,
             })}></${ElementWithAsyncProp}>
         `);
 
         // get elements
-        assertInstanceOf(instance, ElementWithAsyncProp);
+        assert.instanceOf(instance, ElementWithAsyncProp);
         const newPromiseButton = instance.shadowRoot.querySelector('#new-promise');
         const forceUpdateButton = instance.shadowRoot.querySelector('#force-update');
         const assignResolvedButton = instance.shadowRoot.querySelector('#assign-resolved-value');
@@ -207,108 +207,114 @@ describe(asyncProp.name, () => {
         assert.isUndefined(instance.instanceState.myAsyncProp.lastResolvedValue);
         const initialPromise = instance.instanceState.myAsyncProp.value;
 
-        assertDefined(newPromiseButton);
-        assertDefined(forceUpdateButton);
-        assertDefined(assignResolvedButton);
+        assert.isDefined(newPromiseButton);
+        assert.isDefined(forceUpdateButton);
+        assert.isDefined(assignResolvedButton);
 
         // initial render
-        assertDefined(deferredPromiseWrappers[0]);
-        assert.lengthOf(deferredPromiseWrappers, 1);
+        assert.isDefined(deferredPromiseWrappers[0]);
+        assert.isLengthExactly(deferredPromiseWrappers as DeferredPromise<number>[], 1);
         assert.instanceOf(instance.instanceState.myAsyncProp.value, Promise);
-        assert.strictEqual(renderCount, 1);
+        assert.strictEquals(renderCount, 1);
 
         // assign the same number to the input; the element should not re-render
         instance.assignInputs({
             promiseUpdateTrigger: startingNumber,
         });
-        await assertThrows(
+        await assert.throws(
             async () => await waitUntil(() => renderCount === 2),
             undefined,
             'should not have rendered again',
         );
 
-        assert.lengthOf(deferredPromiseWrappers, 1);
+        assert.isLengthExactly(deferredPromiseWrappers as DeferredPromise<number>[], 1);
         assert.instanceOf(instance.instanceState.myAsyncProp.value, Promise);
 
         // assign a new number; the element should re-render
         instance.assignInputs({
             promiseUpdateTrigger: 2,
         });
-        await waitUntil(() => renderCount === 2, 'Render count failed to reach 2');
+        await waitUntil(() => renderCount === 2, undefined, 'Render count failed to reach 2');
 
-        assert.lengthOf(deferredPromiseWrappers, 2);
-        assertDefined(deferredPromiseWrappers[1]);
+        assert.isLengthExactly(deferredPromiseWrappers as DeferredPromise<number>[], 2);
+        assert.isDefined(deferredPromiseWrappers[1]);
         assert.instanceOf(instance.instanceState.myAsyncProp.value, Promise);
 
         // resolve the promise; the element should re-render and the state should update
         const resolutionValue = 3;
         deferredPromiseWrappers[1].resolve(resolutionValue);
 
-        await waitUntil(() => renderCount === 3, 'Render count failed to reach 3');
+        await waitUntil(() => renderCount === 3, undefined, 'Render count failed to reach 3');
         const initialPromiseResult = await initialPromise;
 
-        assert.lengthOf(deferredPromiseWrappers, 2);
-        assert.strictEqual<unknown>(instance.instanceState.myAsyncProp.value, resolutionValue);
-        assert.strictEqual(initialPromiseResult, resolutionValue);
-        assert.strictEqual(instance.instanceState.myAsyncProp.lastResolvedValue, resolutionValue);
+        assert.isLengthExactly(deferredPromiseWrappers as DeferredPromise<number>[], 2);
+        assert.strictEquals(instance.instanceState.myAsyncProp.value as unknown, resolutionValue);
+        assert.strictEquals(initialPromiseResult, resolutionValue);
+        assert.strictEquals(
+            instance.instanceState.myAsyncProp.lastResolvedValue as unknown,
+            resolutionValue,
+        );
 
         // assign a new input; element should re-render and create a new promise
         instance.assignInputs({
             promiseUpdateTrigger: 4,
         });
-        await waitUntil(() => renderCount === 4, 'Render count failed to reach 4');
+        await waitUntil(() => renderCount === 4, undefined, 'Render count failed to reach 4');
 
-        assert.lengthOf(deferredPromiseWrappers, 3);
-        assertDefined(deferredPromiseWrappers[2]);
+        assert.isLengthExactly(deferredPromiseWrappers as DeferredPromise<number>[], 3);
+        assert.isDefined(deferredPromiseWrappers[2]);
         assert.instanceOf(instance.instanceState.myAsyncProp.value, Promise);
 
         // reject the error; element should re-render and update state
         const rejectionError = new Error('fake error');
         deferredPromiseWrappers[2].reject(rejectionError);
 
-        await waitUntil(() => renderCount === 5, 'Render count failed to reach 5');
+        await waitUntil(() => renderCount === 5, undefined, 'Render count failed to reach 5');
 
-        assert.lengthOf(deferredPromiseWrappers, 3);
-        assert.strictEqual<unknown>(instance.instanceState.myAsyncProp.value, rejectionError);
+        assert.isLengthExactly(deferredPromiseWrappers as DeferredPromise<number>[], 3);
+        assert.strictEquals(instance.instanceState.myAsyncProp.value as unknown, rejectionError);
 
         // force an update; element should re-render and update state
-        await clickElement(forceUpdateButton);
+        await testWeb.click(forceUpdateButton);
 
-        await waitUntil(() => renderCount === 6, 'Render count failed to reach 6');
+        await waitUntil(() => renderCount === 6, undefined, 'Render count failed to reach 6');
 
-        assert.lengthOf(deferredPromiseWrappers, 4);
-        assertDefined(deferredPromiseWrappers[3]);
+        assert.isLengthExactly(deferredPromiseWrappers as DeferredPromise<number>[], 4);
+        assert.isDefined(deferredPromiseWrappers[3]);
         assert.instanceOf(instance.instanceState.myAsyncProp.value, Promise);
 
         // assign a new promise; element should not re-render (because the last promise never finished settling) and update state
-        await clickElement(newPromiseButton);
+        await testWeb.click(newPromiseButton);
 
-        assert.lengthOf(deferredPromiseWrappers, 5);
-        assertDefined(deferredPromiseWrappers[4]);
+        assert.isLengthExactly(deferredPromiseWrappers as DeferredPromise<number>[], 5);
+        assert.isDefined(deferredPromiseWrappers[4]);
         assert.instanceOf(instance.instanceState.myAsyncProp.value, Promise);
 
         // it shouldn't render after resolution of a previous promise
         deferredPromiseWrappers[3].resolve(5);
 
-        await assertThrows(() => waitUntil(() => renderCount === 7));
+        await assert.throws(() => waitUntil(() => renderCount === 7));
         assert.instanceOf(instance.instanceState.myAsyncProp.value, Promise);
 
         // should render after resolving the current promise
         const finalResolutionValue = 6;
         deferredPromiseWrappers[4].resolve(finalResolutionValue);
 
-        await waitUntil(() => renderCount === 7, 'Render count failed to reach 7');
-        assert.strictEqual<unknown>(instance.instanceState.myAsyncProp.value, finalResolutionValue);
+        await waitUntil(() => renderCount === 7, undefined, 'Render count failed to reach 7');
+        assert.strictEquals(
+            instance.instanceState.myAsyncProp.value as unknown,
+            finalResolutionValue,
+        );
 
         // assign an already resolved value; element should update once and immediately use the resolved value
-        await clickElement(assignResolvedButton);
+        await testWeb.click(assignResolvedButton);
 
-        assert.lengthOf(
+        assert.isLengthExactly(
             deferredPromiseWrappers,
             5,
             'no new deferred promises should have been created',
         );
-        assert.typeOf(instance.instanceState.myAsyncProp.value, 'number');
+        assert.isNumber(instance.instanceState.myAsyncProp.value);
     });
 
     it('resolves to an error if one is thrown', async () => {
@@ -322,7 +328,7 @@ describe(asyncProp.name, () => {
             stateInitStatic: {
                 myAsyncProp: asyncProp({
                     async updateCallback() {
-                        await wait(1000);
+                        await wait({seconds: 1});
                         throw new Error(errorMessage);
                     },
                 }),
@@ -333,13 +339,13 @@ describe(asyncProp.name, () => {
             },
         });
 
-        const instance = await renderFixture(html`
+        const instance = await testWeb.render(html`
             <${ElementWithAsyncPropError}></${ElementWithAsyncPropError}>
         `);
 
         // get elements
-        assertInstanceOf(instance, ElementWithAsyncPropError);
-        await waitUntilTruthy(() => {
+        assert.instanceOf(instance, ElementWithAsyncPropError);
+        await waitUntil.isTruthy(() => {
             return (
                 instance.instanceState.myAsyncProp.value instanceof Error &&
                 instance.instanceState.myAsyncProp.value.message === errorMessage
@@ -355,11 +361,12 @@ describe(asyncProp.name, () => {
             stateInitStatic: {
                 myRandomNumber: asyncProp({
                     async updateCallback({newNumber}: {newNumber: number | undefined}) {
+                        await wait({milliseconds: 0});
                         return randomString();
                     },
                 }),
             },
-            renderCallback({inputs, state}) {
+            renderCallback({inputs, state, host}) {
                 state.myRandomNumber.update({
                     newNumber: inputs.promiseUpdateTrigger,
                 });
@@ -372,7 +379,7 @@ describe(asyncProp.name, () => {
             },
         });
 
-        const rendered = await renderFixture(html`
+        const rendered = await testWeb.render(html`
             <div>
                 <${ElementWithAsyncProp.assign({
                     promiseUpdateTrigger: undefined,
@@ -389,8 +396,8 @@ describe(asyncProp.name, () => {
             instance2,
         ] = Array.from(rendered.querySelectorAll(ElementWithAsyncProp.tagName));
 
-        assertInstanceOf(instance1, ElementWithAsyncProp);
-        assertInstanceOf(instance2, ElementWithAsyncProp);
+        assert.instanceOf(instance1, ElementWithAsyncProp);
+        assert.instanceOf(instance2, ElementWithAsyncProp);
 
         const [
             span1,
@@ -399,8 +406,8 @@ describe(asyncProp.name, () => {
             instance1.shadowRoot.querySelector('.value-span'),
             instance2.shadowRoot.querySelector('.value-span'),
         ];
-        assertInstanceOf(span1, HTMLSpanElement);
-        assertInstanceOf(span2, HTMLSpanElement);
+        assert.instanceOf(span1, HTMLSpanElement);
+        assert.instanceOf(span2, HTMLSpanElement);
 
         const spans = [
             span1,
@@ -411,9 +418,13 @@ describe(asyncProp.name, () => {
             return typedMap(spans, (span) => span.innerText);
         }
 
+        await waitUntil(() => {
+            return span1.innerText !== 'loading' && span2.innerText !== 'loading';
+        });
+
         const beforeTexts = getSpanTexts();
 
-        assert.notStrictEqual(beforeTexts[0], beforeTexts[1]);
+        assert.notStrictEquals(beforeTexts[0], beforeTexts[1]);
 
         instance1.instanceInputs.promiseUpdateTrigger = Math.random();
 
@@ -423,9 +434,9 @@ describe(asyncProp.name, () => {
 
         const afterTexts = getSpanTexts();
 
-        assert.notStrictEqual(afterTexts[0], afterTexts[1]);
-        assert.notStrictEqual(beforeTexts[0], afterTexts[0]);
-        assert.strictEqual(beforeTexts[1], afterTexts[1]);
+        assert.notStrictEquals(afterTexts[0], afterTexts[1]);
+        assert.notStrictEquals(beforeTexts[0], afterTexts[0]);
+        assert.strictEquals(beforeTexts[1], afterTexts[1]);
     });
 
     it('works even if the value is undefined', async () => {
@@ -439,7 +450,7 @@ describe(asyncProp.name, () => {
             },
             renderCallback({dispatch, events, state}) {
                 if (isResolved(state.myAsyncProp.value) && !isAsyncError(state.myAsyncProp.value)) {
-                    assertTypeOf(state.myAsyncProp.value).toEqualTypeOf<number | undefined>();
+                    assert.tsType(state.myAsyncProp.value).equals<number | undefined>();
                 }
 
                 dispatch(new events.wasRendered());
@@ -448,9 +459,7 @@ describe(asyncProp.name, () => {
                     <button
                         id="new-promise"
                         ${listen('click', () => {
-                            const newPromiseWrapper = createDeferredPromiseWrapper<
-                                number | undefined
-                            >();
+                            const newPromiseWrapper = new DeferredPromise<number | undefined>();
 
                             state.myAsyncProp.setValue(newPromiseWrapper.promise);
                         })}
@@ -484,7 +493,7 @@ describe(asyncProp.name, () => {
         // render the element
         let renderCount: number = 0;
 
-        const instance = await renderFixture(html`
+        const instance = await testWeb.render(html`
             <${ElementWithUndefinedAsyncProp}
                 ${listen(ElementWithUndefinedAsyncProp.events.wasRendered, () => {
                     renderCount++;
@@ -493,33 +502,33 @@ describe(asyncProp.name, () => {
         `);
 
         // get elements
-        assertInstanceOf(instance, ElementWithUndefinedAsyncProp);
+        assert.instanceOf(instance, ElementWithUndefinedAsyncProp);
         const newPromiseButton = instance.shadowRoot.querySelector('#new-promise');
         const forceUpdateButton = instance.shadowRoot.querySelector('#force-update');
         const assignResolvedButton = instance.shadowRoot.querySelector('#assign-resolved-value');
 
-        assertDefined(newPromiseButton);
-        assertDefined(forceUpdateButton);
-        assertDefined(assignResolvedButton);
+        assert.isDefined(newPromiseButton);
+        assert.isDefined(forceUpdateButton);
+        assert.isDefined(assignResolvedButton);
 
         // initial render
         assert.isUndefined(instance.instanceState.myAsyncProp.value);
-        assert.strictEqual(renderCount, 1);
+        assert.strictEquals(renderCount, 1);
 
         // assign a new promise
-        await clickElement(newPromiseButton);
+        await testWeb.click(newPromiseButton);
 
         await waitUntil(() => renderCount === 2);
         assert.instanceOf(instance.instanceState.myAsyncProp.value, Promise);
 
         // force an update (but we have no create promise so it will error out)
-        await clickElement(forceUpdateButton);
+        await testWeb.click(forceUpdateButton);
 
         await waitUntil(() => renderCount === 3);
         assert.instanceOf(instance.instanceState.myAsyncProp.value, Error);
 
         // assign a new resolved value
-        await clickElement(assignResolvedButton);
+        await testWeb.click(assignResolvedButton);
 
         await waitUntil(() => renderCount === 4);
         assert.isNumber(instance.instanceState.myAsyncProp.value);
@@ -541,21 +550,21 @@ describe(asyncProp.name, () => {
          * These properties are set to `protected` to hide them so the `AsyncProp` interface is
          * simpler.
          */
-        // @ts-expect-error
+        // @ts-expect-error: should not exist publicly
         instance.dispatch;
-        // @ts-expect-error
+        // @ts-expect-error: should not exist publicly
         instance.equalityCheck;
-        // @ts-expect-error
+        // @ts-expect-error: should not exist publicly
         instance.getListenerCount;
-        // @ts-expect-error
+        // @ts-expect-error: should not exist publicly
         instance.updateCallback;
-        // @ts-expect-error
+        // @ts-expect-error: should not exist publicly
         instance.removeListener;
-        // @ts-expect-error
+        // @ts-expect-error: should not exist publicly
         instance.removeAllListeners;
-        // @ts-expect-error
+        // @ts-expect-error: should not exist publicly
         instance.listenToEvent;
-        // @ts-expect-error
+        // @ts-expect-error: should not exist publicly
         instance.listen;
     });
 
@@ -573,7 +582,7 @@ describe(asyncProp.name, () => {
         instance.update({prop1: 'hi', callback: () => {}});
         instance.update({prop1: 'bye', callback: () => {}});
 
-        assert.strictEqual(callCount, 2);
+        assert.strictEquals(callCount, 2);
     });
 
     it('does not automatically read new proxy values', async () => {
@@ -603,20 +612,20 @@ describe(asyncProp.name, () => {
             },
         });
 
-        const rendered = await renderFixture(html`
+        const rendered = await testWeb.render(html`
             <${ElementWithProxyAsyncPropInput.assign({
                 inputValue: 'hello there',
             })}></${ElementWithProxyAsyncPropInput}>
         `);
 
-        assertInstanceOf(rendered, ElementWithProxyAsyncPropInput);
+        assert.instanceOf(rendered, ElementWithProxyAsyncPropInput);
 
-        assert.strictEqual(rendered.shadowRoot.textContent, 'hello there');
+        assert.strictEquals(rendered.shadowRoot.textContent, 'hello there');
         rendered.assignInputs({inputValue: 'new value'});
-        assert.strictEqual(rendered.shadowRoot.textContent, 'hello there');
+        assert.strictEquals(rendered.shadowRoot.textContent, 'hello there');
         rendered.instanceState.myProp.forceUpdate();
-        assert.strictEqual(rendered.shadowRoot.textContent, 'hello there');
-        assert.strictEqual(callCount, 2);
+        assert.strictEquals(rendered.shadowRoot.textContent, 'hello there');
+        assert.strictEquals(callCount, 2);
     });
 
     it('ignores ongoing promises if setValue is called', async () => {
@@ -628,7 +637,7 @@ describe(asyncProp.name, () => {
             stateInitStatic: {
                 myProp: asyncProp({
                     async updateCallback() {
-                        await wait(updateDuration.milliseconds);
+                        await wait(updateDuration);
                         setTimeout(() => {
                             resolved = true;
                         });
@@ -642,19 +651,19 @@ describe(asyncProp.name, () => {
             },
         });
 
-        const rendered = await renderFixture(html`
+        const rendered = await testWeb.render(html`
             <${RaceConditionElement}></${RaceConditionElement}>
         `);
 
-        assertInstanceOf(rendered, RaceConditionElement);
+        assert.instanceOf(rendered, RaceConditionElement);
         assert.instanceOf(rendered.instanceState.myProp.value, Promise);
 
         rendered.instanceState.myProp.setValue(42);
 
         assert.isFalse(resolved);
-        await waitUntilTruthy(() => resolved);
-        await wait(updateDuration.milliseconds * 2);
-        assert.strictEqual<unknown>(rendered.instanceState.myProp.value, 42);
+        await waitUntil.isTruthy(() => resolved);
+        await wait({milliseconds: updateDuration.milliseconds * 2});
+        assert.strictEquals(rendered.instanceState.myProp.value as unknown, 42);
     });
 
     it('allows noUpdate', async () => {
@@ -673,9 +682,7 @@ describe(asyncProp.name, () => {
                             return noUpdate;
                         }
 
-                        return Array(10)
-                            .fill(0)
-                            .map(() => value);
+                        return new Array(10).fill(0).map(() => value);
                     },
                 }),
             },
@@ -685,12 +692,12 @@ describe(asyncProp.name, () => {
             },
         });
 
-        const rendered = await renderFixture(html`
+        const rendered = await testWeb.render(html`
             <${VirAsyncPropWithNoUpdate}></${VirAsyncPropWithNoUpdate}>
         `);
 
-        assertInstanceOf(rendered, VirAsyncPropWithNoUpdate);
-        await waitUntilTruthy(() => rendered._internalRenderCount > 0);
+        assert.instanceOf(rendered, VirAsyncPropWithNoUpdate);
+        await waitUntil.isTruthy(() => rendered._internalRenderCount > 0);
         assert.instanceOf(rendered.instanceState.asyncValues.value, Promise);
     });
 });

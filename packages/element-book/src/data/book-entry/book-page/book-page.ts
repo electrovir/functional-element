@@ -8,7 +8,7 @@ import {
 } from 'element-vir';
 import {GlobalValues} from '../../../ui/elements/element-book-app/global-values';
 import {BaseBookEntry} from '../base-book-entry';
-import {BookEntryTypeEnum} from '../book-entry-type';
+import {BookEntryType} from '../book-entry-type';
 import {BookPageControlsInitBase, ControlsToValues} from './book-page-controls';
 
 export type BookPage<
@@ -19,7 +19,7 @@ export type BookPage<
     BaseBookEntry,
     {
         parent: ParentPage;
-        entryType: BookEntryTypeEnum.Page;
+        entryType: BookEntryType.Page;
     }
 > & {
     controls: ControlsInit;
@@ -42,7 +42,7 @@ export type BookElementExample<
     BaseBookEntry,
     {
         parent: BookPage | undefined;
-        entryType: BookEntryTypeEnum.ElementExample;
+        entryType: BookEntryType.ElementExample;
     } & {
         /** Initialize the state for this example. */
         stateInitStatic?: StateInit | undefined;

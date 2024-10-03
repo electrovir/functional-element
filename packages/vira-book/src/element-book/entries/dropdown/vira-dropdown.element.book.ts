@@ -1,4 +1,3 @@
-import {isTruthy} from '@augment-vir/common';
 import {BookPageControlTypeEnum, defineBookPage, definePageControl} from 'element-book';
 import {CSSResult, css, html, listen} from 'element-vir';
 import {Element24Icon, ViraDropdown, ViraDropdownOption, allIconsByName} from 'vira';
@@ -212,7 +211,7 @@ export const viraDropdownPage = defineBookPage({
                                   exampleDropdownOptions.find(
                                       (option) => option.label === controls.Selected,
                                   )?.id,
-                              ].filter(isTruthy)
+                              ].filter(check.isTruthy)
                             : state.selected,
                         selectionPrefix: controls.Prefix || example.inputs?.selectionPrefix,
                         isDisabled: controls.Disabled

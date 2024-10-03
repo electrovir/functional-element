@@ -1,4 +1,4 @@
-import {itCases} from '@augment-vir/browser-testing';
+import {describe, itCases} from '@augment-vir/test';
 import {filterToSelectedOptions} from './dropdown-helpers';
 import {mockOptions} from './dropdown.mock';
 

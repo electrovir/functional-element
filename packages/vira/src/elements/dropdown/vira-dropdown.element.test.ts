@@ -1,13 +1,12 @@
-import {queryThroughShadow, waitForAnimationFrame} from '@augment-vir/browser';
-import {clickElement, extractText} from '@augment-vir/browser-testing';
-import {mapObjectValues, randomString, waitUntilTruthy} from '@augment-vir/common';
-import {assert, fixture, waitUntil} from '@open-wc/testing';
+import {assert, waitUntil} from '@augment-vir/assert';
+import {mapObjectValues, randomString} from '@augment-vir/common';
+import {describe, it, testWeb} from '@augment-vir/test';
+import {extractElementText, queryThroughShadow, waitForAnimationFrame} from '@augment-vir/web';
 import {html, listen, testIdBy} from 'element-vir';
-import {assertDefined, assertInstanceOf} from 'run-time-assertions';
-import {Element24Icon} from '../../icons/index';
-import {mockOptions} from './dropdown.mock';
-import {viraDropdownOptionsTestIds} from './vira-dropdown-options.element';
-import {ViraDropdown, viraDropdownTestIds} from './vira-dropdown.element';
+import {Element24Icon} from '../../icons/index.js';
+import {mockOptions} from './dropdown.mock.js';
+import {viraDropdownOptionsTestIds} from './vira-dropdown-options.element.js';
+import {ViraDropdown, viraDropdownTestIds} from './vira-dropdown.element.js';
 
 async function setupDropdownTest(inputs?: Partial<(typeof ViraDropdown)['inputsType']>) {
     const events: {
@@ -15,7 +14,7 @@ async function setupDropdownTest(inputs?: Partial<(typeof ViraDropdown)['inputsT
             (typeof ViraDropdown.events)[EventKey]
         >['detail'][];
     } = mapObjectValues(ViraDropdown.events, () => []);
-    const instance = await fixture(html`
+    const instance = await testWeb.render(html`
         <${ViraDropdown.assign({
             options: mockOptions,
             selected: [],
@@ -30,10 +29,10 @@ async function setupDropdownTest(inputs?: Partial<(typeof ViraDropdown)['inputsT
         ></${ViraDropdown}>
     `);
 
-    assertInstanceOf(instance, ViraDropdown);
+    assert.instanceOf(instance, ViraDropdown);
 
     const triggerElement = instance.shadowRoot.querySelector(testIdBy(viraDropdownTestIds.trigger));
-    assertInstanceOf(triggerElement, HTMLElement);
+    assert.instanceOf(triggerElement, HTMLElement);
 
     assert.isNull(instance.shadowRoot.querySelector(testIdBy(viraDropdownTestIds.options)));
     assert.isEmpty(events.openChange);
@@ -48,23 +47,23 @@ async function setupDropdownTest(inputs?: Partial<(typeof ViraDropdown)['inputsT
                 return instance.shadowRoot.querySelector(testIdBy(testId));
             };
         }),
-        async toggle() {
+        async toggle(this: void) {
             const optionsExisted: boolean = !!instance.shadowRoot.querySelector(
                 testIdBy(viraDropdownTestIds.options),
             );
 
-            await clickElement(triggerElement);
+            await testWeb.click(triggerElement);
 
-            await waitUntilTruthy(
-                async () => {
+            await waitUntil.isTruthy(
+                () => {
                     const optionsExistNow = !!instance.shadowRoot.querySelector(
                         testIdBy(viraDropdownTestIds.options),
                     );
 
                     return optionsExisted !== optionsExistNow;
                 },
+                {timeout: {seconds: 1}},
                 'the options never popped up',
-                {timeout: {milliseconds: 1000}},
             );
         },
     };
@@ -75,16 +74,16 @@ describe(ViraDropdown.tagName, () => {
         const {toggle, events} = await setupDropdownTest();
 
         await toggle();
-        assert.deepStrictEqual(events.openChange, [true]);
+        assert.deepEquals(events.openChange, [true]);
     });
 
     it('closes on a click', async () => {
         const {toggle, events, queryByTestId} = await setupDropdownTest();
 
         await toggle();
-        assert.deepStrictEqual(events.openChange, [true]);
+        assert.deepEquals(events.openChange, [true]);
         await toggle();
-        assert.deepStrictEqual(events.openChange, [
+        assert.deepEquals(events.openChange, [
             true,
             false,
         ]);
@@ -97,24 +96,22 @@ describe(ViraDropdown.tagName, () => {
         const {instance, toggle, events, queryByTestId} = await setupDropdownTest();
 
         await toggle();
-        const options = queryThroughShadow({
-            element: instance,
-            query: testIdBy(viraDropdownOptionsTestIds.option),
+        const options = queryThroughShadow(instance, testIdBy(viraDropdownOptionsTestIds.option), {
             all: true,
         });
 
-        assert.lengthOf(options, mockOptions.length);
-        assertDefined(options[1]);
-        await clickElement(options[1]);
+        assert.isLengthExactly(options, mockOptions.length);
+        assert.isDefined(options[1]);
+        await testWeb.click(options[1]);
 
         await waitUntil(() => {
             return !queryByTestId.options();
         });
-        assert.deepStrictEqual(events.openChange, [
+        assert.deepEquals(events.openChange, [
             true,
             false,
         ]);
-        assert.deepStrictEqual(events.selectedChange, [
+        assert.deepEquals(events.selectedChange, [
             [1],
         ]);
     });
@@ -133,27 +130,27 @@ describe(ViraDropdown.tagName, () => {
             selectionPrefix: prefix,
             selected: [1],
         });
-        const prefixElement = await waitUntilTruthy(
+        const prefixElement = await waitUntil.isTruthy(
             () => {
                 return queryByTestId.prefix();
             },
+            {timeout: {seconds: 1}},
             'prefix element never showed up',
-            {timeout: {milliseconds: 1000}},
         );
 
-        assert.strictEqual(extractText(prefixElement), prefix);
+        assert.strictEquals(extractElementText(prefixElement), prefix);
     });
 
     it('renders an icon', async () => {
         const {queryByTestId} = await setupDropdownTest({
             icon: Element24Icon,
         });
-        await waitUntilTruthy(
+        await waitUntil.isTruthy(
             () => {
                 return queryByTestId.icon();
             },
+            {timeout: {seconds: 1}},
             'icon element never showed up',
-            {timeout: {milliseconds: 1000}},
         );
     });
 
@@ -169,6 +166,6 @@ describe(ViraDropdown.tagName, () => {
             placeholder,
         });
 
-        assert.strictEqual(extractText(triggerElement), placeholder);
+        assert.strictEquals(extractElementText(triggerElement), placeholder);
     });
 });

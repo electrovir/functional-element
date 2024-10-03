@@ -1,3 +1,4 @@
+import {describe, it} from '@augment-vir/test';
 import {BookPageControlTypeEnum, definePageControl} from './book-page-controls';
 
 describe(definePageControl.name, () => {

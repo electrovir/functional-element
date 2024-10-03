@@ -1,7 +1,7 @@
-import {extractText} from '@augment-vir/browser-testing';
-import {createDeferredPromiseWrapper} from '@augment-vir/common';
-import {assert, fixture as render, waitUntil} from '@open-wc/testing';
-import {assertInstanceOf, assertTypeOf} from 'run-time-assertions';
+import {assert, waitUntil} from '@augment-vir/assert';
+import {DeferredPromise} from '@augment-vir/common';
+import {describe, it, testWeb} from '@augment-vir/test';
+import {extractElementText} from '@augment-vir/web';
 import {
     AsyncValue,
     asyncProp,
@@ -46,23 +46,23 @@ describe(asyncProp.name, () => {
     async function setupAsyncPropTest() {
         const allAsyncValues: AsyncValue<number>[] = [];
 
-        const deferredPromise = createDeferredPromiseWrapper<number>();
+        const deferredPromise = new DeferredPromise<number>();
 
-        const instance = await render(html`
+        const instance = await testWeb.render(html`
             <${elementWithAsyncProp.assign({setAsyncProp: deferredPromise.promise})}
                 ${listen(elementWithAsyncProp.events.previousAsyncProp, (event) => {
                     allAsyncValues.push(event.detail);
                 })}
             ></${elementWithAsyncProp}>
         `);
-        assertInstanceOf(instance, elementWithAsyncProp);
-        assert.lengthOf(allAsyncValues, 1);
+        assert.instanceOf(instance, elementWithAsyncProp);
+        assert.isLengthExactly(allAsyncValues, 1);
         assert.instanceOf(allAsyncValues[0], Promise);
 
         // wait for the event to propagate
         await waitUntil(() => allAsyncValues.length === 1);
 
-        assert.lengthOf(allAsyncValues, 1);
+        assert.isLengthExactly(allAsyncValues, 1);
 
         return {allAsyncValues, instance, deferredPromise};
     }
@@ -76,7 +76,7 @@ describe(asyncProp.name, () => {
                 asyncProp: asyncProp<SomethingObject, any>(),
             },
             renderCallback({state}) {
-                assertTypeOf(state.asyncProp.value).toEqualTypeOf<AsyncValue<SomethingObject>>();
+                assert.tsType(state.asyncProp.value).equals<AsyncValue<SomethingObject>>();
                 return html`
                     ${renderAsync(
                         state.asyncProp,
@@ -98,13 +98,13 @@ describe(asyncProp.name, () => {
 
         const randomValue = Math.random() * 100;
 
-        assert.strictEqual(extractText(instance), 'Loading...');
+        assert.strictEquals(extractElementText(instance), 'Loading...');
 
         deferredPromise.resolve(randomValue);
 
         // wait for the event to propagate
         await waitUntil(() => allAsyncValues.length > 1);
 
-        assert.strictEqual(extractText(instance), `Got ${randomValue.toFixed()}`);
+        assert.strictEquals(extractElementText(instance), `Got ${randomValue.toFixed()}`);
     });
 });

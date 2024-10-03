@@ -1,6 +1,6 @@
-import {assert} from '@open-wc/testing';
+import {assert} from '@augment-vir/assert';
+import {describe, it} from '@augment-vir/test';
 import {SingleCssVarDefinition} from 'lit-css-vars';
-import {assertTypeOf} from 'run-time-assertions';
 import {
     AsyncProp,
     Observable,
@@ -43,31 +43,21 @@ describe('RenderParams', () => {
                     updateState({myNumber: new Observable({defaultValue: 6})});
                 }
 
-                assertTypeOf(
-                    cssVars['test-element-my-thing'],
-                ).toEqualTypeOf<SingleCssVarDefinition>();
+                assert.tsType(cssVars['test-element-my-thing']).equals<SingleCssVarDefinition>();
 
                 const testEventThing = events.testEventName;
 
-                assertTypeOf(state.myAsyncProp.value).toEqualTypeOf<
-                    Promise<number> | number | Error
-                >();
-                assertTypeOf(state.myAsyncProp2.value).toEqualTypeOf<
-                    Promise<number> | number | Error
-                >();
-                assertTypeOf(state.myAsyncProp3.value).toEqualTypeOf<
-                    Promise<number> | number | Error
-                >();
+                assert.tsType(state.myAsyncProp.value).equals<Promise<number> | number | Error>();
+                assert.tsType(state.myAsyncProp2.value).equals<Promise<number> | number | Error>();
+                assert.tsType(state.myAsyncProp3.value).equals<Promise<number> | number | Error>();
 
                 updateState({
                     myAsyncProp: asyncProp(),
                 });
 
-                assertTypeOf<
-                    NonNullable<Parameters<typeof updateState>[0]['myAsyncProp']>
-                >().toEqualTypeOf<
-                    MaybeElementVirStateSetup<AsyncProp<number, MyAsyncPropTriggerType>>
-                >();
+                assert
+                    .tsType<NonNullable<Parameters<typeof updateState>[0]['myAsyncProp']>>()
+                    .equals<MaybeElementVirStateSetup<AsyncProp<number, MyAsyncPropTriggerType>>>();
 
                 state.myAsyncProp.update({input: 'hi'});
 
@@ -104,7 +94,7 @@ describe('RenderParams', () => {
             // @ts-expect-error
             new myEvent('no number here');
 
-            assert.strictEqual(myEventInstance.type, 'my-element-testEventName');
+            assert.strictEquals(myEventInstance.type, 'my-element-testEventName');
 
             renderParams.dispatch(myEventInstance);
             renderParams.dispatch(new TypedEvent(renderParams.events.testEventName, 2));

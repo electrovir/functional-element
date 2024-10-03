@@ -1,6 +1,6 @@
-import {isEnumValue} from '@augment-vir/common';
+import {check} from '@augment-vir/assert';
 import {SpaRouter} from 'spa-router-vir';
-import {BookMainRoute, defaultBookFullRoute, ValidBookPaths} from './book-routing';
+import {BookMainRoute, defaultBookFullRoute, ValidBookPaths} from './book-routing.js';
 
 export function createBookRouter(basePath: string | undefined) {
     return new SpaRouter<ValidBookPaths, undefined, undefined>({
@@ -22,14 +22,14 @@ export type BookRouter = ReturnType<typeof createBookRouter>;
 function sanitizePaths(paths: ReadonlyArray<string>): ValidBookPaths {
     const firstPath = paths[0];
 
-    if (!isEnumValue(firstPath, BookMainRoute)) {
+    if (!check.isEnumValue(firstPath, BookMainRoute)) {
         return defaultBookFullRoute.paths;
     } else if (firstPath === BookMainRoute.Book) {
         return [
             BookMainRoute.Book,
             ...paths.slice(1),
         ];
-    } else if (firstPath === BookMainRoute.Search) {
+    } else if ((firstPath as BookMainRoute) === BookMainRoute.Search) {
         if (!paths[1]) {
             return [
                 BookMainRoute.Book,

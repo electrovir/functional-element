@@ -1,4 +1,5 @@
-import {assertTypeOf} from 'run-time-assertions';
+import {assert} from '@augment-vir/assert';
+import {describe, it} from '@augment-vir/test';
 import {ElementVirStateSetup, FlattenElementVirStateSetup} from './element-vir-state-setup';
 
 describe('FlattenElementVirPropSetup', () => {
@@ -10,7 +11,7 @@ describe('FlattenElementVirPropSetup', () => {
 
         type Flattened = FlattenElementVirStateSetup<Original>;
 
-        assertTypeOf<Flattened>().toEqualTypeOf<{
+        assert.tsType<Flattened>().equals<{
             input: string;
             maybeSetup: string | RegExp;
         }>();
@@ -23,7 +24,7 @@ describe('FlattenElementVirPropSetup', () => {
 
         type Flattened = FlattenElementVirStateSetup<Original>;
 
-        assertTypeOf<Flattened>().toEqualTypeOf<{
+        assert.tsType<Flattened>().equals<{
             input: string;
             maybeSetup: RegExp;
         }>();

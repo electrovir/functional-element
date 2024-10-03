@@ -1,4 +1,4 @@
-import {RequiredAndNotNullBy} from '@augment-vir/common';
+import {SetRequiredAndNotNull} from '@augment-vir/common';
 import {IsAny, IsEmptyObject} from 'type-fest';
 import {CSSResult, LitElement} from '../lit-exports/all-lit-exports';
 import {MinimalDefinitionWithInputs} from '../template-transforms/minimal-element-definition';
@@ -23,7 +23,7 @@ export type DeclarativeElementHost<
     HostClassKeys extends BaseCssPropertyName<TagName> = any,
     CssVarKeys extends BaseCssPropertyName<TagName> = any,
     SlotNames extends ReadonlyArray<string> = any,
-> = RequiredAndNotNullBy<
+> = SetRequiredAndNotNull<
     Omit<
         DeclarativeElement<
             TagName,

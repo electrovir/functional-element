@@ -1,5 +1,5 @@
-import {assert} from '@open-wc/testing';
-import {assertTypeOf} from 'run-time-assertions';
+import {assert} from '@augment-vir/assert';
+import {describe, it} from '@augment-vir/test';
 import {defineElementNoInputs, html} from '../../index';
 import {
     EventInitMapEventDetailExtractor,
@@ -27,11 +27,11 @@ describe('element events', () => {
             },
         });
 
-        assertTypeOf(
-            customElement.events['test-event-name'].type,
-        ).toEqualTypeOf<'test-element-test-event-name'>();
+        assert
+            .tsType(customElement.events['test-event-name'].type)
+            .equals<'test-element-test-event-name'>();
 
-        assert.strictEqual(
+        assert.strictEquals(
             customElement.events['test-event-name'].type,
             'test-element-test-event-name',
         );

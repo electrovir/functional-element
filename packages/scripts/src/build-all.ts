@@ -1,4 +1,5 @@
-import {log, runShellCommand} from '@augment-vir/node-js';
+import {log} from '@augment-vir/common';
+import {runShellCommand} from '@augment-vir/node';
 import {cp, mkdir, rm, writeFile} from 'fs/promises';
 import {join} from 'path';
 import {packagesDir, rootDistDir} from './repo-paths';

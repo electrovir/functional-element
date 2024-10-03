@@ -1,4 +1,4 @@
-import {typedHasProperty} from '@augment-vir/common';
+import {check} from '@augment-vir/assert';
 import {DeclarativeElementDefinitionOptions} from '../declarative-element/definition-options';
 import {PropertyInitMapBase} from '../declarative-element/properties/element-properties';
 
@@ -19,13 +19,11 @@ export function isMinimalDefinitionWithInputs(
     value: unknown,
 ): value is MinimalDefinitionWithInputs {
     return (
-        typedHasProperty(value, '_elementVirIsMinimalDefinitionWithInputs') &&
+        check.hasKey(value, '_elementVirIsMinimalDefinitionWithInputs') &&
         !!value._elementVirIsMinimalDefinitionWithInputs
     );
 }
 
 export function hasTagName(value: unknown): value is MinimalElementDefinition {
-    return (
-        typedHasProperty(value, 'tagName') && !!value.tagName && typeof value.tagName === 'string'
-    );
+    return check.hasKey(value, 'tagName') && !!value.tagName && typeof value.tagName === 'string';
 }

@@ -1,5 +1,6 @@
+import {assert} from '@augment-vir/assert';
 import {randomBoolean, randomString} from '@augment-vir/common';
-import {assertTypeOf} from 'run-time-assertions';
+import {describe, it} from '@augment-vir/test';
 import {defineElement} from './define-element';
 
 describe(defineElement.name, () => {
@@ -174,6 +175,6 @@ describe(defineElement.name, () => {
                 return 'hi';
             },
         });
-        assertTypeOf(MyElement.slotNames.yo).toEqualTypeOf<'yo'>();
+        assert.tsType(MyElement.slotNames.yo).equals<'yo'>();
     });
 });

@@ -1,8 +1,8 @@
-import {checkIfEntirelyInScrollView, waitForAnimationFrame} from '@augment-vir/browser';
+import {check} from '@augment-vir/assert';
+import {checkIfEntirelyInScrollView, waitForAnimationFrame} from '@augment-vir/web';
 import {classMap, css, html, renderIf} from 'element-vir';
-import {isJsonEqual} from 'run-time-assertions';
 import {Element16Icon, ViraIcon} from 'vira';
-import {BookEntryTypeEnum} from '../../../data/book-entry/book-entry-type';
+import {BookEntryType} from '../../../data/book-entry/book-entry-type';
 import {isBookTreeNode} from '../../../data/book-tree/book-tree';
 import {BookTreeNode} from '../../../data/book-tree/book-tree-node';
 import {BookRouter} from '../../../routing/book-router';
@@ -102,13 +102,13 @@ export const BookNav = defineBookElement<{
                         class=${classMap({
                             'title-row': true,
                             selected: inputs.selectedPath
-                                ? isJsonEqual(inputs.selectedPath, treeNode.fullUrlBreadcrumbs)
+                                ? check.jsonEquals(inputs.selectedPath, treeNode.fullUrlBreadcrumbs)
                                 : false,
                         })}
                     >
                         <div class="title-text">
                             ${renderIf(
-                                isBookTreeNode(treeNode, BookEntryTypeEnum.ElementExample),
+                                isBookTreeNode(treeNode, BookEntryType.ElementExample),
                                 html`
                                     <${ViraIcon.assign({icon: Element16Icon})}></${ViraIcon}>
                                 `,

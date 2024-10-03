@@ -1,8 +1,7 @@
-import {itCases} from '@augment-vir/browser-testing';
-import {assert} from '@open-wc/testing';
-import {assertTypeOf} from 'run-time-assertions';
+import {assert} from '@augment-vir/assert';
+import {describe, it, itCases} from '@augment-vir/test';
 import {treeExample} from '../../test/example-tree.test-helper';
-import {BookEntryTypeEnum} from '../book-entry/book-entry-type';
+import {BookEntryType} from '../book-entry/book-entry-type';
 import {
     createBookTreeFromEntries,
     createEmptyBookTreeRoot,
@@ -72,21 +71,18 @@ const expectedTree = {
     },
     entry: {
         descriptionParagraphs: [],
-        entryType: BookEntryTypeEnum.Root,
+        entryType: BookEntryType.Root,
         errors: [],
         parent: undefined,
         title: '',
     },
     urlBreadcrumb: '',
     fullUrlBreadcrumbs: [],
-} satisfies BookTreeNode<BookEntryTypeEnum.Root>;
+} satisfies BookTreeNode<BookEntryType.Root>;
 
 describe(createBookTreeFromEntries.name, () => {
     it('produces a correct tree', () => {
-        assert.deepStrictEqual(
-            createBookTreeFromEntries(treeExample.treeInputs).tree,
-            expectedTree,
-        );
+        assert.deepEquals(createBookTreeFromEntries(treeExample.treeInputs).tree, expectedTree);
     });
 });
 
@@ -94,15 +90,11 @@ describe(doesNodeHaveEntryType.name, () => {
     it('type guards', () => {
         const emptyTreeRootNode = createEmptyBookTreeRoot() as any;
 
-        assertTypeOf(emptyTreeRootNode).not.toEqualTypeOf<BookTreeNode<BookEntryTypeEnum.Page>>();
-        if (doesNodeHaveEntryType(emptyTreeRootNode, BookEntryTypeEnum.Page)) {
-            assertTypeOf(emptyTreeRootNode).toEqualTypeOf<BookTreeNode<BookEntryTypeEnum.Page>>();
-            assertTypeOf(emptyTreeRootNode.entry.entryType).toEqualTypeOf<
-                typeof BookEntryTypeEnum.Page
-            >();
-            assertTypeOf(emptyTreeRootNode).not.toEqualTypeOf<
-                BookTreeNode<BookEntryTypeEnum.Root>
-            >();
+        assert.tsType(emptyTreeRootNode).notEquals<BookTreeNode<BookEntryType.Page>>();
+        if (doesNodeHaveEntryType(emptyTreeRootNode, BookEntryType.Page)) {
+            assert.tsType(emptyTreeRootNode).equals<BookTreeNode<BookEntryType.Page>>();
+            assert.tsType(emptyTreeRootNode.entry.entryType).equals<typeof BookEntryType.Page>();
+            assert.tsType(emptyTreeRootNode).notEquals<BookTreeNode<BookEntryType.Root>>();
         }
     });
 });

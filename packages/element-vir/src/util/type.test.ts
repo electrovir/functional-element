@@ -1,3 +1,4 @@
+import {describe, it} from '@augment-vir/test';
 import {NonEmptyString} from './type';
 
 describe('nonEmptyString', () => {

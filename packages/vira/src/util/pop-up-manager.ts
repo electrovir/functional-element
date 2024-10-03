@@ -1,8 +1,8 @@
-import {findOverflowParent} from '@augment-vir/browser';
+import {assert} from '@augment-vir/assert';
 import {MaybePromise, mapObjectValues} from '@augment-vir/common';
+import {findOverflowAncestor} from '@augment-vir/web';
 import {Coords, NavController, NavDirection} from 'device-navigation';
 import {listenToPageActivation} from 'page-active';
-import {assertInstanceOf} from 'run-time-assertions';
 import {
     ExtractEventByType,
     ExtractEventTypes,
@@ -159,7 +159,7 @@ export class PopUpManager {
                         if (currentlyFocused) {
                             navController.enterInto();
                             this.listenTarget.dispatch(
-                                new NavSelectEvent({detail: currentlyFocused.coords}),
+                                new NavSelectEvent({detail: currentlyFocused.node.coords}),
                             );
                             event.stopImmediatePropagation();
                             event.preventDefault();
@@ -195,8 +195,8 @@ export class PopUpManager {
     ): ShowPopUpResult {
         this.lastRootElement = rootElement;
         const currentOptions = {...this.options, ...options};
-        const container = findOverflowParent(rootElement);
-        assertInstanceOf(container, HTMLElement);
+        const container = findOverflowAncestor(rootElement);
+        assert.instanceOf(container, HTMLElement);
 
         const rootRect = rootElement.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();

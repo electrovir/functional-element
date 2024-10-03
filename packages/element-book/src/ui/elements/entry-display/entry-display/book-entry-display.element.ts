@@ -1,6 +1,6 @@
 import {css, defineElementEvent, html, onDomCreated, renderIf} from 'element-vir';
 import {LoaderAnimated24Icon, ViraIcon, viraAnimationDurations} from 'vira';
-import {BookEntryTypeEnum} from '../../../../data/book-entry/book-entry-type';
+import {BookEntryType} from '../../../../data/book-entry/book-entry-type';
 import {ControlsWrapper} from '../../../../data/book-entry/book-page/controls-wrapper';
 import {BookTreeNode} from '../../../../data/book-tree/book-tree-node';
 import {BookRouter} from '../../../../routing/book-router';
@@ -15,7 +15,7 @@ export const BookEntryDisplay = defineBookElement<{
     currentNodes: ReadonlyArray<BookTreeNode>;
     currentRoute: Readonly<BookFullRoute>;
     debug: boolean;
-    originalTree: Readonly<BookTreeNode<BookEntryTypeEnum.Root>>;
+    originalTree: Readonly<BookTreeNode<BookEntryType.Root>>;
     router: BookRouter | undefined;
     showLoading: boolean;
 }>()({

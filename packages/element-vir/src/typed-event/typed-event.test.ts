@@ -1,4 +1,5 @@
-import {assert} from '@open-wc/testing';
+import {assert} from '@augment-vir/assert';
+import {describe, it} from '@augment-vir/test';
 import {listen} from '../declarative-element/directives/listen.directive';
 import {defineTypedEvent} from './typed-event';
 
@@ -14,10 +15,10 @@ describe(defineTypedEvent.name, () => {
 
         const newValidEvent = new myCustomTypedEvent(5);
 
-        assert.strictEqual(newValidEvent.detail, 5);
+        assert.strictEquals(newValidEvent.detail, 5);
 
-        assert.strictEqual(myCustomTypedEvent.type, eventTypeName);
-        assert.strictEqual(newValidEvent.type, eventTypeName);
+        assert.strictEquals(myCustomTypedEvent.type, eventTypeName);
+        assert.strictEquals(newValidEvent.type, eventTypeName);
     });
 
     it('has proper types', () => {

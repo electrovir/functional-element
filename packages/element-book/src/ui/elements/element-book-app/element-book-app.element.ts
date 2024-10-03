@@ -1,31 +1,31 @@
-import {waitForAnimationFrame} from '@augment-vir/browser';
-import {extractErrorMessage, isTruthy} from '@augment-vir/common';
+import {check} from '@augment-vir/assert';
+import {extractErrorMessage} from '@augment-vir/common';
+import {waitForAnimationFrame} from '@augment-vir/web';
 import {css, defineElement, defineElementEvent, html, listen} from 'element-vir';
-import {isJsonEqual} from 'run-time-assertions';
 import {
     ControlsWrapper,
     createNewControls,
     updateTreeControls,
-} from '../../../data/book-entry/book-page/controls-wrapper';
-import {createBookTreeFromEntries} from '../../../data/book-tree/book-tree';
-import {searchFlattenedNodes} from '../../../data/book-tree/search-nodes';
-import {BookRouter, createBookRouter} from '../../../routing/book-router';
+} from '../../../data/book-entry/book-page/controls-wrapper.js';
+import {createBookTreeFromEntries} from '../../../data/book-tree/book-tree.js';
+import {searchFlattenedNodes} from '../../../data/book-tree/search-nodes.js';
+import {BookRouter, createBookRouter} from '../../../routing/book-router.js';
 import {
     BookFullRoute,
     defaultBookFullRoute,
     extractSearchQuery,
-} from '../../../routing/book-routing';
-import {ColorTheme, colorThemeCssVars, setThemeCssVars} from '../../color-theme/color-theme';
-import {ThemeConfig, createTheme} from '../../color-theme/create-color-theme';
-import {ChangeRouteEvent} from '../../events/change-route.event';
-import {BookNav, scrollSelectedNavElementIntoView} from '../book-nav/book-nav.element';
-import {BookError} from '../common/book-error.element';
-import {BookPageControls} from '../entry-display/book-page/book-page-controls.element';
-import {BookEntryDisplay} from '../entry-display/entry-display/book-entry-display.element';
-import {ElementBookSlotName} from './element-book-app-slots';
-import {ElementBookConfig} from './element-book-config';
-import {getCurrentNodes} from './get-current-nodes';
-import {GlobalValues} from './global-values';
+} from '../../../routing/book-routing.js';
+import {ColorTheme, colorThemeCssVars, setThemeCssVars} from '../../color-theme/color-theme.js';
+import {ThemeConfig, createTheme} from '../../color-theme/create-color-theme.js';
+import {ChangeRouteEvent} from '../../events/change-route.event.js';
+import {BookNav, scrollSelectedNavElementIntoView} from '../book-nav/book-nav.element.js';
+import {BookError} from '../common/book-error.element.js';
+import {BookPageControls} from '../entry-display/book-page/book-page-controls.element.js';
+import {BookEntryDisplay} from '../entry-display/entry-display/book-entry-display.element.js';
+import {ElementBookSlotName} from './element-book-app-slots.js';
+import {ElementBookConfig} from './element-book-config.js';
+import {getCurrentNodes} from './get-current-nodes.js';
+import {GlobalValues} from './global-values.js';
 
 type ColorThemeState = {config: ThemeConfig | undefined; theme: ColorTheme};
 
@@ -91,8 +91,8 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
         }
     `,
     initCallback({host, state}) {
-        setTimeout(() => {
-            scrollNav(host, extractSearchQuery(state.currentRoute.paths), state.currentRoute);
+        setTimeout(async () => {
+            await scrollNav(host, extractSearchQuery(state.currentRoute.paths), state.currentRoute);
         }, 500);
     },
     cleanupCallback({state, updateState}) {
@@ -116,7 +116,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
         function areRoutesNew(newRouteInput: Partial<BookFullRoute>) {
             const newRoute = mergeRoutes(newRouteInput);
 
-            return !isJsonEqual(state.currentRoute, newRoute);
+            return !check.jsonEquals(state.currentRoute, newRoute);
         }
 
         function updateWindowTitle(topNodeTitle: string | undefined) {
@@ -128,7 +128,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
                     state.originalWindowTitle,
                     topNodeTitle,
                 ]
-                    .filter(isTruthy)
+                    .filter(check.isTruthy)
                     .join(' - ');
             }
         }
@@ -152,16 +152,16 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
 
             if (
                 inputs.elementBookRoutePaths &&
-                !isJsonEqual(inputs.elementBookRoutePaths, state.currentRoute.paths)
+                !check.jsonEquals(inputs.elementBookRoutePaths, state.currentRoute.paths)
             ) {
-                dispatch(new events.pathUpdate(newRoute.paths ?? []));
+                dispatch(new events.pathUpdate(newRoute.paths));
             }
         }
 
         try {
             if (
                 inputs.elementBookRoutePaths &&
-                !isJsonEqual(inputs.elementBookRoutePaths, state.currentRoute.paths)
+                !check.jsonEquals(inputs.elementBookRoutePaths, state.currentRoute.paths)
             ) {
                 updateRoutes({paths: inputs.elementBookRoutePaths as any});
             }
@@ -182,7 +182,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
             const inputThemeConfig: ThemeConfig = {
                 themeColor: inputs.themeColor,
             };
-            if (!isJsonEqual(inputThemeConfig, state.colors?.config)) {
+            if (!check.jsonEquals<unknown, unknown>(inputThemeConfig, state.colors.config)) {
                 const newTheme = createTheme(inputThemeConfig);
                 updateState({
                     colors: {
@@ -213,7 +213,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
                         entries: inputs.entries,
                         lastGlobalInputs: inputs.globalValues ?? {},
                         controls: updateTreeControls(originalTree.tree, {
-                            children: state.treeBasedControls?.controls?.children,
+                            children: state.treeBasedControls?.controls.children,
                             controls: inputs.globalValues,
                         }),
                     },
@@ -270,9 +270,9 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
                         const navElement = host.shadowRoot.querySelector(BookNav.tagName);
 
                         if (!(navElement instanceof BookNav)) {
-                            throw new Error(`Failed to find child '${BookNav.tagName}'`);
+                            throw new TypeError(`Failed to find child '${BookNav.tagName}'`);
                         }
-                        scrollNav(host, searchQuery, state.currentRoute);
+                        await scrollNav(host, searchQuery, state.currentRoute);
                     })}
                     ${listen(BookPageControls.events.controlValueChange, (event) => {
                         if (!state.treeBasedControls) {
@@ -359,7 +359,7 @@ async function scrollNav(
     const navElement = host.shadowRoot.querySelector(BookNav.tagName);
 
     if (!(navElement instanceof BookNav)) {
-        throw new Error(`Failed to find child '${BookNav.tagName}'`);
+        throw new TypeError(`Failed to find child '${BookNav.tagName}'`);
     }
 
     await scrollSelectedNavElementIntoView(navElement);

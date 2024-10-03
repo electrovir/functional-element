@@ -1,14 +1,14 @@
 import {combineErrors, extractErrorMessage} from '@augment-vir/common';
 import {html, renderIf} from 'element-vir';
-import {BookEntryTypeEnum} from '../../../../data/book-entry/book-entry-type';
-import {BookPageControlsValues} from '../../../../data/book-entry/book-page/book-page-controls';
-import {BookTreeNode} from '../../../../data/book-tree/book-tree-node';
-import {unsetInternalState} from '../../../../data/unset';
-import {BookError} from '../../common/book-error.element';
-import {defineBookElement} from '../../define-book-element';
+import {BookEntryType} from '../../../../data/book-entry/book-entry-type.js';
+import {BookPageControlsValues} from '../../../../data/book-entry/book-page/book-page-controls.js';
+import {BookTreeNode} from '../../../../data/book-tree/book-tree-node.js';
+import {unsetInternalState} from '../../../../data/unset.js';
+import {BookError} from '../../common/book-error.element.js';
+import {defineBookElement} from '../../define-book-element.js';
 
 export const BookElementExampleViewer = defineBookElement<{
-    elementExampleNode: BookTreeNode<BookEntryTypeEnum.ElementExample>;
+    elementExampleNode: BookTreeNode<BookEntryType.ElementExample>;
     currentPageControls: BookPageControlsValues;
 }>()({
     tagName: 'book-element-example-viewer',
@@ -43,7 +43,7 @@ export const BookElementExampleViewer = defineBookElement<{
                 controls: inputs.currentPageControls,
             });
             if (output instanceof Promise) {
-                throw new Error('renderCallback output cannot be a promise');
+                throw new TypeError('renderCallback output cannot be a promise');
             }
 
             return html`
@@ -58,6 +58,7 @@ export const BookElementExampleViewer = defineBookElement<{
                 ${output}
             `;
         } catch (error) {
+            console.error('ERROR HERE', extractErrorMessage(error));
             console.error(error);
             return html`
                 <${BookError.assign({

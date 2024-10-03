@@ -1,41 +1,40 @@
+import {check} from '@augment-vir/assert';
 import {
-    PropertyValueType,
     ensureErrorAndPrependMessage,
     extractErrorMessage,
     getObjectTypedKeys,
     kebabCaseToCamelCase,
 } from '@augment-vir/common';
 import {defineCssVars} from 'lit-css-vars';
-import {hasProperty, isRunTimeType} from 'run-time-assertions';
-import {MinimalDefinitionWithInputs} from '../template-transforms/minimal-element-definition';
-import {css} from '../template-transforms/vir-css/vir-css';
-import {CustomElementTagName} from './custom-tag-name';
+import {MinimalDefinitionWithInputs} from '../template-transforms/minimal-element-definition.js';
+import {css} from '../template-transforms/vir-css/vir-css.js';
+import {CustomElementTagName} from './custom-tag-name.js';
+import {DeclarativeElementInit} from './declarative-element-init.js';
 import {
     DeclarativeElement,
     DeclarativeElementDefinition,
     StaticDeclarativeElementProperties,
-} from './declarative-element';
-import {DeclarativeElementInit} from './declarative-element-init';
+} from './declarative-element.js';
 import {
     DeclarativeElementDefinitionOptions,
     defaultDeclarativeElementDefinitionOptions,
-} from './definition-options';
-import {hasDeclarativeElementParent} from './has-declarative-element-parent';
-import {assignInputs} from './properties/assign-inputs';
-import {BaseCssPropertyName, assertValidCssProperties} from './properties/css-properties';
-import {CssVars} from './properties/css-vars';
+} from './definition-options.js';
+import {hasDeclarativeElementParent} from './has-declarative-element-parent.js';
+import {assignInputs} from './properties/assign-inputs.js';
+import {BaseCssPropertyName, assertValidCssProperties} from './properties/css-properties.js';
+import {CssVars} from './properties/css-vars.js';
 import {
     EventDescriptorMap,
     EventsInitMap,
     createEventDescriptorMap,
-} from './properties/element-events';
-import {PropertyInitMapBase} from './properties/element-properties';
-import {FlattenElementVirStateSetup} from './properties/element-vir-state-setup';
-import {HostClassNamesMap, createHostClassNamesMap} from './properties/host-classes';
-import {bindReactiveProperty, createElementPropertyProxy} from './properties/property-proxy';
-import {applyHostClasses, hostClassNamesToStylesInput} from './properties/styles';
-import {RenderParams, createRenderParams} from './render-callback';
-import {createSlotNamesMap} from './slot-names';
+} from './properties/element-events.js';
+import {PropertyInitMapBase} from './properties/element-properties.js';
+import {FlattenElementVirStateSetup} from './properties/element-vir-state-setup.js';
+import {HostClassNamesMap, createHostClassNamesMap} from './properties/host-classes.js';
+import {bindReactiveProperty, createElementPropertyProxy} from './properties/property-proxy.js';
+import {applyHostClasses, hostClassNamesToStylesInput} from './properties/styles.js';
+import {RenderParams, createRenderParams} from './render-callback.js';
+import {createSlotNamesMap} from './slot-names.js';
 
 export type VerifiedElementNoInputsInit<
     TagName extends CustomElementTagName,
@@ -95,11 +94,11 @@ export function defineElementNoInputs<
         CssVarKeys,
         SlotNames
     >;
-    if (!isRunTimeType(init, 'object')) {
-        throw new Error('Cannot define element with non-object init: ${init}');
+    if (!check.isObject(init)) {
+        throw new TypeError('Cannot define element with non-object init: ${init}');
     }
-    if (!isRunTimeType(init.tagName, 'string')) {
-        throw new Error('Missing valid tagName (expected a string).');
+    if (!check.isString(init.tagName)) {
+        throw new TypeError('Missing valid tagName (expected a string).');
     }
 
     type ThisElementDefinition = DeclarativeElementDefinition<
@@ -122,6 +121,7 @@ export function defineElementNoInputs<
     >;
     type ThisElementInstance = InstanceType<ThisElementStaticClass>;
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!init.renderCallback || typeof init.renderCallback === 'string') {
         throw new Error(
             `Failed to define element '${init.tagName}': renderCallback is not a function`,
@@ -212,7 +212,7 @@ export function defineElementNoInputs<
             return createRenderParams({element: this, eventsMap, cssVars, slotNamesMap});
         }
 
-        public static override assign = typedAssignCallback as any;
+        public static override readonly assign = typedAssignCallback as any;
 
         // this gets set below in Object.defineProperties
         public static override readonly isStrictInstance: any = () => false;
@@ -316,13 +316,13 @@ export function defineElementNoInputs<
                 if (!this._initCalled && init.initCallback) {
                     this._initCalled = true;
                     if ((init.initCallback(renderParams) as any) instanceof Promise) {
-                        throw new Error('initCallback cannot be asynchronous');
+                        throw new TypeError('initCallback cannot be asynchronous');
                     }
                 }
 
                 const renderResult = typedRenderCallback(renderParams);
                 if (renderResult instanceof Promise) {
-                    throw new Error('renderCallback cannot be asynchronous');
+                    throw new TypeError('renderCallback cannot be asynchronous');
                 }
                 applyHostClasses({
                     host: renderParams.host,
@@ -353,17 +353,14 @@ export function defineElementNoInputs<
                 this._initCalled = true;
                 const renderParams = this.createRenderParams();
                 if ((init.initCallback(renderParams) as any) instanceof Promise) {
-                    throw new Error(`initCallback in '${init.tagName}' cannot be asynchronous`);
+                    throw new TypeError(`initCallback in '${init.tagName}' cannot be asynchronous`);
                 }
             }
         }
 
         public destroy() {
             Object.values(this.instanceState).forEach((stateValue) => {
-                if (
-                    hasProperty(stateValue, 'destroy') &&
-                    isRunTimeType(stateValue.destroy, 'function')
-                ) {
+                if (check.hasKey(stateValue, 'destroy') && check.isFunction(stateValue.destroy)) {
                     stateValue.destroy();
                 }
             });
@@ -374,7 +371,9 @@ export function defineElementNoInputs<
             if (init.cleanupCallback) {
                 const renderParams = this.createRenderParams();
                 if ((init.cleanupCallback(renderParams) as any) instanceof Promise) {
-                    throw new Error(`cleanupCallback in '${init.tagName}' cannot be asynchronous`);
+                    throw new TypeError(
+                        `cleanupCallback in '${init.tagName}' cannot be asynchronous`,
+                    );
                 }
             }
             this.destroy();
@@ -410,9 +409,7 @@ export function defineElementNoInputs<
             getObjectTypedKeys(stateInitStatic).forEach((stateKey) => {
                 bindReactiveProperty(this, stateKey);
 
-                this.instanceState[stateKey] = stateInitStatic[stateKey] as PropertyValueType<
-                    FlattenElementVirStateSetup<StateInit>
-                >;
+                this.instanceState[stateKey] = stateInitStatic[stateKey] as any;
             });
             this.definition = anonymousClass as unknown as ThisElementDefinition;
         }

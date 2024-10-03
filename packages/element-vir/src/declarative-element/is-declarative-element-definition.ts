@@ -1,5 +1,5 @@
-import {getObjectTypedKeys, isTruthy, wrapInTry} from '@augment-vir/common';
-import {AssertionError, hasProperty, isRunTimeType} from 'run-time-assertions';
+import {AssertionError, check} from '@augment-vir/assert';
+import {getObjectTypedKeys, wrapInTry} from '@augment-vir/common';
 import {
     DeclarativeElementDefinition,
     StaticDeclarativeElementProperties,
@@ -30,26 +30,12 @@ export function assertDeclarativeElementDefinition(
     input: unknown,
     failMessage?: string | undefined,
 ): asserts input is DeclarativeElementDefinition {
-    if (!isRunTimeType(input, 'function')) {
-        throw new AssertionError(
-            [
-                'input is not an element constructor',
-                failMessage,
-            ]
-                .filter(isTruthy)
-                .join(': '),
-        );
+    if (!check.isFunction(input)) {
+        throw new AssertionError('input is not an element constructor', failMessage);
     }
     expectedStaticProperties.forEach((expectedProperty) => {
-        if (!hasProperty(input, expectedProperty)) {
-            throw new AssertionError(
-                [
-                    `missing prop '${expectedProperty}'`,
-                    failMessage,
-                ]
-                    .filter(isTruthy)
-                    .join(': '),
-            );
+        if (!check.hasKey(input, expectedProperty)) {
+            throw new AssertionError(`missing prop '${expectedProperty}'`, failMessage);
         }
     });
 }

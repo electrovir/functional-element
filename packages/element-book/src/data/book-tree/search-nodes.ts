@@ -1,5 +1,5 @@
+import {check} from '@augment-vir/assert';
 import {randomString} from '@augment-vir/common';
-import {isRunTimeType} from 'run-time-assertions';
 import {fuzzySearch} from '../../util/fuzzy-search';
 import {BookTreeNode} from './book-tree-node';
 
@@ -84,7 +84,7 @@ export function searchFlattenedNodes({
 
         const shouldInclude = includeInSearchResults[inSearchResultsKey];
 
-        if (!isRunTimeType(shouldInclude, 'boolean')) {
+        if (!check.isBoolean(shouldInclude)) {
             throw new Error(
                 `Failed to find '${treeNode.fullUrlBreadcrumbs.join(
                     ' > ',

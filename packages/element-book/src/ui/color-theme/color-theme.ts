@@ -1,7 +1,6 @@
-import {typedHasProperties, typedHasProperty} from '@augment-vir/common';
+import {check} from '@augment-vir/assert';
 import {CSSResult} from 'element-vir';
 import {SingleCssVarDefinition, defineCssVars, setCssVarValue} from 'lit-css-vars';
-import {isRunTimeType} from 'run-time-assertions';
 import {NestedType} from '../../util/type';
 
 export type ColorPair = {background: CSSResult; foreground: CSSResult};
@@ -80,17 +79,17 @@ export function setThemeCssVars(element: HTMLElement, theme: ColorTheme) {
 }
 
 function isCssResult(input: unknown): input is CSSResult {
-    return typedHasProperty(input, '_$cssResult$');
+    return check.hasKey(input, '_$cssResult$');
 }
 
 function isCssVarDefinition(input: unknown): input is SingleCssVarDefinition {
     return (
-        typedHasProperties(input, [
+        check.hasKeys(input, [
             'name',
             'value',
             'default',
         ]) &&
-        isRunTimeType(input.default, 'string') &&
+        check.isString(input.default) &&
         isCssResult(input.name) &&
         isCssResult(input.value)
     );

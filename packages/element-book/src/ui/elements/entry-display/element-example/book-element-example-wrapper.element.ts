@@ -1,6 +1,6 @@
 import {omitObjectKeys} from '@augment-vir/common';
 import {css, html} from 'element-vir';
-import {BookEntryTypeEnum} from '../../../../data/book-entry/book-entry-type';
+import {BookEntryType} from '../../../../data/book-entry/book-entry-type';
 import {BookPageControlsValues} from '../../../../data/book-entry/book-page/book-page-controls';
 import {BookTreeNode} from '../../../../data/book-tree/book-tree-node';
 import {BookRouter} from '../../../../routing/book-router';
@@ -10,7 +10,7 @@ import {BookElementExampleControls} from './book-element-example-controls.elemen
 import {BookElementExampleViewer} from './book-element-example-viewer.element';
 
 export const BookElementExampleWrapper = defineBookElement<{
-    elementExampleNode: BookTreeNode<BookEntryTypeEnum.ElementExample>;
+    elementExampleNode: BookTreeNode<BookEntryType.ElementExample>;
     currentPageControls: BookPageControlsValues;
     router: BookRouter | undefined;
 }>()({

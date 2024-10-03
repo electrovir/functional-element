@@ -1,4 +1,5 @@
-import {filterMap, isTruthy} from '@augment-vir/common';
+import {check} from '@augment-vir/assert';
+import {filterMap} from '@augment-vir/common';
 import {hasTagName, isMinimalDefinitionWithInputs} from './minimal-element-definition';
 import {TemplateTransform} from './template-transform-type';
 
@@ -26,7 +27,7 @@ function extractElementKeys(values: unknown[]): WeakMapElementKey[] {
 
             return undefined;
         },
-        isTruthy,
+        check.isTruthy,
     );
 }
 

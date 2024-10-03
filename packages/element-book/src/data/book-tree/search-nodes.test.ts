@@ -1,4 +1,5 @@
-import {assert} from '@open-wc/testing';
+import {assert} from '@augment-vir/assert';
+import {describe, it} from '@augment-vir/test';
 import {defineBookPage} from '../book-entry/book-page/define-book-page';
 import {createBookTreeFromEntries} from './book-tree';
 import {searchFlattenedNodes} from './search-nodes';
@@ -48,14 +49,14 @@ describe(searchFlattenedNodes.name, () => {
 
         const searchedTitles = searchedNodes.map((searchedNode) => searchedNode.entry.title);
 
-        assert.deepStrictEqual(flattenedOriginalNodeTitles, [
+        assert.deepEquals(flattenedOriginalNodeTitles, [
             '',
             'child A',
             'child-c',
             'example A',
             'child-b',
         ]);
-        assert.deepStrictEqual(searchedTitles, [
+        assert.deepEquals(searchedTitles, [
             'child A',
             'child-c',
             'example A',

@@ -1,39 +1,43 @@
-import {typedHasProperties} from '@augment-vir/common';
-import {BookEntry, isBookEntry} from '../book-entry/book-entry';
-import {BookEntryTypeEnum} from '../book-entry/book-entry-type';
-import {listUrlBreadcrumbs, titleToUrlBreadcrumb} from '../book-entry/url-breadcrumbs';
-import {bookEntryVerifiers} from '../book-entry/verify-book-entry';
-import {BookTree, BookTreeNode, isBookTreeNodeMarker} from './book-tree-node';
-import {addTreeToCache, getTreeFromCache} from './tree-cache';
+import {check} from '@augment-vir/assert';
+import {BookEntryType} from '../book-entry/book-entry-type.js';
+import {BookEntry, isBookEntry} from '../book-entry/book-entry.js';
+import {listUrlBreadcrumbs, titleToUrlBreadcrumb} from '../book-entry/url-breadcrumbs.js';
+import {bookEntryVerifiers} from '../book-entry/verify-book-entry.js';
+import {BookTree, BookTreeNode, isBookTreeNodeMarker} from './book-tree-node.js';
+import {addTreeToCache, getTreeFromCache} from './tree-cache.js';
 
-export function doesNodeHaveEntryType<const EntryType extends BookEntryTypeEnum>(
-    node: BookTreeNode<any>,
+export function doesNodeHaveEntryType<const EntryType extends BookEntryType>(
+    node: unknown,
     entryType: EntryType,
 ): node is BookTreeNode<EntryType> {
-    return node.entry.entryType === entryType;
+    return (
+        check.hasKey(node, 'entry') &&
+        check.isObject(node.entry) &&
+        node.entry.entryType === entryType
+    );
 }
 
-export function isBookTreeNode<const SpecificType extends BookEntryTypeEnum>(
+export function isBookTreeNode<const SpecificType extends BookEntryType>(
     input: unknown,
     entryType: SpecificType,
 ): input is BookTreeNode<SpecificType> {
-    return !!(isAnyBookTreeNode(input) && (input.entry as BookEntry).entryType === entryType);
+    return !!(isAnyBookTreeNode(input) && input.entry.entryType === entryType);
 }
 
-export function isAnyBookTreeNode(input: unknown): input is BookTreeNode<BookEntryTypeEnum> {
+export function isAnyBookTreeNode(input: unknown): input is BookTreeNode<BookEntryType> {
     return !!(
-        typedHasProperties(input, [
+        check.hasKeys(input, [
             isBookTreeNodeMarker,
             'entry',
         ]) && input[isBookTreeNodeMarker]
     );
 }
 
-export function createEmptyBookTreeRoot(): BookTreeNode<BookEntryTypeEnum.Root> {
-    const rootNode: Readonly<BookTreeNode<BookEntryTypeEnum.Root>> = {
+export function createEmptyBookTreeRoot(): BookTreeNode<BookEntryType.Root> {
+    const rootNode: Readonly<BookTreeNode<BookEntryType.Root>> = {
         [isBookTreeNodeMarker]: true,
         entry: {
-            entryType: BookEntryTypeEnum.Root,
+            entryType: BookEntryType.Root,
             title: '',
             parent: undefined,
             errors: [],
@@ -81,7 +85,7 @@ export function createBookTreeFromEntries({
 }
 
 function getOrAddImmediateParent(
-    tree: BookTreeNode<BookEntryTypeEnum.Root>,
+    tree: BookTreeNode<BookEntryType.Root>,
     entry: BookEntry,
     debug: boolean,
 ): BookTreeNode {
@@ -104,7 +108,7 @@ function getOrAddImmediateParent(
 
     if (!immediateParentAfterAdding) {
         throw new Error(
-            `Failed to find node despite having just added it: ${listUrlBreadcrumbs(entry, false)}`,
+            `Failed to find node despite having just added it: ${listUrlBreadcrumbs(entry, false).join(' > ')}`,
         );
     }
 
@@ -117,7 +121,7 @@ function addEntryToTree({
     debug,
     manuallyAdded,
 }: {
-    tree: BookTreeNode<BookEntryTypeEnum.Root>;
+    tree: BookTreeNode<BookEntryType.Root>;
     newEntry: BookEntry;
     debug: boolean;
     manuallyAdded: boolean;
@@ -168,13 +172,12 @@ function addEntryToTree({
     };
 
     immediateParent.children[newEntryUrlBreadcrumb] = newNode;
-    bookEntryVerifiers;
 
     if (
-        isBookEntry(newEntry, BookEntryTypeEnum.Page) &&
-        Object.values(newEntry.elementExamples ?? {}).length
+        isBookEntry(newEntry, BookEntryType.Page) &&
+        Object.values(newEntry.elementExamples).length
     ) {
-        Object.values(newEntry.elementExamples ?? {}).forEach((elementExample) =>
+        Object.values(newEntry.elementExamples).forEach((elementExample) =>
             addEntryToTree({tree, newEntry: elementExample, debug, manuallyAdded}),
         );
     }

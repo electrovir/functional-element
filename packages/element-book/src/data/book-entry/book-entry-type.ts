@@ -1,4 +1,4 @@
-export enum BookEntryTypeEnum {
+export enum BookEntryType {
     /** A single element example. */
     ElementExample = 'element-example',
     /** An individual book page with element examples and/or sub-pages. */
@@ -8,6 +8,6 @@ export enum BookEntryTypeEnum {
 }
 
 export type AnyBookEntryType =
-    | BookEntryTypeEnum.ElementExample
-    | BookEntryTypeEnum.Page
-    | BookEntryTypeEnum.Root;
+    | BookEntryType.ElementExample
+    | BookEntryType.Page
+    | BookEntryType.Root;

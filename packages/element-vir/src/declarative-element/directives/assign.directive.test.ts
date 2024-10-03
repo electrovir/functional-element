@@ -1,3 +1,4 @@
+import {describe, it} from '@augment-vir/test';
 import {defineElement} from '../define-element';
 import {assign} from './assign.directive';
 

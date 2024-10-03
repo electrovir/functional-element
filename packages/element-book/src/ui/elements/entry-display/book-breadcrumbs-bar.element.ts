@@ -1,11 +1,11 @@
 import {wait} from '@augment-vir/common';
 import {css, html, listen, renderIf} from 'element-vir';
-import {BookRouter} from '../../../routing/book-router';
-import {BookFullRoute, BookMainRoute, defaultBookFullRoute} from '../../../routing/book-routing';
-import {colorThemeCssVars} from '../../color-theme/color-theme';
-import {ChangeRouteEvent} from '../../events/change-route.event';
-import {BookBreadcrumbs} from '../book-breadcrumbs.element';
-import {defineBookElement} from '../define-book-element';
+import {BookRouter} from '../../../routing/book-router.js';
+import {BookFullRoute, BookMainRoute, defaultBookFullRoute} from '../../../routing/book-routing.js';
+import {colorThemeCssVars} from '../../color-theme/color-theme.js';
+import {ChangeRouteEvent} from '../../events/change-route.event.js';
+import {BookBreadcrumbs} from '../book-breadcrumbs.element.js';
+import {defineBookElement} from '../define-book-element.js';
 
 export const BookBreadcrumbsBar = defineBookElement<{
     currentSearch: string;
@@ -46,11 +46,11 @@ export const BookBreadcrumbsBar = defineBookElement<{
                     const inputElement = event.currentTarget;
 
                     if (!(inputElement instanceof HTMLInputElement)) {
-                        throw new Error('Failed to find input element for search.');
+                        throw new TypeError('Failed to find input element for search.');
                     }
                     const preThrottleValue = inputElement.value;
                     // throttle it a bit
-                    await wait(200);
+                    await wait({milliseconds: 200});
 
                     if (inputElement.value !== preThrottleValue) {
                         return;

@@ -1,9 +1,9 @@
 import {Dimensions, wait} from '@augment-vir/common';
 import {Duration, DurationUnit} from 'date-vir';
 import {classMap, css, defineElementEvent, html, listen, renderIf} from 'element-vir';
-import {LoaderAnimated24Icon, StatusFailure24Icon} from '../icons';
-import {defineViraElement} from './define-vira-element';
-import {ViraIcon} from './vira-icon.element';
+import {LoaderAnimated24Icon, StatusFailure24Icon} from '../icons/index.js';
+import {defineViraElement} from './define-vira-element.js';
+import {ViraIcon} from './vira-icon.element.js';
 
 export enum ViraImageSlotNameEnum {
     Loading = 'loading',
@@ -111,13 +111,13 @@ export const ViraImage = defineViraElement<{
                       <${ViraIcon.assign({icon: StatusFailure24Icon})} class="error"></${ViraIcon}>
                   </slot>
               `
-            : !state.loadedUrls[imageUrl]
-              ? html`
+            : state.loadedUrls[imageUrl]
+              ? undefined
+              : html`
                     <slot class="status-wrapper" name=${ViraImageSlotNameEnum.Loading}>
                         <${ViraIcon.assign({icon: LoaderAnimated24Icon})}></${ViraIcon}>
                     </slot>
-                `
-              : undefined;
+                `;
 
         return html`
             ${renderIf(!!statusTemplate, statusTemplate)}
@@ -127,7 +127,7 @@ export const ViraImage = defineViraElement<{
                 })}
                 ${listen('load', async () => {
                     if (inputs._debugLoadDelay) {
-                        await wait(inputs._debugLoadDelay.milliseconds);
+                        await wait(inputs._debugLoadDelay);
                     }
 
                     updateState({
@@ -141,7 +141,7 @@ export const ViraImage = defineViraElement<{
                 })}
                 ${listen('error', async (event) => {
                     if (inputs._debugLoadDelay) {
-                        await wait(inputs._debugLoadDelay.milliseconds);
+                        await wait(inputs._debugLoadDelay);
                     }
                     updateState({
                         erroredUrls: {

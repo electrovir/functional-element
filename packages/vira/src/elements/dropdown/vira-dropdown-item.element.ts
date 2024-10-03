@@ -1,4 +1,4 @@
-import {PartialAndUndefined} from '@augment-vir/common';
+import {PartialWithUndefined} from '@augment-vir/common';
 import {css, html, HTMLTemplateResult} from 'element-vir';
 import {Check24Icon} from '../../icons/icon-svgs/check-24.icon';
 import {noUserSelect, viraAnimationDurations} from '../../styles';
@@ -10,7 +10,7 @@ export type ViraDropdownOption = {
     /** Each `id` must be unique across all options. */
     id: PropertyKey;
     label: string;
-} & PartialAndUndefined<{
+} & PartialWithUndefined<{
     disabled?: boolean | undefined;
     hoverText?: string | undefined;
     /** An optional custom template for this option. */

@@ -4,7 +4,7 @@
     below.
 */
 import {kebabCaseToCamelCase} from '@augment-vir/common';
-import {readDirRecursive, toPosixPath} from '@augment-vir/node-js';
+import {readDirRecursive, toPosixPath} from '@augment-vir/node';
 import {basename, dirname, join, relative} from 'path';
 import {viraSrcDir} from '../repo-paths';
 import {

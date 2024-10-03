@@ -16,15 +16,15 @@
         "update:exports": "ts-node src/vira-scripts/update-all-exports.ts"
     },
     "dependencies": {
-        "@augment-vir/common": "^28.0.0",
-        "@augment-vir/node-js": "^28.0.0",
-        "prettier": "^3.2.5"
+        "@augment-vir/common": "^30.3.0",
+        "@augment-vir/node": "^30.3.0",
+        "prettier": "^3.3.3"
     },
     "devDependencies": {
-        "@types/node": "^20.12.11",
-        "markdown-code-example-inserter": "^1.0.0",
-        "typedoc": "^0.25.13",
-        "typescript": "5.4.5"
+        "@types/node": "^22.7.5",
+        "markdown-code-example-inserter": "^3.0.0",
+        "typedoc": "^0.26.8",
+        "typescript": "5.6.3"
     },
     "engines": {
         "node": ">=22"

@@ -1,4 +1,4 @@
-import {extractEventTarget} from '@augment-vir/browser';
+import {extractEventTarget} from '@augment-vir/web';
 
 export type SharedTextInputElementInputs = {
     value: string;

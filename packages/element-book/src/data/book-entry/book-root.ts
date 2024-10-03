@@ -1,11 +1,11 @@
 import {Overwrite} from '@augment-vir/common';
 import {BaseBookEntry} from './base-book-entry';
-import {BookEntryTypeEnum} from './book-entry-type';
+import {BookEntryType} from './book-entry-type';
 
 export type BookRoot = Overwrite<
     BaseBookEntry,
     {
-        entryType: BookEntryTypeEnum.Root;
+        entryType: BookEntryType.Root;
         parent: undefined;
     }
 >;

@@ -1,4 +1,4 @@
-import {log, logColors} from '@augment-vir/node-js';
+import {log, logColors} from '@augment-vir/node';
 import {existsSync} from 'fs';
 import {readFile, writeFile} from 'fs/promises';
 import {basename, relative} from 'path';

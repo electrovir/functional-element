@@ -1,8 +1,6 @@
-import {waitForAnimationFrame} from '@augment-vir/browser';
-import {extractText} from '@augment-vir/browser-testing';
-import {waitUntilTruthy} from '@augment-vir/common';
-import {assert, fixture} from '@open-wc/testing';
-import {assertInstanceOf} from 'run-time-assertions';
+import {assert, waitUntil} from '@augment-vir/assert';
+import {describe, it, testWeb} from '@augment-vir/test';
+import {extractElementText, waitForAnimationFrame} from '@augment-vir/web';
 import {html} from '../../template-transforms/vir-html/vir-html';
 import {defineElement} from '../define-element';
 import {defineElementEvent} from '../properties/element-events';
@@ -30,7 +28,7 @@ describe('onDomRendered', () => {
 
     async function setupTest() {
         const elements: Element[] = [];
-        const rendered = await fixture(html`
+        const rendered = await testWeb.render(html`
             <${TestOnDomRenderedElement.assign({trigger: 1})}
                 ${listen(TestOnDomRenderedElement.events.renderTrigger, (event) => {
                     elements.push(event.detail);
@@ -38,21 +36,21 @@ describe('onDomRendered', () => {
             ></${TestOnDomRenderedElement}>
         `);
 
-        assertInstanceOf(rendered, TestOnDomRenderedElement);
+        assert.instanceOf(rendered, TestOnDomRenderedElement);
         const instance = rendered;
 
         await waitForAnimationFrame(100);
 
-        assert.lengthOf(elements, 1);
-        assert.strictEqual(extractText(instance), '1');
+        assert.isLengthExactly(elements, 1);
+        assert.strictEquals(extractElementText(instance), '1');
 
         async function updateTrigger(triggerValue: number) {
             instance.assignInputs({
                 trigger: triggerValue,
             });
 
-            await waitUntilTruthy(() => {
-                return extractText(instance) === String(triggerValue);
+            await waitUntil.isTruthy(() => {
+                return extractElementText(instance) === String(triggerValue);
             });
         }
 
@@ -69,8 +67,8 @@ describe('onDomRendered', () => {
 
         await waitForAnimationFrame(100);
 
-        assert.lengthOf(elements, 5);
-        assert.strictEqual(extractText(instance), '60');
+        assert.isLengthExactly(elements, 5);
+        assert.strictEquals(extractElementText(instance), '60');
     });
 
     it('does not trigger when an input does not change', async () => {
@@ -83,7 +81,7 @@ describe('onDomRendered', () => {
 
         await waitForAnimationFrame(100);
 
-        assert.lengthOf(elements, 1);
-        assert.strictEqual(extractText(instance), '1');
+        assert.isLengthExactly(elements, 1);
+        assert.strictEquals(extractElementText(instance), '1');
     });
 });

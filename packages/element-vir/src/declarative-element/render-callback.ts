@@ -1,4 +1,4 @@
-import {getObjectTypedKeys, RequiredAndNotNullBy} from '@augment-vir/common';
+import {getObjectTypedKeys, SetRequiredAndNotNull} from '@augment-vir/common';
 import {HtmlInterpolation} from '../template-transforms/vir-html/html-interpolation';
 import {TypedEvent} from '../typed-event/typed-event';
 import {CustomElementTagName} from './custom-tag-name';
@@ -145,7 +145,7 @@ export function createRenderParams<
         slotNames: slotNamesMap,
         dispatch: (event) => element.dispatchEvent(event),
         events: eventsMap,
-        host: element as RequiredAndNotNullBy<typeof element, 'shadowRoot'>,
+        host: element as SetRequiredAndNotNull<typeof element, 'shadowRoot'>,
         inputs: element.instanceInputs,
         state: element.instanceState,
         updateState,

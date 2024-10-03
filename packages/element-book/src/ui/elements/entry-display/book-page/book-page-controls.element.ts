@@ -1,18 +1,18 @@
-import {extractEventTarget} from '@augment-vir/browser';
-import {PropertyValueType} from '@augment-vir/common';
+import {check} from '@augment-vir/assert';
+import {Values} from '@augment-vir/common';
+import {extractEventTarget} from '@augment-vir/web';
 import {css, defineElementEvent, html, listen, renderIf} from 'element-vir';
-import {isRunTimeType} from 'run-time-assertions';
 import {Options24Icon, ViraIcon, ViraInput} from 'vira';
-import {BookPage} from '../../../../data/book-entry/book-page/book-page';
 import {
     BookPageControl,
     BookPageControlInit,
     BookPageControlTypeEnum,
     BookPageControlsValues,
     isControlInitType,
-} from '../../../../data/book-entry/book-page/book-page-controls';
-import {colorThemeCssVars} from '../../../color-theme/color-theme';
-import {defineBookElement} from '../../define-book-element';
+} from '../../../../data/book-entry/book-page/book-page-controls.js';
+import {BookPage} from '../../../../data/book-entry/book-page/book-page.js';
+import {colorThemeCssVars} from '../../../color-theme/color-theme.js';
+import {defineBookElement} from '../../define-book-element.js';
 
 export const BookPageControls = defineBookElement<{
     config: BookPage['controls'];
@@ -95,7 +95,7 @@ export const BookPageControls = defineBookElement<{
                     inputs.currentValues[controlName],
                     controlInit,
                     (newValue) => {
-                        const fullUrlBreadcrumbs = isRunTimeType(inputs.fullUrlBreadcrumbs, 'array')
+                        const fullUrlBreadcrumbs = check.isArray(inputs.fullUrlBreadcrumbs)
                             ? inputs.fullUrlBreadcrumbs
                             : inputs.fullUrlBreadcrumbs[controlName];
 
@@ -140,7 +140,7 @@ export const BookPageControls = defineBookElement<{
 function createControlInput(
     value: string,
     controlInit: BookPageControlInit<any>,
-    valueChange: (newValue: PropertyValueType<BookPageControlsValues>) => void,
+    valueChange: (newValue: Values<BookPageControlsValues>) => void,
 ) {
     if (isControlInitType(controlInit, BookPageControlTypeEnum.Hidden)) {
         return '';

@@ -1,4 +1,5 @@
-import {extractErrorMessage, isPromiseLike} from '@augment-vir/common';
+import {check} from '@augment-vir/assert';
+import {extractErrorMessage} from '@augment-vir/common';
 import {AsyncProp} from './async-prop';
 
 // overload for when resolutionRender and errorRender are both provided
@@ -68,7 +69,7 @@ export function renderAsync<
             ? errorRender(asyncPropValue)
             : extractErrorMessage(asyncPropValue);
         return errorResult as any;
-    } else if (isPromiseLike(asyncPropValue)) {
+    } else if (check.isPromiseLike(asyncPropValue)) {
         const fallbackResult: FallbackResult = fallback;
         return fallbackResult as any;
     } else {

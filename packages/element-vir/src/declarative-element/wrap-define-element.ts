@@ -1,4 +1,4 @@
-import {PartialAndNullable} from '@augment-vir/common';
+import {PartialWithNullable} from '@augment-vir/common';
 import {CustomElementTagName} from './custom-tag-name';
 import {DeclarativeElementInit} from './declarative-element-init';
 import {defineElement, VerifiedElementInit} from './define-element';
@@ -12,7 +12,7 @@ export type WrapDefineElementOptions<
     InputsRequirement extends PropertyInitMapBase = {},
     StateInitRequirement extends PropertyInitMapBase = {},
     EventsInitRequirement extends EventsInitMap = {},
-> = PartialAndNullable<{
+> = PartialWithNullable<{
     assertInputs: (
         inputInit: DeclarativeElementInit<
             TagNameRequirement,
@@ -62,9 +62,9 @@ export function wrapDefineElement<
                 const TagName extends TagNameRequirement,
                 StateInit extends StateInitRequirement,
                 EventsInit extends EventsInitRequirement,
-                const HostClassKeys extends BaseCssPropertyName<TagName>,
-                const CssVarKeys extends BaseCssPropertyName<TagName>,
-                const SlotNames extends ReadonlyArray<string>,
+                const HostClassKeys extends BaseCssPropertyName<TagName> = `${TagName}-`,
+                const CssVarKeys extends BaseCssPropertyName<TagName> = `${TagName}-`,
+                const SlotNames extends ReadonlyArray<string> = Readonly<[]>,
             >(
                 inputs: VerifiedElementInit<
                     TagName,
@@ -97,9 +97,9 @@ export function wrapDefineElement<
             Inputs extends InputsRequirement,
             StateInit extends StateInitRequirement,
             EventsInit extends EventsInitRequirement,
-            const HostClassKeys extends BaseCssPropertyName<TagName>,
-            const CssVarKeys extends BaseCssPropertyName<TagName>,
-            const SlotNames extends ReadonlyArray<string>,
+            const HostClassKeys extends BaseCssPropertyName<TagName> = `${TagName}-`,
+            const CssVarKeys extends BaseCssPropertyName<TagName> = `${TagName}-`,
+            const SlotNames extends ReadonlyArray<string> = Readonly<[]>,
         >(
             inputs: VerifiedElementNoInputsInit<
                 TagName,

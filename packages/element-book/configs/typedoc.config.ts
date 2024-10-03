@@ -1,8 +1,8 @@
-import {join, resolve} from 'path';
+import {baseTypedocConfig} from '@virmator/docs/configs/typedoc.config.base';
+import {join, resolve} from 'node:path';
 import type {TypeDocOptions} from 'typedoc';
-import {baseTypedocConfig} from 'virmator/dist/compiled-base-configs/base-typedoc';
 
-const repoRoot = resolve(__dirname, '..');
+const repoRoot = resolve(import.meta.dirname, '..');
 const indexTsFile = join(repoRoot, 'src', 'index.ts');
 
 export const typeDocConfig: Partial<TypeDocOptions> = {
@@ -22,5 +22,9 @@ export const typeDocConfig: Partial<TypeDocOptions> = {
         'ValidBookPaths',
         'ControlsWrapper',
     ],
-    requiredToBeDocumented: [],
+    defaultCategory: 'MISSING CATEGORY',
+    categoryOrder: [
+        'Main',
+        'Internal',
+    ],
 };

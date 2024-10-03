@@ -1,4 +1,4 @@
-import {typedHasProperties, typedHasProperty} from '@augment-vir/common';
+import {check} from '@augment-vir/assert';
 import {DeclarativeElement} from './declarative-element';
 
 /**
@@ -11,7 +11,7 @@ export function isDeclarativeElement(input: unknown): input is DeclarativeElemen
         'instanceState',
         'definition',
     ];
-    return typedHasProperties(input, markerProperties);
+    return check.hasKeys(input, markerProperties);
 }
 /**
  * Checks if the input is an instance of a DeclarativeElement, the super class of all custom
@@ -22,7 +22,7 @@ export function assertIsDeclarativeElement(input: unknown): asserts input is Dec
         console.error('this is not a declarative element:', input);
         throw new Error(
             `${
-                typedHasProperty(input, 'tagName') ? input.tagName : input
+                check.hasKey(input, 'tagName') ? input.tagName : input
             } is not a declarative element.`,
         );
     }

@@ -1,4 +1,4 @@
-import {itCases} from '@augment-vir/browser-testing';
+import {describe, itCases} from '@augment-vir/test';
 import {ControlsWrapper, createNewControls, traverseControls} from './controls-wrapper';
 
 const exampleControls = {
@@ -130,7 +130,7 @@ describe(createNewControls.name, () => {
     //         newControlsToSave,
     //     );
 
-    //     assert.deepStrictEqual(newControls, {
+    //     assert.deepEquals(newControls, {
     //         ...exampleControls,
     //         children: {
     //             ...exampleControls.children,
@@ -147,6 +147,6 @@ describe(createNewControls.name, () => {
     //         },
     //     });
 
-    //     assert.deepStrictEqual(originalCurrentControls, exampleControls);
+    //     assert.deepEquals(originalCurrentControls, exampleControls);
     // });
 });

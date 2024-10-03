@@ -1,4 +1,5 @@
-import {assertTypeOf} from 'run-time-assertions';
+import {assert} from '@augment-vir/assert';
+import {describe, it} from '@augment-vir/test';
 import {MinimalElementDefinition, defineElementNoInputs} from '../index';
 
 describe('MinimalElementDefinition', () => {
@@ -10,6 +11,6 @@ describe('MinimalElementDefinition', () => {
             },
         });
 
-        assertTypeOf(TestElementDefinition).toMatchTypeOf<MinimalElementDefinition>();
+        assert.tsType(TestElementDefinition).matches<MinimalElementDefinition>();
     });
 });

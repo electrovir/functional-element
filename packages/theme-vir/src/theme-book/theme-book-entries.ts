@@ -1,4 +1,4 @@
-import {getEnumTypedValues, getObjectTypedEntries, isTruthy} from '@augment-vir/common';
+import {getEnumTypedValues, getObjectTypedEntries, check.isTruthy} from '@augment-vir/common';
 import {BookEntry, defineBookPage} from 'element-book';
 import {html} from 'element-vir';
 import {Theme} from '../create-theme/theme';
@@ -38,7 +38,7 @@ export function createThemeBookEntries<TagName extends string>(
                 });
             },
         )
-        .filter(isTruthy);
+        .filter(check.isTruthy);
 
     return [
         defineBookPage({

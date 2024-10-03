@@ -1,16 +1,15 @@
-import {clickElement, typeString} from '@augment-vir/browser-testing';
+import {assert} from '@augment-vir/assert';
 import {randomString} from '@augment-vir/common';
-import {assert, fixture as renderFixture} from '@open-wc/testing';
+import {describe, it, testWeb} from '@augment-vir/test';
 import {html, listen} from 'element-vir';
-import {assertInstanceOf} from 'run-time-assertions';
 import {ReadonlyDeep} from 'type-fest';
-import {ViraInput} from './vira-input.element';
+import {ViraInput} from './vira-input.element.js';
 
 describe(ViraInput.tagName, () => {
     async function renderTestViraInput(initValue: string = '') {
         const valueChangeEvents: InstanceType<typeof ViraInput.events.valueChange>[] = [];
 
-        const fixture = await renderFixture(html`
+        const fixture = await testWeb.render(html`
             <${ViraInput.assign({
                 value: initValue,
             })}
@@ -20,7 +19,7 @@ describe(ViraInput.tagName, () => {
             ></${ViraInput}>
         `);
 
-        assertInstanceOf(fixture, ViraInput);
+        assert.instanceOf(fixture, ViraInput);
 
         return {
             instance: fixture,
@@ -33,13 +32,13 @@ describe(ViraInput.tagName, () => {
 
         const textToType = randomString();
 
-        await clickElement(instance);
-        assert.strictEqual(document.activeElement, instance);
+        await testWeb.click(instance);
+        assert.strictEquals(document.activeElement, instance);
 
-        await typeString(textToType);
+        await testWeb.typeText(textToType);
 
         const lastEvent = events.slice(-1)[0];
 
-        assert.strictEqual(lastEvent?.detail, textToType);
+        assert.strictEquals(lastEvent?.detail, textToType);
     });
 });

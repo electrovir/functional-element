@@ -1,8 +1,7 @@
-import {clickElement} from '@augment-vir/browser-testing';
+import {assert, expect, waitUntil} from '@augment-vir/assert';
 import {RequiredAndNotNullBy} from '@augment-vir/common';
-import {assert, expect, fixture, waitUntil} from '@open-wc/testing';
+import {describe, it} from '@augment-vir/test';
 import {html} from 'element-vir';
-import {assertInstanceOf, assertTypeOf} from 'run-time-assertions';
 import {TestChildElement} from './child.element';
 import {VirOldTestApp} from './vir-old-test-app.element';
 
@@ -44,12 +43,12 @@ function assertHasShadowRoot<T extends Element>(
     message?: string,
 ): asserts element is T & RequiredAndNotNullBy<Element, 'shadowRoot'> {
     assert.isEmpty(element.innerHTML, message);
-    assertDefined(element.shadowRoot, message);
+    assert.isDefined(element.shadowRoot, message);
 }
 
 describe(VirOldTestApp.tagName, () => {
     async function renderApp() {
-        return await fixture(html`
+        return await testWeb.render(html`
             <${VirOldTestApp}></${VirOldTestApp}>
         `);
     }
@@ -59,7 +58,7 @@ describe(VirOldTestApp.tagName, () => {
             return context;
         }
         const appElement = context.querySelector(VirOldTestApp.tagName);
-        assertInstanceOf(appElement, VirOldTestApp);
+        assert.instanceOf(appElement, VirOldTestApp);
         assertHasShadowRoot(appElement);
         return appElement;
     }
@@ -70,11 +69,11 @@ describe(VirOldTestApp.tagName, () => {
                 TestChildElement.tagName,
                 'span:nth-of-type(3)',
             ]);
-            assertInstanceOf(inputNumberSpan, HTMLSpanElement);
+            assert.instanceOf(inputNumberSpan, HTMLSpanElement);
             expect(inputNumberSpan.innerText).to.contain('input number');
-            assert.strictEqual(inputNumberSpan.childNodes.length, 3);
+            assert.strictEquals(inputNumberSpan.childNodes.length, 3);
             const lastNode = inputNumberSpan.childNodes[2];
-            assertInstanceOf(lastNode, Text);
+            assert.instanceOf(lastNode, Text);
             const inputNumber = Number(lastNode.nodeValue);
             assert.isNotNaN(inputNumber);
             return inputNumber;
@@ -82,16 +81,16 @@ describe(VirOldTestApp.tagName, () => {
 
         async function clickAssignNewNumberButton(context: HTMLElement) {
             const assignNewNumberButton = queryTree(context, ['button']);
-            assertInstanceOf(assignNewNumberButton, HTMLButtonElement);
+            assert.instanceOf(assignNewNumberButton, HTMLButtonElement);
             expect(assignNewNumberButton.innerText).to.contain('assign NEW number to child');
 
-            await clickElement(assignNewNumberButton);
+            await testWeb.click(assignNewNumberButton);
         }
         const rendered = await renderApp();
 
         const appElement = getAppElement(rendered);
 
-        assertTypeOf(appElement.instanceState.derp).toEqualTypeOf<Record<string, string>>();
+        assert.tsType(appElement.instanceState.derp).equals<Record<string, string>>();
 
         const firstInputNumber = getDisplayedInputNumber(appElement);
 
@@ -109,10 +108,10 @@ describe(VirOldTestApp.tagName, () => {
             TestChildElement.tagName,
         ]);
 
-        assertInstanceOf(childElement, TestChildElement);
+        assert.instanceOf(childElement, TestChildElement);
         assert('speak' in childElement.definition.events);
         const currentInputs = {...childElement.instanceInputs};
-        assert.deepStrictEqual(currentInputs, {
+        assert.deepEquals(currentInputs, {
             displayNumber: childElement.instanceInputs.displayNumber,
             myProp: 5,
             width: childElement.instanceInputs.width,
@@ -129,7 +128,7 @@ describe(VirOldTestApp.tagName, () => {
 
         const tagNames = new Set(childrenWithDataAttribute.map((child) => child.tagName));
 
-        assert.strictEqual(
+        assert.strictEquals(
             tagNames.size,
             childrenWithDataAttribute.length,
             'tag names were not unique between data children',

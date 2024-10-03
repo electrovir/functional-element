@@ -1,3 +1,4 @@
+import {describe, it} from '@augment-vir/test';
 import {ElementBookConfig} from './element-book-config';
 
 describe('ElementBookConfig', () => {

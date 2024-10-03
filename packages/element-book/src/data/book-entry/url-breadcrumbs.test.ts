@@ -1,4 +1,4 @@
-import {itCases} from '@augment-vir/browser-testing';
+import {describe, itCases} from '@augment-vir/test';
 import {defineBookPage} from './book-page/define-book-page';
 import {listUrlBreadcrumbs, titleToUrlBreadcrumb} from './url-breadcrumbs';
 

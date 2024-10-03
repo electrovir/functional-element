@@ -1,5 +1,5 @@
-import {itCases} from '@augment-vir/browser-testing';
-import {AssertionError} from 'run-time-assertions';
+import {AssertionError} from '@augment-vir/assert';
+import {describe, itCases} from '@augment-vir/test';
 import {nothing} from '../lit-exports/all-lit-exports';
 import {defineElement} from './define-element';
 import {defineElementNoInputs} from './define-element-no-inputs';
@@ -36,14 +36,18 @@ describe(assertDeclarativeElementDefinition.name, () => {
             inputs: [
                 5,
             ],
-            throws: 'input is not an element constructor',
+            throws: {
+                matchMessage: 'input is not an element constructor',
+            },
         },
         {
             it: 'rejects an empty object',
             inputs: [
                 {},
             ],
-            throws: AssertionError,
+            throws: {
+                matchConstructor: AssertionError,
+            },
         },
     ]);
 });

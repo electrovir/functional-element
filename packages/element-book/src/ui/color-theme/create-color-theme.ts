@@ -1,4 +1,4 @@
-import {PartialAndUndefined, mapObjectValues} from '@augment-vir/common';
+import {PartialWithUndefined, mapObjectValues} from '@augment-vir/common';
 import Color from 'colorjs.io';
 import {CSSResult, unsafeCSS} from 'element-vir';
 import {RequireExactlyOne} from 'type-fest';
@@ -56,7 +56,7 @@ export enum ThemeStyle {
     Light = 'light',
 }
 
-export type ThemeConfig = PartialAndUndefined<{
+export type ThemeConfig = PartialWithUndefined<{
     themeColor: string;
     themeStyle: ThemeStyle;
 }>;

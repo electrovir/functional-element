@@ -1,7 +1,7 @@
-import {AnyFunction, randomString, waitUntilTruthy} from '@augment-vir/common';
-import {assert, fixture} from '@open-wc/testing';
+import {assert, waitUntil} from '@augment-vir/assert';
+import {AnyFunction, randomString} from '@augment-vir/common';
+import {describe, it, testWeb} from '@augment-vir/test';
 import {IntervalObservable} from 'observavir';
-import {assertInstanceOf, assertThrows, assertTypeOf} from 'run-time-assertions';
 import {html} from '../template-transforms/vir-html/vir-html';
 import {defineElementNoInputs} from './define-element-no-inputs';
 
@@ -45,9 +45,9 @@ describe(defineElementNoInputs.name, () => {
             },
         });
 
-        assertTypeOf(myTestElement.slotNames['my slot']).toEqualTypeOf<'my slot'>();
-        assertTypeOf(myTestElement.slotNames['my slot']).toMatchTypeOf<string>();
-        assert.strictEqual(myTestElement.slotNames['my slot'], 'my slot');
+        assert.tsType(myTestElement.slotNames['my slot']).equals<'my slot'>();
+        assert.tsType(myTestElement.slotNames['my slot']).matches<string>();
+        assert.strictEquals(myTestElement.slotNames['my slot'], 'my slot');
     });
 
     it('does not allow updating state properties that do not exist in the state', () => {
@@ -122,18 +122,18 @@ describe(defineElementNoInputs.name, () => {
             },
         });
 
-        const rendered = await fixture(html`
+        const rendered = await testWeb.render(html`
             <${MyElement}></${MyElement}>
         `);
 
-        assertInstanceOf(rendered, MyElement);
-        await waitUntilTruthy(() => count > 10);
+        assert.instanceOf(rendered, MyElement);
+        await waitUntil.isTruthy(() => count > 10);
 
         rendered.destroy();
         const countAfterDestroy = count;
 
-        await assertThrows(() =>
-            waitUntilTruthy(() => count > countAfterDestroy + 10, undefined, {
+        await assert.throws(() =>
+            waitUntil.isTruthy(() => count > countAfterDestroy + 10, {
                 timeout: {milliseconds: 3_000},
             }),
         );

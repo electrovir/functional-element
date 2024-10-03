@@ -1,4 +1,4 @@
-import {itCases} from '@augment-vir/browser-testing';
+import {describe, itCases} from '@augment-vir/test';
 import {insertAndRemoveValues} from './array';
 
 describe(insertAndRemoveValues.name, () => {

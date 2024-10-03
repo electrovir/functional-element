@@ -1,13 +1,14 @@
-import {assertTypeOf} from 'run-time-assertions';
+import {assert} from '@augment-vir/assert';
+import {describe, it} from '@augment-vir/test';
 import {BookEntry} from './book-entry';
-import {BookEntryTypeEnum} from './book-entry-type';
+import {BookEntryType} from './book-entry-type';
 
 describe('BookEntry', () => {
     it('has correct property types', () => {
-        assertTypeOf<BookEntry>().toMatchTypeOf<{
+        assert.tsType<BookEntry>().matches<{
             title: string;
             parent?: BookEntry | undefined;
-            entryType: BookEntryTypeEnum;
+            entryType: BookEntryType;
         }>();
     });
 });

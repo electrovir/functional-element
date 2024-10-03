@@ -1,0 +1,4 @@
+-   convert `stateInitStatic` into a function named `stateInit`
+-   rename `renderCallback` to `render`
+-   rename `initCallback` to `init`
+-   rename `cleanupCallback` to `cleanup`

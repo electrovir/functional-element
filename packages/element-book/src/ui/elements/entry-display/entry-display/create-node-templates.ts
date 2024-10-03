@@ -1,21 +1,22 @@
-import {isLengthAtLeast, mapObjectValues} from '@augment-vir/common';
+import {check} from '@augment-vir/assert';
+import {mapObjectValues} from '@augment-vir/common';
 import {HTMLTemplateResult, HtmlInterpolation, html, nothing, repeat} from 'element-vir';
-import {BookEntryTypeEnum} from '../../../../data/book-entry/book-entry-type';
+import {BookEntryType} from '../../../../data/book-entry/book-entry-type.js';
 import {
     BookPageControlsInitBase,
     BookPageControlsValues,
-} from '../../../../data/book-entry/book-page/book-page-controls';
+} from '../../../../data/book-entry/book-page/book-page-controls.js';
 import {
     ControlsWrapper,
     traverseControls,
-} from '../../../../data/book-entry/book-page/controls-wrapper';
-import {isBookTreeNode, traverseToImmediateParent} from '../../../../data/book-tree/book-tree';
-import {BookTreeNode} from '../../../../data/book-tree/book-tree-node';
-import {BookRouter} from '../../../../routing/book-router';
-import {BookError} from '../../common/book-error.element';
-import {BookPageControls} from '../book-page/book-page-controls.element';
-import {BookPageWrapper} from '../book-page/book-page-wrapper.element';
-import {BookElementExampleWrapper} from '../element-example/book-element-example-wrapper.element';
+} from '../../../../data/book-entry/book-page/controls-wrapper.js';
+import {BookTreeNode} from '../../../../data/book-tree/book-tree-node.js';
+import {isBookTreeNode, traverseToImmediateParent} from '../../../../data/book-tree/book-tree.js';
+import {BookRouter} from '../../../../routing/book-router.js';
+import {BookError} from '../../common/book-error.element.js';
+import {BookPageControls} from '../book-page/book-page-controls.element.js';
+import {BookPageWrapper} from '../book-page/book-page-wrapper.element.js';
+import {BookElementExampleWrapper} from '../element-example/book-element-example-wrapper.element.js';
 
 type FlattenedControls = {
     config: BookPageControlsInitBase;
@@ -27,7 +28,7 @@ function getFlattenedControlsFromHiddenParents(
     currentNodes: ReadonlyArray<BookTreeNode>,
     currentControls: ControlsWrapper,
     currentNode: BookTreeNode,
-    originalTree: Readonly<BookTreeNode<BookEntryTypeEnum.Root>>,
+    originalTree: Readonly<BookTreeNode<BookEntryType.Root>>,
 ): FlattenedControls | undefined {
     const parent = traverseToImmediateParent(currentNode, originalTree);
     const allControls: FlattenedControls[] = [];
@@ -43,10 +44,7 @@ function getFlattenedControlsFromHiddenParents(
             allControls.push(parentControls);
         }
     }
-    if (
-        isBookTreeNode(currentNode, BookEntryTypeEnum.Page) &&
-        !currentNodes.includes(currentNode)
-    ) {
+    if (isBookTreeNode(currentNode, BookEntryType.Page) && !currentNodes.includes(currentNode)) {
         const currentEntryControls = traverseControls(
             currentControls,
             currentNode.fullUrlBreadcrumbs,
@@ -93,7 +91,7 @@ export function createNodeTemplates({
     router: BookRouter | undefined;
     isSearching: boolean;
     controls: ControlsWrapper;
-    originalTree: Readonly<BookTreeNode<BookEntryTypeEnum.Root>>;
+    originalTree: Readonly<BookTreeNode<BookEntryType.Root>>;
 }): HtmlInterpolation[] {
     if (!currentNodes.length && isSearching) {
         return [
@@ -103,7 +101,7 @@ export function createNodeTemplates({
         ];
     }
 
-    const hiddenAncestorControls = isLengthAtLeast(currentNodes, 1)
+    const hiddenAncestorControls = check.isLengthAtLeast(currentNodes, 1)
         ? getFlattenedControlsFromHiddenParents(
               currentNodes,
               controls,
@@ -115,7 +113,7 @@ export function createNodeTemplates({
     const hiddenAncestorControlsTemplate =
         hiddenAncestorControls &&
         Object.values(hiddenAncestorControls.config).length &&
-        isLengthAtLeast(currentNodes, 1)
+        check.isLengthAtLeast(currentNodes, 1)
             ? html`
                   <${BookPageControls.assign({
                       config: hiddenAncestorControls.config,
@@ -128,8 +126,8 @@ export function createNodeTemplates({
     const templates = repeat(
         currentNodes,
         (node) => node.fullUrlBreadcrumbs.join('>'),
-        (currentNode, index): HTMLTemplateResult | typeof nothing => {
-            if (isBookTreeNode(currentNode, BookEntryTypeEnum.Page)) {
+        (currentNode): HTMLTemplateResult | typeof nothing => {
+            if (isBookTreeNode(currentNode, BookEntryType.Page)) {
                 return html`
                     <${BookPageWrapper.assign({
                         isTopLevel,
@@ -140,7 +138,7 @@ export function createNodeTemplates({
                         class="block-entry"
                     ></${BookPageWrapper}>
                 `;
-            } else if (isBookTreeNode(currentNode, BookEntryTypeEnum.ElementExample)) {
+            } else if (isBookTreeNode(currentNode, BookEntryType.ElementExample)) {
                 const controlsForElementExample = traverseControls(
                     controls,
                     currentNode.fullUrlBreadcrumbs.slice(0, -1),
@@ -155,7 +153,7 @@ export function createNodeTemplates({
                         class="inline-entry"
                     ></${BookElementExampleWrapper}>
                 `;
-            } else if (isBookTreeNode(currentNode, BookEntryTypeEnum.Root)) {
+            } else if (isBookTreeNode(currentNode, BookEntryType.Root)) {
                 return nothing;
             } else {
                 return html`

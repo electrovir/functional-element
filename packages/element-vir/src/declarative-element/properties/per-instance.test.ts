@@ -1,6 +1,6 @@
+import {assert} from '@augment-vir/assert';
 import {randomString} from '@augment-vir/common';
-import {assert, fixture as renderFixture} from '@open-wc/testing';
-import {assertInstanceOf, assertTypeOf} from 'run-time-assertions';
+import {describe, it, testWeb} from '@augment-vir/test';
 import {html} from '../../template-transforms/vir-html/vir-html';
 import {defineElementNoInputs} from '../define-element-no-inputs';
 import {perInstance} from './per-instance';
@@ -13,26 +13,26 @@ describe(perInstance.name, () => {
                 myPerInstanceProp: perInstance(() => ({stuff: 'hi'})),
             },
             renderCallback({state}) {
-                assertTypeOf(state.myPerInstanceProp).toEqualTypeOf<{stuff: string}>();
+                assert.tsType(state.myPerInstanceProp).equals<{stuff: string}>();
                 return state.myPerInstanceProp.stuff;
             },
         });
 
-        const fixture = await renderFixture(html`
+        const fixture = await testWeb.render(html`
             <div>
                 <${MyElement}></${MyElement}>
                 <${MyElement}></${MyElement}>
             </div>
         `);
 
-        assertInstanceOf(fixture, HTMLDivElement);
+        assert.instanceOf(fixture, HTMLDivElement);
 
         const elements = Array.from(fixture.querySelectorAll(MyElement.tagName));
 
-        assert.lengthOf(elements, 2);
+        assert.isLengthExactly(elements, 2);
 
-        assertInstanceOf(elements[0], MyElement);
-        assertInstanceOf(elements[1], MyElement);
+        assert.instanceOf(elements[0], MyElement);
+        assert.instanceOf(elements[1], MyElement);
         assert.isFalse(
             elements[0].instanceState.myPerInstanceProp ===
                 elements[1].instanceState.myPerInstanceProp,

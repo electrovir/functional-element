@@ -1,4 +1,4 @@
-import {PartialAndUndefined} from '@augment-vir/common';
+import {PartialWithUndefined} from '@augment-vir/common';
 import {RequireExactlyOne} from 'type-fest';
 import {BookEntry} from '../../../data/book-entry/book-entry';
 import {GlobalValues} from './global-values';
@@ -6,7 +6,7 @@ import {GlobalValues} from './global-values';
 export type ElementBookConfig = {
     /** All element-book entries in order. */
     entries: ReadonlyArray<BookEntry>;
-} & PartialAndUndefined<OptionalConfig>;
+} & PartialWithUndefined<OptionalConfig>;
 
 type OptionalConfig = {
     /** The base theme color from which all other element-book colors will be generated from. */

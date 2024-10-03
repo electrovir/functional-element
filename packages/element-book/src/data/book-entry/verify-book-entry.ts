@@ -1,26 +1,24 @@
-import {isTruthy} from '@augment-vir/common';
+import {check} from '@augment-vir/assert';
 import {BookEntry} from './book-entry';
-import {BookEntryTypeEnum} from './book-entry-type';
+import {BookEntryType} from './book-entry-type';
 import {checkControls} from './book-page/book-page-controls';
 
 export const bookEntryVerifiers = {
-    [BookEntryTypeEnum.ElementExample]: () => {
+    [BookEntryType.ElementExample]: () => {
         // currently all element example checking happens on page definition
         return [];
     },
-    [BookEntryTypeEnum.Page]: (bookPage) => {
+    [BookEntryType.Page]: (bookPage) => {
         return [
             !bookPage.title && new Error(`Cannot define an element-book page with an empty title.`),
             ...checkControls(bookPage.controls, bookPage.title),
-        ].filter(isTruthy);
+        ].filter(check.isTruthy);
     },
-    [BookEntryTypeEnum.Root]: () => {
+    [BookEntryType.Root]: () => {
         return [];
     },
 } satisfies {
-    [EntryType in BookEntryTypeEnum]: (
-        entry: Extract<BookEntry, {entryType: EntryType}>,
-    ) => Error[];
+    [EntryType in BookEntryType]: (entry: Extract<BookEntry, {entryType: EntryType}>) => Error[];
 } as {
-    [EntryType in BookEntryTypeEnum]: (entry: BookEntry) => Error[];
+    [EntryType in BookEntryType]: (entry: BookEntry) => Error[];
 };

@@ -1,5 +1,5 @@
-import {collapseWhiteSpace, getOrSet, isTruthy, safeMatch} from '@augment-vir/common';
-import {isRunTimeType} from 'run-time-assertions';
+import {check} from '@augment-vir/assert';
+import {collapseWhiteSpace, getOrSet, safeMatch} from '@augment-vir/common';
 import {assign} from '../../declarative-element/directives/assign.directive';
 import {HTMLTemplateResult} from '../../lit-exports/all-lit-exports';
 import {declarativeElementRequired} from '../../require-declarative-element';
@@ -24,7 +24,7 @@ export function mapHtmlValues(
         if (lastString && nextString) {
             const {shouldHaveTagNameHere} = classifyValue(lastString, nextString);
 
-            if (shouldHaveTagNameHere && isRunTimeType(currentValue, 'string')) {
+            if (shouldHaveTagNameHere && check.isString(currentValue)) {
                 const replacement: MinimalElementDefinition = {
                     tagName: currentValue,
                     tagInterpolationKey: getOrSet(tagNameKeys, currentValue, () => {
@@ -116,7 +116,7 @@ function transformHtml(
 
             return [
                 isOpeningTag && assignedInputs ? assign(assignedInputs) : undefined,
-            ].filter(isTruthy);
+            ].filter(check.isTruthy);
         },
     };
 }

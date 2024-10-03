@@ -1,4 +1,4 @@
-import {combineErrorMessages, combineErrors, ensureError, isTruthy} from '@augment-vir/common';
+import {combineErrorMessages, combineErrors, ensureError, check.isTruthy} from '@augment-vir/common';
 import {join} from 'path';
 import {viraSrcDir} from '../repo-paths';
 import {generateExportsFromFilePaths, getExportableTsFilePaths} from './common/file-paths';
@@ -60,7 +60,7 @@ export const updateIndexExports: UpdateExportsConfig = {
                     }),
                 ]
                     .flat()
-                    .filter(isTruthy);
+                    .filter(check.isTruthy);
 
                 await writeOrCheckGeneratedFile(
                     indexFilePath,

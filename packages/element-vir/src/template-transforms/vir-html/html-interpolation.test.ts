@@ -1,4 +1,5 @@
-import {assertTypeOf} from 'run-time-assertions';
+import {assert} from '@augment-vir/assert';
+import {describe, it} from '@augment-vir/test';
 import {renderIf} from '../../declarative-element/directives/render-if.directive';
 import {RenderCallback} from '../../declarative-element/render-callback';
 import {classMap, ifDefined} from '../../lit-exports/all-lit-exports';
@@ -7,7 +8,7 @@ import {html} from './vir-html';
 
 describe('HtmlInterpolation', () => {
     it('blocks raw objects', () => {
-        assertTypeOf<{something: string}>().not.toMatchTypeOf<HtmlInterpolation>();
+        assert.tsType<{something: string}>().notMatches<HtmlInterpolation>();
         html`
             hello there
             ${
@@ -15,11 +16,11 @@ describe('HtmlInterpolation', () => {
                 {something: 'hi'}
             }
         `;
-        assertTypeOf<{something: string}>().not.toMatchTypeOf<DirectiveOutput>();
+        assert.tsType<{something: string}>().notMatches<DirectiveOutput>();
     });
 
     it('blocks symbols', () => {
-        assertTypeOf(Symbol('hello')).not.toMatchTypeOf<HtmlInterpolation>();
+        assert.tsType(Symbol('hello')).notMatches<HtmlInterpolation>();
     });
 
     it('allows the ifDefined directive', () => {
@@ -30,20 +31,22 @@ describe('HtmlInterpolation', () => {
 
     /** In order to support directive results, this must also be the case. */
     it('allows empty objects sadly', () => {
-        assertTypeOf({} as const).toMatchTypeOf<HtmlInterpolation>();
+        assert.tsType({} as const).matches<HtmlInterpolation>();
     });
 
     it('allows directives', () => {
-        assertTypeOf(renderIf(true, 'hi')).toMatchTypeOf<HtmlInterpolation>();
-        assertTypeOf(
-            classMap({
-                disabled: true,
-            }),
-        ).toMatchTypeOf<HtmlInterpolation>();
+        assert.tsType(renderIf(true, 'hi')).matches<HtmlInterpolation>();
+        assert
+            .tsType(
+                classMap({
+                    disabled: true,
+                }),
+            )
+            .matches<HtmlInterpolation>();
         html`
             hello there ${classMap({disabled: true})}
         `;
-        assertTypeOf(classMap({disabled: true})).toMatchTypeOf<DirectiveOutput>();
+        assert.tsType(classMap({disabled: true})).matches<DirectiveOutput>();
     });
 
     it('allows function interpolation', () => {
@@ -57,18 +60,20 @@ describe('HtmlInterpolation', () => {
     });
 
     it('allows vira icon definitions', () => {
-        assertTypeOf<
-            RenderCallback<
-                'vira-icon',
-                {
-                    fitContainer?: boolean | undefined;
-                },
-                {},
-                {},
-                'vira-icon-fit-container',
-                `vira-icon-${string}`,
-                string[]
-            >
-        >().toMatchTypeOf<RenderCallback<any, any, any, any, any, any, any>>();
+        assert
+            .tsType<
+                RenderCallback<
+                    'vira-icon',
+                    {
+                        fitContainer?: boolean | undefined;
+                    },
+                    {},
+                    {},
+                    'vira-icon-fit-container',
+                    `vira-icon-${string}`,
+                    string[]
+                >
+            >()
+            .matches<RenderCallback<any, any, any, any, any, any, any>>();
     });
 });
