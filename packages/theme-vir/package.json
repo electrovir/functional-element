@@ -19,19 +19,24 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/electrovir/element-vir"
+        "url": "git+https://github.com/electrovir/element-vir.git"
     },
     "license": "(MIT or CC0 1.0)",
     "author": {
         "name": "electrovir",
         "url": "https://github.com/electrovir"
     },
-    "module": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "type": "module",
+    "main": "src/index.ts",
+    "module": "src/index.ts",
+    "types": "src/index.ts",
     "scripts": {
-        "compile": "rm -rf dist && tsc -b -f --pretty",
+        "compile": "virmator compile",
+        "docs": "virmator docs",
         "start": "virmator frontend",
-        "test": "virmator test-web"
+        "test": "virmator test web",
+        "test:coverage": "npm run test coverage",
+        "test:docs": "virmator docs check"
     },
     "dependencies": {
         "@augment-vir/common": "^28.0.0"
@@ -56,5 +61,11 @@
     "peerDependencies": {
         "element-book": ">=17",
         "element-vir": ">=17"
+    },
+    "engines": {
+        "node": ">=22"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }
