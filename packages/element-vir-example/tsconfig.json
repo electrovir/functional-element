@@ -1,13 +1,16 @@
 {
     "compilerOptions": {
-        "module": "ES2020",
-        "outDir": "dist/",
-        "rootDir": "src/"
+        "outDir": "./dist/",
+        "rootDir": "./src/"
     },
     "exclude": [
-        "configs/",
-        "dist/",
-        "node_modules/"
+        "./configs/",
+        "./coverage/",
+        "./dist-*/",
+        "./dist/",
+        "./node_modules/",
+        "./test-files/",
+        "src/all-files-for-code-coverage.test.ts"
     ],
     "extends": "../../configs/tsconfig.base.json",
     "references": [

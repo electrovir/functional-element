@@ -1,10 +1,10 @@
-import {resolve} from 'path';
-import {defineConfig} from 'virmator/dist/compiled-base-configs/base-vite';
+import {defineConfig} from '@virmator/frontend/configs/vite.config.base.ts';
+import {resolve} from 'node:path';
 
 export default defineConfig(
     {
         forGitHubPages: true,
-        packageDirPath: resolve(__dirname, '..'),
+        packageDirPath: resolve(import.meta.dirname, '..'),
     },
     (baseConfig) => {
         return {
