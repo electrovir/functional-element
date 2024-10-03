@@ -9,7 +9,7 @@
     },
     "scripts": {
         "build": "ts-node src/build-all.ts",
-        "compile": "rm -rf dist && tsc -b -f --pretty",
+        "compile": "virmator compile",
         "test": "npm run test:exports",
         "test:exports": "ts-node src/vira-scripts/update-all-exports.ts --check",
         "update:deps": "ts-node src/update-internal-deps.ts",
@@ -25,5 +25,11 @@
         "markdown-code-example-inserter": "^1.0.0",
         "typedoc": "^0.25.13",
         "typescript": "5.4.5"
+    },
+    "engines": {
+        "node": ">=22"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }
