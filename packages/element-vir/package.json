@@ -18,23 +18,23 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/electrovir/element-vir"
+        "url": "git+https://github.com/electrovir/element-vir.git"
     },
     "license": "(MIT or CC0 1.0)",
     "author": {
         "name": "electrovir",
         "url": "https://github.com/electrovir"
     },
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "type": "module",
+    "main": "src/index.ts",
+    "module": "src/index.ts",
+    "types": "src/index.ts",
     "scripts": {
-        "build:pages": "npm run docs",
-        "compile": "rm -rf dist && tsc -b -f --pretty",
+        "compile": "virmator compile",
         "docs": "virmator docs",
-        "start": "cd ../element-vir-example && npm start",
-        "test": "virmator test-web",
-        "test:docs": "virmator docs check",
-        "test:types": "tsc --pretty --noEmit"
+        "test": "virmator test web",
+        "test:coverage": "npm run test coverage",
+        "test:docs": "virmator docs check"
     },
     "dependencies": {
         "@augment-vir/common": "^28.0.0",
@@ -68,5 +68,11 @@
         "typescript": "5.4.5",
         "vite": "^4.5.0",
         "vite-tsconfig-paths": "^4.3.2"
+    },
+    "engines": {
+        "node": ">=22"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }
