@@ -5,14 +5,14 @@
 */
 import {kebabCaseToCamelCase} from '@augment-vir/common';
 import {readDirRecursive, toPosixPath} from '@augment-vir/node';
-import {basename, dirname, join, relative} from 'path';
-import {viraSrcDir} from '../repo-paths';
+import {basename, dirname, join, relative} from 'node:path';
+import {viraSrcDir} from '../repo-paths.js';
 import {
     UpdateExportsArgs,
     UpdateExportsConfig,
     updateExportsMain,
     writeOrCheckGeneratedFile,
-} from './common/update-exports';
+} from './common/update-exports.js';
 
 const iconsDir = join(viraSrcDir, 'icons', 'icon-svgs');
 const iconIndexPath = join(viraSrcDir, 'icons', 'index.ts');
@@ -90,13 +90,13 @@ export const updateIconExports: UpdateExportsConfig = {
             iconIndexPath,
             generateIconImportsAndExports(allIconPaths),
             inputs,
-            __filename,
+            import.meta,
         );
     },
 };
 
-if (require.main === module) {
-    updateExportsMain(updateIconExports).catch((error) => {
+if (process.argv.slice(-1)[0]?.endsWith(basename(import.meta.filename))) {
+    updateExportsMain(updateIconExports).catch((error: unknown) => {
         console.error(error);
         process.exit(1);
     });

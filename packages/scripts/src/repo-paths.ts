@@ -1,6 +1,6 @@
-import {join, resolve} from 'path';
+import {join, resolve} from 'node:path';
 
-export const monoRepoRootDir = resolve(__dirname, '..', '..', '..');
+export const monoRepoRootDir = resolve(import.meta.dirname, '..', '..', '..');
 export const packagesDir = join(monoRepoRootDir, 'packages');
 const viraPackageDir = join(packagesDir, 'vira');
 export const viraPackageJsonPath = join(viraPackageDir, 'package.json');

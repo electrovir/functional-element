@@ -3,6 +3,7 @@
     "version": "22.2.2",
     "private": true,
     "license": "(MIT or CC0 1.0)",
+    "type": "module",
     "scripts": {
         "compile": "rm -rf dist && tsc -b -f --pretty",
         "start": "virmator frontend",

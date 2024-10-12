@@ -1,12 +1,12 @@
-import {dirname, join} from 'path';
-import {viraSrcDir} from '../repo-paths';
-import {generateExportsFromFilePaths, getExportableTsFilePaths} from './common/file-paths';
+import {basename, dirname, join} from 'node:path';
+import {viraSrcDir} from '../repo-paths.js';
+import {generateExportsFromFilePaths, getExportableTsFilePaths} from './common/file-paths.js';
 import {
     UpdateExportsArgs,
     UpdateExportsConfig,
     updateExportsMain,
     writeOrCheckGeneratedFile,
-} from './common/update-exports';
+} from './common/update-exports.js';
 
 export const updateRootIndexExports: UpdateExportsConfig = {
     executor: async (args: UpdateExportsArgs): Promise<void> => {
@@ -28,13 +28,13 @@ export const updateRootIndexExports: UpdateExportsConfig = {
                 relativeDir: viraSrcDir,
             }),
             args,
-            __filename,
+            import.meta,
         );
     },
 };
 
-if (require.main === module) {
-    updateExportsMain(updateRootIndexExports).catch((error) => {
+if (process.argv.slice(-1)[0]?.endsWith(basename(import.meta.filename))) {
+    updateExportsMain(updateRootIndexExports).catch((error: unknown) => {
         console.error(error);
         process.exit(1);
     });

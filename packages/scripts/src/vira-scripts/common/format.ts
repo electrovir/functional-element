@@ -1,7 +1,7 @@
 import {format as prettierFormat, Options as PrettierOptions} from 'prettier';
-// ignore this import cause it's not typed. We're typing it here!
-// @ts-expect-error
-import * as importedRepoConfig from '../../../../../.prettierrc.js';
+// @ts-expect-error: ignore this import cause it's not typed. We're typing it here!
+// eslint-disable-next-line monorepo-cop/no-relative-import-outside-package
+import * as importedRepoConfig from '../../../../../prettier.config.mjs';
 
 const repoConfig: PrettierOptions = importedRepoConfig as PrettierOptions;
 

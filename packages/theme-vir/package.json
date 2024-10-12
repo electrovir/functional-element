@@ -39,9 +39,11 @@
         "test:docs": "virmator docs check"
     },
     "dependencies": {
+        "@augment-vir/assert": "^30.2.0",
         "@augment-vir/common": "^30.3.0"
     },
     "devDependencies": {
+        "@augment-vir/test": "^30.2.0",
         "@web/dev-server-esbuild": "^1.0.2",
         "@web/test-runner": "^0.19.0",
         "@web/test-runner-commands": "^0.9.0",
@@ -50,6 +52,7 @@
         "element-book": "*",
         "element-vir": "*",
         "esbuild": "^0.24.0",
+        "istanbul-smart-text-reporter": "^1.1.5",
         "typescript": "5.6.3",
         "vite": "^5.4.8",
         "vite-tsconfig-paths": "^5.0.1"

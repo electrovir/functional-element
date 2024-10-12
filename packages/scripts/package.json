@@ -7,18 +7,20 @@
         "name": "electrovir",
         "url": "https://github.com/electrovir"
     },
+    "type": "module",
     "scripts": {
-        "build": "ts-node src/build-all.ts",
+        "build": "tsx src/build-all.ts",
         "compile": "virmator compile",
         "test": "npm run test:exports",
-        "test:exports": "ts-node src/vira-scripts/update-all-exports.ts --check",
-        "update:deps": "ts-node src/update-internal-deps.ts",
-        "update:exports": "ts-node src/vira-scripts/update-all-exports.ts"
+        "test:exports": "tsx src/vira-scripts/update-all-exports.ts --check",
+        "update:deps": "tsx src/update-internal-deps.ts",
+        "update:exports": "tsx src/vira-scripts/update-all-exports.ts"
     },
     "dependencies": {
         "@augment-vir/common": "^30.3.0",
         "@augment-vir/node": "^30.3.0",
-        "prettier": "^3.3.3"
+        "prettier": "^3.3.3",
+        "tsx": "^4.19.1"
     },
     "devDependencies": {
         "@types/node": "^22.7.5",

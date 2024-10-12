@@ -1,12 +1,13 @@
 import {extractErrorMessage} from '@augment-vir/common';
+import {basename} from 'node:path';
 import {
     NotUpToDateError,
     parseUpdateExportsArgs,
     UpdateExportsConfig,
-} from './common/update-exports';
-import {updateIconExports} from './update-icon-exports';
-import {updateIndexExports} from './update-index-exports';
-import {updateRootIndexExports} from './update-root-index-exports';
+} from './common/update-exports.js';
+import {updateIconExports} from './update-icon-exports.js';
+import {updateIndexExports} from './update-index-exports.js';
+import {updateRootIndexExports} from './update-root-index-exports.js';
 
 const updateExportsConfigs: UpdateExportsConfig[] = [
     updateIconExports,
@@ -40,8 +41,8 @@ async function main() {
     }
 }
 
-if (require.main === module) {
-    main().catch((error) => {
+if (process.argv.slice(-1)[0]?.endsWith(basename(import.meta.filename))) {
+    main().catch((error: unknown) => {
         console.error(error);
         process.exit(1);
     });

@@ -41,8 +41,10 @@ export async function writeOrCheckGeneratedFile(
     fileToWriteTo: string,
     codeToWrite: string,
     args: UpdateExportsArgs,
-    scriptName: string,
+    importMeta: ImportMeta,
 ): Promise<void> {
+    const scriptName = importMeta.filename;
+
     const codeWithComment =
         generateAutomaticallyUpdatedByComment(basename(scriptName)) + '\n\n' + codeToWrite;
 
@@ -69,7 +71,7 @@ export async function writeOrCheckGeneratedFile(
                 logColors.bold
             }'${relativeWriteToFile}' needs to be updated: run '${logColors.reset}${
                 logColors.info
-            }npx ts-node ${relative(monoRepoRootDir, scriptName)}${logColors.error}${
+            }npx tsx ${relative(monoRepoRootDir, scriptName)}${logColors.error}${
                 logColors.bold
             }'${logColors.reset}`,
         );

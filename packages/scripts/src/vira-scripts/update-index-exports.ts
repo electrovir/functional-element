@@ -1,6 +1,6 @@
 import {check} from '@augment-vir/assert';
 import {combineErrors, ensureError} from '@augment-vir/common';
-import {join} from 'node:path';
+import {basename, join} from 'node:path';
 import {viraSrcDir} from '../repo-paths.js';
 import {generateExportsFromFilePaths, getExportableTsFilePaths} from './common/file-paths.js';
 import {
@@ -67,7 +67,7 @@ export const updateIndexExports: UpdateExportsConfig = {
                     indexFilePath,
                     exportLines.join('\n'),
                     args,
-                    __filename,
+                    import.meta,
                 );
             }),
         );
@@ -103,8 +103,8 @@ export const updateIndexExports: UpdateExportsConfig = {
     },
 };
 
-if (require.main === module) {
-    updateExportsMain(updateIndexExports).catch((error) => {
+if (process.argv.slice(-1)[0]?.endsWith(basename(import.meta.filename))) {
+    updateExportsMain(updateIndexExports).catch((error: unknown) => {
         console.error(error);
         process.exit(1);
     });
