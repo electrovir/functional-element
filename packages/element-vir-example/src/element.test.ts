@@ -1,3 +1,4 @@
+import {assert} from '@augment-vir/assert';
 import {getObjectTypedKeys, randomString} from '@augment-vir/common';
 import {describe, it} from '@augment-vir/test';
 import {
@@ -15,9 +16,9 @@ import {
     html,
     listen,
 } from 'element-vir';
-import {TestChildElement} from './elements/entries/old-test-app/child.element';
-import {VirOldTestApp} from './elements/entries/old-test-app/vir-old-test-app.element';
-import {VirTestBookApp} from './elements/vir-test-book-app.element';
+import {TestChildElement} from './elements/entries/old-test-app/child.element.js';
+import {VirOldTestApp} from './elements/entries/old-test-app/vir-old-test-app.element.js';
+import {VirTestBookApp} from './elements/vir-test-book-app.element.js';
 
 describe('test elements', () => {
     it('has proper types', () => {
@@ -26,7 +27,7 @@ describe('test elements', () => {
                 tagName: 'invalid-derp-whatever',
                 hostClasses: {
                     'invalid-derp-whatever-stuff': false,
-                    // @ts-expect-error
+                    // @ts-expect-error: missing tag name prefix
                     stuff: false,
                 },
                 stateInitStatic: {
@@ -34,7 +35,7 @@ describe('test elements', () => {
                 },
                 cssVars: {
                     'invalid-derp-whatever-css-var': 'blue',
-                    // @ts-expect-error
+                    // @ts-expect-error: missing tag name prefix
                     derp: 'blue',
                 },
                 renderCallback({state, updateState}) {
@@ -73,15 +74,13 @@ describe('test elements', () => {
         });
 
         WithHostClassesAndCssVars.hostClasses['derp-whatever-stuff'];
-        // @ts-expect-error
+        // @ts-expect-error: can't access non-existent host classes
         WithHostClassesAndCssVars.hostClasses.derp;
 
         WithHostClassesAndCssVars.cssVars['derp-whatever-css-var'].name;
         WithHostClassesAndCssVars.cssVars['derp-whatever-css-var'].default;
         WithHostClassesAndCssVars.cssVars['derp-whatever-css-var'].value;
-        // @ts-expect-error
-        WithHostClassesAndCssVars.cssVars.derp;
-        // @ts-expect-error
+        // @ts-expect-error: can't access non-existent css vars
         WithHostClassesAndCssVars.cssVars.derp;
 
         assert.throws(() => {
@@ -117,8 +116,7 @@ describe('test elements', () => {
             VirOldTestApp.stateInitStatic,
         );
 
-        // element constructor should not be able to be assigned to an instance
-        // @ts-expect-error
+        // @ts-expect-error: element constructor should not be able to be assigned to an instance
         const instance: typeof VirTestBookApp.instanceType = VirTestBookApp;
         // @ts-expect-error
         const instance2: DeclarativeElement = VirTestBookApp;

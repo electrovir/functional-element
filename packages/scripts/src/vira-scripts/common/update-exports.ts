@@ -1,10 +1,10 @@
-import {log, logColors} from '@augment-vir/node';
-import {existsSync} from 'fs';
-import {readFile, writeFile} from 'fs/promises';
-import {basename, relative} from 'path';
-import {monoRepoRootDir} from '../../repo-paths';
-import {generateAutomaticallyUpdatedByComment} from './automatically-updated';
-import {formatCode} from './format';
+import {log, logColors} from '@augment-vir/common';
+import {existsSync} from 'node:fs';
+import {readFile, writeFile} from 'node:fs/promises';
+import {basename, relative} from 'node:path';
+import {monoRepoRootDir} from '../../repo-paths.js';
+import {generateAutomaticallyUpdatedByComment} from './automatically-updated.js';
+import {formatCode} from './format.js';
 
 export class NotUpToDateError extends Error {
     public override readonly name = 'NotUpToDateError';

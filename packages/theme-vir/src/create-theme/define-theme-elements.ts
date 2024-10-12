@@ -1,12 +1,15 @@
+import {getEnumValues, getObjectTypedValues, typedObjectFromEntries} from '@augment-vir/common';
 import {
-    getEnumTypedValues,
-    getObjectTypedValues,
-    typedObjectFromEntries,
-} from '@augment-vir/common';
-import {css, defineElement, defineElementNoInputs, html, unsafeCSS} from 'element-vir';
-import {createFontStyleCss} from './font-css';
-import {Theme} from './theme';
-import {AllThemeOptions, HeadingLevel} from './theme-options';
+    css,
+    defineElement,
+    defineElementNoInputs,
+    html,
+    unsafeCSS,
+    type HostClass,
+} from 'element-vir';
+import {createFontStyleCss} from './font-css.js';
+import {AllThemeOptions, HeadingLevel} from './theme-options.js';
+import {Theme} from './theme.js';
 
 export function defineThemeElements<TagPrefix extends string>(
     options: Pick<AllThemeOptions<TagPrefix>, 'elementTagPrefix' | 'font'>,
@@ -87,11 +90,11 @@ function defineHeadingElement<TagPrefix extends string>(
 ) {
     const headingTag = `${options.elementTagPrefix}-heading` as const;
 
-    const headingSelectors = unsafeCSS(getEnumTypedValues(HeadingLevel).join(', '));
+    const headingSelectors = unsafeCSS(getEnumValues(HeadingLevel).join(', '));
     return defineElement<{headingLevel: HeadingLevel}>()({
         tagName: headingTag,
         hostClasses: typedObjectFromEntries(
-            getEnumTypedValues(HeadingLevel).map(
+            getEnumValues(HeadingLevel).map(
                 (
                     headingLevel,
                 ): [
@@ -105,30 +108,35 @@ function defineHeadingElement<TagPrefix extends string>(
                 },
             ),
         ),
-        styles: ({hostClasses}) => css`
-            :host {
-                display: block;
-            }
+        styles: ({hostClasses}) => {
+            const hostClassValues = getObjectTypedValues(hostClasses) as HostClass[];
 
-            ${unsafeCSS(
-                getObjectTypedValues(hostClasses)
-                    .map((hostClass) => {
-                        const headingLevel = String(hostClass.name)
-                            .split('-')
-                            .slice(-1)[0]! as HeadingLevel;
-                        return css`
-                            ${hostClass.selector} {
-                                ${createFontStyleCss(options.font.headings[headingLevel])}
-                            }
-                        `;
-                    })
-                    .join('\n'),
-            )}
+            return css`
+                :host {
+                    display: block;
+                }
 
-            ${headingSelectors} {
-                all: inherit;
-            }
-        `,
+                ${unsafeCSS(
+                    hostClassValues
+                        .map((hostClass) => {
+                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                            const headingLevel = String(hostClass.name)
+                                .split('-')
+                                .slice(-1)[0]! as HeadingLevel;
+                            return css`
+                                ${hostClass.selector} {
+                                    ${createFontStyleCss(options.font.headings[headingLevel])}
+                                }
+                            `;
+                        })
+                        .join('\n'),
+                )}
+
+                ${headingSelectors} {
+                    all: inherit;
+                }
+            `;
+        },
         renderCallback({inputs}) {
             const headingTag = inputs.headingLevel;
 

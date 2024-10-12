@@ -1,14 +1,15 @@
-import {combineErrorMessages, combineErrors, ensureError, check.isTruthy} from '@augment-vir/common';
-import {join} from 'path';
-import {viraSrcDir} from '../repo-paths';
-import {generateExportsFromFilePaths, getExportableTsFilePaths} from './common/file-paths';
+import {check} from '@augment-vir/assert';
+import {combineErrors, ensureError} from '@augment-vir/common';
+import {join} from 'node:path';
+import {viraSrcDir} from '../repo-paths.js';
+import {generateExportsFromFilePaths, getExportableTsFilePaths} from './common/file-paths.js';
 import {
     NotUpToDateError,
     UpdateExportsArgs,
     UpdateExportsConfig,
     updateExportsMain,
     writeOrCheckGeneratedFile,
-} from './common/update-exports';
+} from './common/update-exports.js';
 
 const indexDirs: ReadonlyArray<{
     dirName: string;
@@ -45,7 +46,7 @@ export const updateIndexExports: UpdateExportsConfig = {
                 const filteredFilePaths = dirDetails.filter
                     ? allNonIndexFilePaths.filter((filePath) => {
                           if (dirDetails.filter?.require) {
-                              return filePath.endsWith(dirDetails.filter?.require);
+                              return filePath.endsWith(dirDetails.filter.require);
                           }
 
                           return true;
@@ -97,7 +98,7 @@ export const updateIndexExports: UpdateExportsConfig = {
         }
 
         if (errors.notUpToDateErrors.length) {
-            throw new NotUpToDateError(combineErrorMessages(errors.notUpToDateErrors));
+            throw combineErrors(errors.notUpToDateErrors);
         }
     },
 };

@@ -1,7 +1,7 @@
 import {ElementBookApp, ElementBookSlotName} from 'element-book';
 import {css, defineElementNoInputs, html} from 'element-vir';
-import {joinUrlParts} from 'url-vir';
-import {allElementBookEntries} from './all-element-book-entries';
+import {joinUrlPaths} from 'url-vir';
+import {allElementBookEntries} from './all-element-book-entries.js';
 
 export const ViraBookApp = defineElementNoInputs({
     tagName: 'vira-book-app',
@@ -28,7 +28,7 @@ export const ViraBookApp = defineElementNoInputs({
         return html`
             <${ElementBookApp.assign({
                 internalRouterConfig: {
-                    basePath: joinUrlParts('element-vir', 'vira'),
+                    basePath: joinUrlPaths('element-vir', 'vira'),
                     useInternalRouter: true,
                 },
                 entries: allElementBookEntries,

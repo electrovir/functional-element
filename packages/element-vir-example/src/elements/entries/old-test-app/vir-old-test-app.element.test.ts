@@ -1,9 +1,9 @@
-import {assert, expect, waitUntil} from '@augment-vir/assert';
+import {assert, waitUntil} from '@augment-vir/assert';
 import {RequiredAndNotNullBy} from '@augment-vir/common';
-import {describe, it} from '@augment-vir/test';
+import {describe, it, testWeb} from '@augment-vir/test';
 import {html} from 'element-vir';
-import {TestChildElement} from './child.element';
-import {VirOldTestApp} from './vir-old-test-app.element';
+import {TestChildElement} from './child.element.js';
+import {VirOldTestApp} from './vir-old-test-app.element.js';
 
 function assertDefined<T>(value: T, message?: string): asserts value is NonNullable<T> {
     assert.isDefined(value, message);
@@ -70,19 +70,19 @@ describe(VirOldTestApp.tagName, () => {
                 'span:nth-of-type(3)',
             ]);
             assert.instanceOf(inputNumberSpan, HTMLSpanElement);
-            expect(inputNumberSpan.innerText).to.contain('input number');
+            assert.isIn('input number', inputNumberSpan.innerText);
             assert.strictEquals(inputNumberSpan.childNodes.length, 3);
             const lastNode = inputNumberSpan.childNodes[2];
             assert.instanceOf(lastNode, Text);
             const inputNumber = Number(lastNode.nodeValue);
-            assert.isNotNaN(inputNumber);
+            assert.isNumber(inputNumber);
             return inputNumber;
         }
 
         async function clickAssignNewNumberButton(context: HTMLElement) {
             const assignNewNumberButton = queryTree(context, ['button']);
             assert.instanceOf(assignNewNumberButton, HTMLButtonElement);
-            expect(assignNewNumberButton.innerText).to.contain('assign NEW number to child');
+            assert.isIn('assign NEW number to child', assignNewNumberButton.innerText);
 
             await testWeb.click(assignNewNumberButton);
         }
@@ -96,10 +96,14 @@ describe(VirOldTestApp.tagName, () => {
 
         await clickAssignNewNumberButton(appElement);
 
-        await waitUntil(() => {
-            const secondInputNumber = getDisplayedInputNumber(appElement);
-            return firstInputNumber !== secondInputNumber;
-        }, 'the child input number did not change');
+        await waitUntil(
+            () => {
+                const secondInputNumber = getDisplayedInputNumber(appElement);
+                return firstInputNumber !== secondInputNumber;
+            },
+            undefined,
+            'the child input number did not change',
+        );
     });
 
     it('inputs should be spreadable', async () => {

@@ -2,10 +2,10 @@ import {randomString} from '@augment-vir/common';
 import {defineBookPage} from 'element-book';
 import {Observable, css, defineElementNoInputs, html, listen, onResize} from 'element-vir';
 import {assign} from 'element-vir/dist/declarative-element/directives/assign.directive';
-import {AsyncChild} from './async-child.element';
-import {TestChildElement} from './child.element';
-import {MyCustomEvent} from './customEvent';
-import {allTestArrayElements} from './elements-array.element';
+import {AsyncChild} from './async-child.element.js';
+import {TestChildElement} from './child.element.js';
+import {MyCustomEvent} from './customEvent.js';
+import {allTestArrayElements} from './elements-array.element.js';
 
 export const VirOldTestApp = defineElementNoInputs({
     tagName: 'vir-old-test-app',
