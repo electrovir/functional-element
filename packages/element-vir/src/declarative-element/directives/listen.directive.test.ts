@@ -1,7 +1,7 @@
 import {assert} from '@augment-vir/assert';
 import {describe, it} from '@augment-vir/test';
-import {defineTypedEvent} from '../../index';
-import {listen} from './listen.directive';
+import {defineTypedEvent} from '../../index.js';
+import {listen} from './listen.directive.js';
 
 describe(listen.name, () => {
     it('has proper types', () => {

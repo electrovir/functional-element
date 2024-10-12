@@ -1,7 +1,7 @@
 import {check} from '@augment-vir/assert';
 import {filterMap} from '@augment-vir/common';
-import {hasTagName, isMinimalDefinitionWithInputs} from './minimal-element-definition';
-import {TemplateTransform} from './template-transform-type';
+import {hasTagName, isMinimalDefinitionWithInputs} from './minimal-element-definition.js';
+import {TemplateTransform} from './template-transform-type.js';
 
 type WeakMapElementKey = {
     tagName: string;

@@ -1,9 +1,9 @@
 import {ensureType} from '@augment-vir/common';
 import {describe, itCases} from '@augment-vir/test';
-import {BookEntryType} from '../../../data/book-entry/book-entry-type';
-import {BookTreeNode} from '../../../data/book-tree/book-tree-node';
-import {treeExample} from '../../../test/example-tree.test-helper';
-import {shouldShowTreeNodeInNav} from './book-nav-filter';
+import {BookEntryType} from '../../../data/book-entry/book-entry-type.js';
+import {BookTreeNode} from '../../../data/book-tree/book-tree-node.js';
+import {treeExample} from '../../../test/example-tree.test-helper.js';
+import {shouldShowTreeNodeInNav} from './book-nav-filter.js';
 
 describe(shouldShowTreeNodeInNav.name, () => {
     itCases(shouldShowTreeNodeInNav, [

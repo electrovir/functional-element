@@ -1,4 +1,4 @@
-import {ChildPart, ElementPartInfo, PartInfo, PartType} from '../../lit-exports/all-lit-exports';
+import {ChildPart, ElementPartInfo, PartInfo, PartType} from '../../lit-exports/all-lit-exports.js';
 
 /** For some reason these aren't defined in lit's types already. */
 export type ExtraPartInfoProperties = {
@@ -12,16 +12,17 @@ export type ExtraPartInfoProperties = {
 
 export function extractElement(partInfo: PartInfo, directiveName: string): Element {
     assertIsElementPartInfo(partInfo, directiveName);
-    const element = (partInfo as ElementPartInfo & ExtraPartInfoProperties).element;
+    const element = partInfo.element;
     return element;
 }
 
 function getPartHostTagName(partInfo: PartInfo): string | undefined {
     try {
-        const tagName = ((partInfo as ChildPart).options!.host as Element)!.tagName.toLowerCase();
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const tagName = ((partInfo as ChildPart).options!.host as Element).tagName.toLowerCase();
 
         return tagName;
-    } catch (error) {
+    } catch {
         return undefined;
     }
 }
@@ -38,6 +39,7 @@ export function assertIsElementPartInfo(
             `${directiveName} directive can only be attached directly to an element${hostTagMessage}.`,
         );
     }
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!(partInfo as ElementPartInfo & ExtraPartInfoProperties).element) {
         throw new Error(`${directiveName} directive found no element${hostTagMessage}.`);
     }

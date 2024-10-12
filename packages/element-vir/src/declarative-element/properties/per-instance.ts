@@ -1,4 +1,4 @@
-import {ElementVirStateSetup, stateSetupKey} from './element-vir-state-setup';
+import {ElementVirStateSetup, stateSetupKey} from './element-vir-state-setup.js';
 
 /**
  * A state prop helper that sets up the given callback for each instance of the element that this

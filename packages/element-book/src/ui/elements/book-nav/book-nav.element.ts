@@ -2,16 +2,16 @@ import {check} from '@augment-vir/assert';
 import {checkIfEntirelyInScrollView, waitForAnimationFrame} from '@augment-vir/web';
 import {classMap, css, html, renderIf} from 'element-vir';
 import {Element16Icon, ViraIcon} from 'vira';
-import {BookEntryType} from '../../../data/book-entry/book-entry-type';
-import {isBookTreeNode} from '../../../data/book-tree/book-tree';
-import {BookTreeNode} from '../../../data/book-tree/book-tree-node';
-import {BookRouter} from '../../../routing/book-router';
-import {BookMainRoute, defaultBookFullRoute} from '../../../routing/book-routing';
-import {colorThemeCssVars} from '../../color-theme/color-theme';
-import {BookRouteLink} from '../common/book-route-link.element';
-import {defineBookElement} from '../define-book-element';
-import {ElementBookSlotName} from '../element-book-app/element-book-app-slots';
-import {shouldShowTreeNodeInNav} from './book-nav-filter';
+import {BookEntryType} from '../../../data/book-entry/book-entry-type.js';
+import {isBookTreeNode} from '../../../data/book-tree/book-tree.js';
+import {BookTreeNode} from '../../../data/book-tree/book-tree-node.js';
+import {BookRouter} from '../../../routing/book-router.js';
+import {BookMainRoute, defaultBookFullRoute} from '../../../routing/book-routing.js';
+import {colorThemeCssVars} from '../../color-theme/color-theme.js';
+import {BookRouteLink} from '../common/book-route-link.element.js';
+import {defineBookElement} from '../define-book-element.js';
+import {ElementBookSlotName} from '../element-book-app/element-book-app-slots.js';
+import {shouldShowTreeNodeInNav} from './book-nav-filter.js';
 
 export const BookNav = defineBookElement<{
     flattenedNodes: ReadonlyArray<Readonly<BookTreeNode>>;

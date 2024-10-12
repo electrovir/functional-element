@@ -1,7 +1,7 @@
 import {describe, itCases} from '@augment-vir/test';
-import {unsafeSVG} from '../lit-exports/all-lit-exports';
-import {html} from '../template-transforms/vir-html/vir-html';
-import {convertTemplateToString} from './lit-template';
+import {unsafeSVG} from '../lit-exports/all-lit-exports.js';
+import {html} from '../template-transforms/vir-html/vir-html.js';
+import {convertTemplateToString} from './lit-template.js';
 
 describe(convertTemplateToString.name, () => {
     itCases(convertTemplateToString, [

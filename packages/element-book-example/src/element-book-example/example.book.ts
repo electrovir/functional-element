@@ -31,16 +31,14 @@ function createExamplePage(index: number, parent: BookPage) {
         title: `test ${index}`,
         parent,
         elementExamplesCallback({defineExample}) {
-            Array(20)
-                .fill(0)
-                .forEach((value, exampleIndex) => {
-                    defineExample({
-                        title: `example ${index} ${exampleIndex}`,
-                        renderCallback() {
-                            return 'element example here';
-                        },
-                    });
+            new Array(20).fill(0).forEach((value, exampleIndex) => {
+                defineExample({
+                    title: `example ${index} ${exampleIndex}`,
+                    renderCallback() {
+                        return 'element example here';
+                    },
                 });
+            });
         },
     });
 
@@ -139,9 +137,7 @@ export const entries = [
     parentPage1,
     createExamplePage(0, parentPage2),
     subPage,
-    ...Array(100)
-        .fill(0)
-        .map((_value, index) => createExamplePage(index + 1, subPage)),
+    ...new Array(100).fill(0).map((_value, index) => createExamplePage(index + 1, subPage)),
     duplicateErrorPage,
     duplicateErrorPage,
     testPage3,

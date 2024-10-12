@@ -1,7 +1,7 @@
 import {BookPageControlTypeEnum, defineBookPage} from 'element-book';
 import {CSSResult, css, html, unsafeCSS} from 'element-vir';
 import {Options24Icon, ViraButton, ViraButtonStyleEnum} from 'vira';
-import {elementsBookPage} from '../elements.book';
+import {elementsBookPage} from '../elements.book.js';
 
 export const viraButtonBookPage = defineBookPage({
     parent: elementsBookPage,

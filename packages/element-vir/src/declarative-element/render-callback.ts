@@ -1,21 +1,21 @@
 import {getObjectTypedKeys, SetRequiredAndNotNull} from '@augment-vir/common';
-import {HtmlInterpolation} from '../template-transforms/vir-html/html-interpolation';
-import {TypedEvent} from '../typed-event/typed-event';
-import {CustomElementTagName} from './custom-tag-name';
-import type {DeclarativeElement, DeclarativeElementHost} from './declarative-element';
-import {BaseCssPropertyName} from './properties/css-properties';
-import {CssVars} from './properties/css-vars';
+import {HtmlInterpolation} from '../template-transforms/vir-html/html-interpolation.js';
+import {TypedEvent} from '../typed-event/typed-event.js';
+import {CustomElementTagName} from './custom-tag-name.js';
+import type {DeclarativeElement, DeclarativeElementHost} from './declarative-element.js';
+import {BaseCssPropertyName} from './properties/css-properties.js';
+import {CssVars} from './properties/css-vars.js';
 import {
     EventDescriptorMap,
     EventInitMapEventDetailExtractor,
     EventsInitMap,
-} from './properties/element-events';
-import {PropertyInitMapBase} from './properties/element-properties';
+} from './properties/element-events.js';
+import {PropertyInitMapBase} from './properties/element-properties.js';
 import {
     AllowElementVirStateSetup,
     FlattenElementVirStateSetup,
-} from './properties/element-vir-state-setup';
-import {SlotNameMap} from './slot-names';
+} from './properties/element-vir-state-setup.js';
+import {SlotNameMap} from './slot-names.js';
 
 export type RenderCallback<
     TagName extends CustomElementTagName = any,

@@ -1,8 +1,8 @@
 import {ObservableListener, isObservableBase} from 'observavir';
-import {property} from '../../lit-exports/all-lit-exports';
-import {DeclarativeElement} from '../declarative-element';
-import {PropertyInitMapBase} from './element-properties';
-import {isElementVirStateSetup, stateSetupKey} from './element-vir-state-setup';
+import {property} from '../../lit-exports/all-lit-exports.js';
+import {DeclarativeElement} from '../declarative-element.js';
+import {PropertyInitMapBase} from './element-properties.js';
+import {isElementVirStateSetup, stateSetupKey} from './element-vir-state-setup.js';
 
 export type ObservableListenerMap<OriginalPropertyMap extends PropertyInitMapBase> = Partial<
     Record<keyof OriginalPropertyMap, ObservableListener<any> | undefined>
@@ -21,7 +21,7 @@ function assertValidPropertyName<PropertyInitGeneric extends PropertyInitMapBase
     elementTagName: string,
 ): asserts propKey is keyof PropertyInitGeneric {
     if (typeof propKey !== 'string' && typeof propKey !== 'number' && typeof propKey !== 'symbol') {
-        throw new Error(
+        throw new TypeError(
             `Property name must be a string, got type '${typeof propKey}' from: '${String(
                 propKey,
             )}' for '${elementTagName.toLowerCase()}'`,
@@ -46,6 +46,7 @@ export function createElementPropertyProxy<PropertyInitGeneric extends PropertyI
     const elementAsProps = element as DeclarativeElement & PropertyInitGeneric;
 
     function verifyProperty(propertyKey: PropertyKey) {
+        // eslint-disable-next-line sonarjs/no-selector-parameter
         if (shouldAlreadyExist) {
             assertValidPropertyName(propertyKey, element, element.tagName);
         } else {

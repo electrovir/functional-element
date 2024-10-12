@@ -1,6 +1,6 @@
 import {check} from '@augment-vir/assert';
-import {DeclarativeElementDefinitionOptions} from '../declarative-element/definition-options';
-import {PropertyInitMapBase} from '../declarative-element/properties/element-properties';
+import {DeclarativeElementDefinitionOptions} from '../declarative-element/definition-options.js';
+import {PropertyInitMapBase} from '../declarative-element/properties/element-properties.js';
 
 export type MinimalElementDefinition = {
     tagName: string;

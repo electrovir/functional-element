@@ -1,5 +1,5 @@
-import {directive, Directive, PartInfo} from '../../lit-exports/all-lit-exports';
-import {assertIsElementPartInfo} from './directive-helpers';
+import {directive, Directive, PartInfo} from '../../lit-exports/all-lit-exports.js';
+import {assertIsElementPartInfo} from './directive-helpers.js';
 
 export type OnResizeCallback = (
     /** Only these two properties are supported in all major modern browsers */
@@ -32,6 +32,7 @@ export const onResize = directive(
             }
             this.callback?.(
                 {target: resizeEntry.target, contentRect: resizeEntry.contentRect},
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 this.element!,
             );
         }
@@ -52,6 +53,7 @@ export const onResize = directive(
             return this.render(callback);
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         render(callback: OnResizeCallback) {
             return undefined;
         }

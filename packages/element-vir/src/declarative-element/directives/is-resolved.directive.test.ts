@@ -1,8 +1,8 @@
 import {assert} from '@augment-vir/assert';
 import {describe, it, itCases} from '@augment-vir/test';
-import {stateSetupKey} from '../properties/element-vir-state-setup';
-import {AsyncValue, asyncProp} from './async-prop';
-import {isAsyncError, isResolved, resolvedOrUndefined} from './is-resolved.directive';
+import {stateSetupKey} from '../properties/element-vir-state-setup.js';
+import {AsyncValue, asyncProp} from './async-prop.js';
+import {isAsyncError, isResolved, resolvedOrUndefined} from './is-resolved.directive.js';
 
 describe(isResolved.name, () => {
     itCases(isResolved, [

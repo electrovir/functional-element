@@ -1,16 +1,16 @@
 import {assert, waitUntil} from '@augment-vir/assert';
-import {AnyFunction, randomString} from '@augment-vir/common';
+import {randomString} from '@augment-vir/common';
 import {describe, it, testWeb} from '@augment-vir/test';
+import {queryThroughShadow} from '@augment-vir/web';
 import {IntervalObservable} from 'observavir';
-import {html} from '../template-transforms/vir-html/vir-html';
-import {defineElementNoInputs} from './define-element-no-inputs';
+import {html} from '../template-transforms/vir-html/vir-html.js';
+import {defineElementNoInputs} from './define-element-no-inputs.js';
 
 describe(defineElementNoInputs.name, () => {
     it('blocks render callbacks without a return type', () => {
         defineElementNoInputs({
             tagName: `some-tag-${randomString()}`,
-            // render callback must return something
-            // @ts-expect-error
+            // @ts-expect-error: render callback must return something
             renderCallback() {},
         });
         defineElementNoInputs({
@@ -29,7 +29,7 @@ describe(defineElementNoInputs.name, () => {
             initCallback() {
                 return undefined;
             },
-            // @ts-expect-error
+            // @ts-expect-error: render callback must return something
             renderCallback() {},
         });
     });
@@ -63,7 +63,7 @@ describe(defineElementNoInputs.name, () => {
                       }>,
                 userInputConvertAmount: '',
                 generalError: '',
-                prepareConvertResult: undefined as undefined | Awaited<ReturnType<AnyFunction>>,
+                prepareConvertResult: undefined as unknown,
                 step2ConfirmationAccepted: false,
                 confirmedTxUrl: '',
                 showLoader: false,
@@ -71,7 +71,7 @@ describe(defineElementNoInputs.name, () => {
             },
             renderCallback({state, updateState}) {
                 updateState({
-                    // @ts-expect-error
+                    // @ts-expect-error: this property does not exist
                     thingie: 'yo',
                     generalError: 'hi',
                 });
@@ -134,8 +134,60 @@ describe(defineElementNoInputs.name, () => {
 
         await assert.throws(() =>
             waitUntil.isTruthy(() => count > countAfterDestroy + 10, {
-                timeout: {milliseconds: 3_000},
+                timeout: {milliseconds: 3000},
             }),
         );
+    });
+
+    it('does not reconstruct children', async () => {
+        const Parent = defineElementNoInputs({
+            tagName: 'parent-that-updates',
+            stateInitStatic: {
+                value: 1,
+            },
+            renderCallback({state, updateState}) {
+                setTimeout(() => {
+                    updateState({value: state.value + 1});
+                }, 100);
+                return html`
+                    value:
+                    <span class="parent-value">${state.value}</span>
+                    <br />
+                    <${Child}></${Child}>
+                `;
+            },
+        });
+
+        const Child = defineElementNoInputs({
+            tagName: 'child-that-does-not-update',
+            renderCallback() {
+                return html`
+                    this should not update:
+                    <span class="child-value">
+                        ${randomString(8)}
+                        <span></span>
+                    </span>
+                `;
+            },
+        });
+
+        const parentInstance = await testWeb.render(html`
+            <${Parent}></${Parent}>
+        `);
+
+        assert.instanceOf(parentInstance, Parent);
+
+        const parentValueSpan = queryThroughShadow(parentInstance, '.parent-value');
+        assert.instanceOf(parentValueSpan, HTMLSpanElement);
+
+        const childValueSpan = queryThroughShadow(parentInstance, '.child-value');
+        assert.instanceOf(childValueSpan, HTMLSpanElement);
+        const originalChildValue = childValueSpan.textContent || '';
+        assert.isTruthy(originalChildValue);
+
+        await waitUntil.strictEquals('10', () => parentValueSpan.textContent);
+
+        assert.isString(childValueSpan.textContent);
+        assert.strictEquals(originalChildValue, childValueSpan.textContent);
     });
 });

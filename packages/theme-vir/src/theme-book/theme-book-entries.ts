@@ -46,7 +46,7 @@ export function createThemeBookEntries<TagName extends string>(
             title: theme.elements.heading.tagName,
             parent: elementsBookPage,
             elementExamplesCallback({defineExample}) {
-                getEnumValues(HeadingLevel).map((headingLevel) => {
+                getEnumValues(HeadingLevel).forEach((headingLevel) => {
                     defineExample({
                         title: headingLevel,
                         renderCallback() {

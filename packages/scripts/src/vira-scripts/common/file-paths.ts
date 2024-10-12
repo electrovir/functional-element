@@ -1,7 +1,7 @@
 import {readDirRecursive, toPosixPath} from '@augment-vir/node';
-import {existsSync} from 'fs';
-import {stat} from 'fs/promises';
-import {join, relative} from 'path';
+import {existsSync} from 'node:fs';
+import {stat} from 'node:fs/promises';
+import {join, relative} from 'node:path';
 
 export function generateExportsFromFilePaths({
     filePaths,

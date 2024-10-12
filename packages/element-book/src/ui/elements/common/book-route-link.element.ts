@@ -1,9 +1,9 @@
 import {css, html, listen} from 'element-vir';
 import {shouldClickEventTriggerRouteChange} from 'spa-router-vir';
-import {BookRouter} from '../../../routing/book-router';
-import {BookFullRoute} from '../../../routing/book-routing';
-import {ChangeRouteEvent} from '../../events/change-route.event';
-import {defineBookElement} from '../define-book-element';
+import {BookRouter} from '../../../routing/book-router.js';
+import {BookFullRoute} from '../../../routing/book-routing.js';
+import {ChangeRouteEvent} from '../../events/change-route.event.js';
+import {defineBookElement} from '../define-book-element.js';
 
 export const BookRouteLink = defineBookElement<{
     route: Partial<BookFullRoute>;

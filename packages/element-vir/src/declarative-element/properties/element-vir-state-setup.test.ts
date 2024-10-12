@@ -1,6 +1,6 @@
 import {assert} from '@augment-vir/assert';
 import {describe, it} from '@augment-vir/test';
-import {ElementVirStateSetup, FlattenElementVirStateSetup} from './element-vir-state-setup';
+import {ElementVirStateSetup, FlattenElementVirStateSetup} from './element-vir-state-setup.js';
 
 describe('FlattenElementVirPropSetup', () => {
     it('allows union types', () => {

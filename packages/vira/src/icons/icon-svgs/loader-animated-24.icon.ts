@@ -1,7 +1,7 @@
 import {css, html} from 'element-vir';
-import {viraAnimationDurations} from '../../styles/durations';
-import {defineIcon} from '../icon-svg';
-import {Loader24Icon} from './loader-24.icon';
+import {viraAnimationDurations} from '../../styles/durations.js';
+import {defineIcon} from '../icon-svg.js';
+import {Loader24Icon} from './loader-24.icon.js';
 
 const animatedLoaderStyles = css`
     @keyframes loader-animated-spin {

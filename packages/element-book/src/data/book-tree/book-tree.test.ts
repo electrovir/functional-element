@@ -1,14 +1,14 @@
 import {assert} from '@augment-vir/assert';
 import {describe, it, itCases} from '@augment-vir/test';
-import {treeExample} from '../../test/example-tree.test-helper';
-import {BookEntryType} from '../book-entry/book-entry-type';
+import {treeExample} from '../../test/example-tree.test-helper.js';
+import {BookEntryType} from '../book-entry/book-entry-type.js';
+import {BookTreeNode, isBookTreeNodeMarker} from './book-tree-node.js';
 import {
     createBookTreeFromEntries,
     createEmptyBookTreeRoot,
     doesNodeHaveEntryType,
     flattenTree,
-} from './book-tree';
-import {BookTreeNode, isBookTreeNodeMarker} from './book-tree-node';
+} from './book-tree.js';
 
 const expectedTree = {
     [isBookTreeNodeMarker]: true,
@@ -22,6 +22,7 @@ const expectedTree = {
                     [isBookTreeNodeMarker]: true,
                     manuallyAdded: true,
                     children: {},
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     entry: treeExample.entries[0].elementExamples['example-1']!,
                     urlBreadcrumb: 'example-1',
                     fullUrlBreadcrumbs: [
@@ -106,10 +107,15 @@ describe(flattenTree.name, () => {
             input: treeExample.tree,
             expect: [
                 treeExample.tree,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 treeExample.tree.children['page-1']!,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 treeExample.tree.children['page-1']!.children['example-1']!,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 treeExample.tree.children['page-1']!.children['page-1-child']!,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 treeExample.tree.children['page-1']!.children['aaaaaaaa']!,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 treeExample.tree.children['page-2']!,
             ],
         },

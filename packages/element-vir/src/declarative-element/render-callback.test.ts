@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/constructor-for-side-effects */
 import {assert} from '@augment-vir/assert';
 import {describe, it} from '@augment-vir/test';
 import {SingleCssVarDefinition} from 'lit-css-vars';
@@ -12,8 +13,8 @@ import {
     defineElementEvent,
     defineElementNoInputs,
     html,
-} from '../index';
-import {MaybeElementVirStateSetup} from './properties/element-vir-state-setup';
+} from '../index.js';
+import {MaybeElementVirStateSetup} from './properties/element-vir-state-setup.js';
 
 describe('RenderParams', () => {
     it('should produce proper types', () => {
@@ -23,6 +24,7 @@ describe('RenderParams', () => {
             tagName: 'test-element',
             stateInitStatic: {
                 myAsyncProp: asyncProp({
+                    // eslint-disable-next-line @typescript-eslint/require-await
                     async updateCallback({input}: MyAsyncPropTriggerType) {
                         return 5;
                     },
@@ -68,9 +70,9 @@ describe('RenderParams', () => {
                 state.myAsyncProp.update({input: undefined});
 
                 new testEventThing(4);
-                // @ts-expect-error
+                // @ts-expect-error: requires a number input
                 new testEventThing(undefined);
-                // @ts-expect-error
+                // @ts-expect-error: requires a number input
                 new testEventThing('not a number input');
 
                 return html``;
@@ -91,7 +93,7 @@ describe('RenderParams', () => {
 
             const myEvent = renderParams.events.testEventName;
             const myEventInstance = new myEvent(4);
-            // @ts-expect-error
+            // @ts-expect-error: requires a number input
             new myEvent('no number here');
 
             assert.strictEquals(myEventInstance.type, 'my-element-testEventName');

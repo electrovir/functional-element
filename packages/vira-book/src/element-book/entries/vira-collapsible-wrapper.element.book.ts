@@ -1,7 +1,7 @@
 import {defineBookPage} from 'element-book';
 import {css, html, listen, renderIf} from 'element-vir';
 import {ViraCollapsibleWrapper} from 'vira';
-import {elementsBookPage} from '../elements.book';
+import {elementsBookPage} from '../elements.book.js';
 
 export const viraCollapsibleBookPage = defineBookPage({
     title: ViraCollapsibleWrapper.tagName,
@@ -25,7 +25,7 @@ export const viraCollapsibleBookPage = defineBookPage({
                 showMoreStates: [] as boolean[],
             },
             renderCallback({updateState, state}) {
-                return Array(3)
+                return new Array(3)
                     .fill(0)
                     .map((value, index) => {
                         return html`
@@ -81,7 +81,7 @@ export const viraCollapsibleBookPage = defineBookPage({
                 showMoreStates: [] as boolean[],
             },
             renderCallback({updateState, state}) {
-                return Array(3)
+                return new Array(3)
                     .fill(0)
                     .map((value, index) => {
                         return html`

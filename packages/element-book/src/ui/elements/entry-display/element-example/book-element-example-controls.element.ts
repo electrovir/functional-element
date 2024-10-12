@@ -1,11 +1,11 @@
 import {css, html} from 'element-vir';
-import {BookEntryType} from '../../../../data/book-entry/book-entry-type';
-import {BookTreeNode} from '../../../../data/book-tree/book-tree-node';
-import {BookRouter} from '../../../../routing/book-router';
-import {BookMainRoute, ValidBookPaths} from '../../../../routing/book-routing';
-import {colorThemeCssVars} from '../../../color-theme/color-theme';
-import {BookRouteLink} from '../../common/book-route-link.element';
-import {defineBookElement} from '../../define-book-element';
+import {BookEntryType} from '../../../../data/book-entry/book-entry-type.js';
+import {BookTreeNode} from '../../../../data/book-tree/book-tree-node.js';
+import {BookRouter} from '../../../../routing/book-router.js';
+import {BookMainRoute, ValidBookPaths} from '../../../../routing/book-routing.js';
+import {colorThemeCssVars} from '../../../color-theme/color-theme.js';
+import {BookRouteLink} from '../../common/book-route-link.element.js';
+import {defineBookElement} from '../../define-book-element.js';
 
 export const BookElementExampleControls = defineBookElement<{
     elementExampleNode: BookTreeNode<BookEntryType.ElementExample>;

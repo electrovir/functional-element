@@ -1,6 +1,6 @@
 import {ElementBookApp, ElementBookSlotName} from 'element-book';
 import {css, defineElementNoInputs, html, listen} from 'element-vir';
-import {entries} from '../../element-book-example/example.book';
+import {entries} from '../../element-book-example/example.book.js';
 
 export const VirApp = defineElementNoInputs({
     tagName: 'vir-app',
@@ -39,7 +39,7 @@ export const VirApp = defineElementNoInputs({
                     ${listen('input', (event) => {
                         const element = event.currentTarget;
                         if (!(element instanceof HTMLInputElement)) {
-                            throw new Error('input element not found for input event');
+                            throw new TypeError('input element not found for input event');
                         }
                         updateState({themeColor: element.value});
                     })}

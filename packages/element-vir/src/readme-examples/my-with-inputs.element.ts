@@ -1,4 +1,4 @@
-import {defineElement, html} from '../index';
+import {defineElement, html} from '../index.js';
 
 export const MyWithInputs = defineElement<{
     username: string;

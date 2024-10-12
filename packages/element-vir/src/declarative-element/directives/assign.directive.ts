@@ -1,13 +1,14 @@
+import type {EmptyObject} from 'type-fest';
 import {
     directive,
     Directive,
     DirectiveResult,
     noChange,
     PartInfo,
-} from '../../lit-exports/all-lit-exports';
-import {assignInputs} from '../properties/assign-inputs';
-import {PropertyInitMapBase} from '../properties/element-properties';
-import {extractElement} from './directive-helpers';
+} from '../../lit-exports/all-lit-exports.js';
+import {assignInputs} from '../properties/assign-inputs.js';
+import {PropertyInitMapBase} from '../properties/element-properties.js';
+import {extractElement} from './directive-helpers.js';
 
 export type ElementDefinitionWithInputsType<
     InputsType extends PropertyInitMapBase = PropertyInitMapBase,
@@ -18,12 +19,12 @@ export type ElementDefinitionWithInputsType<
  *
  * @deprecated Instead of using this directive, assign inputs directly on the element's
  *   interpolation opening tag interpolation.
- * @example html`<${MyElement} ${assign(MyElement, {value: 1})}>...` should be
+ * @example Html`<${MyElement} ${assign(MyElement, {value: 1})}>...` should be
  * html`<${MyElement.assign({value: 1})}>...`
  */
 export function assign<const SpecificDeclarativeElement extends ElementDefinitionWithInputsType>(
     declarativeElement: SpecificDeclarativeElement,
-    inputsObject: {} extends Required<SpecificDeclarativeElement['inputsType']>
+    inputsObject: EmptyObject extends Required<SpecificDeclarativeElement['inputsType']>
         ? never
         : SpecificDeclarativeElement['inputsType'],
 ): DirectiveResult;
@@ -32,7 +33,7 @@ export function assign<const SpecificDeclarativeElement extends ElementDefinitio
  *
  * @deprecated Instead of using this directive, assign inputs directly on the element's
  *   interpolation opening tag interpolation.
- * @example html`<${MyElement} ${assign(MyElement, {value: 1})}>...` should be
+ * @example Html`<${MyElement} ${assign(MyElement, {value: 1})}>...` should be
  * html`<${MyElement.assign({value: 1})}>...`
  */
 export function assign<
@@ -44,12 +45,12 @@ export function assign<
  *
  * @deprecated Instead of using this directive, assign inputs directly on the element's
  *   interpolation opening tag interpolation.
- * @example html`<${MyElement} ${assign(MyElement, {value: 1})}>...` should be
+ * @example Html`<${MyElement} ${assign(MyElement, {value: 1})}>...` should be
  * html`<${MyElement.assign({value: 1})}>...`
  */
 export function assign<const SpecificDeclarativeElement extends ElementDefinitionWithInputsType>(
     declarativeElementOrInputs: SpecificDeclarativeElement,
-    inputsObject?: {} extends Required<SpecificDeclarativeElement['inputsType']>
+    inputsObject?: EmptyObject extends Required<SpecificDeclarativeElement['inputsType']>
         ? never
         : SpecificDeclarativeElement['inputsType'],
 ): DirectiveResult {

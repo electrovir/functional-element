@@ -1,6 +1,6 @@
 import {css, defineElementEvent, html, listen, onResize} from 'element-vir';
-import {noNativeFormStyles, viraAnimationDurations} from '../styles';
-import {defineViraElement} from './define-vira-element';
+import {noNativeFormStyles, viraAnimationDurations} from '../styles/index.js';
+import {defineViraElement} from './define-vira-element.js';
 
 export const ViraCollapsibleWrapper = defineViraElement<{expanded: boolean}>()({
     tagName: 'vira-collapsible-wrapper',

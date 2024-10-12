@@ -10,7 +10,7 @@ import {
     defineElementEvent,
     defineElementNoInputs,
     html,
-} from '../index';
+} from '../index.js';
 
 describe('StaticDeclarativeElementProperties', () => {
     it('excludes observables in inputsType', () => {

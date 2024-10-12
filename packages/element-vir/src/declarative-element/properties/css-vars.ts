@@ -1,7 +1,7 @@
 import {Values} from '@augment-vir/common';
 import {CssVarDefinitions, CssVarsSetup} from 'lit-css-vars';
-import {CustomElementTagName} from '../custom-tag-name';
-import {BaseCssPropertyName} from './css-properties';
+import {CustomElementTagName} from '../custom-tag-name.js';
+import {BaseCssPropertyName} from './css-properties.js';
 
 export type CssVarsInitMap<
     ElementTagName extends CustomElementTagName,

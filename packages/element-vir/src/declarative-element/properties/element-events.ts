@@ -3,9 +3,9 @@ import {
     DefinedTypedEventNameDefinition,
     defineTypedEvent,
     TypedEvent,
-} from '../../typed-event/typed-event';
-import {NonEmptyString} from '../../util/type';
-import {CustomElementTagName} from '../custom-tag-name';
+} from '../../typed-event/typed-event.js';
+import {NonEmptyString} from '../../util/type.js';
+import {CustomElementTagName} from '../custom-tag-name.js';
 
 export type EventsInitMap = Record<string, DefinedTypedEventNameDefinition<any>>;
 
@@ -56,8 +56,8 @@ export function createEventDescriptorMap<
                 currentElementEventKey: keyof EventsInitGeneric,
             ): currentElementEventKey is NonEmptyString<keyof EventsInitGeneric> => {
                 if (typeof currentElementEventKey !== 'string') {
-                    throw new Error(
-                        `Expected event key of type string but got type "${typeof currentElementEventKey}" for key ${String(
+                    throw new TypeError(
+                        `Expected event key of type string but got type '${typeof currentElementEventKey}' for key ${String(
                             currentElementEventKey,
                         )}`,
                     );

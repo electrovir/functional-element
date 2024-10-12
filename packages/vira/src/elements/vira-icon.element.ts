@@ -1,6 +1,6 @@
 import {css} from 'element-vir';
-import {ViraIconSvg} from '../icons/icon-svg';
-import {defineViraElement} from './define-vira-element';
+import {ViraIconSvg} from '../icons/icon-svg.js';
+import {defineViraElement} from './define-vira-element.js';
 
 export const ViraIcon = defineViraElement<{
     icon: Pick<ViraIconSvg, 'svgTemplate'> | undefined;

@@ -1,7 +1,7 @@
 import {joinWithFinalConjunction} from '@augment-vir/common';
-import {PopUpManager, ShowPopUpResult} from '../../util/pop-up-manager';
-import {ViraDropdownOption} from './vira-dropdown-item.element';
-import {ViraDropdown} from './vira-dropdown.element';
+import {PopUpManager, ShowPopUpResult} from '../../util/pop-up-manager.js';
+import {ViraDropdownOption} from './vira-dropdown-item.element.js';
+import {ViraDropdown} from './vira-dropdown.element.js';
 
 export function filterToSelectedOptions({
     selected,
@@ -51,6 +51,7 @@ export function createNewSelection(
     currentSelection: ReadonlyArray<PropertyKey>,
     isMultiSelect: boolean,
 ): PropertyKey[] {
+    // eslint-disable-next-line sonarjs/no-selector-parameter
     if (isMultiSelect) {
         return currentSelection.includes(id)
             ? currentSelection.filter((entry) => entry !== id)

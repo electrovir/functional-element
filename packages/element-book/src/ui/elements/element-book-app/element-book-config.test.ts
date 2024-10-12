@@ -1,5 +1,5 @@
 import {describe, it} from '@augment-vir/test';
-import {ElementBookConfig} from './element-book-config';
+import {ElementBookConfig} from './element-book-config.js';
 
 describe('ElementBookConfig', () => {
     function acceptsElementBookConfig(input: ElementBookConfig) {}
@@ -19,9 +19,8 @@ describe('ElementBookConfig', () => {
             },
             themeColor: 'blue',
         });
-        // if they're combined we get a TS error
         acceptsElementBookConfig(
-            // @ts-expect-error
+            // @ts-expect-error: if they're combined we get a TS error
             {
                 entries: [],
                 internalRouterConfig: {

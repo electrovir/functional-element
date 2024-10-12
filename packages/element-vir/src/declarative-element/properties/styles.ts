@@ -1,11 +1,11 @@
 import {getObjectTypedKeys, mapObjectValues} from '@augment-vir/common';
-import {CSSResult, unsafeCSS} from '../../lit-exports/all-lit-exports';
-import {CustomElementTagName} from '../custom-tag-name';
-import {BaseCssPropertyName} from './css-properties';
-import {CssVars} from './css-vars';
-import {PropertyInitMapBase} from './element-properties';
-import {FlattenElementVirStateSetup} from './element-vir-state-setup';
-import {HostClassNamesMap, HostClassesInitMap} from './host-classes';
+import {CSSResult, unsafeCSS} from '../../lit-exports/all-lit-exports.js';
+import {CustomElementTagName} from '../custom-tag-name.js';
+import {BaseCssPropertyName} from './css-properties.js';
+import {CssVars} from './css-vars.js';
+import {PropertyInitMapBase} from './element-properties.js';
+import {FlattenElementVirStateSetup} from './element-vir-state-setup.js';
+import {HostClassNamesMap, HostClassesInitMap} from './host-classes.js';
 
 export type HostClass = {
     selector: CSSResult;

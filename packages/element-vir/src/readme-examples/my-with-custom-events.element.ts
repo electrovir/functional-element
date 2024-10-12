@@ -1,5 +1,6 @@
-import {defineElementNoInputs, html, listen} from '../index';
-import {MyCustomActionEvent} from './my-custom-action.event';
+import {randomInteger} from '@augment-vir/common';
+import {defineElementNoInputs, html, listen} from '../index.js';
+import {MyCustomActionEvent} from './my-custom-action.event.js';
 
 export const MyWithCustomEvents = defineElementNoInputs({
     tagName: 'my-with-custom-events',
@@ -12,7 +13,7 @@ export const MyWithCustomEvents = defineElementNoInputs({
             >
                 <div
                     ${listen('click', () => {
-                        dispatch(new MyCustomActionEvent(Math.random()));
+                        dispatch(new MyCustomActionEvent(randomInteger({min: 0, max: 1_000_000})));
                     })}
                 ></div>
             </div>

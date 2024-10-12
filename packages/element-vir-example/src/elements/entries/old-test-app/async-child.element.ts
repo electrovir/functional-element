@@ -1,7 +1,7 @@
-import {wait, waitValue} from '@augment-vir/common';
+import {randomInteger, wait, waitValue} from '@augment-vir/common';
 import {asyncProp, defineElement, html, listen, renderAsync} from 'element-vir';
 
-const sameNumberPromise = waitValue(1_500, 86);
+const sameNumberPromise = waitValue(1500, 86);
 
 const circularReference = {derp: '' as any};
 circularReference.derp = circularReference;
@@ -12,14 +12,8 @@ export const AsyncChild = defineElement<{
     tagName: 'async-child',
     stateInitStatic: {
         loadThing: asyncProp({
-            async updateCallback({
-                trigger,
-                circularReference,
-            }: {
-                trigger: number;
-                circularReference: any;
-            }) {
-                await wait(1_500);
+            async updateCallback({trigger}: {trigger: number; circularReference: any}) {
+                await wait(1500);
                 return Math.pow(trigger, 2);
             },
         }),
@@ -45,7 +39,7 @@ export const AsyncChild = defineElement<{
             </button>
             <button
                 ${listen('click', () => {
-                    state.loadThing.setValue(waitValue(1_500, 42));
+                    state.loadThing.setValue(waitValue(1500, 42));
                 })}
             >
                 New Number Promise
@@ -59,7 +53,7 @@ export const AsyncChild = defineElement<{
             </button>
             <button
                 ${listen('click', () => {
-                    state.loadThing.setValue(Math.random());
+                    state.loadThing.setValue(randomInteger({min: 0, max: 10}));
                 })}
             >
                 New Resolved Value

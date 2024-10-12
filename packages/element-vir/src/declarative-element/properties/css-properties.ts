@@ -1,4 +1,5 @@
-import {CustomElementTagName} from '../custom-tag-name';
+import {CustomElementTagName} from '../custom-tag-name.js';
+
 export type BaseCssPropertyName<ElementTagName extends CustomElementTagName> =
     `${ElementTagName}-${string}`;
 

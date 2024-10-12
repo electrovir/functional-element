@@ -3,7 +3,7 @@ import {getObjectTypedKeys, wrapInTry} from '@augment-vir/common';
 import {
     DeclarativeElementDefinition,
     StaticDeclarativeElementProperties,
-} from './declarative-element';
+} from './declarative-element.js';
 
 const expectedStaticProperties = getObjectTypedKeys({
     assign: '',

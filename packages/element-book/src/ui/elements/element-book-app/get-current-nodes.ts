@@ -1,6 +1,10 @@
-import {doBreadcrumbsStartWith} from '../../../data/book-entry/url-breadcrumbs';
-import {BookTreeNode} from '../../../data/book-tree/book-tree-node';
-import {BookFullRoute, ValidBookPaths, defaultBookFullRoute} from '../../../routing/book-routing';
+import {doBreadcrumbsStartWith} from '../../../data/book-entry/url-breadcrumbs.js';
+import {BookTreeNode} from '../../../data/book-tree/book-tree-node.js';
+import {
+    BookFullRoute,
+    ValidBookPaths,
+    defaultBookFullRoute,
+} from '../../../routing/book-routing.js';
 
 export function getCurrentNodes(
     flattenedNodes: ReadonlyArray<Readonly<BookTreeNode>>,
@@ -15,14 +19,7 @@ export function getCurrentNodes(
         updateRoutes(defaultBookFullRoute);
     }
 
-    const filteredNodesFromDefaultPath = filterNodes(flattenedNodes, defaultBookFullRoute.paths);
-
-    if (!filteredNodesFromDefaultPath) {
-        throw new Error(`Tried to self-correct for invalid path ${currentPaths.join('/')}
-                        but failed to do so.`);
-    }
-
-    return filteredNodesFromDefaultPath;
+    return filterNodes(flattenedNodes, defaultBookFullRoute.paths);
 }
 
 function filterNodes(

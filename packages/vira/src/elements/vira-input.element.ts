@@ -7,20 +7,25 @@ import {
     onResize,
     renderIf,
 } from 'element-vir';
-import {EyeClosed24Icon, EyeOpen24Icon, ViraIconSvg} from '../icons';
-import {CloseX24Icon} from '../icons/icon-svgs/close-x-24.icon';
-import {noUserSelect, viraAnimationDurations, viraBorders, viraDisabledStyles} from '../styles';
-import {createFocusStyles, viraFocusCssVars} from '../styles/focus';
-import {noNativeFormStyles} from '../styles/native-styles';
-import {defineViraElement} from './define-vira-element';
+import {CloseX24Icon} from '../icons/icon-svgs/close-x-24.icon.js';
+import {EyeClosed24Icon, EyeOpen24Icon, ViraIconSvg} from '../icons/index.js';
+import {createFocusStyles, viraFocusCssVars} from '../styles/focus.js';
+import {
+    noUserSelect,
+    viraAnimationDurations,
+    viraBorders,
+    viraDisabledStyles,
+} from '../styles/index.js';
+import {noNativeFormStyles} from '../styles/native-styles.js';
+import {defineViraElement} from './define-vira-element.js';
 import {
     SharedTextInputElementInputs,
     filterTextInputValue,
     textInputListener,
-} from './shared-text-input-logic';
-import {ViraIcon} from './vira-icon.element';
+} from './shared-text-input-logic.js';
+import {ViraIcon} from './vira-icon.element.js';
 
-export * from './shared-text-input-logic';
+export * from './shared-text-input-logic.js';
 
 export enum ViraInputType {
     Default = 'text',
@@ -56,7 +61,9 @@ export const ViraInput = defineViraElement<
         'vira-input-clear-button-hover-color': '#ff0000',
         'vira-input-clear-button-active-color': '#b30000',
 
+        // eslint-disable-next-line sonarjs/no-hardcoded-credentials
         'vira-input-show-password-button-hover-color': '#0a89ff',
+        // eslint-disable-next-line sonarjs/no-hardcoded-credentials
         'vira-input-show-password-button-active-color': '#0261ba',
 
         'vira-input-padding-horizontal': '10px',
@@ -266,7 +273,7 @@ export const ViraInput = defineViraElement<
     },
     renderCallback: ({inputs, dispatch, state, updateState, events}) => {
         const {filtered: filteredValue} = filterTextInputValue({
-            value: inputs.value ?? '',
+            value: inputs.value,
             allowed: inputs.allowedInputs,
             blocked: inputs.blockedInputs,
         });
@@ -342,7 +349,7 @@ export const ViraInput = defineViraElement<
                     `,
                 )}
                 ${renderIf(
-                    !!(inputs.type === ViraInputType.Password),
+                    inputs.type === ViraInputType.Password,
                     html`
                         <button
                             class="show-password-button"

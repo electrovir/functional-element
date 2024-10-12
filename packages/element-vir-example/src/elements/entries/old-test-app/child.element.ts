@@ -1,6 +1,6 @@
 import {randomString} from '@augment-vir/common';
 import {css, defineElement, defineElementEvent, html, listen, onDomCreated} from 'element-vir';
-import {MyCustomEvent} from './customEvent';
+import {MyCustomEvent} from './customEvent.js';
 
 export const TestChildElement = defineElement<{
     width: number;

@@ -1,5 +1,5 @@
 import {DeclarativeElementDefinition} from 'element-vir';
-import {HeadingLevel} from './theme-options';
+import {HeadingLevel} from './theme-options.js';
 
 export type Theme<TagPrefix extends string> = {
     elements: {

@@ -1,8 +1,8 @@
 import {assert} from '@augment-vir/assert';
 import {describe, it} from '@augment-vir/test';
-import {defineBookPage} from '../book-entry/book-page/define-book-page';
-import {createBookTreeFromEntries} from './book-tree';
-import {searchFlattenedNodes} from './search-nodes';
+import {defineBookPage} from '../book-entry/book-page/define-book-page.js';
+import {createBookTreeFromEntries} from './book-tree.js';
+import {searchFlattenedNodes} from './search-nodes.js';
 
 describe(searchFlattenedNodes.name, () => {
     it('filters out unmatched nodes', () => {

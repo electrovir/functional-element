@@ -1,7 +1,7 @@
 import {check} from '@augment-vir/assert';
 import {randomString} from '@augment-vir/common';
-import {fuzzySearch} from '../../util/fuzzy-search';
-import {BookTreeNode} from './book-tree-node';
+import {fuzzySearch} from '../../util/fuzzy-search.js';
+import {BookTreeNode} from './book-tree-node.js';
 
 const searchJoin = randomString(32);
 
@@ -85,7 +85,7 @@ export function searchFlattenedNodes({
         const shouldInclude = includeInSearchResults[inSearchResultsKey];
 
         if (!check.isBoolean(shouldInclude)) {
-            throw new Error(
+            throw new TypeError(
                 `Failed to find '${treeNode.fullUrlBreadcrumbs.join(
                     ' > ',
                 )}' in includeInSearchResults.`,

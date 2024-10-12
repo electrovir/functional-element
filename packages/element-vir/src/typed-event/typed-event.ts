@@ -1,4 +1,4 @@
-import {NonEmptyString} from '../util/type';
+import {NonEmptyString} from '../util/type.js';
 
 export class TypedEvent<
     EventTypeNameGeneric extends string = '',
@@ -50,7 +50,7 @@ export function defineTypedEvent<EventDetailGeneric>() {
         eventType: NonEmptyString<EventTypeNameGeneric>,
     ): DefinedTypedEvent<EventTypeNameGeneric, EventDetailGeneric> => {
         return class extends TypedEvent<EventTypeNameGeneric, EventDetailGeneric> {
-            public static type = eventType;
+            public static readonly type = eventType;
             public override readonly _type = eventType;
 
             constructor(value: EventDetailGeneric) {

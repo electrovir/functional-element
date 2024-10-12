@@ -1,13 +1,13 @@
 import {omitObjectKeys} from '@augment-vir/common';
 import {css, html} from 'element-vir';
-import {BookEntryType} from '../../../../data/book-entry/book-entry-type';
-import {BookPageControlsValues} from '../../../../data/book-entry/book-page/book-page-controls';
-import {BookTreeNode} from '../../../../data/book-tree/book-tree-node';
-import {BookRouter} from '../../../../routing/book-router';
-import {colorThemeCssVars} from '../../../color-theme/color-theme';
-import {defineBookElement} from '../../define-book-element';
-import {BookElementExampleControls} from './book-element-example-controls.element';
-import {BookElementExampleViewer} from './book-element-example-viewer.element';
+import {BookEntryType} from '../../../../data/book-entry/book-entry-type.js';
+import {BookPageControlsValues} from '../../../../data/book-entry/book-page/book-page-controls.js';
+import {BookTreeNode} from '../../../../data/book-tree/book-tree-node.js';
+import {BookRouter} from '../../../../routing/book-router.js';
+import {colorThemeCssVars} from '../../../color-theme/color-theme.js';
+import {defineBookElement} from '../../define-book-element.js';
+import {BookElementExampleControls} from './book-element-example-controls.element.js';
+import {BookElementExampleViewer} from './book-element-example-viewer.element.js';
 
 export const BookElementExampleWrapper = defineBookElement<{
     elementExampleNode: BookTreeNode<BookEntryType.ElementExample>;

@@ -1,6 +1,6 @@
 import {assert} from '@augment-vir/assert';
 import {describe, it} from '@augment-vir/test';
-import {renderIf} from './render-if.directive';
+import {renderIf} from './render-if.directive.js';
 
 describe(renderIf.name, () => {
     it('has correct types', () => {

@@ -1,6 +1,6 @@
 import {html} from 'element-vir';
-import {viraIconCssVars} from '../icon-css-vars';
-import {defineIcon} from '../icon-svg';
+import {viraIconCssVars} from '../icon-css-vars.js';
+import {defineIcon} from '../icon-svg.js';
 
 export const StatusFailure24Icon = defineIcon({
     name: 'StatusFailure24Icon',

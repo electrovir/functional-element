@@ -1,7 +1,7 @@
 import {BookPageControlTypeEnum, defineBookPage, definePageControl} from 'element-book';
 import {CSSResult, HTMLTemplateResult, css, html} from 'element-vir';
 import {ViraDropdownItem} from 'vira';
-import {dropdownPage} from './vira-dropdown.book';
+import {dropdownPage} from './vira-dropdown.book.js';
 
 const examples: ReadonlyArray<{
     title: string;
@@ -82,7 +82,7 @@ export const ViraDropdownItemPage = defineBookPage({
             defineExample({
                 title: example.title,
                 stateInitStatic: {
-                    selected: example.inputs?.selected || [],
+                    selected: example.inputs.selected || [],
                 },
                 styles: example.customStyle,
                 renderCallback({controls}) {

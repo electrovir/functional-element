@@ -1,5 +1,5 @@
-import {defineElementNoInputs, html, listen} from '../index';
-import {MyWithEvents} from './my-with-events.element';
+import {defineElementNoInputs, html, listen} from '../index.js';
+import {MyWithEvents} from './my-with-events.element.js';
 
 export const MyWithEventListening = defineElementNoInputs({
     tagName: 'my-with-event-listening',

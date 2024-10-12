@@ -1,6 +1,6 @@
 import {check} from '@augment-vir/assert';
-import {BookEntryType} from '../../../data/book-entry/book-entry-type';
-import {BookTreeNode} from '../../../data/book-tree/book-tree-node';
+import {BookEntryType} from '../../../data/book-entry/book-entry-type.js';
+import {BookTreeNode} from '../../../data/book-tree/book-tree-node.js';
 
 export function shouldShowTreeNodeInNav(
     currentNode: Readonly<BookTreeNode>,
@@ -23,14 +23,8 @@ export function shouldShowTreeNodeInNav(
         return true;
     }
 
-    const isSiblingSelected = check.jsonEquals(
+    return check.jsonEquals(
         selectedPath?.slice(0, -1),
         currentNode.fullUrlBreadcrumbs.slice(0, -1),
     );
-
-    if (isSiblingSelected) {
-        return true;
-    }
-
-    return false;
 }

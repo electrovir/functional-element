@@ -1,8 +1,8 @@
 import {assert} from '@augment-vir/assert';
 import {describe, it} from '@augment-vir/test';
-import {BookEntryType} from '../data/book-entry/book-entry-type';
-import {isBookTreeNode} from '../data/book-tree/book-tree';
-import {treeExample} from './example-tree.test-helper';
+import {BookEntryType} from '../data/book-entry/book-entry-type.js';
+import {isBookTreeNode} from '../data/book-tree/book-tree.js';
+import {treeExample} from './example-tree.test-helper.js';
 
 describe('treeExample', () => {
     it('matches correct flattened nodes', () => {

@@ -1,4 +1,4 @@
-import {asyncProp, defineElement, html, listen, renderAsync} from '../index';
+import {asyncProp, defineElement, html, listen, renderAsync} from '../index.js';
 
 type EndpointData = number[];
 

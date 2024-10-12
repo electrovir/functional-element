@@ -1,4 +1,4 @@
-import {defineElementNoInputs, html, listen} from '../index';
+import {defineElementNoInputs, html, listen} from '../index.js';
 
 export const MyWithUpdateState = defineElementNoInputs({
     tagName: 'my-with-update-state',

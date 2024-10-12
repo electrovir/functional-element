@@ -1,5 +1,5 @@
-import {defineElementNoInputs, html} from '../index';
-import {MySimple} from './my-simple.element';
+import {defineElementNoInputs, html} from '../index.js';
+import {MySimple} from './my-simple.element.js';
 
 export const MyApp = defineElementNoInputs({
     tagName: 'my-app',

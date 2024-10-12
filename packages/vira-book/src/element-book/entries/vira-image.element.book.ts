@@ -8,7 +8,7 @@ import {
     ViraImage,
     ViraImageSlotNameEnum,
 } from 'vira';
-import {elementsBookPage} from '../elements.book';
+import {elementsBookPage} from '../elements.book.js';
 
 export const viraImageBookPage = defineBookPage({
     title: ViraImage.tagName,
@@ -118,7 +118,7 @@ export const viraImageBookPage = defineBookPage({
                 title: 'long loading',
                 inputs: {
                     imageUrl: '/bolt.png',
-                    _debugLoadDelay: {milliseconds: 2_000},
+                    _debugLoadDelay: {milliseconds: 2000},
                 },
                 styles: css`
                     border-radius: 32px;

@@ -1,2 +1,2 @@
-export * from './base-lit-exports';
-export * from './lit-repeat-fix';
+export * from './base-lit-exports.js';
+export * from './lit-repeat-fix.js';

@@ -1,1 +1,1 @@
-export * from './pop-up-manager';
+export * from './pop-up-manager.js';

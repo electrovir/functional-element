@@ -1,7 +1,7 @@
 import {check} from '@augment-vir/assert';
 import {CSSResult} from 'element-vir';
 import {SingleCssVarDefinition, defineCssVars, setCssVarValue} from 'lit-css-vars';
-import {NestedType} from '../../util/type';
+import {NestedType} from '../../util/type.js';
 
 export type ColorPair = {background: CSSResult; foreground: CSSResult};
 

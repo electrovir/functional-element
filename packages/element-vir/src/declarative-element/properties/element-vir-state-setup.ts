@@ -1,5 +1,5 @@
 import {check} from '@augment-vir/assert';
-import {PropertyInitMapBase} from './element-properties';
+import {PropertyInitMapBase} from './element-properties.js';
 
 export const stateSetupKey = Symbol('element-vir-state-setup');
 

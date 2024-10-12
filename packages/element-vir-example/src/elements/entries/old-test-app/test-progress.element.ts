@@ -1,3 +1,4 @@
+import {assert} from '@augment-vir/assert';
 import {defineElement, html, requireAllCustomElementsToBeDeclarativeElements} from 'element-vir';
 
 requireAllCustomElementsToBeDeclarativeElements();
@@ -14,14 +15,5 @@ export const TestTypesProgress = defineElement<TestTypesProgressInputs>()({
     },
 });
 
-function doThing(thing: typeof TestTypesProgress.instanceType) {
-    thing.instanceInputs;
-}
-
-const thing = new TestTypesProgress();
-
-if (thing instanceof TestTypesProgress) {
-    thing;
-} else {
-    thing;
-}
+// test that this property exists
+assert.tsType<typeof TestTypesProgress.instanceType>().matches<{instanceInputs: any}>();

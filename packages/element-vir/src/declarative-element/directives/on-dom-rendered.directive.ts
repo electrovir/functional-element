@@ -1,6 +1,6 @@
 import {MaybePromise} from '@augment-vir/common';
-import {directive, Directive, PartInfo} from '../../lit-exports/all-lit-exports';
-import {assertIsElementPartInfo} from './directive-helpers';
+import {directive, Directive, PartInfo} from '../../lit-exports/all-lit-exports.js';
+import {assertIsElementPartInfo} from './directive-helpers.js';
 
 export type OnDomRenderedCallback = (element: Element) => MaybePromise<void>;
 
@@ -24,6 +24,7 @@ export const onDomRendered = directive(
             return this.render(callback);
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         render(callback: OnDomRenderedCallback) {
             return undefined;
         }

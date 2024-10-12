@@ -1,6 +1,6 @@
 import {describe, itCases} from '@augment-vir/test';
-import {defineBookPage} from './book-page/define-book-page';
-import {listUrlBreadcrumbs, titleToUrlBreadcrumb} from './url-breadcrumbs';
+import {defineBookPage} from './book-page/define-book-page.js';
+import {listUrlBreadcrumbs, titleToUrlBreadcrumb} from './url-breadcrumbs.js';
 
 describe(listUrlBreadcrumbs.name, () => {
     const exampleTopLevelPage = defineBookPage({

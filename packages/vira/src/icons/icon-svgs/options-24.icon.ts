@@ -1,6 +1,6 @@
 import {html} from 'element-vir';
-import {viraIconCssVars} from '../icon-css-vars';
-import {defineIcon} from '../icon-svg';
+import {viraIconCssVars} from '../icon-css-vars.js';
+import {defineIcon} from '../icon-svg.js';
 
 export const Options24Icon = defineIcon({
     name: 'Options24Icon',
@@ -18,7 +18,7 @@ export const Options24Icon = defineIcon({
             <path
                 d="M3 5.5h3.5m5 0h8.5M3 12.5h11m5 0h2M3 18.5h3m5 0h10"
                 fill="none"
-                stroke="${viraIconCssVars['vira-icon-stroke-color'].value}"
+                stroke=${viraIconCssVars['vira-icon-stroke-color'].value}
                 stroke-width=${viraIconCssVars['vira-icon-stroke-width'].value}
             />
         </svg>

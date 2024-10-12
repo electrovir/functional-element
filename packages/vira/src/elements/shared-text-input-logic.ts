@@ -104,7 +104,7 @@ export function textInputListener({
     newValueCallback: (newValue: string) => void;
 }) {
     if (!(event instanceof InputEvent)) {
-        throw new Error('Text input event was not an InputEvent.');
+        throw new TypeError('Text input event was not an InputEvent.');
     }
 
     const inputElement = extractEventTarget(event, HTMLInputElement);
@@ -116,7 +116,7 @@ export function textInputListener({
     const beforeChangeText = filteredValue;
 
     // this will be overwritten below if blocked characters are encountered
-    let finalText = inputElement.value ?? '';
+    let finalText = inputElement.value;
 
     /**
      * When changedText is falsy, that means an operation other than inserting characters happened.

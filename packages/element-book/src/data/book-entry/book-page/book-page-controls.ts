@@ -1,3 +1,5 @@
+import type {EmptyObject} from 'type-fest';
+
 export type BookPageControl<ControlType extends BookPageControlTypeEnum = BookPageControlTypeEnum> =
     {
         controlType: ControlType;
@@ -8,7 +10,7 @@ export type BookPageControl<ControlType extends BookPageControlTypeEnum = BookPa
         ? {
               options: string[];
           }
-        : {});
+        : EmptyObject);
 
 export type BookPageControlInit<ControlType extends BookPageControlTypeEnum> = Omit<
     BookPageControl<ControlType>,

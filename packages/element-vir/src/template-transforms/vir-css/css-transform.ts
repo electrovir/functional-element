@@ -1,7 +1,9 @@
-import {CSSResultGroup} from '../../lit-exports/all-lit-exports';
-import {MinimalElementDefinition, hasTagName} from '../minimal-element-definition';
-import {TemplateTransform} from '../template-transform-type';
-import {ValueTransformCallback, transformTemplate} from '../transform-template';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+import {CSSResultGroup} from '../../lit-exports/all-lit-exports.js';
+import {MinimalElementDefinition, hasTagName} from '../minimal-element-definition.js';
+import {TemplateTransform} from '../template-transform-type.js';
+import {ValueTransformCallback, transformTemplate} from '../transform-template.js';
 
 function transformCss(
     ...[

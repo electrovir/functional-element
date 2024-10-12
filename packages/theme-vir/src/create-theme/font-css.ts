@@ -1,5 +1,5 @@
 import {CSSResult, css, unsafeCSS} from 'element-vir';
-import {FontSize, FontStyle} from './theme-options';
+import {FontSize, FontStyle} from './theme-options.js';
 
 export function createFontSizeCssValue(fontSize: Readonly<FontSize>): CSSResult {
     if ('pixels' in fontSize) {

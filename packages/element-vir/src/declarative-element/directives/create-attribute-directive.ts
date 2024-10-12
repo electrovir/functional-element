@@ -1,5 +1,5 @@
-import {directive, Directive, noChange, PartInfo} from '../../lit-exports/all-lit-exports';
-import {extractElement} from './directive-helpers';
+import {directive, Directive, noChange, PartInfo} from '../../lit-exports/all-lit-exports.js';
+import {extractElement} from './directive-helpers.js';
 
 export function createAttributeDirective(attributeName: string) {
     const newDirective = directive(
@@ -21,10 +21,10 @@ export function createAttributeDirective(attributeName: string) {
     );
 
     return {
-        attributeSelector(attributeValue: string) {
+        attributeSelector(this: void, attributeValue: string) {
             return `[${attributeName}="${attributeValue}"]`;
         },
-        attributeDirective(attributeValue: string) {
+        attributeDirective(this: void, attributeValue: string) {
             return newDirective(attributeValue);
         },
         attributeName,

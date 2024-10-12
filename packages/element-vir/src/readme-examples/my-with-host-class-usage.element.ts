@@ -1,5 +1,5 @@
-import {defineElementNoInputs, html} from '../index';
-import {MyWithHostClassDefinition} from './my-with-host-class-definition.element';
+import {defineElementNoInputs, html} from '../index.js';
+import {MyWithHostClassDefinition} from './my-with-host-class-definition.element.js';
 
 export const MyWithHostClassUsage = defineElementNoInputs({
     tagName: 'my-with-host-class-usage',

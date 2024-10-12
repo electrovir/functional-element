@@ -118,7 +118,7 @@ describe('test elements', () => {
 
         // @ts-expect-error: element constructor should not be able to be assigned to an instance
         const instance: typeof VirTestBookApp.instanceType = VirTestBookApp;
-        // @ts-expect-error
+        // @ts-expect-error: I don't know why I added this check
         const instance2: DeclarativeElement = VirTestBookApp;
 
         const TestElementVoidEvent = defineElementNoInputs({
@@ -127,11 +127,11 @@ describe('test elements', () => {
                 thingHappened: defineElementEvent<void>(),
             },
             renderCallback({state, dispatch, events}): TemplateResult {
-                // @ts-expect-error
+                // @ts-expect-error: this has no state
                 console.info(state.thing);
                 dispatch(new events.thingHappened());
                 dispatch(new events.thingHappened(undefined));
-                // @ts-expect-error
+                // @ts-expect-error: this event has no inputs
                 dispatch(new events.thingHappened(5));
                 return html``;
             },
@@ -152,19 +152,19 @@ describe('test elements', () => {
         defineElementNoInputs({
             tagName: 'test-element-no-events-or-state',
             renderCallback({state, dispatch, events}): TemplateResult {
-                // @ts-expect-error
+                // @ts-expect-error: this has no events
                 console.info(events.thing);
-                // @ts-expect-error
+                // @ts-expect-error: this has no state
                 console.info(state.thing);
                 // should only allow strings
-                // @ts-expect-error
+                // @ts-expect-error: this event requires a string
                 dispatch(new MyElementEvent(5));
                 dispatch(new MyElementEvent('derp'));
-                // @ts-expect-error
-                events.thingHappened; // this property does not exist
-                // @ts-expect-error
+                // @ts-expect-error: this property does not exist
+                events.thingHappened;
+                // @ts-expect-error: this has no events
                 dispatch(new events.thingHappened(events.thingHappened));
-                // @ts-expect-error
+                // @ts-expect-error: this has no events
                 dispatch(new TypedEvent(events.thingHappened, 5));
                 return html``;
             },
@@ -194,7 +194,7 @@ describe('test elements', () => {
                 numberEvent: defineElementEvent<number>(),
             },
             renderCallback({state, dispatch, events}) {
-                // @ts-expect-error
+                // @ts-expect-error: string is not a number
                 const stuff: number = state.stringProp;
 
                 return html`
@@ -202,13 +202,13 @@ describe('test elements', () => {
                     <span>
                         input number:
                         ${
-                            // @ts-expect-error
+                            // @ts-expect-error: this does not exist
                             state.nonExistingProp
                         }
                     </span>
                     <button
                         ${listen(MyElementEvent, (event) => {
-                            console.debug(event);
+                            console.info(event);
                         })}
                         @click=${() => {
                             dispatch(new TestElement.events.stringEvent(randomString()));
@@ -222,25 +222,25 @@ describe('test elements', () => {
                             );
                             dispatch(new TypedEvent(TestElement.events.numberEvent, 4));
 
-                            // @ts-expect-error
+                            // @ts-expect-error: requires a number input
                             dispatch(new TestElement.events.numberEvent(randomString()));
                             dispatch(
                                 new TypedEvent(TestElement.events.numberEvent, randomString()),
                             );
-                            // @ts-expect-error
+                            // @ts-expect-error: requires a number input
                             dispatch(new events.numberEvent(randomString()));
 
-                            // @ts-expect-error
+                            // @ts-expect-error: requires a value
                             dispatch(new TypedEvent(TestElement.events.numberEvent));
                             dispatch(new TypedEvent(TestElement.events.stringEvent, 4));
-                            // @ts-expect-error
+                            // @ts-expect-error: requires a value
                             dispatch(new TypedEvent(TestElement.events.stringEvent));
-                            // @ts-expect-error
+                            // @ts-expect-error: this event does not exist
                             dispatch(new TypedEvent(TestElement.events.nonExistingEvent, 4));
-                            // @ts-expect-error
+                            // @ts-expect-error: this event does not exist
                             dispatch(new TypedEvent(TestElement.events.nonExistingEvent));
                             dispatch(new TypedEvent(TestElement.events.yo, {hello: 'there'}));
-                            // @ts-expect-error
+                            // @ts-expect-error: requires a value
                             dispatch(new TypedEvent(TestElement.events.yo));
                         }}
                     >
@@ -254,13 +254,13 @@ describe('test elements', () => {
         function listenTest() {
             listen(TestElement.events.numberEvent, (event) => {
                 const detail: number = event.detail;
-                // @ts-expect-error
+                // @ts-expect-error: event.detail is a number
                 const detailString: string = event.detail;
                 const myEvent: TypedEvent<
                     (typeof TestElement.events.numberEvent)['type'],
                     EventObjectEventDetailExtractor<typeof TestElement.events.numberEvent>
                 > = event;
-                // @ts-expect-error
+                // @ts-expect-error: `event` requires a number
                 const myEventString: TypedEvent<
                     (typeof TestElement.events.numberEvent)['type'],
                     string

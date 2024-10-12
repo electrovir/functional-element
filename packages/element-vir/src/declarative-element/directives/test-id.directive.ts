@@ -1,4 +1,4 @@
-import {createAttributeDirective} from './create-attribute-directive';
+import {createAttributeDirective} from './create-attribute-directive.js';
 
 export const {
     attributeDirective: testId,

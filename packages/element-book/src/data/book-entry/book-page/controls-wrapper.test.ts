@@ -1,5 +1,5 @@
 import {describe, itCases} from '@augment-vir/test';
-import {ControlsWrapper, createNewControls, traverseControls} from './controls-wrapper';
+import {ControlsWrapper, createNewControls, traverseControls} from './controls-wrapper.js';
 
 const exampleControls = {
     children: {
@@ -111,42 +111,4 @@ describe(createNewControls.name, () => {
             },
         },
     ]);
-
-    // // modifications are now allowed :/
-    // it('creates new controls but does not modify the original controls object', () => {
-    //     const originalCurrentControls = copyThroughJson(exampleControls);
-
-    //     const newControlsToSave = {
-    //         a1Value1: 'new 1',
-    //         a1Value2: 'new 2',
-    //     };
-
-    //     const newControls = createNewControls(
-    //         exampleControls,
-    //         [
-    //             'a',
-    //             'a1',
-    //         ],
-    //         newControlsToSave,
-    //     );
-
-    //     assert.deepEquals(newControls, {
-    //         ...exampleControls,
-    //         children: {
-    //             ...exampleControls.children,
-    //             a: {
-    //                 ...exampleControls.children.a,
-    //                 children: {
-    //                     ...exampleControls.children.a.children,
-    //                     a1: {
-    //                         ...exampleControls.children.a.children.a1,
-    //                         controls: newControlsToSave,
-    //                     },
-    //                 },
-    //             },
-    //         },
-    //     });
-
-    //     assert.deepEquals(originalCurrentControls, exampleControls);
-    // });
 });

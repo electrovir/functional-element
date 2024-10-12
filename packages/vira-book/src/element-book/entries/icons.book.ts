@@ -43,7 +43,7 @@ export const iconsBookPage = defineBookPage({
                             controls['Stroke Color'] || 'inherit',
                         )};
                         ${viraIconCssVars['vira-icon-stroke-width'].name}: ${unsafeCSS(
-                            addPx(controls['Stroke Width']) || 'inherit',
+                            controls['Stroke Width'] ? addPx(controls['Stroke Width']) : 'inherit',
                         )};
                     `;
 

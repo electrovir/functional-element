@@ -1,5 +1,5 @@
-import {defineElementNoInputs, html} from '../index';
-import {MyWithInputs} from './my-with-inputs.element';
+import {defineElementNoInputs, html} from '../index.js';
+import {MyWithInputs} from './my-with-inputs.element.js';
 
 export const MyWithAssignment = defineElementNoInputs({
     tagName: 'my-with-assignment',

@@ -1,5 +1,5 @@
 import {describe, itCases} from '@augment-vir/test';
-import {insertAndRemoveValues} from './array';
+import {insertAndRemoveValues} from './array.js';
 
 describe(insertAndRemoveValues.name, () => {
     itCases(insertAndRemoveValues, [

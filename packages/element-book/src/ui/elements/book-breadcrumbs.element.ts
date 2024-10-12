@@ -1,8 +1,8 @@
 import {css, html} from 'element-vir';
-import {BookRouter} from '../../routing/book-router';
-import {BookFullRoute, BookMainRoute} from '../../routing/book-routing';
-import {BookRouteLink} from './common/book-route-link.element';
-import {defineBookElement} from './define-book-element';
+import {BookRouter} from '../../routing/book-router.js';
+import {BookFullRoute, BookMainRoute} from '../../routing/book-routing.js';
+import {BookRouteLink} from './common/book-route-link.element.js';
+import {defineBookElement} from './define-book-element.js';
 
 export const BookBreadcrumbs = defineBookElement<{
     currentRoute: Readonly<BookFullRoute>;

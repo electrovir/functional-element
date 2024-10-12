@@ -1,5 +1,5 @@
 import {check} from '@augment-vir/assert';
-import {DeclarativeElement} from './declarative-element';
+import {DeclarativeElement} from './declarative-element.js';
 
 /**
  * Checks if the input is an instance of a DeclarativeElement, the super class of all custom
@@ -21,9 +21,9 @@ export function assertIsDeclarativeElement(input: unknown): asserts input is Dec
     if (!isDeclarativeElement(input)) {
         console.error('this is not a declarative element:', input);
         throw new Error(
-            `${
-                check.hasKey(input, 'tagName') ? input.tagName : input
-            } is not a declarative element.`,
+            `${String(
+                check.hasKey(input, 'tagName') ? input.tagName : input,
+            )} is not a declarative element.`,
         );
     }
 }

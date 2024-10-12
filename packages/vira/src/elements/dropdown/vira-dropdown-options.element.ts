@@ -9,12 +9,12 @@ import {
     nothing,
     testId,
 } from 'element-vir';
-import {viraDisabledStyles} from '../../styles';
-import {viraBorders} from '../../styles/border';
-import {viraFormCssVars} from '../../styles/form-themes';
-import {viraShadows} from '../../styles/shadows';
-import {defineViraElement} from '../define-vira-element';
-import {ViraDropdownItem, ViraDropdownOption} from './vira-dropdown-item.element';
+import {viraDisabledStyles} from '../../styles/index.js';
+import {viraBorders} from '../../styles/border.js';
+import {viraFormCssVars} from '../../styles/form-themes.js';
+import {viraShadows} from '../../styles/shadows.js';
+import {defineViraElement} from '../define-vira-element.js';
+import {ViraDropdownItem, ViraDropdownOption} from './vira-dropdown-item.element.js';
 
 export const viraDropdownOptionsTestIds = {
     option: 'dropdown-option',

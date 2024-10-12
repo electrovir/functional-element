@@ -1,4 +1,7 @@
-import {randomString} from '@augment-vir/common';
+/* eslint-disable @typescript-eslint/no-deprecated */
+/* eslint-disable sonarjs/deprecation */
+
+import {randomInteger, randomString} from '@augment-vir/common';
 import {defineBookPage} from 'element-book';
 import {Observable, css, defineElementNoInputs, html, listen, onResize} from 'element-vir';
 import {assign} from 'element-vir/dist/declarative-element/directives/assign.directive';
@@ -55,7 +58,7 @@ export const VirOldTestApp = defineElementNoInputs({
         }
     `,
     stateInitStatic: {
-        funnyNumber: Math.random(),
+        funnyNumber: randomInteger({min: 0, max: 10}),
         eventsReceived: 0,
         lastReceivedMessage: '',
         width: -1,
@@ -73,7 +76,11 @@ export const VirOldTestApp = defineElementNoInputs({
                 })}
             >
                 Welcome to the test app.
-                <button ${listen('click', () => updateState({funnyNumber: Math.random()}))}>
+                <button
+                    ${listen('click', () =>
+                        updateState({funnyNumber: randomInteger({min: 0, max: 10})}),
+                    )}
+                >
                     assign NEW number to child
                 </button>
                 <!-- Verify that the child component does not rerender when we pass it the same value. -->
@@ -99,10 +106,10 @@ export const VirOldTestApp = defineElementNoInputs({
                         });
                     })}
                     ${listen(MyCustomEvent, (event) => {
-                        console.debug(event.detail);
+                        console.info(event.detail);
                     })}
                     ${listen('click', (event) => {
-                        console.debug(
+                        console.info(
                             'event should be a mouse event:',
                             // should be true
                             event instanceof MouseEvent,
@@ -158,7 +165,19 @@ export const VirOldTestApp = defineElementNoInputs({
                         `;
                     })}
                 </section>
+                <section>
+                    <${ChildThatShouldNotReRender}></${ChildThatShouldNotReRender}>
+                </section>
             </main>
+        `;
+    },
+});
+
+const ChildThatShouldNotReRender = defineElementNoInputs({
+    tagName: 'child-that-should-no-re-render',
+    renderCallback() {
+        return html`
+            This should not update: ${randomString(8)}
         `;
     },
 });

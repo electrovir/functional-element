@@ -1,6 +1,6 @@
-import {ArrayInsertion, insertAndRemoveValues} from '../util/array';
-import {getAlreadyMappedTemplate, setMappedTemplate} from './nested-mapped-templates';
-import {AllValueTransforms, TemplateTransform} from './template-transform-type';
+import {ArrayInsertion, insertAndRemoveValues} from '../util/array.js';
+import {getAlreadyMappedTemplate, setMappedTemplate} from './nested-mapped-templates.js';
+import {AllValueTransforms, TemplateTransform} from './template-transform-type.js';
 
 export type ValueInsertion = {
     index: number;
@@ -18,26 +18,6 @@ export type ValueTransformCallback = (
       }
     | undefined;
 
-type WeakMapElementKey = {
-    tagName: string;
-};
-
-type NestedTemplatesWeakMap = WeakMap<
-    WeakMapElementKey,
-    TemplateTransform | NestedTemplatesWeakMap
->;
-type TemplatesWeakMap = WeakMap<TemplateStringsArray, TemplateTransform | NestedTemplatesWeakMap>;
-
-/**
- * The transformed templates are written to a map so that we can preserve reference equality between
- * calls. Without maintaining reference equality between html`` calls, lit-element reconstructs all
- * of its children on every render.
- *
- * This is a WeakMap because we only care about the transformed array value as long as the original
- * template array key exists.
- */
-const transformedTemplateStrings: TemplatesWeakMap = new WeakMap();
-
 export function getTransformedTemplate<PossibleValues>(
     templateStringsKey: TemplateStringsArray,
     values: PossibleValues[],
@@ -52,8 +32,6 @@ export function getTransformedTemplate<PossibleValues>(
         const result = setMappedTemplate(templateStringsKey, values, templateTransform);
         if (!result.result) {
             throw new Error(`Failed to set template transform: ${result.reason}`);
-        } else {
-            transformedTemplateStrings.set(templateStringsKey, templateTransform);
         }
     }
 
@@ -88,7 +66,9 @@ export function transformTemplate<PossibleValues>(
         const currentValueIndex = currentTemplateStringIndex - 1;
         const currentValue = inputValues[currentValueIndex];
 
-        assertValidString && assertValidString(currentTemplateString);
+        if (assertValidString) {
+            assertValidString(currentTemplateString);
+        }
 
         let transformOutput: ReturnType<ValueTransformCallback> | undefined = undefined;
         let extraValues: unknown[] = [];
@@ -96,7 +76,10 @@ export function transformTemplate<PossibleValues>(
         if (typeof lastNewString === 'string') {
             transformOutput = transformValue(lastNewString, currentTemplateString, currentValue);
             if (transformOutput) {
-                newStrings[lastNewStringsIndex] = lastNewString + transformOutput.replacement;
+                newStrings[lastNewStringsIndex] = [
+                    lastNewString,
+                    transformOutput.replacement,
+                ].join('');
                 valueIndexDeletions.push(currentValueIndex);
                 const getExtraValuesCallback = transformOutput.getExtraValues;
                 extraValues = getExtraValuesCallback ? getExtraValuesCallback(currentValue) : [];
@@ -128,10 +111,15 @@ export function transformTemplate<PossibleValues>(
             newStrings.push(currentTemplateString);
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const currentRawLitString = inputTemplateStrings.raw[currentTemplateStringIndex]!;
         if (transformOutput) {
-            newRaws[lastNewStringsIndex] =
-                newRaws[lastNewStringsIndex]! + transformOutput.replacement + currentRawLitString;
+            newRaws[lastNewStringsIndex] = [
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                newRaws[lastNewStringsIndex]!,
+                transformOutput.replacement,
+                currentRawLitString,
+            ].join('');
             if (extraValues.length) {
                 extraValues.forEach(() => {
                     newRaws.push('');
@@ -149,9 +137,9 @@ export function transformTemplate<PossibleValues>(
     return {
         templateStrings: newTemplateStrings,
         valuesTransform(values): AllValueTransforms {
-            const insertions: ArrayInsertion<unknown>[] = valueTransforms
-                .map((transformCallback) => transformCallback(values))
-                .flat();
+            const insertions: ArrayInsertion<unknown>[] = valueTransforms.flatMap(
+                (transformCallback) => transformCallback(values),
+            );
 
             return {
                 valueIndexDeletions,

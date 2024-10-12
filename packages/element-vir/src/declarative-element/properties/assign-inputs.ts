@@ -1,5 +1,5 @@
 import {getObjectTypedKeys} from '@augment-vir/common';
-import {DeclarativeElement} from '../declarative-element';
+import {DeclarativeElement} from '../declarative-element.js';
 
 export function assignInputs(element: Element, inputs: object): void {
     const instanceState = (element as Partial<DeclarativeElement>).instanceState;
@@ -7,7 +7,7 @@ export function assignInputs(element: Element, inputs: object): void {
     getObjectTypedKeys(inputs).forEach((newInputKey) => {
         if (instanceState && newInputKey in instanceState) {
             throw new Error(
-                `Cannot set input '${newInputKey}' on '${element.tagName}'. '${element.tagName}' already has a state property with the same name.`,
+                `Cannot set input '${String(newInputKey)}' on '${element.tagName}'. '${element.tagName}' already has a state property with the same name.`,
             );
         }
         if ('instanceInputs' in element) {

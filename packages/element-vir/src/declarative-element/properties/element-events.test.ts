@@ -1,11 +1,11 @@
 import {assert} from '@augment-vir/assert';
 import {describe, it} from '@augment-vir/test';
-import {defineElementNoInputs, html} from '../../index';
+import {defineElementNoInputs, html} from '../../index.js';
 import {
     EventInitMapEventDetailExtractor,
     EventsInitMap,
     defineElementEvent,
-} from './element-events';
+} from './element-events.js';
 
 describe('element events', () => {
     it('has proper types', () => {
@@ -18,9 +18,9 @@ describe('element events', () => {
                 const testEventThing = events['test-event-name'];
 
                 const eventInstance = new testEventThing(4);
-                // @ts-expect-error
+                // @ts-expect-error: requires a number input
                 const badEventInstance1 = new testEventThing(undefined);
-                // @ts-expect-error
+                // @ts-expect-error: requires a number input
                 const badEventInstance2 = new testEventThing('not a number input');
 
                 return html``;
@@ -51,9 +51,9 @@ describe('element events', () => {
         const extractedEvent = customElement.events['test-event-name'];
 
         const eventInstance = new extractedEvent(4);
-        // @ts-expect-error
+        // @ts-expect-error: requires a number input
         const badEventInstance1 = new extractedEvent(undefined);
-        // @ts-expect-error
+        // @ts-expect-error: requires a number input
         const badEventInstance2 = new extractedEvent('not a number input');
     });
 });

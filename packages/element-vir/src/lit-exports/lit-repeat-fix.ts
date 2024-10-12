@@ -5,7 +5,7 @@ import {Directive, PartInfo} from 'lit-html/directive.js';
 import {KeyFn} from 'lit-html/directives/repeat.js';
 import {ChildPart, noChange} from 'lit-html/lit-html.js';
 import {repeat as repeatImport} from 'lit/directives/repeat.js';
-import {HtmlInterpolation} from '../template-transforms/vir-html/html-interpolation';
+import {HtmlInterpolation} from '../template-transforms/vir-html/html-interpolation.js';
 
 declare class RepeatDirective extends Directive {
     private _itemKeys?;

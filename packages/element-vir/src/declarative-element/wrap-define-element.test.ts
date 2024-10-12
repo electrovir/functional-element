@@ -36,7 +36,7 @@ describe(wrapDefineElement.name, () => {
             );
 
         myDefineElement<MySpecificInputs>()({
-            // @ts-expect-error
+            // @ts-expect-error: this tag does not match the requirements
             tagName: 'bad-tag-1',
             renderCallback() {
                 return '';
@@ -107,7 +107,7 @@ describe(wrapDefineElement.name, () => {
             );
 
         myDefineElementNoInputs({
-            // @ts-expect-error
+            // @ts-expect-error: this tag does not match the requirements
             tagName: 'bad-tag-2',
             renderCallback() {
                 return '';
@@ -118,8 +118,7 @@ describe(wrapDefineElement.name, () => {
     it('requires non-void returning renderCallback', () => {
         myDefineElementNoInputs({
             tagName: 'my-thing-abc6',
-            // renderCallback missing a return is not allowed
-            // @ts-expect-error
+            // @ts-expect-error: renderCallback missing a return is not allowed
             renderCallback() {},
         });
         myDefineElementNoInputs({

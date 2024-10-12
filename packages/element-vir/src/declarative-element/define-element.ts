@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+
 import {check} from '@augment-vir/assert';
-import {CustomElementTagName} from './custom-tag-name';
-import {DeclarativeElementDefinition} from './declarative-element';
-import {DeclarativeElementInit} from './declarative-element-init';
-import {defineElementNoInputs, VerifiedElementNoInputsInit} from './define-element-no-inputs';
-import {BaseCssPropertyName} from './properties/css-properties';
-import {EventsInitMap} from './properties/element-events';
-import {PropertyInitMapBase} from './properties/element-properties';
+import {CustomElementTagName} from './custom-tag-name.js';
+import {DeclarativeElementInit} from './declarative-element-init.js';
+import {DeclarativeElementDefinition} from './declarative-element.js';
+import {defineElementNoInputs, VerifiedElementNoInputsInit} from './define-element-no-inputs.js';
+import {BaseCssPropertyName} from './properties/css-properties.js';
+import {EventsInitMap} from './properties/element-events.js';
+import {PropertyInitMapBase} from './properties/element-properties.js';
 
 export type VerifiedElementInit<
     TagName extends CustomElementTagName,
@@ -70,7 +72,7 @@ export function defineElement<Inputs extends PropertyInitMapBase = {}>() {
               > = initInput;
 
         if (!check.isObject(init)) {
-            throw new Error('Cannot define element with non-object init: ${init}');
+            throw new TypeError('Cannot define element with non-object init: ${init}');
         }
 
         return defineElementNoInputs({

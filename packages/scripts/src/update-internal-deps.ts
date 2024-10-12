@@ -1,7 +1,7 @@
 import {NpmWorkspace, queryNpmWorkspace, readPackageJson} from '@augment-vir/node';
-import {readFile, writeFile} from 'fs/promises';
-import {join} from 'path';
-import {monoRepoRootDir} from './repo-paths';
+import {readFile, writeFile} from 'node:fs/promises';
+import {join} from 'node:path';
+import {monoRepoRootDir} from './repo-paths.js';
 
 type FilteredNpmPackage = NpmWorkspace & {name: string};
 type MonoRepoPackages = {
@@ -67,4 +67,4 @@ async function updateInternalDeps() {
     );
 }
 
-updateInternalDeps();
+await updateInternalDeps();

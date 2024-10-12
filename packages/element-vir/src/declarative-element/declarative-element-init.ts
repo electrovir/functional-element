@@ -1,13 +1,13 @@
-import {CSSResult} from '../lit-exports/all-lit-exports';
-import {CustomElementTagName} from './custom-tag-name';
-import {DeclarativeElementDefinitionOptions} from './definition-options';
-import {BaseCssPropertyName} from './properties/css-properties';
-import {CssVarsInitMap} from './properties/css-vars';
-import {EventsInitMap} from './properties/element-events';
-import {PropertyInitMapBase} from './properties/element-properties';
-import {HostClassesInitMap} from './properties/host-classes';
-import {StylesCallback} from './properties/styles';
-import {InitCallback, RenderCallback} from './render-callback';
+import {CSSResult} from '../lit-exports/all-lit-exports.js';
+import {CustomElementTagName} from './custom-tag-name.js';
+import {DeclarativeElementDefinitionOptions} from './definition-options.js';
+import {BaseCssPropertyName} from './properties/css-properties.js';
+import {CssVarsInitMap} from './properties/css-vars.js';
+import {EventsInitMap} from './properties/element-events.js';
+import {PropertyInitMapBase} from './properties/element-properties.js';
+import {HostClassesInitMap} from './properties/host-classes.js';
+import {StylesCallback} from './properties/styles.js';
+import {InitCallback, RenderCallback} from './render-callback.js';
 
 export type DeclarativeElementInit<
     TagName extends CustomElementTagName,

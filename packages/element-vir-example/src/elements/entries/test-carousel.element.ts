@@ -45,32 +45,26 @@ export const TestCarouselWrapper = defineElementNoInputs({
             <${TestCarousel.assign({
                 enableAutomaticCycling: true,
                 cycleIntervalMs: 1000,
-                templates: Array(500)
-                    .fill(0)
-                    .map(() => {
-                        const styles = css`
-                            display: flex;
-                            height: 100px;
-                            width: 100px;
-                            margin: 16px;
-                            border: 1px solid blue;
-                            justify-content: center;
-                            align-items: center;
-                            border-radius: 12px;
-                        `;
+                templates: new Array(500).fill(0).map(() => {
+                    const styles = css`
+                        display: flex;
+                        height: 100px;
+                        width: 100px;
+                        margin: 16px;
+                        border: 1px solid blue;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 12px;
+                    `;
 
-                        // // no issues
-                        // return html`
-                        //     <div style=${styles}>hi</div>
-                        // `;
-                        return html`
-                            <${ViraIcon.assign({
-                                icon: ArrowRight24Icon,
-                            })}
-                                style=${styles}
-                            ></${ViraIcon}>
-                        `;
-                    }),
+                    return html`
+                        <${ViraIcon.assign({
+                            icon: ArrowRight24Icon,
+                        })}
+                            style=${styles}
+                        ></${ViraIcon}>
+                    `;
+                }),
             })}></${TestCarousel}>
         `;
     },

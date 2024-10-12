@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+
 import {Overwrite, SetOptionalAndNullable} from '@augment-vir/common';
 import {
     CSSResult,
@@ -6,12 +8,13 @@ import {
     RenderParams,
     TypedEvent,
 } from 'element-vir';
-import {GlobalValues} from '../../../ui/elements/element-book-app/global-values';
-import {BaseBookEntry} from '../base-book-entry';
-import {BookEntryType} from '../book-entry-type';
-import {BookPageControlsInitBase, ControlsToValues} from './book-page-controls';
+import {GlobalValues} from '../../../ui/elements/element-book-app/global-values.js';
+import {BaseBookEntry} from '../base-book-entry.js';
+import {BookEntryType} from '../book-entry-type.js';
+import {BookPageControlsInitBase, ControlsToValues} from './book-page-controls.js';
 
 export type BookPage<
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     GlobalValuesType extends GlobalValues = {},
     ParentPage extends BookPage | undefined = any,
     ControlsInit extends BookPageControlsInitBase = BookPageControlsInitBase,

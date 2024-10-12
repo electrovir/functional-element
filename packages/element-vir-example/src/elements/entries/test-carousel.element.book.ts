@@ -1,6 +1,6 @@
 import {defineBookPage} from 'element-book';
 import {html} from 'element-vir';
-import {TestCarousel, TestCarouselWrapper} from './test-carousel.element';
+import {TestCarousel, TestCarouselWrapper} from './test-carousel.element.js';
 
 export const testCarouselPage = defineBookPage({
     title: TestCarousel.tagName,

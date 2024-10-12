@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+
 import {assert} from '@augment-vir/assert';
 import {describe, it} from '@augment-vir/test';
-import {renderIf} from '../../declarative-element/directives/render-if.directive';
-import {RenderCallback} from '../../declarative-element/render-callback';
-import {classMap, ifDefined} from '../../lit-exports/all-lit-exports';
-import {DirectiveOutput, HtmlInterpolation} from './html-interpolation';
-import {html} from './vir-html';
+import {renderIf} from '../../declarative-element/directives/render-if.directive.js';
+import {RenderCallback} from '../../declarative-element/render-callback.js';
+import {classMap, ifDefined} from '../../lit-exports/all-lit-exports.js';
+import {DirectiveOutput, HtmlInterpolation} from './html-interpolation.js';
+import {html} from './vir-html.js';
 
 describe('HtmlInterpolation', () => {
     it('blocks raw objects', () => {
@@ -74,6 +76,6 @@ describe('HtmlInterpolation', () => {
                     string[]
                 >
             >()
-            .matches<RenderCallback<any, any, any, any, any, any, any>>();
+            .matches<RenderCallback>();
     });
 });

@@ -1,7 +1,7 @@
 import {ElementBookApp} from 'element-book';
 import {css, defineElementNoInputs, html} from 'element-vir';
-import {createTheme} from '../create-theme/create-theme';
-import {createThemeBookEntries} from './theme-book-entries';
+import {createTheme} from '../create-theme/create-theme.js';
+import {createThemeBookEntries} from './theme-book-entries.js';
 
 export const VirThemeBookApp = defineElementNoInputs({
     tagName: 'vir-theme-book-app',

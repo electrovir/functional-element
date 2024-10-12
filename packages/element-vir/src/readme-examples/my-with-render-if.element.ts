@@ -1,4 +1,4 @@
-import {defineElement, html, renderIf} from '../index';
+import {defineElement, html, renderIf} from '../index.js';
 
 export const MyWithRenderIf = defineElement<{shouldRender: boolean}>()({
     tagName: 'my-with-render-if',

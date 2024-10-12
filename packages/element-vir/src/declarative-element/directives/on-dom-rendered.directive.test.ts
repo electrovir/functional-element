@@ -1,11 +1,11 @@
 import {assert, waitUntil} from '@augment-vir/assert';
 import {describe, it, testWeb} from '@augment-vir/test';
 import {extractElementText, waitForAnimationFrame} from '@augment-vir/web';
-import {html} from '../../template-transforms/vir-html/vir-html';
-import {defineElement} from '../define-element';
-import {defineElementEvent} from '../properties/element-events';
-import {listen} from './listen.directive';
-import {onDomRendered} from './on-dom-rendered.directive';
+import {html} from '../../template-transforms/vir-html/vir-html.js';
+import {defineElement} from '../define-element.js';
+import {defineElementEvent} from '../properties/element-events.js';
+import {listen} from './listen.directive.js';
+import {onDomRendered} from './on-dom-rendered.directive.js';
 
 describe('onDomRendered', () => {
     const TestOnDomRenderedElement = defineElement<{trigger: number}>()({

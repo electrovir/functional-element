@@ -1,19 +1,22 @@
 import {SetRequiredAndNotNull} from '@augment-vir/common';
-import {IsAny, IsEmptyObject} from 'type-fest';
-import {CSSResult, LitElement} from '../lit-exports/all-lit-exports';
-import {MinimalDefinitionWithInputs} from '../template-transforms/minimal-element-definition';
-import {CustomElementTagName} from './custom-tag-name';
-import {DeclarativeElementInit} from './declarative-element-init';
-import {DeclarativeElementDefinitionOptions} from './definition-options';
-import {BaseCssPropertyName} from './properties/css-properties';
-import {CssVars} from './properties/css-vars';
-import {EventDescriptorMap, EventsInitMap} from './properties/element-events';
-import {ElementPropertyDescriptorMap, PropertyInitMapBase} from './properties/element-properties';
-import {FlattenElementVirStateSetup} from './properties/element-vir-state-setup';
-import {HostClassNamesMap} from './properties/host-classes';
-import {ObservableListenerMap} from './properties/property-proxy';
-import type {RenderCallback, RenderParams, UpdateStateCallback} from './render-callback';
-import {SlotNameMap} from './slot-names';
+import {IsAny, IsEmptyObject, type EmptyObject} from 'type-fest';
+import {CSSResult, LitElement} from '../lit-exports/all-lit-exports.js';
+import {MinimalDefinitionWithInputs} from '../template-transforms/minimal-element-definition.js';
+import {CustomElementTagName} from './custom-tag-name.js';
+import {DeclarativeElementInit} from './declarative-element-init.js';
+import {DeclarativeElementDefinitionOptions} from './definition-options.js';
+import {BaseCssPropertyName} from './properties/css-properties.js';
+import {CssVars} from './properties/css-vars.js';
+import {EventDescriptorMap, EventsInitMap} from './properties/element-events.js';
+import {
+    ElementPropertyDescriptorMap,
+    PropertyInitMapBase,
+} from './properties/element-properties.js';
+import {FlattenElementVirStateSetup} from './properties/element-vir-state-setup.js';
+import {HostClassNamesMap} from './properties/host-classes.js';
+import {ObservableListenerMap} from './properties/property-proxy.js';
+import type {RenderCallback, RenderParams, UpdateStateCallback} from './render-callback.js';
+import {SlotNameMap} from './slot-names.js';
 
 export type DeclarativeElementHost<
     TagName extends CustomElementTagName = any,
@@ -88,7 +91,7 @@ export abstract class DeclarativeElement<
     CssVarKeys extends BaseCssPropertyName<TagName> = any,
     SlotNames extends ReadonlyArray<string> = any,
 > extends LitElement {
-    public static assign: StaticDeclarativeElementProperties<
+    public static readonly assign: StaticDeclarativeElementProperties<
         CustomElementTagName,
         PropertyInitMapBase,
         PropertyInitMapBase,
@@ -97,7 +100,7 @@ export abstract class DeclarativeElement<
         BaseCssPropertyName<CustomElementTagName>,
         ReadonlyArray<string>
     >['assign'];
-    public static assignedInputs: PropertyInitMapBase | undefined;
+    public static readonly assignedInputs: PropertyInitMapBase | undefined;
     public static readonly tagName: StaticDeclarativeElementProperties<
         CustomElementTagName,
         PropertyInitMapBase,
@@ -238,7 +241,7 @@ export abstract class DeclarativeElement<
     >;
     public abstract readonly instanceInputs: Inputs;
     public abstract assignInputs(
-        inputs: {} extends Required<Inputs> ? never : Partial<Inputs>,
+        inputs: EmptyObject extends Required<Inputs> ? never : Partial<Inputs>,
     ): void;
     public abstract _haveInputsBeenSet: boolean;
     /** The element definition for this element instance. */

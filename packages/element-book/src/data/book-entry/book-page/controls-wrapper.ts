@@ -1,8 +1,8 @@
 import {PartialWithUndefined, mapObjectValues} from '@augment-vir/common';
-import {isBookTreeNode} from '../../book-tree/book-tree';
-import {BookTreeNode} from '../../book-tree/book-tree-node';
-import {BookEntryType} from '../book-entry-type';
-import {BookPageControlsValues} from './book-page-controls';
+import {isBookTreeNode} from '../../book-tree/book-tree.js';
+import {BookTreeNode} from '../../book-tree/book-tree-node.js';
+import {BookEntryType} from '../book-entry-type.js';
+import {BookPageControlsValues} from './book-page-controls.js';
 
 export type ControlsWrapper = {
     children: {

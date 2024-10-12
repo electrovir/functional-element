@@ -1,4 +1,4 @@
-import {css, defineElementNoInputs, html} from '../index';
+import {css, defineElementNoInputs, html} from '../index.js';
 
 export const MyWithHostClassDefinition = defineElementNoInputs({
     tagName: 'my-with-host-class-definition',

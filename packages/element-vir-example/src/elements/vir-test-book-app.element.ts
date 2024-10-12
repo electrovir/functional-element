@@ -4,7 +4,7 @@ import {
     html,
     requireAllCustomElementsToBeDeclarativeElements,
 } from 'element-vir';
-import {allBookEntries} from './all-book-entries';
+import {allBookEntries} from './all-book-entries.js';
 
 requireAllCustomElementsToBeDeclarativeElements();
 

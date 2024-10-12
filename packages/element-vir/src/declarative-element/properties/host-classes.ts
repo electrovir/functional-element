@@ -1,9 +1,9 @@
 import {mapObjectValues} from '@augment-vir/common';
-import {CustomElementTagName} from '../custom-tag-name';
-import {BaseCssPropertyName} from './css-properties';
-import {PropertyInitMapBase} from './element-properties';
-import {FlattenElementVirStateSetup} from './element-vir-state-setup';
-import {WithTagName} from './tag-name';
+import {CustomElementTagName} from '../custom-tag-name.js';
+import {BaseCssPropertyName} from './css-properties.js';
+import {PropertyInitMapBase} from './element-properties.js';
+import {FlattenElementVirStateSetup} from './element-vir-state-setup.js';
+import {WithTagName} from './tag-name.js';
 
 export type HostClassToggleCallbackInput<
     Inputs extends PropertyInitMapBase,

@@ -1,5 +1,5 @@
 import {collapseWhiteSpace} from '@augment-vir/common';
-import {BookEntry} from './book-entry';
+import {BookEntry} from './book-entry.js';
 
 export function listUrlBreadcrumbs(entry: BookEntry, includeSelf: boolean): string[] {
     const entryBreadcrumb = titleToUrlBreadcrumb(entry.title);

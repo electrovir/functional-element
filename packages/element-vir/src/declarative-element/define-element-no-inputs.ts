@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+
 import {check} from '@augment-vir/assert';
 import {
     ensureErrorAndPrependMessage,
@@ -404,6 +406,7 @@ export function defineElementNoInputs<
             super();
 
             const stateInitStatic: StateInit =
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 (init.stateInitStatic as StateInit) || ({} as StateInit);
 
             getObjectTypedKeys(stateInitStatic).forEach((stateKey) => {

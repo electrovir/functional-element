@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-deprecated */
+/* eslint-disable sonarjs/deprecation */
+
 import {describe, it} from '@augment-vir/test';
-import {defineElement} from '../define-element';
-import {assign} from './assign.directive';
+import {defineElement} from '../define-element.js';
+import {assign} from './assign.directive.js';
 
 describe(assign.name, () => {
     const SampleElementDefinition = defineElement<{stuff: string}>()({
@@ -15,14 +18,12 @@ describe(assign.name, () => {
             stuff: 'hi',
         });
         assign(SampleElementDefinition, {
-            // blocks invalid property value types
-            // @ts-expect-error
+            // @ts-expect-error: blocks invalid property value types
             stuff: 5,
         });
         assign(
             SampleElementDefinition,
-            // blocks invalid inputs
-            // @ts-expect-error
+            // @ts-expect-error: blocks invalid inputs
             42,
         );
     });
@@ -31,13 +32,12 @@ describe(assign.name, () => {
         assign({
             hi: 'there',
         });
-        // blocks invalid inputs
-        // @ts-expect-error
+        // @ts-expect-error: blocks invalid inputs
         assign(57);
     });
 
     it('has typescript error if a bare HTMLElement input', () => {
-        // @ts-expect-error
+        // @ts-expect-error: cannot a bare html input
         assign(SampleElementDefinition);
     });
 });

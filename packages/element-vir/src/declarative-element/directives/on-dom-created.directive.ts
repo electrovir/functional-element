@@ -1,5 +1,5 @@
-import {directive, Directive, PartInfo} from '../../lit-exports/all-lit-exports';
-import {assertIsElementPartInfo} from './directive-helpers';
+import {directive, Directive, PartInfo} from '../../lit-exports/all-lit-exports.js';
+import {assertIsElementPartInfo} from './directive-helpers.js';
 
 export type OnDomCreatedCallback = (element: Element) => void;
 
@@ -28,6 +28,7 @@ export const onDomCreated = directive(
             return this.render(callback);
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         render(callback: OnDomCreatedCallback) {
             return undefined;
         }

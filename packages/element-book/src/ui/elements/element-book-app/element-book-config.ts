@@ -1,7 +1,7 @@
 import {PartialWithUndefined} from '@augment-vir/common';
 import {RequireExactlyOne} from 'type-fest';
-import {BookEntry} from '../../../data/book-entry/book-entry';
-import {GlobalValues} from './global-values';
+import {BookEntry} from '../../../data/book-entry/book-entry.js';
+import {GlobalValues} from './global-values.js';
 
 export type ElementBookConfig = {
     /** All element-book entries in order. */

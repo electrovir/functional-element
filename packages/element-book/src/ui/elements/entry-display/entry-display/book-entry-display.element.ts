@@ -1,14 +1,14 @@
 import {css, defineElementEvent, html, onDomCreated, renderIf} from 'element-vir';
 import {LoaderAnimated24Icon, ViraIcon, viraAnimationDurations} from 'vira';
-import {BookEntryType} from '../../../../data/book-entry/book-entry-type';
-import {ControlsWrapper} from '../../../../data/book-entry/book-page/controls-wrapper';
-import {BookTreeNode} from '../../../../data/book-tree/book-tree-node';
-import {BookRouter} from '../../../../routing/book-router';
-import {BookFullRoute, extractSearchQuery} from '../../../../routing/book-routing';
-import {defineBookElement} from '../../define-book-element';
-import {ElementBookSlotName} from '../../element-book-app/element-book-app-slots';
-import {BookBreadcrumbsBar} from '../book-breadcrumbs-bar.element';
-import {createNodeTemplates} from './create-node-templates';
+import {BookEntryType} from '../../../../data/book-entry/book-entry-type.js';
+import {ControlsWrapper} from '../../../../data/book-entry/book-page/controls-wrapper.js';
+import {BookTreeNode} from '../../../../data/book-tree/book-tree-node.js';
+import {BookRouter} from '../../../../routing/book-router.js';
+import {BookFullRoute, extractSearchQuery} from '../../../../routing/book-routing.js';
+import {defineBookElement} from '../../define-book-element.js';
+import {ElementBookSlotName} from '../../element-book-app/element-book-app-slots.js';
+import {BookBreadcrumbsBar} from '../book-breadcrumbs-bar.element.js';
+import {createNodeTemplates} from './create-node-templates.js';
 
 export const BookEntryDisplay = defineBookElement<{
     controls: ControlsWrapper;

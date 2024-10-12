@@ -1,17 +1,20 @@
+/* eslint-disable @typescript-eslint/no-deprecated */
+/* eslint-disable sonarjs/deprecation */
+
 import {check} from '@augment-vir/assert';
 import {collapseWhiteSpace, getOrSet, safeMatch} from '@augment-vir/common';
-import {assign} from '../../declarative-element/directives/assign.directive';
-import {HTMLTemplateResult} from '../../lit-exports/all-lit-exports';
-import {declarativeElementRequired} from '../../require-declarative-element';
+import {assign} from '../../declarative-element/directives/assign.directive.js';
+import {HTMLTemplateResult} from '../../lit-exports/all-lit-exports.js';
+import {declarativeElementRequired} from '../../require-declarative-element.js';
 import {
     MinimalElementDefinition,
     hasTagName,
     isMinimalDefinitionWithInputs,
-} from '../minimal-element-definition';
-import {TemplateTransform} from '../template-transform-type';
-import {ValueTransformCallback, transformTemplate} from '../transform-template';
-import {HtmlInterpolation} from './html-interpolation';
-import {tagNameKeys} from './tag-name-keys';
+} from '../minimal-element-definition.js';
+import {TemplateTransform} from '../template-transform-type.js';
+import {ValueTransformCallback, transformTemplate} from '../transform-template.js';
+import {HtmlInterpolation} from './html-interpolation.js';
+import {tagNameKeys} from './tag-name-keys.js';
 
 export function mapHtmlValues(
     inputTemplateStrings: TemplateStringsArray,
@@ -42,9 +45,9 @@ export function mapHtmlValues(
 
 function classifyValue(lastNewString: string, currentTemplateString: string) {
     const isOpeningTag =
-        lastNewString.trim().endsWith('<') && !!currentTemplateString.match(/^[\s\n>]/);
+        lastNewString.trim().endsWith('<') && !!currentTemplateString.match(/^[\s>]/);
     const isClosingTag =
-        lastNewString?.trim().endsWith('</') && currentTemplateString.trim().startsWith('>');
+        lastNewString.trim().endsWith('</') && currentTemplateString.trim().startsWith('>');
     const shouldHaveTagNameHere: boolean = isOpeningTag || isClosingTag;
 
     return {
@@ -122,7 +125,7 @@ function transformHtml(
 }
 
 function extractCustomElementTags(input: string): string[] {
-    const tagNameMatches = safeMatch(input, /<\/[\s\n]*[^\s\n><]+[\s\n]*>/g);
+    const tagNameMatches = safeMatch(input, /<\/\s*[^\s><]+\s*>/g);
     return tagNameMatches.reduce((accum: string[], match) => {
         const tagName = collapseWhiteSpace(match.replace(/\n/g, ' ')).replace(/<\/|>/g, '');
         // custom elements always have a dash in them

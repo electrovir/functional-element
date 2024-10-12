@@ -11,7 +11,7 @@ import {
     html,
     listen,
     renderAsync,
-} from '../../index';
+} from '../../index.js';
 
 describe(asyncProp.name, () => {
     const elementWithAsyncProp = defineElement<{
@@ -33,7 +33,6 @@ describe(asyncProp.name, () => {
                 state.myAsyncProp,
                 'Loading...',
                 (value) => {
-                    // return {what: 'hello'};
                     return html`
                         Got ${value.toFixed(0)}
                     `;
@@ -58,9 +57,6 @@ describe(asyncProp.name, () => {
         assert.instanceOf(instance, elementWithAsyncProp);
         assert.isLengthExactly(allAsyncValues, 1);
         assert.instanceOf(allAsyncValues[0], Promise);
-
-        // wait for the event to propagate
-        await waitUntil(() => allAsyncValues.length === 1);
 
         assert.isLengthExactly(allAsyncValues, 1);
 
@@ -103,7 +99,7 @@ describe(asyncProp.name, () => {
         deferredPromise.resolve(randomValue);
 
         // wait for the event to propagate
-        await waitUntil(() => allAsyncValues.length > 1);
+        await waitUntil(() => (allAsyncValues.length as number) > 1);
 
         assert.strictEquals(extractElementText(instance), `Got ${randomValue.toFixed()}`);
     });

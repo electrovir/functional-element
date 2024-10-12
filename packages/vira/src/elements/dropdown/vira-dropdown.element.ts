@@ -12,34 +12,34 @@ import {
     renderIf,
     testId,
 } from 'element-vir';
-import {ViraIconSvg} from '../../icons/icon-svg';
-import {ChevronUp24Icon} from '../../icons/index';
+import {ViraIconSvg} from '../../icons/icon-svg.js';
+import {ChevronUp24Icon} from '../../icons/index.js';
 import {
     noNativeFormStyles,
     noUserSelect,
     viraAnimationDurations,
     viraDisabledStyles,
-} from '../../styles';
-import {viraBorders} from '../../styles/border';
-import {createFocusStyles, viraFocusCssVars} from '../../styles/focus';
-import {viraFormCssVars} from '../../styles/form-themes';
-import {viraShadows} from '../../styles/shadows';
+} from '../../styles/index.js';
+import {viraBorders} from '../../styles/border.js';
+import {createFocusStyles, viraFocusCssVars} from '../../styles/focus.js';
+import {viraFormCssVars} from '../../styles/form-themes.js';
+import {viraShadows} from '../../styles/shadows.js';
 import {
     HidePopUpEvent,
     NavSelectEvent,
     PopUpManager,
     ShowPopUpResult,
-} from '../../util/pop-up-manager';
-import {defineViraElement} from '../define-vira-element';
-import {ViraIcon} from '../vira-icon.element';
+} from '../../util/pop-up-manager.js';
+import {defineViraElement} from '../define-vira-element.js';
+import {ViraIcon} from '../vira-icon.element.js';
 import {
     assertUniqueIdProps,
     createNewSelection,
     filterToSelectedOptions,
     triggerPopUpState,
-} from './dropdown-helpers';
-import {ViraDropdownOption} from './vira-dropdown-item.element';
-import {ViraDropdownOptions} from './vira-dropdown-options.element';
+} from './dropdown-helpers.js';
+import {ViraDropdownOption} from './vira-dropdown-item.element.js';
+import {ViraDropdownOptions} from './vira-dropdown-options.element.js';
 
 export const viraDropdownTestIds = {
     trigger: 'dropdown-trigger',

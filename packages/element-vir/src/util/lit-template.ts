@@ -1,5 +1,5 @@
 import {collapseWhiteSpace} from '@augment-vir/common';
-import type {TemplateResult, unsafeHTML, unsafeSVG} from '../lit-exports/all-lit-exports';
+import type {TemplateResult, unsafeHTML, unsafeSVG} from '../lit-exports/all-lit-exports.js';
 
 export function convertTemplateToString(
     template:
@@ -19,7 +19,7 @@ export function convertTemplateToString(
               values: undefined | unknown[];
           };
 
-    if ((!strings || !strings?.length) && (!values || !values.length)) {
+    if ((!strings?.length) && (!values?.length)) {
         return '';
     }
 
@@ -45,11 +45,9 @@ function extractValue(previousString: string, value: any) {
         // array of strings or templates.
         const values = value.map((innerValue) => convertTemplateToString(innerValue));
         return values.join('');
-    } else {
-        if (previousString.endsWith('=')) {
+    } else if (previousString.endsWith('=')) {
             return `"${value}"`;
         } else {
             return value;
         }
-    }
 }

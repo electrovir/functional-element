@@ -1,8 +1,8 @@
 import {log} from '@augment-vir/common';
 import {runShellCommand} from '@augment-vir/node';
-import {cp, mkdir, rm, writeFile} from 'fs/promises';
-import {join} from 'path';
-import {packagesDir, rootDistDir} from './repo-paths';
+import {cp, mkdir, rm, writeFile} from 'node:fs/promises';
+import {join} from 'node:path';
+import {packagesDir, rootDistDir} from './repo-paths.js';
 
 type BuildPackageInfo = {
     /** Relative to the packages dir. */
@@ -89,4 +89,4 @@ async function buildPages() {
     await writeFile(join(rootDistDir, 'index.html'), buildTopLevelIndexFile());
 }
 
-buildPages();
+await buildPages();

@@ -1,7 +1,7 @@
 import {addPx} from '@augment-vir/common';
 import {css, unsafeCSS} from 'element-vir';
 import {defineCssVars} from 'lit-css-vars';
-import {viraBorders} from './border';
+import {viraBorders} from './border.js';
 
 export const viraFocusCssVars = defineCssVars({
     'vira-focus-outline-color': '#59b1ff',

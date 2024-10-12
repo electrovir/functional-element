@@ -40,17 +40,15 @@ const VirTestSingleTemplateToMultipleSlots = defineElement<{
 }>()({
     tagName: 'vir-test-single-template-to-multiple-slots',
     renderCallback({inputs}) {
-        return Array(inputs.count)
-            .fill(0)
-            .map((zero, index) => {
-                const slotName = index % 2 ? 'main-slot' : 'secondary-slot';
+        return new Array(inputs.count).fill(0).map((zero, index) => {
+            const slotName = index % 2 ? 'main-slot' : 'secondary-slot';
 
-                return html`
-                    <${VirTestMultipleSlots}>
-                        <span slot=${slotName}>${inputs.loadingTemplate}</span>
-                    </${VirTestMultipleSlots}>
-                `;
-            });
+            return html`
+                <${VirTestMultipleSlots}>
+                    <span slot=${slotName}>${inputs.loadingTemplate}</span>
+                </${VirTestMultipleSlots}>
+            `;
+        });
     },
 });
 
@@ -61,7 +59,7 @@ export const multipleSlotsPage = defineBookPage({
         defineExample({
             title: 'multiple slotted elements',
             stateInitStatic: {value: 0},
-            renderCallback({state, updateState}) {
+            renderCallback() {
                 return html`
                     <${VirTestMultipleSlots}>
                         <p slot="main-slot">ABCD</p>
@@ -78,7 +76,7 @@ export const multipleSlotsPage = defineBookPage({
         defineExample({
             title: 'single template to multiple slots',
             stateInitStatic: {value: 0},
-            renderCallback({state, updateState}) {
+            renderCallback() {
                 return html`
                     <${VirTestSingleTemplateToMultipleSlots.assign({
                         count: 5,

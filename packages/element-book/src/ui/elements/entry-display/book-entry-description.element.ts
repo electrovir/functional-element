@@ -1,6 +1,6 @@
 import {css, html} from 'element-vir';
-import {colorThemeCssVars} from '../../color-theme/color-theme';
-import {defineBookElement} from '../define-book-element';
+import {colorThemeCssVars} from '../../color-theme/color-theme.js';
+import {defineBookElement} from '../define-book-element.js';
 
 export const BookEntryDescription = defineBookElement<{
     descriptionParagraphs: ReadonlyArray<string>;

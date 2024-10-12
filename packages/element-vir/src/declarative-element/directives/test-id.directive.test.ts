@@ -1,8 +1,8 @@
 import {assert} from '@augment-vir/assert';
 import {randomString} from '@augment-vir/common';
 import {describe, it, testWeb} from '@augment-vir/test';
-import {html} from '../../template-transforms/vir-html/vir-html';
-import {testId, testIdAttributeName} from './test-id.directive';
+import {html} from '../../template-transforms/vir-html/vir-html.js';
+import {testId, testIdAttributeName} from './test-id.directive.js';
 
 describe(testId.name, () => {
     it('attaches a the given test id', async () => {

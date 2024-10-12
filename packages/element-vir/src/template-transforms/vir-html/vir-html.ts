@@ -1,8 +1,8 @@
 import {html as litHtml} from 'lit';
-import {HTMLTemplateResult} from '../../lit-exports/all-lit-exports';
-import {getTransformedTemplate} from '../transform-template';
-import {HtmlInterpolation} from './html-interpolation';
-import {mapHtmlValues, transformHtmlTemplate} from './html-transform';
+import {HTMLTemplateResult} from '../../lit-exports/all-lit-exports.js';
+import {getTransformedTemplate} from '../transform-template.js';
+import {HtmlInterpolation} from './html-interpolation.js';
+import {mapHtmlValues, transformHtmlTemplate} from './html-transform.js';
 
 /**
  * Interprets a template literal as an HTML template which is lazily rendered to the DOM.

@@ -1,7 +1,7 @@
 import {check} from '@augment-vir/assert';
-import {BookEntry} from './book-entry';
-import {BookEntryType} from './book-entry-type';
-import {checkControls} from './book-page/book-page-controls';
+import {BookEntry} from './book-entry.js';
+import {BookEntryType} from './book-entry-type.js';
+import {checkControls} from './book-page/book-page-controls.js';
 
 export const bookEntryVerifiers = {
     [BookEntryType.ElementExample]: () => {

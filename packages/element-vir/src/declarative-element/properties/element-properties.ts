@@ -29,7 +29,7 @@ export function createPropertyDescriptorMap<PropertyInitGeneric extends Property
             if (typeof key === 'string') {
                 return true;
             } else {
-                throw new Error(`Property init cannot have non string keys: "${key}"`);
+                throw new TypeError(`Property init cannot have non string keys: '${String(key)}'`);
             }
         })
         .reduce(

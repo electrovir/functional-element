@@ -49,10 +49,11 @@ export function fuzzySearch({
     const lowercaseSearchIn = searchIn.toLowerCase();
     const lowercaseSearchQuery = searchQuery.toLowerCase();
 
+    // eslint-disable-next-line sonarjs/no-labels
     outer: for (let i = 0, j = 0; i < searchQueryLength; i++) {
-        const charCode = lowercaseSearchQuery.charCodeAt(i);
+        const charCode = lowercaseSearchQuery.codePointAt(i);
         while (j < searchInLength) {
-            if (lowercaseSearchIn.charCodeAt(j++) === charCode) {
+            if (lowercaseSearchIn.codePointAt(j++) === charCode) {
                 continue outer;
             }
         }

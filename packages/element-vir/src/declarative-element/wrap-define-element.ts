@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+
 import {PartialWithNullable} from '@augment-vir/common';
-import {CustomElementTagName} from './custom-tag-name';
-import {DeclarativeElementInit} from './declarative-element-init';
-import {defineElement, VerifiedElementInit} from './define-element';
-import {defineElementNoInputs, VerifiedElementNoInputsInit} from './define-element-no-inputs';
-import {BaseCssPropertyName} from './properties/css-properties';
-import {EventsInitMap} from './properties/element-events';
-import {PropertyInitMapBase} from './properties/element-properties';
+import {CustomElementTagName} from './custom-tag-name.js';
+import {DeclarativeElementInit} from './declarative-element-init.js';
+import {defineElementNoInputs, VerifiedElementNoInputsInit} from './define-element-no-inputs.js';
+import {defineElement, VerifiedElementInit} from './define-element.js';
+import {BaseCssPropertyName} from './properties/css-properties.js';
+import {EventsInitMap} from './properties/element-events.js';
+import {PropertyInitMapBase} from './properties/element-properties.js';
 
 export type WrapDefineElementOptions<
     TagNameRequirement extends CustomElementTagName = CustomElementTagName,

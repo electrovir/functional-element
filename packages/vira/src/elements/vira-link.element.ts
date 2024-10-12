@@ -1,7 +1,7 @@
 import {css, html, listen} from 'element-vir';
 import {FullRoute, SpaRouter} from 'spa-router-vir';
 import {RequireExactlyOne} from 'type-fest';
-import {defineViraElement} from './define-vira-element';
+import {defineViraElement} from './define-vira-element.js';
 
 export const ViraLink = defineViraElement<
     RequireExactlyOne<{
@@ -75,7 +75,7 @@ export const ViraLink = defineViraElement<
         } else {
             const linkUrl = inputs.link
                 ? inputs.link.url
-                : inputs.route?.router.createRouteUrl(inputs.route.route);
+                : inputs.route.router.createRouteUrl(inputs.route.route);
 
             /** Noopener and noreferrer are needed for security reasons, do not remove! */
             return html`

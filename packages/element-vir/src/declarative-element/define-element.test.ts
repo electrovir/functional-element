@@ -1,7 +1,7 @@
 import {assert} from '@augment-vir/assert';
 import {randomBoolean, randomString} from '@augment-vir/common';
 import {describe, it} from '@augment-vir/test';
-import {defineElement} from './define-element';
+import {defineElement} from './define-element.js';
 
 describe(defineElement.name, () => {
     it('does not allow HTMLElement properties in state or inputs', () => {
@@ -17,7 +17,7 @@ describe(defineElement.name, () => {
                 },
             },
         );
-        defineElement<{}>()(
+        defineElement()(
             // @ts-expect-error classList is a default HTMLElement key
             {
                 tagName: 'blah-blah-blah-2',
@@ -50,14 +50,13 @@ describe(defineElement.name, () => {
     });
 
     it('blocks render callbacks without a return type', () => {
-        defineElement<{}>()({
+        defineElement()({
             tagName: `some-tag-${randomString()}`,
             cleanupCallback({host}) {},
-            // render callback must return something
-            // @ts-expect-error
+            // @ts-expect-error: render callback must return something
             renderCallback() {},
         });
-        defineElement<{}>()({
+        defineElement()({
             tagName: `some-tag-2-${randomString()}`,
             // returning undefined is cool
             renderCallback() {
@@ -72,8 +71,7 @@ describe(defineElement.name, () => {
         }>()({
             tagName: `some-tag-${randomString()}`,
             cleanupCallback({host}) {},
-            // render callback must return something
-            // @ts-expect-error
+            // @ts-expect-error: render callback must return something
             renderCallback() {},
         });
 
@@ -110,15 +108,15 @@ describe(defineElement.name, () => {
     });
 
     it('blocks render callbacks that are async', () => {
-        defineElement<{}>()({
+        defineElement()({
             tagName: `some-tag-${randomString()}`,
-            // renderCallback cannot be async
-            // @ts-expect-error
+            // @ts-expect-error: renderCallback cannot be async
+            // eslint-disable-next-line @typescript-eslint/require-await
             async renderCallback() {
                 return 'hello';
             },
         });
-        defineElement<{}>()({
+        defineElement()({
             tagName: `some-tag-2-${randomString()}`,
             renderCallback() {
                 return 'hello';
@@ -127,9 +125,10 @@ describe(defineElement.name, () => {
     });
 
     it('blocks init callbacks that are async', () => {
-        defineElement<{}>()({
+        defineElement()({
             tagName: `some-tag-${randomString()}`,
             // init callback does not need to return something
+            // eslint-disable-next-line @typescript-eslint/require-await
             async initCallback({host}) {
                 return undefined;
             },
@@ -137,7 +136,7 @@ describe(defineElement.name, () => {
                 return 'hello';
             },
         });
-        defineElement<{}>()({
+        defineElement()({
             tagName: `some-tag-2-${randomString()}`,
             initCallback({host}) {
                 return undefined;
@@ -149,7 +148,7 @@ describe(defineElement.name, () => {
     });
 
     it('allows host to be assigned to instance type', () => {
-        const MyElement = defineElement<{}>()({
+        const MyElement = defineElement()({
             tagName: `some-tag-${randomString()}`,
             // init callback does not need to return something
             initCallback({host}) {
@@ -168,7 +167,7 @@ describe(defineElement.name, () => {
     });
 
     it('preserves slot names', () => {
-        const MyElement = defineElement<{}>()({
+        const MyElement = defineElement()({
             tagName: 'just-some-element-with-slot-names',
             slotNames: ['yo'],
             renderCallback() {

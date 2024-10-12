@@ -1,8 +1,8 @@
 import {AnyFunction} from '@augment-vir/common';
 import {CSSResult, TemplateResult, nothing} from 'lit';
 import {EmptyObject} from 'type-fest';
-import {DeclarativeElementDefinition} from '../../declarative-element/declarative-element';
-import {MinimalDefinitionWithInputs, MinimalElementDefinition} from '../minimal-element-definition';
+import {DeclarativeElementDefinition} from '../../declarative-element/declarative-element.js';
+import {MinimalDefinitionWithInputs, MinimalElementDefinition} from '../minimal-element-definition.js';
 
 /**
  * Unfortunately the type for `DirectiveResult` means it's just an empty object. So in order to

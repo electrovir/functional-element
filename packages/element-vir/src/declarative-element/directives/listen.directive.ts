@@ -5,9 +5,9 @@ import {
     DirectiveResult,
     noChange,
     PartInfo,
-} from '../../lit-exports/all-lit-exports';
-import {DefinedTypedEvent, TypedEvent} from '../../typed-event/typed-event';
-import {extractElement} from './directive-helpers';
+} from '../../lit-exports/all-lit-exports.js';
+import {DefinedTypedEvent, TypedEvent} from '../../typed-event/typed-event.js';
+import {extractElement} from './directive-helpers.js';
 
 /** We don't care at all what this returns, just allow anything! */
 type ListenCallbackReturn = MaybePromise<any>;
@@ -32,21 +32,13 @@ type PossibleListenerCallbacks<
  * @param listener The callback to fire when an event is caught. Assuming the definedTypedEvent
  *   input is properly typed, the event given to this callback will also be typed.
  */
-export function listen<
-    TypedEventTypeNameGeneric extends string,
-    TypedEventDetailGeneric,
-    NativeElementEventNameGeneric extends keyof HTMLElementEventMap,
->(
+export function listen<TypedEventTypeNameGeneric extends string, TypedEventDetailGeneric>(
     eventType: DefinedTypedEvent<TypedEventTypeNameGeneric, TypedEventDetailGeneric>,
     listener: (
         event: TypedEvent<TypedEventTypeNameGeneric, TypedEventDetailGeneric>,
     ) => ListenCallbackReturn,
 ): DirectiveResult<any>;
-export function listen<
-    TypedEventTypeNameGeneric extends string,
-    TypedEventDetailGeneric,
-    NativeElementEventNameGeneric extends keyof HTMLElementEventMap,
->(
+export function listen<NativeElementEventNameGeneric extends keyof HTMLElementEventMap>(
     eventType: NativeElementEventNameGeneric,
     listener: (event: HTMLElementEventMap[NativeElementEventNameGeneric]) => ListenCallbackReturn,
 ): DirectiveResult<any>;
@@ -119,8 +111,8 @@ const listenDirective = directive(
                 typeof eventTypeInput === 'string' ? eventTypeInput : eventTypeInput.type;
 
             if (typeof eventType !== 'string') {
-                throw new Error(
-                    `Cannot listen to an event with a name that is not a string. Given event name: "${eventType}"`,
+                throw new TypeError(
+                    `Cannot listen to an event with a name that is not a string. Given event name: '${String(eventType)}'`,
                 );
             }
 

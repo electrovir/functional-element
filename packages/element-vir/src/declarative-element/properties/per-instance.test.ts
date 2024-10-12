@@ -1,9 +1,9 @@
 import {assert} from '@augment-vir/assert';
 import {randomString} from '@augment-vir/common';
 import {describe, it, testWeb} from '@augment-vir/test';
-import {html} from '../../template-transforms/vir-html/vir-html';
-import {defineElementNoInputs} from '../define-element-no-inputs';
-import {perInstance} from './per-instance';
+import {html} from '../../template-transforms/vir-html/vir-html.js';
+import {defineElementNoInputs} from '../define-element-no-inputs.js';
+import {perInstance} from './per-instance.js';
 
 describe(perInstance.name, () => {
     it('allows host to be assigned to instance type', async () => {

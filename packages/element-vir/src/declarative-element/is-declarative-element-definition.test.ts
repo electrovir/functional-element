@@ -1,16 +1,16 @@
 import {AssertionError} from '@augment-vir/assert';
 import {describe, itCases} from '@augment-vir/test';
-import {nothing} from '../lit-exports/all-lit-exports';
-import {defineElement} from './define-element';
-import {defineElementNoInputs} from './define-element-no-inputs';
-import {assertDeclarativeElementDefinition} from './is-declarative-element-definition';
+import {nothing} from '../lit-exports/all-lit-exports.js';
+import {defineElement} from './define-element.js';
+import {defineElementNoInputs} from './define-element-no-inputs.js';
+import {assertDeclarativeElementDefinition} from './is-declarative-element-definition.js';
 
 describe(assertDeclarativeElementDefinition.name, () => {
     itCases(assertDeclarativeElementDefinition, [
         {
             it: 'passes with a definition that has inputs',
             inputs: [
-                defineElement<{}>()({
+                defineElement()({
                     tagName: 'test-thing-984451',
                     renderCallback() {
                         return nothing;

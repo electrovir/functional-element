@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+
 import {check} from '@augment-vir/assert';
 import {SetOptionalAndNullable, Values} from '@augment-vir/common';
 import {PropertyInitMapBase} from 'element-vir';
-import {GlobalValues} from '../../../ui/elements/element-book-app/global-values';
-import {InfiniteRecursionLimiter} from '../../../util/type';
-import {BookEntryType} from '../book-entry-type';
-import {titleToUrlBreadcrumb} from '../url-breadcrumbs';
-import {BookElementExample, BookElementExampleInit, BookPage} from './book-page';
-import {BookPageControlsInitBase} from './book-page-controls';
+import type {EmptyObject} from 'type-fest';
+import {GlobalValues} from '../../../ui/elements/element-book-app/global-values.js';
+import {InfiniteRecursionLimiter} from '../../../util/type.js';
+import {BookEntryType} from '../book-entry-type.js';
+import {titleToUrlBreadcrumb} from '../url-breadcrumbs.js';
+import {BookPageControlsInitBase} from './book-page-controls.js';
+import {BookElementExample, BookElementExampleInit, BookPage} from './book-page.js';
 
 export type DefineExampleCallback<
     GlobalValuesType extends GlobalValues = {},
@@ -28,13 +31,14 @@ type CollapseControlsInit<
 > = CurrentControlsInit &
     (RecursionDepth extends [any, ...infer RemainingDepth]
         ? ParentPage extends BookPage<
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               infer GlobalValuesType,
               infer GrandParentPage,
               infer ParentControls
           >
             ? CollapseControlsInit<GrandParentPage, ParentControls, RemainingDepth>
-            : {}
-        : {});
+            : EmptyObject
+        : EmptyObject);
 
 type CollapseGlobalValuesType<
     ParentPage extends BookPage | undefined,
@@ -46,11 +50,12 @@ type CollapseGlobalValuesType<
         ? ParentPage extends BookPage<
               infer GlobalValuesType,
               infer GrandParentPage,
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               infer ParentControls
           >
             ? CollapseGlobalValuesType<GrandParentPage, GlobalValuesType, RemainingDepth>
-            : {}
-        : {});
+            : EmptyObject
+        : EmptyObject);
 
 export type BookPageInit<
     GlobalValuesType extends GlobalValues,

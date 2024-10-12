@@ -1,4 +1,4 @@
-import {AsyncProp, AsyncValue} from './async-prop';
+import {AsyncProp, AsyncValue} from './async-prop.js';
 
 export function isResolved<Value extends AsyncValue<any>>(
     asyncValue: Value extends AsyncProp<any, any>

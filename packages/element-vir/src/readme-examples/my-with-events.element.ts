@@ -1,4 +1,5 @@
-import {defineElementEvent, defineElementNoInputs, html, listen} from '../index';
+import {randomInteger} from '@augment-vir/common';
+import {defineElementEvent, defineElementNoInputs, html, listen} from '../index.js';
 
 export const MyWithEvents = defineElementNoInputs({
     tagName: 'my-with-events',
@@ -9,7 +10,11 @@ export const MyWithEvents = defineElementNoInputs({
     renderCallback({dispatch, events}) {
         return html`
             <button ${listen('click', () => dispatch(new events.logoutClick()))}>log out</button>
-            <button ${listen('click', () => dispatch(new events.randomNumber(Math.random())))}>
+            <button
+                ${listen('click', () =>
+                    dispatch(new events.randomNumber(randomInteger({min: 0, max: 1_000_000}))),
+                )}
+            >
                 generate random number
             </button>
         `;

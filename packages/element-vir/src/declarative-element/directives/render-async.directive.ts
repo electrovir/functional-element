@@ -1,6 +1,6 @@
 import {check} from '@augment-vir/assert';
 import {extractErrorMessage} from '@augment-vir/common';
-import {AsyncProp} from './async-prop';
+import {AsyncProp} from './async-prop.js';
 
 // overload for when resolutionRender and errorRender are both provided
 export function renderAsync<
@@ -15,36 +15,21 @@ export function renderAsync<
     errorRender: (error: Error) => ErrorRenderResult,
 ): FallbackResult | ResolutionRenderResult | ErrorRenderResult;
 // overload for when resolutionRender is provided but errorRender is not
-export function renderAsync<
-    T,
-    FallbackResult,
-    ResolutionRenderResult = never,
-    ErrorRenderResult = never,
->(
+export function renderAsync<T, FallbackResult, ResolutionRenderResult = never>(
     asyncProp: Pick<AsyncProp<T, any>, 'value'>,
     fallback: FallbackResult,
     resolutionRender: (resolved: Awaited<T>) => ResolutionRenderResult,
     errorRender?: undefined,
 ): FallbackResult | ResolutionRenderResult | string;
 // overload for when resolutionRender is not provided but errorRender is
-export function renderAsync<
-    T,
-    FallbackResult,
-    ResolutionRenderResult = never,
-    ErrorRenderResult = never,
->(
+export function renderAsync<T, FallbackResult, ErrorRenderResult = never>(
     asyncProp: Pick<AsyncProp<T, any>, 'value'>,
     fallback: FallbackResult,
     resolutionRender: undefined,
     errorRender: (error: Error) => ErrorRenderResult,
 ): FallbackResult | Awaited<T> | ErrorRenderResult;
 // overload for when neither resolutionRender or errorRender are provided
-export function renderAsync<
-    T,
-    FallbackResult,
-    ResolutionRenderResult = never,
-    ErrorRenderResult = never,
->(
+export function renderAsync<T, FallbackResult>(
     asyncProp: Pick<AsyncProp<T, any>, 'value'>,
     fallback: FallbackResult,
     resolutionRender?: undefined,

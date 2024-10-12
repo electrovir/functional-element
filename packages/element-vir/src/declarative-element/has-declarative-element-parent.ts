@@ -1,4 +1,4 @@
-import {DeclarativeElement} from './declarative-element';
+import {DeclarativeElement} from './declarative-element.js';
 
 export function hasDeclarativeElementParent(input: Element): boolean {
     const rootNode = input.getRootNode();
