@@ -15,11 +15,13 @@
     },
     "dependencies": {
         "@augment-vir/assert": "^30.3.0",
+        "@augment-vir/common": "^30.3.0",
         "element-book": "*",
         "element-vir": "*",
         "vira": "*"
     },
     "devDependencies": {
+        "@augment-vir/test": "^30.3.0",
         "esbuild": "^0.24.0",
         "markdown-code-example-inserter": "^3.0.0",
         "typedoc": "^0.26.8",

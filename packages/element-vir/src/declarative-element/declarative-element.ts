@@ -1,22 +1,26 @@
-import {SetRequiredAndNotNull} from '@augment-vir/common';
-import {IsAny, IsEmptyObject, type EmptyObject} from 'type-fest';
-import {CSSResult, LitElement} from '../lit-exports/all-lit-exports.js';
-import {MinimalDefinitionWithInputs} from '../template-transforms/minimal-element-definition.js';
-import {CustomElementTagName} from './custom-tag-name.js';
-import {DeclarativeElementInit} from './declarative-element-init.js';
-import {DeclarativeElementDefinitionOptions} from './definition-options.js';
-import {BaseCssPropertyName} from './properties/css-properties.js';
-import {CssVars} from './properties/css-vars.js';
-import {EventDescriptorMap, EventsInitMap} from './properties/element-events.js';
+import {type SetRequiredAndNotNull} from '@augment-vir/common';
+import {type EmptyObject, type IsAny, type IsEmptyObject} from 'type-fest';
+import {LitElement, type CSSResult} from '../lit-exports/base-lit-exports.js';
+import {type MinimalDefinitionWithInputs} from '../template-transforms/minimal-element-definition.js';
+import {type CustomElementTagName} from './custom-tag-name.js';
+import {type DeclarativeElementInit} from './declarative-element-init.js';
+import {type DeclarativeElementDefinitionOptions} from './definition-options.js';
+import {type BaseCssPropertyName} from './properties/css-properties.js';
+import {type CssVars} from './properties/css-vars.js';
+import {type EventDescriptorMap, type EventsInitMap} from './properties/element-events.js';
 import {
-    ElementPropertyDescriptorMap,
-    PropertyInitMapBase,
+    type ElementPropertyDescriptorMap,
+    type PropertyInitMapBase,
 } from './properties/element-properties.js';
-import {FlattenElementVirStateSetup} from './properties/element-vir-state-setup.js';
-import {HostClassNamesMap} from './properties/host-classes.js';
-import {ObservableListenerMap} from './properties/property-proxy.js';
-import type {RenderCallback, RenderParams, UpdateStateCallback} from './render-callback.js';
-import {SlotNameMap} from './slot-names.js';
+import {type FlattenElementVirStateSetup} from './properties/element-vir-state-setup.js';
+import {type HostClassNamesMap} from './properties/host-classes.js';
+import {type ObservableListenerMap} from './properties/property-proxy.js';
+import {
+    type RenderCallback,
+    type RenderParams,
+    type UpdateStateCallback,
+} from './render-callback.js';
+import {type SlotNameMap} from './slot-names.js';
 
 export type DeclarativeElementHost<
     TagName extends CustomElementTagName = any,

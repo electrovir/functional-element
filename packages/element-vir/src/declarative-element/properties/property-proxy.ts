@@ -1,7 +1,7 @@
-import {ObservableListener, isObservableBase} from 'observavir';
-import {property} from '../../lit-exports/all-lit-exports.js';
-import {DeclarativeElement} from '../declarative-element.js';
-import {PropertyInitMapBase} from './element-properties.js';
+import {type ObservableListener, isObservableBase} from 'observavir';
+import {property} from '../../lit-exports/base-lit-exports.js';
+import {type DeclarativeElement} from '../declarative-element.js';
+import {type PropertyInitMapBase} from './element-properties.js';
 import {isElementVirStateSetup, stateSetupKey} from './element-vir-state-setup.js';
 
 export type ObservableListenerMap<OriginalPropertyMap extends PropertyInitMapBase> = Partial<

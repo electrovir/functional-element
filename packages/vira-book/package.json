@@ -15,6 +15,7 @@
         "test": "exit 0"
     },
     "dependencies": {
+        "@augment-vir/assert": "^30.3.0",
         "@augment-vir/common": "^30.3.0",
         "element-book": "*",
         "element-vir": "*",

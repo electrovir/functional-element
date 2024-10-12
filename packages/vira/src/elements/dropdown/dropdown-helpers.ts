@@ -1,7 +1,6 @@
 import {joinWithFinalConjunction} from '@augment-vir/common';
 import {PopUpManager, ShowPopUpResult} from '../../util/pop-up-manager.js';
 import {ViraDropdownOption} from './vira-dropdown-item.element.js';
-import {ViraDropdown} from './vira-dropdown.element.js';
 
 export function filterToSelectedOptions({
     selected,
@@ -17,7 +16,7 @@ export function filterToSelectedOptions({
 
         if (selectedOptions.length > 1 && !isMultiSelect) {
             console.error(
-                `${ViraDropdown.tagName} has multiple selections but \`isMultiSelect\` is not \`true\`. Truncating to the first selection.`,
+                `vira-dropdown has multiple selections but \`isMultiSelect\` is not \`true\`. Truncating to the first selection.`,
             );
             return selectedOptions.slice(0, 1);
         } else {
