@@ -9,9 +9,9 @@ import {
     nothing,
     testId,
 } from 'element-vir';
-import {viraDisabledStyles} from '../../styles/index.js';
 import {viraBorders} from '../../styles/border.js';
 import {viraFormCssVars} from '../../styles/form-themes.js';
+import {viraDisabledStyles} from '../../styles/index.js';
 import {viraShadows} from '../../styles/shadows.js';
 import {defineViraElement} from '../define-vira-element.js';
 import {ViraDropdownItem, ViraDropdownOption} from './vira-dropdown-item.element.js';

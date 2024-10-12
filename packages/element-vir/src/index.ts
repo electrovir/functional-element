@@ -1,10 +1,10 @@
 export * from 'observavir';
 
 export * from './declarative-element/custom-tag-name.js';
-export * from './declarative-element/declarative-element.js';
 export * from './declarative-element/declarative-element-init.js';
-export * from './declarative-element/define-element.js';
+export * from './declarative-element/declarative-element.js';
 export * from './declarative-element/define-element-no-inputs.js';
+export * from './declarative-element/define-element.js';
 export type {DeclarativeElementDefinitionOptions} from './declarative-element/definition-options.js';
 export * from './declarative-element/directives/async-prop.js';
 export * from './declarative-element/directives/create-attribute-directive.js';
@@ -17,8 +17,8 @@ export * from './declarative-element/directives/on-resize.directive.js';
 export * from './declarative-element/directives/render-async.directive.js';
 export * from './declarative-element/directives/render-if.directive.js';
 export * from './declarative-element/directives/test-id.directive.js';
-export * from './declarative-element/is-declarative-element.js';
 export * from './declarative-element/is-declarative-element-definition.js';
+export * from './declarative-element/is-declarative-element.js';
 export * from './declarative-element/properties/css-properties.js';
 export * from './declarative-element/properties/css-vars.js';
 export * from './declarative-element/properties/element-events.js';

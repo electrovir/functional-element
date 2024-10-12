@@ -1,10 +1,10 @@
 import {css, html} from 'element-vir';
 import {ViraIconSvg} from '../icons/index.js';
-import {noUserSelect} from '../styles/index.js';
 import {viraBorders} from '../styles/border.js';
 import {viraDisabledStyles} from '../styles/disabled.js';
 import {viraAnimationDurations} from '../styles/durations.js';
 import {createFocusStyles, viraFocusCssVars} from '../styles/focus.js';
+import {noUserSelect} from '../styles/index.js';
 import {noNativeFormStyles} from '../styles/native-styles.js';
 import {defineViraElement} from './define-vira-element.js';
 import {ViraIcon} from './vira-icon.element.js';

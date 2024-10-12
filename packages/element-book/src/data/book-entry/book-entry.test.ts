@@ -1,7 +1,7 @@
 import {assert} from '@augment-vir/assert';
 import {describe, it} from '@augment-vir/test';
-import {BookEntry} from './book-entry.js';
 import {BookEntryType} from './book-entry-type.js';
+import {BookEntry} from './book-entry.js';
 
 describe('BookEntry', () => {
     it('has correct property types', () => {

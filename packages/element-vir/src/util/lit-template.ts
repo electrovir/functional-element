@@ -19,7 +19,7 @@ export function convertTemplateToString(
               values: undefined | unknown[];
           };
 
-    if ((!strings?.length) && (!values?.length)) {
+    if (!strings?.length && !values?.length) {
         return '';
     }
 
@@ -46,8 +46,8 @@ function extractValue(previousString: string, value: any) {
         const values = value.map((innerValue) => convertTemplateToString(innerValue));
         return values.join('');
     } else if (previousString.endsWith('=')) {
-            return `"${value}"`;
-        } else {
-            return value;
-        }
+        return `"${value}"`;
+    } else {
+        return value;
+    }
 }

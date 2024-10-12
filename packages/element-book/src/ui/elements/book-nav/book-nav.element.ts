@@ -3,8 +3,8 @@ import {checkIfEntirelyInScrollView, waitForAnimationFrame} from '@augment-vir/w
 import {classMap, css, html, renderIf} from 'element-vir';
 import {Element16Icon, ViraIcon} from 'vira';
 import {BookEntryType} from '../../../data/book-entry/book-entry-type.js';
-import {isBookTreeNode} from '../../../data/book-tree/book-tree.js';
 import {BookTreeNode} from '../../../data/book-tree/book-tree-node.js';
+import {isBookTreeNode} from '../../../data/book-tree/book-tree.js';
 import {BookRouter} from '../../../routing/book-router.js';
 import {BookMainRoute, defaultBookFullRoute} from '../../../routing/book-routing.js';
 import {colorThemeCssVars} from '../../color-theme/color-theme.js';

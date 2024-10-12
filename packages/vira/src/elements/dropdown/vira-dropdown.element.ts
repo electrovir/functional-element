@@ -14,15 +14,15 @@ import {
 } from 'element-vir';
 import {ViraIconSvg} from '../../icons/icon-svg.js';
 import {ChevronUp24Icon} from '../../icons/index.js';
+import {viraBorders} from '../../styles/border.js';
+import {createFocusStyles, viraFocusCssVars} from '../../styles/focus.js';
+import {viraFormCssVars} from '../../styles/form-themes.js';
 import {
     noNativeFormStyles,
     noUserSelect,
     viraAnimationDurations,
     viraDisabledStyles,
 } from '../../styles/index.js';
-import {viraBorders} from '../../styles/border.js';
-import {createFocusStyles, viraFocusCssVars} from '../../styles/focus.js';
-import {viraFormCssVars} from '../../styles/form-themes.js';
 import {viraShadows} from '../../styles/shadows.js';
 import {
     HidePopUpEvent,

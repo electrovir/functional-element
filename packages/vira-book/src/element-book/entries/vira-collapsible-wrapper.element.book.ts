@@ -25,46 +25,44 @@ export const viraCollapsibleBookPage = defineBookPage({
                 showMoreStates: [] as boolean[],
             },
             renderCallback({updateState, state}) {
-                return new Array(3)
-                    .fill(0)
-                    .map((value, index) => {
-                        return html`
-                            <${ViraCollapsibleWrapper.assign({
-                                expanded: !!state.expandedStates[index],
+                return new Array(3).fill(0).map((value, index) => {
+                    return html`
+                        <${ViraCollapsibleWrapper.assign({
+                            expanded: !!state.expandedStates[index],
+                        })}
+                            ${listen(ViraCollapsibleWrapper.events.expandChange, (event) => {
+                                const newExpandedStates = [...state.expandedStates];
+                                newExpandedStates[index] = event.detail;
+                                updateState({expandedStates: newExpandedStates});
                             })}
-                                ${listen(ViraCollapsibleWrapper.events.expandChange, (event) => {
-                                    const newExpandedStates = [...state.expandedStates];
-                                    newExpandedStates[index] = event.detail;
-                                    updateState({expandedStates: newExpandedStates});
+                        >
+                            <div
+                                class="section-header"
+                                slot=${ViraCollapsibleWrapper.slotNames.header}
+                            >
+                                Section ${index}
+                            </div>
+                            <p>Variable contents</p>
+                            <button
+                                ${listen('click', () => {
+                                    const newShowMoreStates = [...state.showMoreStates];
+                                    newShowMoreStates[index] = !newShowMoreStates[index];
+                                    updateState({showMoreStates: newShowMoreStates});
                                 })}
                             >
-                                <div
-                                    class="section-header"
-                                    slot=${ViraCollapsibleWrapper.slotNames.header}
-                                >
-                                    Section ${index}
-                                </div>
-                                <p>Variable contents</p>
-                                <button
-                                    ${listen('click', () => {
-                                        const newShowMoreStates = [...state.showMoreStates];
-                                        newShowMoreStates[index] = !newShowMoreStates[index];
-                                        updateState({showMoreStates: newShowMoreStates});
-                                    })}
-                                >
-                                    show more
-                                </button>
-                                ${renderIf(
-                                    !!state.showMoreStates[index],
-                                    html`
-                                        <p>Variable contents</p>
-                                        <p>Variable contents</p>
-                                    `,
-                                )}
-                                <p>Variable contents</p>
-                            </${ViraCollapsibleWrapper}>
-                        `;
-                    });
+                                show more
+                            </button>
+                            ${renderIf(
+                                !!state.showMoreStates[index],
+                                html`
+                                    <p>Variable contents</p>
+                                    <p>Variable contents</p>
+                                `,
+                            )}
+                            <p>Variable contents</p>
+                        </${ViraCollapsibleWrapper}>
+                    `;
+                });
             },
         });
         defineExample({
@@ -81,58 +79,56 @@ export const viraCollapsibleBookPage = defineBookPage({
                 showMoreStates: [] as boolean[],
             },
             renderCallback({updateState, state}) {
-                return new Array(3)
-                    .fill(0)
-                    .map((value, index) => {
-                        return html`
-                            <${ViraCollapsibleWrapper.assign({
-                                expanded: !!state.expandedStates[index],
+                return new Array(3).fill(0).map((value, index) => {
+                    return html`
+                        <${ViraCollapsibleWrapper.assign({
+                            expanded: !!state.expandedStates[index],
+                        })}
+                            ${listen(ViraCollapsibleWrapper.events.expandChange, (event) => {
+                                const newExpandedStates = [...state.expandedStates];
+                                newExpandedStates[index] = event.detail;
+                                updateState({expandedStates: newExpandedStates});
                             })}
-                                ${listen(ViraCollapsibleWrapper.events.expandChange, (event) => {
-                                    const newExpandedStates = [...state.expandedStates];
-                                    newExpandedStates[index] = event.detail;
-                                    updateState({expandedStates: newExpandedStates});
+                        >
+                            <div
+                                class="section-header"
+                                slot=${ViraCollapsibleWrapper.slotNames.header}
+                            >
+                                Section ${index}
+                            </div>
+                            <p>
+                                Variable contents Variable contents Variable contents Variable
+                                contents Variable contents Variable contents
+                            </p>
+                            <button
+                                ${listen('click', () => {
+                                    const newShowMoreStates = [...state.showMoreStates];
+                                    newShowMoreStates[index] = !newShowMoreStates[index];
+                                    updateState({showMoreStates: newShowMoreStates});
                                 })}
                             >
-                                <div
-                                    class="section-header"
-                                    slot=${ViraCollapsibleWrapper.slotNames.header}
-                                >
-                                    Section ${index}
-                                </div>
-                                <p>
-                                    Variable contents Variable contents Variable contents Variable
-                                    contents Variable contents Variable contents
-                                </p>
-                                <button
-                                    ${listen('click', () => {
-                                        const newShowMoreStates = [...state.showMoreStates];
-                                        newShowMoreStates[index] = !newShowMoreStates[index];
-                                        updateState({showMoreStates: newShowMoreStates});
-                                    })}
-                                >
-                                    show more
-                                </button>
-                                ${renderIf(
-                                    !!state.showMoreStates[index],
-                                    html`
-                                        <p>
-                                            Variable contents Variable contents Variable contents
-                                            Variable contents Variable contents Variable contents
-                                        </p>
-                                        <p>
-                                            Variable contents Variable contents Variable contents
-                                            Variable contents Variable contents Variable contents
-                                        </p>
-                                    `,
-                                )}
-                                <p>
-                                    Variable contents Variable contents Variable contents Variable
-                                    contents Variable contents Variable contents
-                                </p>
-                            </${ViraCollapsibleWrapper}>
-                        `;
-                    });
+                                show more
+                            </button>
+                            ${renderIf(
+                                !!state.showMoreStates[index],
+                                html`
+                                    <p>
+                                        Variable contents Variable contents Variable contents
+                                        Variable contents Variable contents Variable contents
+                                    </p>
+                                    <p>
+                                        Variable contents Variable contents Variable contents
+                                        Variable contents Variable contents Variable contents
+                                    </p>
+                                `,
+                            )}
+                            <p>
+                                Variable contents Variable contents Variable contents Variable
+                                contents Variable contents Variable contents
+                            </p>
+                        </${ViraCollapsibleWrapper}>
+                    `;
+                });
             },
         });
     },

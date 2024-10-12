@@ -1,8 +1,8 @@
 import {PartialWithUndefined} from '@augment-vir/common';
 import {css, html, HTMLTemplateResult} from 'element-vir';
 import {Check24Icon} from '../../icons/icon-svgs/check-24.icon.js';
-import {noUserSelect, viraAnimationDurations} from '../../styles/index.js';
 import {viraBorders} from '../../styles/border.js';
+import {noUserSelect, viraAnimationDurations} from '../../styles/index.js';
 import {defineViraElement} from '../define-vira-element.js';
 import {ViraIcon} from '../vira-icon.element.js';
 
