@@ -220,7 +220,7 @@ export const MyWithAssignment = defineElementNoInputs({
 There are two other callbacks you can define that are sort of similar to lifecycle callbacks. They are much simpler than lifecycle callbacks however.
 
 -   `init`: called right before the first render and has all state and inputs setup. (This is similar to `connectedCallback` in standard HTMLElement classes but is fired much later, after inputs are assigned, to avoid race conditions.)
--   `cleanupCallback`: called when an element is removed from the DOM. (This is the same as the `disconnectedCallback` in standard HTMLElement classes.)
+-   `cleanup`: called when an element is removed from the DOM. (This is the same as the `disconnectedCallback` in standard HTMLElement classes.)
 
 <!-- example-link: src/readme-examples/my-with-cleanup-callback.element.ts -->
 
@@ -242,7 +242,7 @@ export const MyWithAssignmentCleanupCallback = defineElementNoInputs({
             <h1>My App</h1>
         `;
     },
-    cleanupCallback: ({state, updateState}) => {
+    cleanup: ({state, updateState}) => {
         window.clearInterval(state.intervalId);
         updateState({
             intervalId: undefined,

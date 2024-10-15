@@ -367,12 +367,10 @@ export function defineElementNoInputs<
 
         public override disconnectedCallback(): void {
             super.disconnectedCallback();
-            if (init.cleanupCallback) {
+            if (init.cleanup) {
                 const renderParams = this.createRenderParams();
-                if ((init.cleanupCallback(renderParams) as any) instanceof Promise) {
-                    throw new TypeError(
-                        `cleanupCallback in '${init.tagName}' cannot be asynchronous`,
-                    );
+                if ((init.cleanup(renderParams) as any) instanceof Promise) {
+                    throw new TypeError(`cleanup in '${init.tagName}' cannot be asynchronous`);
                 }
             }
             this.destroy();

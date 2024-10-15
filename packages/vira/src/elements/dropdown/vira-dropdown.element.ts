@@ -199,7 +199,7 @@ export const ViraDropdown = defineViraElement<
         popUpManager: perInstance(() => new PopUpManager()),
         navController: undefined as NavController | undefined,
     },
-    cleanupCallback({state, updateState}) {
+    cleanup({state, updateState}) {
         updateState({showPopUpResult: undefined});
         state.popUpManager.destroy();
     },

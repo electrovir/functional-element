@@ -1,2 +1,1 @@
 -   convert `stateInitStatic` into a function named `stateInit`
--   rename `cleanupCallback` to `cleanup`

@@ -15,7 +15,7 @@ export const MyWithAssignmentCleanupCallback = defineElementNoInputs({
             <h1>My App</h1>
         `;
     },
-    cleanupCallback: ({state, updateState}) => {
+    cleanup: ({state, updateState}) => {
         window.clearInterval(state.intervalId);
         updateState({
             intervalId: undefined,

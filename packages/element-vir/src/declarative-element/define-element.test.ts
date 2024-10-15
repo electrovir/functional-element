@@ -52,7 +52,7 @@ describe(defineElement.name, () => {
     it('blocks render callbacks without a return type', () => {
         defineElement()({
             tagName: `some-tag-${randomString()}`,
-            cleanupCallback({host}) {},
+            cleanup({host}) {},
             // @ts-expect-error: render callback must return something
             render() {},
         });
@@ -70,7 +70,7 @@ describe(defineElement.name, () => {
             maybeUndefined?: string | undefined;
         }>()({
             tagName: `some-tag-${randomString()}`,
-            cleanupCallback({host}) {},
+            cleanup({host}) {},
             // @ts-expect-error: render callback must return something
             render() {},
         });

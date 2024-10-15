@@ -102,7 +102,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
             await scrollNav(host, extractSearchQuery(state.currentRoute.paths), state.currentRoute);
         }, 500);
     },
-    cleanupCallback({state, updateState}) {
+    cleanup({state, updateState}) {
         if (state.router) {
             state.router.destroy();
             updateState({router: undefined});

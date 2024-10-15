@@ -67,7 +67,7 @@ export type DeclarativeElementInit<
         CssVarKeys,
         SlotNames
     >;
-    cleanupCallback?: InitCallback<
+    cleanup?: InitCallback<
         TagName,
         Inputs,
         StateInit,
