@@ -19,7 +19,7 @@ export const BookBreadcrumbs = defineBookElement<{
             padding: 0 4px;
         }
     `,
-    renderCallback: ({inputs}) => {
+    render: ({inputs}) => {
         const bookPaths = inputs.currentRoute.paths.slice(1);
 
         if (!bookPaths.length) {

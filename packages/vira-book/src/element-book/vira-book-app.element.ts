@@ -24,7 +24,7 @@ export const ViraBookApp = defineElementNoInputs({
             margin-left: 16px;
         }
     `,
-    renderCallback() {
+    render() {
         return html`
             <${ElementBookApp.assign({
                 internalRouterConfig: {

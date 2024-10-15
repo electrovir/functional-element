@@ -83,7 +83,7 @@ export const BookEntryDisplay = defineBookElement<{
     stateInitStatic: {
         lastElement: undefined as undefined | Element,
     },
-    renderCallback: ({inputs, dispatch, events, state, updateState}) => {
+    render: ({inputs, dispatch, events, state, updateState}) => {
         const currentSearch = extractSearchQuery(inputs.currentRoute.paths);
 
         const entryTemplates = createNodeTemplates({

@@ -9,7 +9,7 @@ const VirObservablesTestParent = defineElementNoInputs({
     stateInitStatic: {
         renderCount: 0,
     },
-    renderCallback({state, updateState}) {
+    render({state, updateState}) {
         updateState({renderCount: state.renderCount + 1});
         return html`
             <p>Parent render count (should not change): ${state.renderCount}</p>
@@ -35,7 +35,7 @@ const VirObservablesTestChild = defineElement<{observableProp: typeof myObservab
     stateInitStatic: {
         renderCount: 0,
     },
-    renderCallback({inputs, state, updateState}) {
+    render({inputs, state, updateState}) {
         updateState({renderCount: state.renderCount + 1});
         return html`
             <p>child render count (should increase): ${state.renderCount}</p>

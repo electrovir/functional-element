@@ -15,7 +15,7 @@ const expectedStaticProperties = getObjectTypedKeys({
     init: '',
     inputsType: '',
     isStrictInstance: '',
-    renderCallback: '',
+    render: '',
     slotNames: '',
     stateInitStatic: '',
     stateType: '',

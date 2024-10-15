@@ -247,7 +247,7 @@ export const ViraDropdown = defineViraElement<
         });
         updateState({navController: new NavController(host)});
     },
-    renderCallback({dispatch, events, state, inputs, updateState, host}) {
+    render({dispatch, events, state, inputs, updateState, host}) {
         assertUniqueIdProps(inputs.options);
 
         function triggerPopUp(param: Parameters<typeof triggerPopUpState>[0]) {

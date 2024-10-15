@@ -79,7 +79,7 @@ export const BookNav = defineBookElement<{
             color: ${colorThemeCssVars['element-book-accent-icon-color'].value};
         }
     `,
-    renderCallback({inputs}) {
+    render({inputs}) {
         const navTreeTemplates = inputs.flattenedNodes.map((treeNode) => {
             if (!shouldShowTreeNodeInNav(treeNode, inputs.selectedPath)) {
                 return;

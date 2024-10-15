@@ -31,7 +31,7 @@ export const VirApp = defineElementNoInputs({
         themeColor: undefined as string | undefined,
         paths: ['book'] as ReadonlyArray<string>,
     },
-    renderCallback: ({state, updateState}) => {
+    render: ({state, updateState}) => {
         return html`
             <label>
                 Theme color

@@ -24,7 +24,7 @@ export const BookRouteLink = defineBookElement<{
             width: 100%;
         }
     `,
-    renderCallback: ({inputs, dispatch}) => {
+    render: ({inputs, dispatch}) => {
         const linkUrl: string =
             inputs.router?.createRouteUrl({
                 ...inputs.route,

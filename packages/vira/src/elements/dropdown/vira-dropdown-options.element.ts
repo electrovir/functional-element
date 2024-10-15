@@ -75,7 +75,7 @@ export const ViraDropdownOptions = defineViraElement<
             pointer-events: auto;
         }
     `,
-    renderCallback({inputs, dispatch, events}) {
+    render({inputs, dispatch, events}) {
         const optionTemplates = inputs.options.map((option) => {
             const innerTemplate =
                 option.template ||

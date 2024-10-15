@@ -2,7 +2,7 @@ import {defineElement, html} from 'element-vir';
 
 const ArrayAElement = defineElement<{value: string}>()({
     tagName: 'element-vir-test-a',
-    renderCallback({inputs}) {
+    render({inputs}) {
         return html`
             A - ${inputs.value}
         `;
@@ -11,7 +11,7 @@ const ArrayAElement = defineElement<{value: string}>()({
 
 const ArrayBElement = defineElement<{value: string}>()({
     tagName: 'element-vir-test-b',
-    renderCallback({inputs}) {
+    render({inputs}) {
         return html`
             B - ${inputs.value}
         `;
@@ -20,7 +20,7 @@ const ArrayBElement = defineElement<{value: string}>()({
 
 const ArrayCElement = defineElement<{value: string}>()({
     tagName: 'element-vir-test-c',
-    renderCallback({inputs}) {
+    render({inputs}) {
         return html`
             C - ${inputs.value}
         `;
@@ -29,7 +29,7 @@ const ArrayCElement = defineElement<{value: string}>()({
 
 const ArrayDElement = defineElement<{value: string}>()({
     tagName: 'element-vir-test-d',
-    renderCallback({inputs}) {
+    render({inputs}) {
         return html`
             D - ${inputs.value}
         `;

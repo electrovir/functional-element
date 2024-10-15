@@ -30,7 +30,7 @@ export const ViraIcon = defineViraElement<{
             width: 100%;
         }
     `,
-    renderCallback({inputs}) {
+    render({inputs}) {
         if (!inputs.icon) {
             return '';
         }

@@ -27,7 +27,7 @@ export const BookEntryDescription = defineBookElement<{
             margin-top: 8px;
         }
     `,
-    renderCallback({inputs}) {
+    render({inputs}) {
         return inputs.descriptionParagraphs.map((paragraph) => {
             return html`
                 <p>${paragraph}</p>

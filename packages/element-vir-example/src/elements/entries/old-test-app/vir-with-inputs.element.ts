@@ -5,7 +5,7 @@ export const VirWithInputs = defineElement<{
     second: string;
 }>()({
     tagName: 'vir-with-inputs',
-    renderCallback({inputs: inputs}) {
+    render({inputs: inputs}) {
         return html`
             <span ${testId('first')}>${inputs.first}</span>
             <span ${testId('second')}>${inputs.second}</span>

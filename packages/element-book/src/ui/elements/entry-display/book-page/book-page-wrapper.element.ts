@@ -46,7 +46,7 @@ export const BookPageWrapper = defineBookElement<{
             display: inline-block;
         }
     `,
-    renderCallback({inputs}) {
+    render({inputs}) {
         const titleTemplate = inputs.isTopLevel
             ? html`
                   <h2 class="header-with-icon">${inputs.pageNode.entry.title}</h2>

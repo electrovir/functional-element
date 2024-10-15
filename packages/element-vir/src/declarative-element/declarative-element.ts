@@ -132,7 +132,7 @@ export abstract class DeclarativeElement<
         BaseCssPropertyName<CustomElementTagName>,
         ReadonlyArray<string>
     >['isStrictInstance'];
-    public static readonly renderCallback: StaticDeclarativeElementProperties<
+    public static readonly render: StaticDeclarativeElementProperties<
         CustomElementTagName,
         PropertyInitMapBase,
         PropertyInitMapBase,
@@ -140,7 +140,7 @@ export abstract class DeclarativeElement<
         BaseCssPropertyName<CustomElementTagName>,
         BaseCssPropertyName<CustomElementTagName>,
         ReadonlyArray<string>
-    >['renderCallback'];
+    >['render'];
     public static readonly inputsType: StaticDeclarativeElementProperties<
         CustomElementTagName,
         PropertyInitMapBase,
@@ -283,7 +283,7 @@ export type StaticDeclarativeElementProperties<
     assignedInputs: Inputs | undefined;
 
     /** Pass through the render callback for direct unit testability */
-    readonly renderCallback: RenderCallback<
+    readonly render: RenderCallback<
         TagName,
         Inputs,
         StateInit,

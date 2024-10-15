@@ -97,7 +97,7 @@ export const ViraImage = defineViraElement<{
          */
         erroredUrls: {} as Readonly<{[url: string]: true}>,
     },
-    renderCallback({inputs, state, updateState, dispatch, events, slotNames}) {
+    render({inputs, state, updateState, dispatch, events, slotNames}) {
         /**
          * Saved off for use in the image listeners. This is used to eliminate race conditions
          * between image events and the input URL changing.

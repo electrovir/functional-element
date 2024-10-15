@@ -27,7 +27,7 @@ export function defineThemeElements<TagPrefix extends string>(
                     all: inherit;
                 }
             `,
-            renderCallback() {
+            render() {
                 return html`
                     <b><slot></slot></b>
                 `;
@@ -41,7 +41,7 @@ export function defineThemeElements<TagPrefix extends string>(
                     ${createFontStyleCss(options.font.monospace)}
                 }
             `,
-            renderCallback() {
+            render() {
                 return html`
                     <slot></slot>
                 `;
@@ -55,7 +55,7 @@ export function defineThemeElements<TagPrefix extends string>(
                     ${createFontStyleCss(options.font.monospace)}
                 }
             `,
-            renderCallback() {
+            render() {
                 return html`
                     <code><slot></slot></code>
                 `;
@@ -73,7 +73,7 @@ export function defineThemeElements<TagPrefix extends string>(
                     all: inherit;
                 }
             `,
-            renderCallback() {
+            render() {
                 return html`
                     <p><slot></slot></p>
                 `;
@@ -137,7 +137,7 @@ function defineHeadingElement<TagPrefix extends string>(
                 }
             `;
         },
-        renderCallback({inputs}) {
+        render({inputs}) {
             const headingTag = inputs.headingLevel;
 
             return html`

@@ -13,7 +13,7 @@ export const MyWithStyles = defineElementNoInputs({
             margin-top: 16px;
         }
     `,
-    renderCallback() {
+    render() {
         return html`
             <span>Hello there!</span>
             <span>How are you doing?</span>

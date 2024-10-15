@@ -13,7 +13,7 @@ export const MyWithHostClassDefinition = defineElementNoInputs({
         'my-with-host-class-definition-a': false,
         /**
          * This host class will be automatically applied if the given callback is evaluated to true
-         * after a call to renderCallback.
+         * after a call to render.
          */
         'my-with-host-class-definition-automatic': ({state}) => {
             return state.myProp === 'foo';
@@ -32,7 +32,7 @@ export const MyWithHostClassDefinition = defineElementNoInputs({
             color: red;
         }
     `,
-    renderCallback({state}) {
+    render({state}) {
         return html`
             ${state.myProp}
         `;

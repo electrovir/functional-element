@@ -49,7 +49,7 @@ describe(DeclarativeElement.name, () => {
 
     it('has proper types', async () => {
         const definedDeclarativeElementWithEvents = defineElementNoInputs({
-            renderCallback() {
+            render() {
                 return html``;
             },
             stateInitStatic: {
@@ -62,7 +62,7 @@ describe(DeclarativeElement.name, () => {
         });
 
         const definedDeclarativeElementWithoutEvents = defineElementNoInputs({
-            renderCallback() {
+            render() {
                 return html``;
             },
             stateInitStatic: {

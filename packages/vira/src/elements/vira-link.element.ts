@@ -51,7 +51,7 @@ export const ViraLink = defineViraElement<
             color: ${cssVars['vira-link-hover-color'].value};
         }
     `,
-    renderCallback({inputs}) {
+    render({inputs}) {
         function clickCallback(event: MouseEvent) {
             if (!inputs.route) {
                 return;

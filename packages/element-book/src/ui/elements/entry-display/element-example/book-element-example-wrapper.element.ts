@@ -49,7 +49,7 @@ export const BookElementExampleWrapper = defineBookElement<{
             color: ${colorThemeCssVars['element-book-accent-icon-color'].value};
         }
     `,
-    renderCallback({inputs}) {
+    render({inputs}) {
         return html`
             <div class="individual-example-wrapper">
                 <${BookElementExampleControls.assign(

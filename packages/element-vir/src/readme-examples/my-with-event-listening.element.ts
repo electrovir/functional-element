@@ -6,7 +6,7 @@ export const MyWithEventListening = defineElementNoInputs({
     stateInitStatic: {
         myNumber: -1,
     },
-    renderCallback({state, updateState}) {
+    render({state, updateState}) {
         return html`
             <h1>My App</h1>
             <${MyWithEvents}

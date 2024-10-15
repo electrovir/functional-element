@@ -271,7 +271,7 @@ export const ViraInput = defineViraElement<
         forcedInputWidth: 0,
         showPassword: false,
     },
-    renderCallback: ({inputs, dispatch, state, updateState, events}) => {
+    render: ({inputs, dispatch, state, updateState, events}) => {
         const {filtered: filteredValue} = filterTextInputValue({
             value: inputs.value,
             allowed: inputs.allowedInputs,

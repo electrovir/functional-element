@@ -21,7 +21,7 @@ describe(wrapDefineElement.name, () => {
             .tsType(
                 myDefineElement<MySpecificInputs>()({
                     tagName: 'my-tag-abc0' as 'my-tag-abc',
-                    renderCallback() {
+                    render() {
                         return '';
                     },
                 }),
@@ -29,7 +29,7 @@ describe(wrapDefineElement.name, () => {
             .equals(
                 defineElement<MySpecificInputs>()({
                     tagName: 'my-tag-abc1' as 'my-tag-abc',
-                    renderCallback() {
+                    render() {
                         return '';
                     },
                 }),
@@ -38,7 +38,7 @@ describe(wrapDefineElement.name, () => {
         myDefineElement<MySpecificInputs>()({
             // @ts-expect-error: this tag does not match the requirements
             tagName: 'bad-tag-1',
-            renderCallback() {
+            render() {
                 return '';
             },
         });
@@ -47,7 +47,7 @@ describe(wrapDefineElement.name, () => {
             .tsType(
                 myDefineElementNoInputs({
                     tagName: 'my-tag-abc2' as 'my-tag-abc',
-                    renderCallback() {
+                    render() {
                         return '';
                     },
                 }),
@@ -55,7 +55,7 @@ describe(wrapDefineElement.name, () => {
             .equals(
                 defineElementNoInputs({
                     tagName: 'my-tag-abc3' as 'my-tag-abc',
-                    renderCallback() {
+                    render() {
                         return '';
                     },
                 }),
@@ -83,7 +83,7 @@ describe(wrapDefineElement.name, () => {
                     events: {
                         outputOne: defineElementEvent<string>(),
                     },
-                    renderCallback() {
+                    render() {
                         return '';
                     },
                 }),
@@ -100,7 +100,7 @@ describe(wrapDefineElement.name, () => {
                     events: {
                         outputOne: defineElementEvent<string>(),
                     },
-                    renderCallback() {
+                    render() {
                         return '';
                     },
                 }),
@@ -109,22 +109,22 @@ describe(wrapDefineElement.name, () => {
         myDefineElementNoInputs({
             // @ts-expect-error: this tag does not match the requirements
             tagName: 'bad-tag-2',
-            renderCallback() {
+            render() {
                 return '';
             },
         });
     });
 
-    it('requires non-void returning renderCallback', () => {
+    it('requires non-void returning render', () => {
         myDefineElementNoInputs({
             tagName: 'my-thing-abc6',
-            // @ts-expect-error: renderCallback missing a return is not allowed
-            renderCallback() {},
+            // @ts-expect-error: render missing a return is not allowed
+            render() {},
         });
         myDefineElementNoInputs({
             tagName: 'my-thing-abc7',
             // returning undefined is chill
-            renderCallback() {
+            render() {
                 return undefined;
             },
         });
@@ -136,7 +136,7 @@ describe(wrapDefineElement.name, () => {
             events: {
                 myOutput: defineElementEvent<number>(),
             },
-            renderCallback() {
+            render() {
                 return '';
             },
         });

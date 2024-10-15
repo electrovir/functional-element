@@ -7,7 +7,7 @@ export const MyWithEvents = defineElementNoInputs({
         logoutClick: defineElementEvent<void>(),
         randomNumber: defineElementEvent<number>(),
     },
-    renderCallback({dispatch, events}) {
+    render({dispatch, events}) {
         return html`
             <button ${listen('click', () => dispatch(new events.logoutClick()))}>log out</button>
             <button

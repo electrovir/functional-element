@@ -10,7 +10,7 @@ export const MyWithAssignmentCleanupCallback = defineElementNoInputs({
             intervalId: window.setInterval(() => console.info('hi'), 1000),
         });
     },
-    renderCallback() {
+    render() {
         return html`
             <h1>My App</h1>
         `;

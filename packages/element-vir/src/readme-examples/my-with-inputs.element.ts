@@ -5,7 +5,7 @@ export const MyWithInputs = defineElement<{
     email: string;
 }>()({
     tagName: 'my-with-inputs',
-    renderCallback({inputs}) {
+    render({inputs}) {
         return html`
             <span>Hello there ${inputs.username}!</span>
         `;

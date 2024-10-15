@@ -19,7 +19,7 @@ export const MyWithCssVars = defineElementNoInputs({
             color: ${cssVars['my-with-css-vars-my-var'].value};
         }
     `,
-    renderCallback() {
+    render() {
         return html``;
     },
 });

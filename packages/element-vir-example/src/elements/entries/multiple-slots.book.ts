@@ -22,7 +22,7 @@ const VirTestMultipleSlots = defineElementNoInputs({
             width: 100px;
         }
     `,
-    renderCallback() {
+    render() {
         return html`
             <div class="main-wrapper">
                 <slot name="main-slot"></slot>
@@ -39,7 +39,7 @@ const VirTestSingleTemplateToMultipleSlots = defineElement<{
     count: number;
 }>()({
     tagName: 'vir-test-single-template-to-multiple-slots',
-    renderCallback({inputs}) {
+    render({inputs}) {
         return new Array(inputs.count).fill(0).map((zero, index) => {
             const slotName = index % 2 ? 'main-slot' : 'secondary-slot';
 

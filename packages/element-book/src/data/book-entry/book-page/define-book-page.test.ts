@@ -26,7 +26,7 @@ describe(defineBookPage.name, () => {
                 // // does not work
                 // {
                 //     stateInitStatic: {value: 'hi'},
-                //     renderCallback({state}) {
+                //     render({state}) {
                 //         return `yo ${state.value}`
                 //     },
                 // },

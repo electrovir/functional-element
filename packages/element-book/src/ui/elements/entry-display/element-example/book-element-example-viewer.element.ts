@@ -15,7 +15,7 @@ export const BookElementExampleViewer = defineBookElement<{
     stateInitStatic: {
         isUnset: unsetInternalState,
     } as any,
-    renderCallback({state, inputs, updateState}) {
+    render({state, inputs, updateState}) {
         try {
             if (inputs.elementExampleNode.entry.errors.length) {
                 throw combineErrors(inputs.elementExampleNode.entry.errors);
@@ -23,12 +23,12 @@ export const BookElementExampleViewer = defineBookElement<{
 
             if (
                 /** This is a check to make sure the input entry _does_ match the expected type. */
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
                 !inputs.elementExampleNode.entry.render ||
                 typeof inputs.elementExampleNode.entry.render === 'string'
             ) {
                 throw new Error(
-                    `Failed to render example '${inputs.elementExampleNode.entry.title}': renderCallback is not a function`,
+                    `Failed to render example '${inputs.elementExampleNode.entry.title}': render is not a function`,
                 );
             }
 
@@ -45,7 +45,7 @@ export const BookElementExampleViewer = defineBookElement<{
                 controls: inputs.currentPageControls,
             });
             if (output instanceof Promise) {
-                throw new TypeError('renderCallback output cannot be a promise');
+                throw new TypeError('render output cannot be a promise');
             }
 
             return html`

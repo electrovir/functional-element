@@ -8,7 +8,7 @@ export const MyWithStylesAndInterpolatedSelector = defineElementNoInputs({
             background-color: blue;
         }
     `,
-    renderCallback() {
+    render() {
         return html`
             <${MySimple}></${MySimple}>
         `;

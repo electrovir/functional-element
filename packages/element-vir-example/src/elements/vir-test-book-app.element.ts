@@ -10,7 +10,7 @@ requireAllCustomElementsToBeDeclarativeElements();
 
 export const VirTestBookApp = defineElementNoInputs({
     tagName: 'vir-test-book-app',
-    renderCallback() {
+    render() {
         return html`
             <${ElementBookApp.assign({
                 pages: allBookPages,

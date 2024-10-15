@@ -12,7 +12,7 @@ describe(perInstance.name, () => {
             stateInitStatic: {
                 myPerInstanceProp: perInstance(() => ({stuff: 'hi'})),
             },
-            renderCallback({state}) {
+            render({state}) {
                 assert.tsType(state.myPerInstanceProp).equals<{stuff: string}>();
                 return state.myPerInstanceProp.stuff;
             },

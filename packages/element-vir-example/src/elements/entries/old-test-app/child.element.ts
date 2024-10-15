@@ -47,7 +47,7 @@ export const TestChildElement = defineElement<{
         speak: defineElementEvent<string>(),
         eat: defineElementEvent<number>(),
     },
-    renderCallback({state, inputs, dispatch, updateState, events}) {
+    render({state, inputs, dispatch, updateState, events}) {
         // log here to make sure it's not rendering too often
         console.info('child rendering');
         return html`

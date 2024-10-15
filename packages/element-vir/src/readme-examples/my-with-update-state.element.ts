@@ -10,7 +10,7 @@ export const MyWithUpdateState = defineElementNoInputs({
          */
         email: undefined as string | undefined,
     },
-    renderCallback({state, updateState}) {
+    render({state, updateState}) {
         return html`
             <span
                 ${listen('click', () => {

@@ -14,7 +14,7 @@ describe('element events', () => {
             events: {
                 'test-event-name': defineElementEvent<number>(),
             },
-            renderCallback({events}) {
+            render({events}) {
                 const testEventThing = events['test-event-name'];
 
                 const eventInstance = new testEventThing(4);

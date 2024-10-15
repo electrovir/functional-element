@@ -13,7 +13,7 @@ describe('onDomRendered', () => {
         events: {
             renderTrigger: defineElementEvent<Element>(),
         },
-        renderCallback({inputs, events, dispatch}) {
+        render({inputs, events, dispatch}) {
             return html`
                 <div
                     ${onDomRendered((element) => {

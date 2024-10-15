@@ -115,7 +115,7 @@ export const ViraButton = defineViraElement<{
             margin-left: 8px;
         }
     `,
-    renderCallback: ({inputs}) => {
+    render: ({inputs}) => {
         const iconTemplate = inputs.icon
             ? html`
                   <${ViraIcon.assign({

@@ -6,7 +6,7 @@ describe('MinimalElementDefinition', () => {
     it('matches an actual definition', () => {
         const TestElementDefinition = defineElementNoInputs({
             tagName: 'something-something-test-fad-time',
-            renderCallback() {
+            render() {
                 return 'hi';
             },
         });

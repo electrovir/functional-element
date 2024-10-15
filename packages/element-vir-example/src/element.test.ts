@@ -38,7 +38,7 @@ describe('test elements', () => {
                     // @ts-expect-error: missing tag name prefix
                     derp: 'blue',
                 },
-                renderCallback({state, updateState}) {
+                render({state, updateState}) {
                     // purple
                     console.info(state.color);
                     updateState({color: 'green'});
@@ -62,7 +62,7 @@ describe('test elements', () => {
             cssVars: {
                 'derp-whatever-css-var': 'blue',
             },
-            renderCallback({state, updateState}) {
+            render({state, updateState}) {
                 // purple
                 console.info(state.color);
                 updateState({color: 'green'});
@@ -86,7 +86,7 @@ describe('test elements', () => {
         assert.throws(() => {
             // @ts-expect-error: missing tagName
             defineElementNoInputs({
-                renderCallback(): TemplateResult {
+                render(): TemplateResult {
                     return html`
                         <${WithHostClassesAndCssVars}
                             class=${WithHostClassesAndCssVars.hostClasses['derp-whatever-stuff']}
@@ -126,7 +126,7 @@ describe('test elements', () => {
             events: {
                 thingHappened: defineElementEvent<void>(),
             },
-            renderCallback({state, dispatch, events}): TemplateResult {
+            render({state, dispatch, events}): TemplateResult {
                 // @ts-expect-error: this has no state
                 console.info(state.thing);
                 dispatch(new events.thingHappened());
@@ -141,7 +141,7 @@ describe('test elements', () => {
             defineElementNoInputs({
                 // @ts-expect-error: tag name must have dashes in it
                 tagName: 'invalidTagNameMissingDash',
-                renderCallback() {
+                render() {
                     return html``;
                 },
             }),
@@ -151,7 +151,7 @@ describe('test elements', () => {
 
         defineElementNoInputs({
             tagName: 'test-element-no-events-or-state',
-            renderCallback({state, dispatch, events}): TemplateResult {
+            render({state, dispatch, events}): TemplateResult {
                 // @ts-expect-error: this has no events
                 console.info(events.thing);
                 // @ts-expect-error: this has no state
@@ -193,7 +193,7 @@ describe('test elements', () => {
                 stringEvent: defineElementEvent<string>(),
                 numberEvent: defineElementEvent<number>(),
             },
-            renderCallback({state, dispatch, events}) {
+            render({state, dispatch, events}) {
                 // @ts-expect-error: string is not a number
                 const stuff: number = state.stringProp;
 

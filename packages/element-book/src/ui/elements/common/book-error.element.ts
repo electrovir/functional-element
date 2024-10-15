@@ -17,7 +17,7 @@ export const BookError = defineBookElement<{message: string | ReadonlyArray<stri
             padding: 0;
         }
     `,
-    renderCallback({inputs}) {
+    render({inputs}) {
         const paragraphs = check.isArray(inputs.message) ? inputs.message : [inputs.message];
 
         return paragraphs.map(

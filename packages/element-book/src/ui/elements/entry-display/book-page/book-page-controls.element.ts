@@ -74,7 +74,7 @@ export const BookPageControls = defineBookElement<{
             margin-left: -32px;
         }
     `,
-    renderCallback({inputs, dispatch, events}) {
+    render({inputs, dispatch, events}) {
         if (!Object.entries(inputs.config).length) {
             return '';
         }

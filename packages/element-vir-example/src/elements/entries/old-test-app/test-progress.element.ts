@@ -10,7 +10,7 @@ export type TestTypesProgressInputs = {
 
 export const TestTypesProgress = defineElement<TestTypesProgressInputs>()({
     tagName: 'vir-test-types-progress',
-    renderCallback() {
+    render() {
         return html``;
     },
 });

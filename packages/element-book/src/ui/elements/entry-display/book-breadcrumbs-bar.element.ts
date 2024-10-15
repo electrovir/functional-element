@@ -25,7 +25,7 @@ export const BookBreadcrumbsBar = defineBookElement<{
             justify-content: space-between;
         }
     `,
-    renderCallback({inputs, dispatch}) {
+    render({inputs, dispatch}) {
         return html`
             ${renderIf(
                 !!inputs.currentSearch,

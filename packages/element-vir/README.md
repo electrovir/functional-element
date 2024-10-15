@@ -36,7 +36,7 @@ All of [`lit`](https://lit.dev)'s syntax and functionality is available for use 
 
 ## Simple element definition
 
-Use `defineElementNoInputs` to define your element if it's not going to accept any inputs (or if you're just getting started). It's only input is an object with at least `tagName` and `renderCallback` properties (the types enforce this). Here is a bare-minimum example custom element:
+Use `defineElementNoInputs` to define your element if it's not going to accept any inputs (or if you're just getting started). It's only input is an object with at least `tagName` and `render` properties (the types enforce this). Here is a bare-minimum example custom element:
 
 <!-- example-link: src/readme-examples/my-simple.element.ts -->
 
@@ -45,7 +45,7 @@ import {defineElementNoInputs, html} from 'element-vir';
 
 export const MySimple = defineElementNoInputs({
     tagName: 'my-simple',
-    renderCallback() {
+    render() {
         return html`
             <span>Hello there!</span>
         `;
@@ -67,7 +67,7 @@ import {MySimple} from './my-simple.element.js';
 
 export const MyApp = defineElementNoInputs({
     tagName: 'my-app',
-    renderCallback() {
+    render() {
         return html`
             <h1>My App</h1>
             <${MySimple}></${MySimple}>
@@ -100,7 +100,7 @@ export const MyWithStyles = defineElementNoInputs({
             margin-top: 16px;
         }
     `,
-    renderCallback() {
+    render() {
         return html`
             <span>Hello there!</span>
             <span>How are you doing?</span>
@@ -126,7 +126,7 @@ export const MyWithStylesAndInterpolatedSelector = defineElementNoInputs({
             background-color: blue;
         }
     `,
-    renderCallback() {
+    render() {
         return html`
             <${MySimple}></${MySimple}>
         `;
@@ -138,7 +138,7 @@ export const MyWithStylesAndInterpolatedSelector = defineElementNoInputs({
 
 Define element inputs by using `defineElement` to define a declarative element. Pass your input type as a generic to the `defineElement` call. Then call _that_ with the normal definition input (like when using `defineElementNoInputs`).
 
-To use an element's inputs for use in its template, grab `inputs` from `renderCallback`'s parameters and interpolate it into your HTML template:
+To use an element's inputs for use in its template, grab `inputs` from `render`'s parameters and interpolate it into your HTML template:
 
 <!-- example-link: src/readme-examples/my-with-inputs.element.ts -->
 
@@ -150,7 +150,7 @@ export const MyWithInputs = defineElement<{
     email: string;
 }>()({
     tagName: 'my-with-inputs',
-    renderCallback({inputs}) {
+    render({inputs}) {
         return html`
             <span>Hello there ${inputs.username}!</span>
         `;
@@ -160,7 +160,7 @@ export const MyWithInputs = defineElement<{
 
 ## Defining internal state
 
-Define initial internal state values and types with the `stateInit` property when defining an element. Grab it with `state` in `renderCallback` to use state. Grab `updateState` in `renderCallback` to update state:
+Define initial internal state values and types with the `stateInit` property when defining an element. Grab it with `state` in `render` to use state. Grab `updateState` in `render` to update state:
 
 <!-- example-link: src/readme-examples/my-with-update-state.element.ts -->
 
@@ -177,7 +177,7 @@ export const MyWithUpdateState = defineElementNoInputs({
          */
         email: undefined as string | undefined,
     },
-    renderCallback({state, updateState}) {
+    render({state, updateState}) {
         return html`
             <span
                 ${listen('click', () => {
@@ -203,7 +203,7 @@ import {MyWithInputs} from './my-with-inputs.element.js';
 
 export const MyWithAssignment = defineElementNoInputs({
     tagName: 'my-with-assignment',
-    renderCallback() {
+    render() {
         return html`
             <h1>My App</h1>
             <${MyWithInputs.assign({
@@ -237,7 +237,7 @@ export const MyWithAssignmentCleanupCallback = defineElementNoInputs({
             intervalId: window.setInterval(() => console.info('hi'), 1000),
         });
     },
-    renderCallback() {
+    render() {
         return html`
             <h1>My App</h1>
         `;
@@ -255,7 +255,7 @@ export const MyWithAssignmentCleanupCallback = defineElementNoInputs({
 
 When defining a declarative element, use `events` to setup event names and types. Each event must be initialized with `defineElementEvent` and a type parameter but no run-time inputs.
 
-To dispatch an event, grab `dispatch` and `events` from `renderCallback`'s parameters.
+To dispatch an event, grab `dispatch` and `events` from `render`'s parameters.
 
 <!-- example-link: src/readme-examples/my-with-events.element.ts -->
 
@@ -269,7 +269,7 @@ export const MyWithEvents = defineElementNoInputs({
         logoutClick: defineElementEvent<void>(),
         randomNumber: defineElementEvent<number>(),
     },
-    renderCallback({dispatch, events}) {
+    render({dispatch, events}) {
         return html`
             <button ${listen('click', () => dispatch(new events.logoutClick()))}>log out</button>
             <button
@@ -299,7 +299,7 @@ export const MyWithEventListening = defineElementNoInputs({
     stateInitStatic: {
         myNumber: -1,
     },
-    renderCallback({state, updateState}) {
+    render({state, updateState}) {
         return html`
             <h1>My App</h1>
             <${MyWithEvents}
@@ -343,7 +343,7 @@ import {MyCustomActionEvent} from './my-custom-action.event.js';
 
 export const MyWithCustomEvents = defineElementNoInputs({
     tagName: 'my-with-custom-events',
-    renderCallback({dispatch}) {
+    render({dispatch}) {
         return html`
             <div
                 ${listen(MyCustomActionEvent, (event) => {
@@ -392,7 +392,7 @@ export const MyWithHostClassDefinition = defineElementNoInputs({
         'my-with-host-class-definition-a': false,
         /**
          * This host class will be automatically applied if the given callback is evaluated to true
-         * after a call to renderCallback.
+         * after a call to render.
          */
         'my-with-host-class-definition-automatic': ({state}) => {
             return state.myProp === 'foo';
@@ -411,7 +411,7 @@ export const MyWithHostClassDefinition = defineElementNoInputs({
             color: red;
         }
     `,
-    renderCallback({state}) {
+    render({state}) {
         return html`
             ${state.myProp}
         `;
@@ -431,7 +431,7 @@ import {MyWithHostClassDefinition} from './my-with-host-class-definition.element
 
 export const MyWithHostClassUsage = defineElementNoInputs({
     tagName: 'my-with-host-class-usage',
-    renderCallback() {
+    render() {
         return html`
             <${MyWithHostClassDefinition}
                 class=${MyWithHostClassDefinition.hostClasses['my-with-host-class-definition-a']}
@@ -469,7 +469,7 @@ export const MyWithCssVars = defineElementNoInputs({
             color: ${cssVars['my-with-css-vars-my-var'].value};
         }
     `,
-    renderCallback() {
+    render() {
         return html``;
     },
 });
@@ -532,7 +532,7 @@ import {defineElementNoInputs, html, onDomCreated} from 'element-vir';
 
 export const MyWithOnDomCreated = defineElementNoInputs({
     tagName: 'my-with-on-dom-created',
-    renderCallback() {
+    render() {
         return html`
             <span
                 ${onDomCreated((element) => {
@@ -558,7 +558,7 @@ import {defineElementNoInputs, html, onResize} from 'element-vir';
 
 export const MyWithOnResize = defineElementNoInputs({
     tagName: 'my-with-on-resize',
-    renderCallback() {
+    render() {
         return html`
             <span
                 ${onResize((entry) => {
@@ -589,7 +589,7 @@ import {defineElement, html, renderIf} from 'element-vir';
 
 export const MyWithRenderIf = defineElement<{shouldRender: boolean}>()({
     tagName: 'my-with-render-if',
-    renderCallback({inputs}) {
+    render({inputs}) {
         return html`
             ${renderIf(
                 inputs.shouldRender,
@@ -636,7 +636,7 @@ export const MyWithAsyncProp = defineElement<{endpoint: string}>()({
             },
         }),
     },
-    renderCallback({inputs, state}) {
+    render({inputs, state}) {
         /**
          * This causes the a promise which automatically updates the state.data prop once the
          * promise resolves. It only creates a new promise if the first input, the trigger, value

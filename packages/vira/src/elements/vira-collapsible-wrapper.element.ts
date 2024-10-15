@@ -40,7 +40,7 @@ export const ViraCollapsibleWrapper = defineViraElement<{expanded: boolean}>()({
     stateInitStatic: {
         contentHeight: 0,
     },
-    renderCallback({state, slotNames, updateState, dispatch, events, inputs}) {
+    render({state, slotNames, updateState, dispatch, events, inputs}) {
         const collapsingStyles = inputs.expanded
             ? css`
                   height: ${state.contentHeight}px;

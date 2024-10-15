@@ -23,7 +23,7 @@ export const VirThemeBookApp = defineElementNoInputs({
             elementTagPrefix: 'vir',
         }),
     },
-    renderCallback({state}) {
+    render({state}) {
         return html`
             <${ElementBookApp.assign({
                 pages: createThemeBookPages(state.theme),

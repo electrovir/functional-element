@@ -56,7 +56,7 @@ describe(asyncProp.name, () => {
                 }),
                 syncProp: {value: 'hi'},
             },
-            renderCallback({state, updateState}) {
+            render({state, updateState}) {
                 updateState({
                     myAsyncProp: asyncProp({
                         updateCallback(trigger: TriggerType) {
@@ -144,7 +144,7 @@ describe(asyncProp.name, () => {
                     },
                 }),
             },
-            renderCallback({inputs, state}) {
+            render({inputs, state}) {
                 state.myAsyncProp.update({
                     newNumber: inputs.promiseUpdateTrigger ?? startingNumber,
                     circularReference,
@@ -333,7 +333,7 @@ describe(asyncProp.name, () => {
                     },
                 }),
             },
-            renderCallback({state}) {
+            render({state}) {
                 state.myAsyncProp.update();
                 return 'hello';
             },
@@ -366,7 +366,7 @@ describe(asyncProp.name, () => {
                     },
                 }),
             },
-            renderCallback({inputs, state, host}) {
+            render({inputs, state, host}) {
                 state.myRandomNumber.update({
                     newNumber: inputs.promiseUpdateTrigger,
                 });
@@ -448,7 +448,7 @@ describe(asyncProp.name, () => {
             events: {
                 wasRendered: defineElementEvent<void>(),
             },
-            renderCallback({dispatch, events, state}) {
+            render({dispatch, events, state}) {
                 if (isResolved(state.myAsyncProp.value) && !isAsyncError(state.myAsyncProp.value)) {
                     assert.tsType(state.myAsyncProp.value).equals<number | undefined>();
                 }
@@ -601,7 +601,7 @@ describe(asyncProp.name, () => {
             initCallback({state, inputs}) {
                 state.myProp.update(inputs);
             },
-            renderCallback({state}) {
+            render({state}) {
                 if (!isResolved(state.myProp.value)) {
                     return 'loading';
                 } else if (isAsyncError(state.myProp.value)) {
@@ -645,7 +645,7 @@ describe(asyncProp.name, () => {
                     },
                 }),
             },
-            renderCallback({state}) {
+            render({state}) {
                 state.myProp.update();
                 return nothing;
             },
@@ -686,7 +686,7 @@ describe(asyncProp.name, () => {
                     },
                 }),
             },
-            renderCallback: ({state}) => {
+            render: ({state}) => {
                 state.asyncValues.update({value: 'hello there', shouldBypass: true});
                 return 'hi';
             },

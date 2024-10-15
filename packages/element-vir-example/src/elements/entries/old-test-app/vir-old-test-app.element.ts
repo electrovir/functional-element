@@ -66,7 +66,7 @@ export const VirOldTestApp = defineElementNoInputs({
         derp: {hi: 'yo'} as Record<string, string>,
         myObservable: new Observable({defaultValue: 5}),
     },
-    renderCallback({state, updateState}) {
+    render({state, updateState}) {
         // log here to make sure it's not rendering too often
         console.info(`app rendering ${state.width}`);
         return html`
@@ -175,7 +175,7 @@ export const VirOldTestApp = defineElementNoInputs({
 
 const ChildThatShouldNotReRender = defineElementNoInputs({
     tagName: 'child-that-should-no-re-render',
-    renderCallback() {
+    render() {
         return html`
             This should not update: ${randomString(8)}
         `;

@@ -11,12 +11,12 @@ describe(defineElementNoInputs.name, () => {
         defineElementNoInputs({
             tagName: `some-tag-${randomString()}`,
             // @ts-expect-error: render callback must return something
-            renderCallback() {},
+            render() {},
         });
         defineElementNoInputs({
             tagName: `some-tag-2-${randomString()}`,
             // returning undefined is cool
-            renderCallback() {
+            render() {
                 return undefined;
             },
         });
@@ -30,7 +30,7 @@ describe(defineElementNoInputs.name, () => {
                 return undefined;
             },
             // @ts-expect-error: render callback must return something
-            renderCallback() {},
+            render() {},
         });
     });
 
@@ -40,7 +40,7 @@ describe(defineElementNoInputs.name, () => {
             slotNames: [
                 'my slot',
             ],
-            renderCallback() {
+            render() {
                 return 'hi';
             },
         });
@@ -69,7 +69,7 @@ describe(defineElementNoInputs.name, () => {
                 showLoader: false,
                 isMax: false,
             },
-            renderCallback({state, updateState}) {
+            render({state, updateState}) {
                 updateState({
                     // @ts-expect-error: this property does not exist
                     thingie: 'yo',
@@ -88,7 +88,7 @@ describe(defineElementNoInputs.name, () => {
                 acceptHost(host);
                 return undefined;
             },
-            renderCallback({host}) {
+            render({host}) {
                 acceptHost(host);
 
                 return '';
@@ -117,7 +117,7 @@ describe(defineElementNoInputs.name, () => {
                     },
                 }),
             },
-            renderCallback() {
+            render() {
                 return '';
             },
         });
@@ -145,7 +145,7 @@ describe(defineElementNoInputs.name, () => {
             stateInitStatic: {
                 value: 1,
             },
-            renderCallback({state, updateState}) {
+            render({state, updateState}) {
                 setTimeout(() => {
                     updateState({value: state.value + 1});
                 }, 100);
@@ -160,7 +160,7 @@ describe(defineElementNoInputs.name, () => {
 
         const Child = defineElementNoInputs({
             tagName: 'child-that-does-not-update',
-            renderCallback() {
+            render() {
                 return html`
                     this should not update:
                     <span class="child-value">

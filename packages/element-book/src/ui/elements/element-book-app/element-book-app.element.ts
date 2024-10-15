@@ -108,7 +108,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
             updateState({router: undefined});
         }
     },
-    renderCallback: ({state, inputs, host, updateState, dispatch, events}) => {
+    render: ({state, inputs, host, updateState, dispatch, events}) => {
         if (inputs._debug) {
             console.info('rendering element-book app');
         }

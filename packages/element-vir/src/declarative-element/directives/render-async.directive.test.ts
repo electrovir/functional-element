@@ -24,7 +24,7 @@ describe(asyncProp.name, () => {
         events: {
             previousAsyncProp: defineElementEvent<AsyncValue<number>>(),
         },
-        renderCallback({state, inputs, dispatch, events}) {
+        render({state, inputs, dispatch, events}) {
             state.myAsyncProp.setValue(inputs.setAsyncProp);
 
             dispatch(new events.previousAsyncProp(state.myAsyncProp.value));
@@ -71,7 +71,7 @@ describe(asyncProp.name, () => {
             stateInitStatic: {
                 asyncProp: asyncProp<SomethingObject, any>(),
             },
-            renderCallback({state}) {
+            render({state}) {
                 assert.tsType(state.asyncProp.value).equals<AsyncValue<SomethingObject>>();
                 return html`
                     ${renderAsync(

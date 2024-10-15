@@ -4,7 +4,7 @@ import {MyCustomActionEvent} from './my-custom-action.event.js';
 
 export const MyWithCustomEvents = defineElementNoInputs({
     tagName: 'my-with-custom-events',
-    renderCallback({dispatch}) {
+    render({dispatch}) {
         return html`
             <div
                 ${listen(MyCustomActionEvent, (event) => {

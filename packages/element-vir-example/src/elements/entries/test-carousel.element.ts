@@ -39,7 +39,7 @@ export const TestCarouselWrapper = defineElementNoInputs({
             border: 1px solid red;
         }
     `,
-    renderCallback() {
+    render() {
         console.info('render');
         return html`
             <${TestCarousel.assign({
@@ -174,7 +174,7 @@ export const TestCarousel = defineElement<{
             pointer-events: none;
         }
     `,
-    renderCallback({inputs}) {
+    render({inputs}) {
         return html`
             <div>
                 <div ${onResize(() => {})} class=${templatesContainerClassName}>

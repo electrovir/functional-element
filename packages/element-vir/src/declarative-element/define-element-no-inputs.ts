@@ -123,11 +123,8 @@ export function defineElementNoInputs<
     >;
     type ThisElementInstance = InstanceType<ThisElementStaticClass>;
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (!init.renderCallback || typeof init.renderCallback === 'string') {
-        throw new Error(
-            `Failed to define element '${init.tagName}': renderCallback is not a function`,
-        );
+    if (!init.render || typeof init.render === 'string') {
+        throw new Error(`Failed to define element '${init.tagName}': render is not a function`);
     }
 
     const elementOptions: DeclarativeElementDefinitionOptions = {
@@ -174,7 +171,7 @@ export function defineElementNoInputs<
         HostClassKeys,
         CssVarKeys,
         SlotNames
-    >['renderCallback'] = init.renderCallback;
+    >['render'] = init.render;
 
     function typedAssignCallback(...[inputs]: Parameters<ThisElementStaticClass['assign']>) {
         const wrappedDefinition: MinimalDefinitionWithInputs = {
@@ -227,8 +224,8 @@ export function defineElementNoInputs<
             CssVarKeys,
             SlotNames
         >['events'] = eventsMap;
-        public static override readonly renderCallback: ThisElementStaticClass['renderCallback'] =
-            typedRenderCallback as DeclarativeElementDefinition['renderCallback'] as ThisElementStaticClass['renderCallback'];
+        public static override readonly render: ThisElementStaticClass['render'] =
+            typedRenderCallback;
         public static override readonly hostClasses: StaticDeclarativeElementProperties<
             TagName,
             Inputs,
@@ -324,7 +321,7 @@ export function defineElementNoInputs<
 
                 const renderResult = typedRenderCallback(renderParams);
                 if (renderResult instanceof Promise) {
-                    throw new TypeError('renderCallback cannot be asynchronous');
+                    throw new TypeError('render cannot be asynchronous');
                 }
                 applyHostClasses({
                     host: renderParams.host,

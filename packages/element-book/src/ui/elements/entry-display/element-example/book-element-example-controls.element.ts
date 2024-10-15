@@ -20,7 +20,7 @@ export const BookElementExampleControls = defineBookElement<{
             padding: 0 8px 4px;
         }
     `,
-    renderCallback({inputs}) {
+    render({inputs}) {
         const linkPaths: ValidBookPaths = [
             BookMainRoute.Book,
             ...inputs.elementExampleNode.fullUrlBreadcrumbs,

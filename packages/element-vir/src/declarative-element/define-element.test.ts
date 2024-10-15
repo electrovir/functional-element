@@ -12,7 +12,7 @@ describe(defineElement.name, () => {
             // @ts-expect-error style is a default HTMLElement key
             {
                 tagName: 'blah-blah-blah-1',
-                renderCallback() {
+                render() {
                     return 'hi';
                 },
             },
@@ -24,7 +24,7 @@ describe(defineElement.name, () => {
                 stateInitStatic: {
                     classList: ['hi'],
                 },
-                renderCallback() {
+                render() {
                     return 'hi';
                 },
             },
@@ -42,7 +42,7 @@ describe(defineElement.name, () => {
                     inputKey: 0,
                     otherKey: 'hi',
                 },
-                renderCallback() {
+                render() {
                     return 'hi';
                 },
             },
@@ -54,12 +54,12 @@ describe(defineElement.name, () => {
             tagName: `some-tag-${randomString()}`,
             cleanupCallback({host}) {},
             // @ts-expect-error: render callback must return something
-            renderCallback() {},
+            render() {},
         });
         defineElement()({
             tagName: `some-tag-2-${randomString()}`,
             // returning undefined is cool
-            renderCallback() {
+            render() {
                 return undefined;
             },
         });
@@ -72,7 +72,7 @@ describe(defineElement.name, () => {
             tagName: `some-tag-${randomString()}`,
             cleanupCallback({host}) {},
             // @ts-expect-error: render callback must return something
-            renderCallback() {},
+            render() {},
         });
 
         MyElement.assign({
@@ -110,15 +110,15 @@ describe(defineElement.name, () => {
     it('blocks render callbacks that are async', () => {
         defineElement()({
             tagName: `some-tag-${randomString()}`,
-            // @ts-expect-error: renderCallback cannot be async
+            // @ts-expect-error: render cannot be async
             // eslint-disable-next-line @typescript-eslint/require-await
-            async renderCallback() {
+            async render() {
                 return 'hello';
             },
         });
         defineElement()({
             tagName: `some-tag-2-${randomString()}`,
-            renderCallback() {
+            render() {
                 return 'hello';
             },
         });
@@ -132,7 +132,7 @@ describe(defineElement.name, () => {
             async initCallback({host}) {
                 return undefined;
             },
-            renderCallback() {
+            render() {
                 return 'hello';
             },
         });
@@ -141,7 +141,7 @@ describe(defineElement.name, () => {
             initCallback({host}) {
                 return undefined;
             },
-            renderCallback() {
+            render() {
                 return 'hello';
             },
         });
@@ -154,7 +154,7 @@ describe(defineElement.name, () => {
             initCallback({host}) {
                 acceptHost(host);
             },
-            renderCallback({host}) {
+            render({host}) {
                 acceptHost(host);
 
                 return '';
@@ -170,7 +170,7 @@ describe(defineElement.name, () => {
         const MyElement = defineElement()({
             tagName: 'just-some-element-with-slot-names',
             slotNames: ['yo'],
-            renderCallback() {
+            render() {
                 return 'hi';
             },
         });

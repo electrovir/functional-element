@@ -2,7 +2,7 @@ import {defineElementNoInputs, html, onResize} from '../index.js';
 
 export const MyWithOnResize = defineElementNoInputs({
     tagName: 'my-with-on-resize',
-    renderCallback() {
+    render() {
         return html`
             <span
                 ${onResize((entry) => {

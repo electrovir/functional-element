@@ -12,7 +12,7 @@ describe(assertDeclarativeElementDefinition.name, () => {
             inputs: [
                 defineElement()({
                     tagName: 'test-thing-984451',
-                    renderCallback() {
+                    render() {
                         return nothing;
                     },
                 }),
@@ -24,7 +24,7 @@ describe(assertDeclarativeElementDefinition.name, () => {
             inputs: [
                 defineElementNoInputs({
                     tagName: 'test-thing-158685',
-                    renderCallback() {
+                    render() {
                         return nothing;
                     },
                 }),

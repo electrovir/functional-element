@@ -68,7 +68,7 @@ export const ViraDropdownItem = defineViraElement<{
                 ${viraBorders['vira-form-input-radius'].value} 0 0;
         }
     `,
-    renderCallback({inputs}) {
+    render({inputs}) {
         return html`
             <div class="option">
                 <${ViraIcon.assign({icon: Check24Icon})}></${ViraIcon}>

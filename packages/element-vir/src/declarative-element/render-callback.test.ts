@@ -40,7 +40,7 @@ describe('RenderParams', () => {
                 testEventName: defineElementEvent<number>(),
                 testEventName2: defineElementEvent<number>(),
             },
-            renderCallback({events, state, updateState, cssVars}) {
+            render({events, state, updateState, cssVars}) {
                 if (state.myNumber == undefined) {
                     updateState({myNumber: new Observable({defaultValue: 6})});
                 }
@@ -116,7 +116,7 @@ describe('UpdateStateCallback', () => {
         const customElement = defineElementNoInputs({
             tagName: 'custom-element-for-testing-update-state-callback-type',
             stateInitStatic: stateInit,
-            renderCallback({state}) {
+            render({state}) {
                 acceptStateFromElementDefinition(state);
 
                 return 'hi';

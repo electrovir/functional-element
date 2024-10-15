@@ -48,7 +48,7 @@ export type DeclarativeElementInit<
      * then passed to the styles property, which must be a callback to take advantage of these.
      */
     cssVars?: CssVarsInitMap<TagName, CssVarKeys>;
-    /** Called as part of the first renderCallback call, before the first renderCallback call. */
+    /** Called as part of the first render call, before the first render call. */
     initCallback?: InitCallback<
         TagName,
         Inputs,
@@ -58,7 +58,7 @@ export type DeclarativeElementInit<
         CssVarKeys,
         SlotNames
     >;
-    renderCallback: RenderCallback<
+    render: RenderCallback<
         TagName,
         Inputs,
         StateInit,

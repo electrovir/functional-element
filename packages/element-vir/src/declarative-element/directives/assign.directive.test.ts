@@ -8,7 +8,7 @@ import {assign} from './assign.directive.js';
 describe(assign.name, () => {
     const SampleElementDefinition = defineElement<{stuff: string}>()({
         tagName: 'sample-element',
-        renderCallback() {
+        render() {
             return '';
         },
     });
