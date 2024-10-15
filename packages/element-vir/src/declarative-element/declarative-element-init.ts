@@ -49,7 +49,7 @@ export type DeclarativeElementInit<
      */
     cssVars?: CssVarsInitMap<TagName, CssVarKeys>;
     /** Called as part of the first render call, before the first render call. */
-    initCallback?: InitCallback<
+    init?: InitCallback<
         TagName,
         Inputs,
         StateInit,

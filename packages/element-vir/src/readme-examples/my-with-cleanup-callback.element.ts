@@ -5,7 +5,7 @@ export const MyWithAssignmentCleanupCallback = defineElementNoInputs({
     stateInitStatic: {
         intervalId: undefined as undefined | number,
     },
-    initCallback: ({updateState}) => {
+    init: ({updateState}) => {
         updateState({
             intervalId: window.setInterval(() => console.info('hi'), 1000),
         });

@@ -598,7 +598,7 @@ describe(asyncProp.name, () => {
                     },
                 }),
             },
-            initCallback({state, inputs}) {
+            init({state, inputs}) {
                 state.myProp.update(inputs);
             },
             render({state}) {

@@ -26,7 +26,7 @@ describe(defineElementNoInputs.name, () => {
         defineElementNoInputs({
             tagName: `some-tag-${randomString()}`,
             // render callback must return something
-            initCallback() {
+            init() {
                 return undefined;
             },
             // @ts-expect-error: render callback must return something
@@ -84,7 +84,7 @@ describe(defineElementNoInputs.name, () => {
         const MyElement = defineElementNoInputs({
             tagName: `some-tag-${randomString()}`,
             // render callback must return something
-            initCallback({host}) {
+            init({host}) {
                 acceptHost(host);
                 return undefined;
             },

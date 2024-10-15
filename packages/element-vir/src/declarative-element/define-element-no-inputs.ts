@@ -312,10 +312,10 @@ export function defineElementNoInputs<
 
                 const renderParams = this.createRenderParams();
 
-                if (!this._initCalled && init.initCallback) {
+                if (!this._initCalled && init.init) {
                     this._initCalled = true;
-                    if ((init.initCallback(renderParams) as any) instanceof Promise) {
-                        throw new TypeError('initCallback cannot be asynchronous');
+                    if ((init.init(renderParams) as any) instanceof Promise) {
+                        throw new TypeError('init cannot be asynchronous');
                     }
                 }
 
@@ -348,11 +348,11 @@ export function defineElementNoInputs<
 
         public override connectedCallback(): void {
             super.connectedCallback();
-            if (this._hasRendered && !this._initCalled && init.initCallback) {
+            if (this._hasRendered && !this._initCalled && init.init) {
                 this._initCalled = true;
                 const renderParams = this.createRenderParams();
-                if ((init.initCallback(renderParams) as any) instanceof Promise) {
-                    throw new TypeError(`initCallback in '${init.tagName}' cannot be asynchronous`);
+                if ((init.init(renderParams) as any) instanceof Promise) {
+                    throw new TypeError(`init in '${init.tagName}' cannot be asynchronous`);
                 }
             }
         }

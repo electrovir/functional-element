@@ -97,7 +97,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
             max-width: min(400px, 40%);
         }
     `,
-    initCallback({host, state}) {
+    init({host, state}) {
         setTimeout(async () => {
             await scrollNav(host, extractSearchQuery(state.currentRoute.paths), state.currentRoute);
         }, 500);

@@ -203,7 +203,7 @@ export const ViraDropdown = defineViraElement<
         updateState({showPopUpResult: undefined});
         state.popUpManager.destroy();
     },
-    initCallback({state, updateState, host, inputs, dispatch, events}) {
+    init({state, updateState, host, inputs, dispatch, events}) {
         state.popUpManager.listen(HidePopUpEvent, () => {
             updateState({showPopUpResult: undefined});
             if (!inputs.isDisabled) {

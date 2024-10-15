@@ -129,7 +129,7 @@ describe(defineElement.name, () => {
             tagName: `some-tag-${randomString()}`,
             // init callback does not need to return something
             // eslint-disable-next-line @typescript-eslint/require-await
-            async initCallback({host}) {
+            async init({host}) {
                 return undefined;
             },
             render() {
@@ -138,7 +138,7 @@ describe(defineElement.name, () => {
         });
         defineElement()({
             tagName: `some-tag-2-${randomString()}`,
-            initCallback({host}) {
+            init({host}) {
                 return undefined;
             },
             render() {
@@ -151,7 +151,7 @@ describe(defineElement.name, () => {
         const MyElement = defineElement()({
             tagName: `some-tag-${randomString()}`,
             // init callback does not need to return something
-            initCallback({host}) {
+            init({host}) {
                 acceptHost(host);
             },
             render({host}) {
