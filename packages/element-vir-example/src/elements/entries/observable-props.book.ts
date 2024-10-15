@@ -56,10 +56,10 @@ const VirObservablesTestChild = defineElement<{observableProp: typeof myObservab
 export const observablePropInputTestPage = defineBookPage({
     title: 'observable prop input',
     parent: undefined,
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         defineExample({
             title: 'test',
-            renderCallback() {
+            render() {
                 return html`
                     <${VirObservablesTestParent}></${VirObservablesTestParent}>
                 `;

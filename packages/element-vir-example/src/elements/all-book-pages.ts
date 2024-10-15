@@ -5,7 +5,7 @@ import {oldTestAppPage} from './entries/old-test-app/vir-old-test-app.element.js
 import {testCarouselPage} from './entries/test-carousel.element.book.js';
 import {undefinedInterpolationBookPage} from './entries/undefined-interpolation.book.js';
 
-export const allBookEntries = [
+export const allBookPages = [
     multipleDirectivesBookPage,
     multipleSlotsPage,
     testCarouselPage,

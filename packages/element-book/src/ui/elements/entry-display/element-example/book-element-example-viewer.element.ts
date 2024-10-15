@@ -24,8 +24,8 @@ export const BookElementExampleViewer = defineBookElement<{
             if (
                 /** This is a check to make sure the input entry _does_ match the expected type. */
                 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                !inputs.elementExampleNode.entry.renderCallback ||
-                typeof inputs.elementExampleNode.entry.renderCallback === 'string'
+                !inputs.elementExampleNode.entry.render ||
+                typeof inputs.elementExampleNode.entry.render === 'string'
             ) {
                 throw new Error(
                     `Failed to render example '${inputs.elementExampleNode.entry.title}': renderCallback is not a function`,
@@ -39,7 +39,7 @@ export const BookElementExampleViewer = defineBookElement<{
                 });
             }
 
-            const output = inputs.elementExampleNode.entry.renderCallback({
+            const output = inputs.elementExampleNode.entry.render({
                 state,
                 updateState,
                 controls: inputs.currentPageControls,

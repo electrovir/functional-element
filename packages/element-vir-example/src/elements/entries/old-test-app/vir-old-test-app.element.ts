@@ -185,7 +185,7 @@ const ChildThatShouldNotReRender = defineElementNoInputs({
 export const oldTestAppPage = defineBookPage({
     title: 'Old Tests',
     parent: undefined,
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         defineExample({
             title: VirOldTestApp.tagName,
             styles: css`
@@ -193,7 +193,7 @@ export const oldTestAppPage = defineBookPage({
                     max-width: 100%;
                 }
             `,
-            renderCallback() {
+            render() {
                 return html`
                     <${VirOldTestApp}></${VirOldTestApp}>
                 `;

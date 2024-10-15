@@ -5,11 +5,6 @@ import {LoaderAnimated24Icon, StatusFailure24Icon} from '../icons/index.js';
 import {defineViraElement} from './define-vira-element.js';
 import {ViraIcon} from './vira-icon.element.js';
 
-export enum ViraImageSlotNameEnum {
-    Loading = 'loading',
-    Error = 'error',
-}
-
 /**
  * An `<img>` element wrapper that handles size constraints and includes slots for loading and error
  * indicators.
@@ -35,6 +30,10 @@ export const ViraImage = defineViraElement<{
     hostClasses: {
         'vira-image-height-constrained': ({inputs}) => inputs.dominantDimension === 'height',
     },
+    slotNames: [
+        'loading',
+        'error',
+    ],
     events: {
         imageLoad: defineElementEvent<void>(),
         imageError: defineElementEvent<unknown>(),
@@ -98,7 +97,7 @@ export const ViraImage = defineViraElement<{
          */
         erroredUrls: {} as Readonly<{[url: string]: true}>,
     },
-    renderCallback({inputs, state, updateState, dispatch, events}) {
+    renderCallback({inputs, state, updateState, dispatch, events, slotNames}) {
         /**
          * Saved off for use in the image listeners. This is used to eliminate race conditions
          * between image events and the input URL changing.
@@ -107,14 +106,14 @@ export const ViraImage = defineViraElement<{
 
         const statusTemplate = state.erroredUrls[imageUrl]
             ? html`
-                  <slot class="status-wrapper" name=${ViraImageSlotNameEnum.Error}>
+                  <slot class="status-wrapper" name=${slotNames.error}>
                       <${ViraIcon.assign({icon: StatusFailure24Icon})} class="error"></${ViraIcon}>
                   </slot>
               `
             : state.loadedUrls[imageUrl]
               ? undefined
               : html`
-                    <slot class="status-wrapper" name=${ViraImageSlotNameEnum.Loading}>
+                    <slot class="status-wrapper" name=${slotNames.loading}>
                         <${ViraIcon.assign({icon: LoaderAnimated24Icon})}></${ViraIcon}>
                     </slot>
                 `;

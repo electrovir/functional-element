@@ -14,6 +14,7 @@ import {
     BookFullRoute,
     defaultBookFullRoute,
     extractSearchQuery,
+    type ValidBookPaths,
 } from '../../../routing/book-routing.js';
 import {ColorTheme, colorThemeCssVars, setThemeCssVars} from '../../color-theme/color-theme.js';
 import {ThemeConfig, createTheme} from '../../color-theme/create-color-theme.js';
@@ -29,6 +30,12 @@ import {GlobalValues} from './global-values.js';
 
 type ColorThemeState = {config: ThemeConfig | undefined; theme: ColorTheme};
 
+/**
+ * The element-book app itself. Instantiate one of these where you want your element-book pages to
+ * render. Make sure to also provide an array of pages to actually render!
+ *
+ * @category Main
+ */
 export const ElementBookApp = defineElement<ElementBookConfig>()({
     tagName: 'element-book-app',
     events: {
@@ -44,7 +51,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
         } as ColorThemeState,
         treeBasedControls: undefined as
             | {
-                  entries: ElementBookConfig['entries'];
+                  pages: ElementBookConfig['pages'];
                   lastGlobalInputs: GlobalValues;
                   controls: ControlsWrapper;
               }
@@ -163,7 +170,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
                 inputs.elementBookRoutePaths &&
                 !check.jsonEquals(inputs.elementBookRoutePaths, state.currentRoute.paths)
             ) {
-                updateRoutes({paths: inputs.elementBookRoutePaths as any});
+                updateRoutes({paths: inputs.elementBookRoutePaths as ValidBookPaths});
             }
 
             if (inputs.internalRouterConfig?.useInternalRouter && !state.router) {
@@ -196,13 +203,13 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
             const debug: boolean = inputs._debug ?? false;
 
             const originalTree = createBookTreeFromEntries({
-                entries: inputs.entries,
+                entries: inputs.pages,
                 debug,
             });
 
             if (
                 !state.treeBasedControls ||
-                state.treeBasedControls.entries !== inputs.entries ||
+                state.treeBasedControls.pages !== inputs.pages ||
                 state.treeBasedControls.lastGlobalInputs !== inputs.globalValues
             ) {
                 if (inputs._debug) {
@@ -210,7 +217,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
                 }
                 updateState({
                     treeBasedControls: {
-                        entries: inputs.entries,
+                        pages: inputs.pages,
                         lastGlobalInputs: inputs.globalValues ?? {},
                         controls: updateTreeControls(originalTree.tree, {
                             children: state.treeBasedControls?.controls.children,

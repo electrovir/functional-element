@@ -63,7 +63,7 @@ To use already defined elements (like the example above), they must be interpola
 
 ```TypeScript
 import {defineElementNoInputs, html} from 'element-vir';
-import {MySimple} from './my-simple.element';
+import {MySimple} from './my-simple.element.js';
 
 export const MyApp = defineElementNoInputs({
     tagName: 'my-app',
@@ -117,7 +117,7 @@ Declarative element definitions can be used in the `css` tagged template just li
 
 ```TypeScript
 import {css, defineElementNoInputs, html} from 'element-vir';
-import {MySimple} from './my-simple.element';
+import {MySimple} from './my-simple.element.js';
 
 export const MyWithStylesAndInterpolatedSelector = defineElementNoInputs({
     tagName: 'my-with-styles-and-interpolated-selector',
@@ -199,7 +199,7 @@ Use the `assign` directive to assign values to child custom elements inputs:
 
 ```TypeScript
 import {defineElementNoInputs, html} from 'element-vir';
-import {MyWithInputs} from './my-with-inputs.element';
+import {MyWithInputs} from './my-with-inputs.element.js';
 
 export const MyWithAssignment = defineElementNoInputs({
     tagName: 'my-with-assignment',
@@ -260,6 +260,7 @@ To dispatch an event, grab `dispatch` and `events` from `renderCallback`'s param
 <!-- example-link: src/readme-examples/my-with-events.element.ts -->
 
 ```TypeScript
+import {randomInteger} from '@augment-vir/common';
 import {defineElementEvent, defineElementNoInputs, html, listen} from 'element-vir';
 
 export const MyWithEvents = defineElementNoInputs({
@@ -271,7 +272,11 @@ export const MyWithEvents = defineElementNoInputs({
     renderCallback({dispatch, events}) {
         return html`
             <button ${listen('click', () => dispatch(new events.logoutClick()))}>log out</button>
-            <button ${listen('click', () => dispatch(new events.randomNumber(Math.random())))}>
+            <button
+                ${listen('click', () =>
+                    dispatch(new events.randomNumber(randomInteger({min: 0, max: 1_000_000}))),
+                )}
+            >
                 generate random number
             </button>
         `;
@@ -287,7 +292,7 @@ Use the `listen` directive to listen to events emitted by your custom elements:
 
 ```TypeScript
 import {defineElementNoInputs, html, listen} from 'element-vir';
-import {MyWithEvents} from './my-with-events.element';
+import {MyWithEvents} from './my-with-events.element.js';
 
 export const MyWithEventListening = defineElementNoInputs({
     tagName: 'my-with-event-listening',
@@ -332,8 +337,9 @@ Dispatching a custom event and listening to a custom event is the same as doing 
 <!-- example-link: src/readme-examples/my-with-custom-events.element.ts -->
 
 ```TypeScript
+import {randomInteger} from '@augment-vir/common';
 import {defineElementNoInputs, html, listen} from 'element-vir';
-import {MyCustomActionEvent} from './my-custom-action.event';
+import {MyCustomActionEvent} from './my-custom-action.event.js';
 
 export const MyWithCustomEvents = defineElementNoInputs({
     tagName: 'my-with-custom-events',
@@ -346,7 +352,7 @@ export const MyWithCustomEvents = defineElementNoInputs({
             >
                 <div
                     ${listen('click', () => {
-                        dispatch(new MyCustomActionEvent(Math.random()));
+                        dispatch(new MyCustomActionEvent(randomInteger({min: 0, max: 1_000_000})));
                     })}
                 ></div>
             </div>
@@ -421,7 +427,7 @@ To apply a host class in a consumer, access the child element's `.hostClasses` p
 
 ```TypeScript
 import {defineElementNoInputs, html} from 'element-vir';
-import {MyWithHostClassDefinition} from './my-with-host-class-definition.element';
+import {MyWithHostClassDefinition} from './my-with-host-class-definition.element.js';
 
 export const MyWithHostClassUsage = defineElementNoInputs({
     tagName: 'my-with-host-class-usage',

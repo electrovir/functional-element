@@ -171,7 +171,7 @@ describe('test elements', () => {
         });
 
         assert.throws(() =>
-            // @ts-expect-error: missing renderCallback
+            // @ts-expect-error: missing render
             defineElementNoInputs({
                 tagName: 'element-vir-test-element-no-render',
             }),

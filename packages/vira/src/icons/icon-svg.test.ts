@@ -3,7 +3,7 @@ import {describe, it, testWeb} from '@augment-vir/test';
 import Color from 'colorjs.io';
 import {html} from 'element-vir';
 import {rgbCssColorFormat} from '../styles/color.js';
-import {ColorTypeEnum, extractIconColor} from './icon-color.test-helper.js';
+import {ColorType, extractIconColor} from './icon-color.test-helper.js';
 import {createColoredIcon} from './icon-svg.js';
 import {Element24Icon} from './icon-svgs/element-24.icon.js';
 
@@ -25,7 +25,7 @@ describe(createColoredIcon.name, () => {
         const pathElement = rendered.querySelector('path');
         assert.instanceOf(pathElement, SVGPathElement);
 
-        const appliedColor = extractIconColor(pathElement, ColorTypeEnum.Stroke);
+        const appliedColor = extractIconColor(pathElement, ColorType.Stroke);
 
         assert.strictEquals(appliedColor, testColor.toString({format: rgbCssColorFormat}));
     });

@@ -9,10 +9,10 @@ export const viraIconBookPage = defineBookPage({
     descriptionParagraphs: [
         "See the 'Icons' page for a list of all included icons.",
     ],
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         defineExample({
             title: 'basic',
-            renderCallback() {
+            render() {
                 return html`
                     <${ViraIcon.assign({icon: Element24Icon})}></${ViraIcon}>
                 `;
@@ -20,7 +20,7 @@ export const viraIconBookPage = defineBookPage({
         });
         defineExample({
             title: 'using createColoredIcon',
-            renderCallback() {
+            render() {
                 return html`
                     <${ViraIcon.assign({
                         icon: createColoredIcon(Element24Icon, {
@@ -39,7 +39,7 @@ export const viraIconBookPage = defineBookPage({
                     border: 1px solid #eee;
                 }
             `,
-            renderCallback() {
+            render() {
                 return html`
                     <${ViraIcon.assign({
                         icon: createColoredIcon(Element24Icon, {

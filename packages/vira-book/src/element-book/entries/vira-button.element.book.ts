@@ -1,6 +1,6 @@
-import {BookPageControlTypeEnum, defineBookPage} from 'element-book';
+import {BookPageControlType, defineBookPage} from 'element-book';
 import {CSSResult, css, html, unsafeCSS} from 'element-vir';
-import {Options24Icon, ViraButton, ViraButtonStyleEnum} from 'vira';
+import {Options24Icon, ViraButton, ViraButtonStyle} from 'vira';
 import {elementsBookPage} from '../elements.book.js';
 
 export const viraButtonBookPage = defineBookPage({
@@ -11,23 +11,23 @@ export const viraButtonBookPage = defineBookPage({
     ],
     controls: {
         'Primary color': {
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: ViraButton.cssVars['vira-button-primary-color'].default,
         },
         'Secondary color': {
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: ViraButton.cssVars['vira-button-secondary-color'].default,
         },
         'Hover color': {
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: ViraButton.cssVars['vira-button-primary-hover-color'].default,
         },
         'Active color': {
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: ViraButton.cssVars['vira-button-primary-active-color'].default,
         },
     },
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         function defineViraButtonExample({
             title,
             styles: inputStyles,
@@ -42,7 +42,7 @@ export const viraButtonBookPage = defineBookPage({
             defineExample({
                 title,
                 styles,
-                renderCallback({controls}) {
+                render({controls}) {
                     const styles = css`
                         ${ViraButton.cssVars['vira-button-primary-color'].name}: ${unsafeCSS(
                             controls['Primary color'] || 'inherit',
@@ -75,7 +75,7 @@ export const viraButtonBookPage = defineBookPage({
         defineViraButtonExample({
             title: 'outline',
             inputs: {
-                buttonStyle: ViraButtonStyleEnum.Outline,
+                buttonStyle: ViraButtonStyle.Outline,
             },
         });
         defineViraButtonExample({
@@ -111,7 +111,7 @@ export const viraButtonBookPage = defineBookPage({
                     ${ViraButton.cssVars['vira-button-primary-active-color'].name}: yellow;
                 }
             `,
-            renderCallback() {
+            render() {
                 return html`
                     <${ViraButton.assign({
                         text: 'hello',

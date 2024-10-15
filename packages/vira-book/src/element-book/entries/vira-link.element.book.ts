@@ -1,4 +1,4 @@
-import {BookPageControlTypeEnum, defineBookPage, definePageControl} from 'element-book';
+import {BookPageControlType, defineBookPage, definePageControl} from 'element-book';
 import {css, html, unsafeCSS} from 'element-vir';
 import {ViraLink} from 'vira';
 import {elementsBookPage} from '../elements.book.js';
@@ -11,15 +11,15 @@ export const viraLinkBookPage = defineBookPage({
     ],
     controls: {
         'CSS Color': definePageControl({
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: '',
         }),
         'Hover color': definePageControl({
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: '',
         }),
     },
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         function defineLinkExample({
             title,
             inputs,
@@ -29,7 +29,7 @@ export const viraLinkBookPage = defineBookPage({
         }) {
             defineExample({
                 title,
-                renderCallback({controls}) {
+                render({controls}) {
                     const styles = css`
                         ${ViraLink.cssVars['vira-link-hover-color'].name}: ${unsafeCSS(
                             controls['Hover color'] || 'inherit',

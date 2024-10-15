@@ -8,10 +8,10 @@ export const testCarouselPage = defineBookPage({
     descriptionParagraphs: [
         'At one point this had major scroll lag issues. Try scrolling horizontally to test.',
     ],
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         defineExample({
             title: 'test',
-            renderCallback() {
+            render() {
                 return html`
                     <${TestCarouselWrapper}></${TestCarouselWrapper}>
                 `;

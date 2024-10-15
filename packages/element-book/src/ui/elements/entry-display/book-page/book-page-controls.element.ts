@@ -6,7 +6,7 @@ import {Options24Icon, ViraIcon, ViraInput} from 'vira';
 import {
     BookPageControl,
     BookPageControlInit,
-    BookPageControlTypeEnum,
+    BookPageControlType,
     BookPageControlsValues,
     isControlInitType,
 } from '../../../../data/book-entry/book-page/book-page-controls.js';
@@ -87,7 +87,7 @@ export const BookPageControls = defineBookElement<{
                 ],
                 index,
             ) => {
-                if (controlInit.controlType === BookPageControlTypeEnum.Hidden) {
+                if (controlInit.controlType === BookPageControlType.Hidden) {
                     return '';
                 }
 
@@ -142,9 +142,9 @@ function createControlInput(
     controlInit: BookPageControlInit<any>,
     valueChange: (newValue: Values<BookPageControlsValues>) => void,
 ) {
-    if (isControlInitType(controlInit, BookPageControlTypeEnum.Hidden)) {
+    if (isControlInitType(controlInit, BookPageControlType.Hidden)) {
         return '';
-    } else if (isControlInitType(controlInit, BookPageControlTypeEnum.Checkbox)) {
+    } else if (isControlInitType(controlInit, BookPageControlType.Checkbox)) {
         return html`
             <input
                 type="checkbox"
@@ -156,7 +156,7 @@ function createControlInput(
                 })}
             />
         `;
-    } else if (isControlInitType(controlInit, BookPageControlTypeEnum.Color)) {
+    } else if (isControlInitType(controlInit, BookPageControlType.Color)) {
         return html`
             <input
                 type="color"
@@ -168,7 +168,7 @@ function createControlInput(
                 })}
             />
         `;
-    } else if (isControlInitType(controlInit, BookPageControlTypeEnum.Text)) {
+    } else if (isControlInitType(controlInit, BookPageControlType.Text)) {
         return html`
             <${ViraInput.assign({
                 value: String(value),
@@ -180,7 +180,7 @@ function createControlInput(
                 })}
             ></${ViraInput}>
         `;
-    } else if (isControlInitType(controlInit, BookPageControlTypeEnum.Number)) {
+    } else if (isControlInitType(controlInit, BookPageControlType.Number)) {
         return html`
             <input
                 type="number"
@@ -192,7 +192,7 @@ function createControlInput(
                 })}
             />
         `;
-    } else if (isControlInitType(controlInit, BookPageControlTypeEnum.Dropdown)) {
+    } else if (isControlInitType(controlInit, BookPageControlType.Dropdown)) {
         return html`
             <select
                 .value=${value}

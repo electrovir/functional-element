@@ -1,5 +1,5 @@
 import {mapObjectValues} from '@augment-vir/common';
-import {BookPageControlTypeEnum, defineBookPage} from 'element-book';
+import {BookPageControlType, defineBookPage} from 'element-book';
 import {CSSResult, css, html, listen} from 'element-vir';
 import {Element24Icon, ViraInput, ViraInputType} from 'vira';
 import {elementsBookPage} from '../elements.book.js';
@@ -13,27 +13,27 @@ export const viraInputBookPage = defineBookPage({
     ],
     controls: {
         'Text color': {
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: ViraInput.cssVars['vira-input-text-color'].default,
         },
         'Placeholder color': {
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: ViraInput.cssVars['vira-input-placeholder-color'].default,
         },
         'Border color': {
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: ViraInput.cssVars['vira-input-border-color'].default,
         },
         'Focus color': {
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: ViraInput.cssVars['vira-input-focus-border-color'].default,
         },
         'Selection color': {
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: ViraInput.cssVars['vira-input-text-selection-color'].default,
         },
     } as const satisfies NonNullable<Parameters<typeof defineBookPage>[0]['controls']>,
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         type Example = {
             styles?: CSSResult;
             title: string;
@@ -49,7 +49,7 @@ export const viraInputBookPage = defineBookPage({
                 stateInitStatic: {
                     value: inputs.value,
                 },
-                renderCallback({state, updateState, controls}) {
+                render({state, updateState, controls}) {
                     const cssVarControlValues = {
                         [String(ViraInput.cssVars['vira-input-text-color'].name)]:
                             controls['Text color'],

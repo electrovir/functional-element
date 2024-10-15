@@ -1,6 +1,6 @@
 import {
     BookPage,
-    BookPageControlTypeEnum,
+    BookPageControlType,
     defineBookPage,
     defineBookPageWithGlobals,
     definePageControl,
@@ -14,11 +14,11 @@ const parentPage1 = defineBookPageWithGlobals<{
     parent: undefined,
     controls: {
         'Parent Control': definePageControl({
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: '#33ccff',
         }),
         'Hidden control': definePageControl({
-            controlType: BookPageControlTypeEnum.Hidden,
+            controlType: BookPageControlType.Hidden,
             initValue: new RegExp('this can be anything'),
         }),
     },
@@ -30,11 +30,11 @@ function createExamplePage(index: number, parent: BookPage) {
     const newPage = defineBookPage({
         title: `test ${index}`,
         parent,
-        elementExamplesCallback({defineExample}) {
+        defineExamples({defineExample}) {
             new Array(20).fill(0).forEach((value, exampleIndex) => {
                 defineExample({
                     title: `example ${index} ${exampleIndex}`,
-                    renderCallback() {
+                    render() {
                         return 'element example here';
                     },
                 });
@@ -52,16 +52,16 @@ const duplicateErrorPage = defineBookPage({
         'This is the description. It has stuff in it.',
         'Yay stuff!',
     ],
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         defineExample({
             title: 'example 1',
-            renderCallback() {
+            render() {
                 return 'hi';
             },
         });
         defineExample({
             title: 'example 2',
-            renderCallback() {
+            render() {
                 return 'hi';
             },
         });
@@ -72,15 +72,15 @@ const testPage3 = defineBookPage({
     controls: {
         thing: definePageControl({
             initValue: 'there',
-            controlType: BookPageControlTypeEnum.Text,
+            controlType: BookPageControlType.Text,
         }),
         thing2: definePageControl({
             initValue: false,
-            controlType: BookPageControlTypeEnum.Checkbox,
+            controlType: BookPageControlType.Checkbox,
         }),
         thing3: definePageControl({
             initValue: 'hello',
-            controlType: BookPageControlTypeEnum.Dropdown,
+            controlType: BookPageControlType.Dropdown,
             options: [
                 'hello',
                 'hi',
@@ -89,10 +89,10 @@ const testPage3 = defineBookPage({
         }),
     },
     parent: parentPage1,
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         defineExample({
             title: 'example 3 1',
-            renderCallback() {
+            render() {
                 return 'hi';
             },
         });
@@ -104,7 +104,7 @@ const testPage3 = defineBookPage({
                     height: 20px;);
                 }
             `,
-            renderCallback({controls}) {
+            render({controls}) {
                 const colorControlStyles = css`
                     background-color: ${unsafeCSS(controls['Parent Control'])};
                 `;
@@ -120,20 +120,20 @@ const testPage3 = defineBookPage({
         });
         defineExample({
             title: 'example with error',
-            renderCallback() {
+            render() {
                 return `broken`;
             },
         });
         defineExample({
             title: 'example with error',
-            renderCallback() {
+            render() {
                 return `broken`;
             },
         });
     },
 });
 
-export const entries = [
+export const pages = [
     parentPage1,
     createExamplePage(0, parentPage2),
     subPage,
@@ -144,4 +144,4 @@ export const entries = [
     parentPage2,
 ];
 
-console.info({entries});
+console.info({pages});

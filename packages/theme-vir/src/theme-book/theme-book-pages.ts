@@ -1,13 +1,13 @@
 import {check} from '@augment-vir/assert';
 import {getEnumValues, getObjectTypedEntries} from '@augment-vir/common';
-import {BookEntry, defineBookPage} from 'element-book';
+import {defineBookPage, type BookPage} from 'element-book';
 import {html} from 'element-vir';
 import {HeadingLevel} from '../create-theme/theme-options.js';
 import {Theme} from '../create-theme/theme.js';
 
-export function createThemeBookEntries<TagName extends string>(
+export function createThemeBookPages<TagName extends string>(
     theme: Readonly<Theme<TagName>>,
-): ReadonlyArray<Readonly<BookEntry>> {
+): ReadonlyArray<Readonly<BookPage>> {
     const elementsBookPage = defineBookPage({
         title: 'elements',
         parent: undefined,
@@ -26,10 +26,10 @@ export function createThemeBookEntries<TagName extends string>(
                 return defineBookPage({
                     title: themeElement.tagName,
                     parent: elementsBookPage,
-                    elementExamplesCallback({defineExample}) {
+                    defineExamples({defineExample}) {
                         defineExample({
                             title: 'bold',
-                            renderCallback() {
+                            render() {
                                 return html`
                                     <${themeElement}>This is ${elementName}</${themeElement}>
                                 `;
@@ -45,11 +45,11 @@ export function createThemeBookEntries<TagName extends string>(
         defineBookPage({
             title: theme.elements.heading.tagName,
             parent: elementsBookPage,
-            elementExamplesCallback({defineExample}) {
+            defineExamples({defineExample}) {
                 getEnumValues(HeadingLevel).forEach((headingLevel) => {
                     defineExample({
                         title: headingLevel,
-                        renderCallback() {
+                        render() {
                             return html`
                                 <${theme.elements.heading.assign({
                                     headingLevel,

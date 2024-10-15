@@ -3,8 +3,18 @@ import {BookEntryType} from './book-entry-type.js';
 import {BookElementExample, BookPage} from './book-page/book-page.js';
 import {BookRoot} from './book-root.js';
 
+/**
+ * All possible book entries.
+ *
+ * @category Internal
+ */
 export type BookEntry = BookPage | BookRoot | BookElementExample;
 
+/**
+ * Check if the input is a book entry of the given type.
+ *
+ * @category Internal
+ */
 export function isBookEntry<const SpecificType extends BookEntryType>(
     entry: unknown,
     entryType: SpecificType,

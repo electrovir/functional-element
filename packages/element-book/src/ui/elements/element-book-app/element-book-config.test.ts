@@ -7,13 +7,13 @@ describe('ElementBookConfig', () => {
     it('prevents router config and paths in the same config', () => {
         // it's fine with elementBookRoutePaths and everything else
         acceptsElementBookConfig({
-            entries: [],
+            pages: [],
             elementBookRoutePaths: [],
             themeColor: 'blue',
         });
         // it's fine with elementBookRoutePaths and everything else
         acceptsElementBookConfig({
-            entries: [],
+            pages: [],
             internalRouterConfig: {
                 useInternalRouter: true,
             },
@@ -22,7 +22,7 @@ describe('ElementBookConfig', () => {
         acceptsElementBookConfig(
             // @ts-expect-error: if they're combined we get a TS error
             {
-                entries: [],
+                pages: [],
                 internalRouterConfig: {
                     useInternalRouter: true,
                 },

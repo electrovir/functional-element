@@ -1,13 +1,7 @@
 import {randomString} from '@augment-vir/common';
 import {defineBookPage} from 'element-book';
 import {CSSResult, TemplateResult, css, html, listen} from 'element-vir';
-import {
-    LoaderAnimated24Icon,
-    StatusFailure24Icon,
-    ViraIcon,
-    ViraImage,
-    ViraImageSlotNameEnum,
-} from 'vira';
+import {LoaderAnimated24Icon, StatusFailure24Icon, ViraIcon, ViraImage} from 'vira';
 import {elementsBookPage} from '../elements.book.js';
 
 export const viraImageBookPage = defineBookPage({
@@ -17,7 +11,7 @@ export const viraImageBookPage = defineBookPage({
         'An `<img>` element wrapper that handles size constraints and includes slots for loading and error indicators.',
         'Use CSS properties to constrain the image. In particular, set `min-height` and `min-width` on this to control the size of the loader and error slots.',
     ],
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         const examples: ReadonlyArray<{
             title: string;
             inputs: typeof ViraImage.inputsType;
@@ -207,7 +201,7 @@ export const viraImageBookPage = defineBookPage({
                 stateInitStatic: {
                     imageUrl: example.inputs.imageUrl,
                 },
-                renderCallback({state, updateState}) {
+                render({state, updateState}) {
                     return html`
                         <${ViraImage.assign({
                             ...example.inputs,
@@ -225,16 +219,13 @@ export const viraImageBookPage = defineBookPage({
                         >
                             ${example.loadingSlot
                                 ? html`
-                                      <div
-                                          class="slot-wrapper"
-                                          slot=${ViraImageSlotNameEnum.Loading}
-                                      >
+                                      <div class="slot-wrapper" slot=${ViraImage.slotNames.loading}>
                                           ${example.loadingSlot}
                                       </div>
                                   `
                                 : ''}${example.errorSlot
                                 ? html`
-                                      <div class="slot-wrapper" slot=${ViraImageSlotNameEnum.Error}>
+                                      <div class="slot-wrapper" slot=${ViraImage.slotNames.error}>
                                           ${example.errorSlot}
                                       </div>
                                   `

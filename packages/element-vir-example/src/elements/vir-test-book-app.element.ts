@@ -4,7 +4,7 @@ import {
     html,
     requireAllCustomElementsToBeDeclarativeElements,
 } from 'element-vir';
-import {allBookEntries} from './all-book-entries.js';
+import {allBookPages} from './all-book-pages.js';
 
 requireAllCustomElementsToBeDeclarativeElements();
 
@@ -13,7 +13,7 @@ export const VirTestBookApp = defineElementNoInputs({
     renderCallback() {
         return html`
             <${ElementBookApp.assign({
-                entries: allBookEntries,
+                pages: allBookPages,
                 internalRouterConfig: {
                     useInternalRouter: true,
                     basePath: 'element-vir',

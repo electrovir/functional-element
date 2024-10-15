@@ -1,5 +1,5 @@
 import {check} from '@augment-vir/assert';
-import {BookPageControlTypeEnum, defineBookPage, definePageControl} from 'element-book';
+import {BookPageControlType, defineBookPage, definePageControl} from 'element-book';
 import {CSSResult, css, html, listen} from 'element-vir';
 import {Element24Icon, ViraDropdown, ViraDropdownOption, allIconsByName} from 'vira';
 import {dropdownPage} from './vira-dropdown.book.js';
@@ -141,7 +141,7 @@ export const viraDropdownPage = defineBookPage({
     parent: dropdownPage,
     controls: {
         Selected: definePageControl({
-            controlType: BookPageControlTypeEnum.Dropdown,
+            controlType: BookPageControlType.Dropdown,
             initValue: '',
             options: [
                 '',
@@ -149,11 +149,11 @@ export const viraDropdownPage = defineBookPage({
             ],
         }),
         Prefix: definePageControl({
-            controlType: BookPageControlTypeEnum.Text,
+            controlType: BookPageControlType.Text,
             initValue: '',
         }),
         'Force State': definePageControl({
-            controlType: BookPageControlTypeEnum.Dropdown,
+            controlType: BookPageControlType.Dropdown,
             options: [
                 '',
                 'force open',
@@ -162,7 +162,7 @@ export const viraDropdownPage = defineBookPage({
             initValue: '',
         }),
         'Multi Select': definePageControl({
-            controlType: BookPageControlTypeEnum.Dropdown,
+            controlType: BookPageControlType.Dropdown,
             options: [
                 '',
                 'all',
@@ -171,7 +171,7 @@ export const viraDropdownPage = defineBookPage({
             initValue: '',
         }),
         Icon: definePageControl({
-            controlType: BookPageControlTypeEnum.Dropdown,
+            controlType: BookPageControlType.Dropdown,
             initValue: '',
             options: [
                 '',
@@ -179,7 +179,7 @@ export const viraDropdownPage = defineBookPage({
             ],
         }),
         Disabled: definePageControl({
-            controlType: BookPageControlTypeEnum.Dropdown,
+            controlType: BookPageControlType.Dropdown,
             options: [
                 '',
                 'all',
@@ -188,11 +188,11 @@ export const viraDropdownPage = defineBookPage({
             initValue: '',
         }),
         Placeholder: definePageControl({
-            controlType: BookPageControlTypeEnum.Text,
+            controlType: BookPageControlType.Text,
             initValue: 'Select something',
         }),
     },
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         examples.forEach((example) => {
             defineExample({
                 title: example.title,
@@ -200,7 +200,7 @@ export const viraDropdownPage = defineBookPage({
                     selected: example.inputs?.selected || [],
                 },
                 styles: example.customStyle,
-                renderCallback({state, updateState, controls}) {
+                render({state, updateState, controls}) {
                     const finalInputs: typeof ViraDropdown.inputsType = {
                         placeholder:
                             example.inputs && 'placeholder' in example.inputs

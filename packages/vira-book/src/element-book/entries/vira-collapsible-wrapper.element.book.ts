@@ -10,7 +10,7 @@ export const viraCollapsibleBookPage = defineBookPage({
         'A very basic collapsible wrapper element that expands to fit its content with smooth animations. The animations even adapt to dynamic child sizes!',
         'This element does not make any assumptions on styling, all styles are applied by consumers.',
     ],
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         defineExample({
             title: 'stacked examples',
             styles: css`
@@ -24,7 +24,7 @@ export const viraCollapsibleBookPage = defineBookPage({
                 expandedStates: [] as boolean[],
                 showMoreStates: [] as boolean[],
             },
-            renderCallback({updateState, state}) {
+            render({updateState, state}) {
                 return new Array(3).fill(0).map((value, index) => {
                     return html`
                         <${ViraCollapsibleWrapper.assign({
@@ -78,7 +78,7 @@ export const viraCollapsibleBookPage = defineBookPage({
                 expandedStates: [] as boolean[],
                 showMoreStates: [] as boolean[],
             },
-            renderCallback({updateState, state}) {
+            render({updateState, state}) {
                 return new Array(3).fill(0).map((value, index) => {
                     return html`
                         <${ViraCollapsibleWrapper.assign({

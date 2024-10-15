@@ -6,10 +6,10 @@ import {createBookTreeFromEntries} from '../data/book-tree/book-tree.js';
 const page1 = defineBookPage({
     parent: undefined,
     title: 'page 1',
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         defineExample({
             title: 'example 1',
-            renderCallback() {
+            render() {
                 return 'hi';
             },
         });

@@ -9,7 +9,7 @@ import {noNativeFormStyles} from '../styles/native-styles.js';
 import {defineViraElement} from './define-vira-element.js';
 import {ViraIcon} from './vira-icon.element.js';
 
-export enum ViraButtonStyleEnum {
+export enum ViraButtonStyle {
     Default = 'vira-button-default',
     Outline = 'vira-button-outline',
 }
@@ -18,12 +18,11 @@ export const ViraButton = defineViraElement<{
     text?: string;
     icon?: undefined | Pick<ViraIconSvg, 'svgTemplate'>;
     disabled?: boolean | undefined;
-    buttonStyle?: ViraButtonStyleEnum | undefined;
+    buttonStyle?: ViraButtonStyle | undefined;
 }>()({
     tagName: 'vira-button',
     hostClasses: {
-        'vira-button-outline-style': ({inputs}) =>
-            inputs.buttonStyle === ViraButtonStyleEnum.Outline,
+        'vira-button-outline-style': ({inputs}) => inputs.buttonStyle === ViraButtonStyle.Outline,
         'vira-button-disabled': ({inputs}) => !!inputs.disabled,
     },
     cssVars: {

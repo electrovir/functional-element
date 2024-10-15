@@ -11,21 +11,10 @@ export const typeDocConfig: Partial<TypeDocOptions> = {
     entryPoints: [
         indexTsFile,
     ],
-    intentionallyNotExported: [
-        'BaseBookEntry',
-        'BookRoot',
-        'controlValueTypes',
-        'OptionalConfig',
-        'CollapseGlobalValuesType',
-        'CollapseControlsInit',
-        'ColorThemeState',
-        'ValidBookPaths',
-        'ControlsWrapper',
-    ],
+    intentionallyNotExported: [],
     defaultCategory: 'MISSING CATEGORY',
     categoryOrder: [
         'Main',
-        'Type',
         'Internal',
     ],
 };

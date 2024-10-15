@@ -4,11 +4,11 @@ import {html, listen, testId} from 'element-vir';
 export const multipleDirectivesBookPage = defineBookPage({
     title: 'multiple directives',
     parent: undefined,
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         defineExample({
             title: 'with array (does not work)',
             stateInitStatic: {value: 0},
-            renderCallback({state, updateState}) {
+            render({state, updateState}) {
                 return html`
                     <div
                         ${[
@@ -28,7 +28,7 @@ export const multipleDirectivesBookPage = defineBookPage({
         defineExample({
             title: 'with extra template',
             stateInitStatic: {value: 0},
-            renderCallback({state, updateState}) {
+            render({state, updateState}) {
                 const directives = html`
                     ${listen('click', () => {
                         updateState({value: state.value + 1});

@@ -1,11 +1,16 @@
 import {PartialWithUndefined} from '@augment-vir/common';
 import {RequireExactlyOne} from 'type-fest';
-import {BookEntry} from '../../../data/book-entry/book-entry.js';
+import type {BookPage} from '../../../data/book-entry/book-page/book-page.js';
 import {GlobalValues} from './global-values.js';
 
+/**
+ * Full configuration for an element-book app.
+ *
+ * @category Type
+ */
 export type ElementBookConfig = {
-    /** All element-book entries in order. */
-    entries: ReadonlyArray<BookEntry>;
+    /** All element-book pages in order. */
+    pages: ReadonlyArray<BookPage>;
 } & PartialWithUndefined<OptionalConfig>;
 
 type OptionalConfig = {

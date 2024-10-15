@@ -10,7 +10,7 @@ import {viraImageBookPage} from './entries/vira-image.element.book.js';
 import {viraInputBookPage} from './entries/vira-input.element.book.js';
 import {viraLinkBookPage} from './entries/vira-link.element.book.js';
 
-export const allElementBookEntries = [
+export const viraBookPages = [
     elementsBookPage,
     iconsBookPage,
     dropdownPage,

@@ -13,6 +13,11 @@ import {BaseBookEntry} from '../base-book-entry.js';
 import {BookEntryType} from '../book-entry-type.js';
 import {BookPageControlsInitBase, ControlsToValues} from './book-page-controls.js';
 
+/**
+ * An individual element-book page.
+ *
+ * @category Type
+ */
 export type BookPage<
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     GlobalValuesType extends GlobalValues = {},
@@ -21,6 +26,10 @@ export type BookPage<
 > = Overwrite<
     BaseBookEntry,
     {
+        /**
+         * The parent page of this page. If this page is meant to be at the top-level, set this to
+         * `undefined`.
+         */
         parent: ParentPage;
         entryType: BookEntryType.Page;
     }
@@ -29,6 +38,11 @@ export type BookPage<
     elementExamples: Record<string, BookElementExample>;
 };
 
+/**
+ * All parameters required for rendering an element-book page.
+ *
+ * @category Internal
+ */
 export type BookPageExampleRenderParams<
     GlobalValuesType extends GlobalValues,
     ControlsInit extends BookPageControlsInitBase,
@@ -37,6 +51,11 @@ export type BookPageExampleRenderParams<
     controls: ControlsToValues<ControlsInit> & GlobalValuesType;
 };
 
+/**
+ * An individual element example for an element-book page.
+ *
+ * @category Internal
+ */
 export type BookElementExample<
     GlobalValuesType extends GlobalValues = {},
     ControlsInit extends BookPageControlsInitBase = {},
@@ -57,7 +76,7 @@ export type BookElementExample<
          */
         styles?: CSSResult | undefined;
         /** Render the example. */
-        renderCallback: (
+        render: (
             renderParams: BookPageExampleRenderParams<GlobalValuesType, ControlsInit, StateInit>,
         ) => HtmlInterpolation;
     }
@@ -65,7 +84,9 @@ export type BookElementExample<
 
 /**
  * The properties that are necessary to initialize an element example. Missing properties will be
- * filling in by the parent.
+ * filled in by the parent.
+ *
+ * @category Internal
  */
 export type BookElementExampleInit<
     GlobalValuesType extends GlobalValues,

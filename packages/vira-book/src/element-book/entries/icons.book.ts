@@ -1,5 +1,5 @@
 import {addPx} from '@augment-vir/common';
-import {BookPageControlTypeEnum, defineBookPage, definePageControl} from 'element-book';
+import {BookPageControlType, defineBookPage, definePageControl} from 'element-book';
 import {css, html, unsafeCSS} from 'element-vir';
 import {ViraIcon, allIconsByName, viraBorders, viraIconCssVars} from 'vira';
 
@@ -8,19 +8,19 @@ export const iconsBookPage = defineBookPage({
     parent: undefined,
     controls: {
         'Stroke Color': definePageControl({
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: '',
         }),
         'Fill Color': definePageControl({
-            controlType: BookPageControlTypeEnum.Color,
+            controlType: BookPageControlType.Color,
             initValue: '',
         }),
         'Stroke Width': definePageControl({
-            controlType: BookPageControlTypeEnum.Number,
+            controlType: BookPageControlType.Number,
             initValue: 1,
         }),
     },
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         Object.values(allIconsByName).forEach((icon) => {
             defineExample({
                 title: icon.name,
@@ -34,7 +34,7 @@ export const iconsBookPage = defineBookPage({
                         border-radius: ${viraBorders['vira-form-input-radius'].value};
                     }
                 `,
-                renderCallback({controls}) {
+                render({controls}) {
                     const styles = css`
                         ${viraIconCssVars['vira-icon-fill-color'].name}: ${unsafeCSS(
                             controls['Fill Color'] || 'inherit',

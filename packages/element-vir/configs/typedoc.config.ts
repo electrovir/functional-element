@@ -11,11 +11,32 @@ export const typeDocConfig: Partial<TypeDocOptions> = {
     entryPoints: [
         indexTsFile,
     ],
-    excludePrivate: true,
     excludeInternal: true,
-    excludeExternals: true,
+    excludeReferences: true,
+    blockTags: [
+        /** The default tags we use. */
+        '@category',
+        '@default',
+        '@example',
+        '@param',
+        '@returns',
+        '@throws',
+        '@see',
+
+        /** Used by lit, and despite my attempts to exclude lit, this is still needed. */
+        '@nocollapse',
+    ],
+    exclude: [
+        '**/node_modules/**',
+        '**/packages/**/node_modules/**',
+    ],
+    externalPattern: [
+        '**/node_modules/**',
+        './src/lit-exports/*',
+    ],
+    logLevel: 'Verbose',
     intentionallyNotExported: [
-        '_AsyncPropClass',
+        'InternalAsyncPropClass',
         '__class',
     ],
     defaultCategory: 'MISSING CATEGORY',

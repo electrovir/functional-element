@@ -1,14 +1,9 @@
 import {assert, waitUntil} from '@augment-vir/assert';
-import {RequiredAndNotNullBy} from '@augment-vir/common';
+import {SetRequiredAndNotNull} from '@augment-vir/common';
 import {describe, it, testWeb} from '@augment-vir/test';
 import {html} from 'element-vir';
 import {TestChildElement} from './child.element.js';
 import {VirOldTestApp} from './vir-old-test-app.element.js';
-
-function assertDefined<T>(value: T, message?: string): asserts value is NonNullable<T> {
-    assert.isDefined(value, message);
-    assert.isNotNull(value, message);
-}
 
 /** Accounts for shadow DOM */
 function queryTree(
@@ -41,7 +36,7 @@ function queryTree(
 function assertHasShadowRoot<T extends Element>(
     element: T,
     message?: string,
-): asserts element is T & RequiredAndNotNullBy<Element, 'shadowRoot'> {
+): asserts element is T & SetRequiredAndNotNull<Element, 'shadowRoot'> {
     assert.isEmpty(element.innerHTML, message);
     assert.isDefined(element.shadowRoot, message);
 }

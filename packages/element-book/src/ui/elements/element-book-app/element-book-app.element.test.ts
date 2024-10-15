@@ -8,10 +8,10 @@ import {ElementBookApp} from './element-book-app.element.js';
 import {ElementBookConfig} from './element-book-config.js';
 
 describe(ElementBookApp.tagName, () => {
-    async function setupEntriesTest(entries: ElementBookConfig['entries']) {
+    async function setupPagesTest(pages: ElementBookConfig['pages']) {
         const elementBookAppInstance = await testWeb.render(html`
             <${ElementBookApp.assign({
-                entries,
+                pages,
             })}></${ElementBookApp}>
         `);
 
@@ -54,7 +54,7 @@ describe(ElementBookApp.tagName, () => {
     }
 
     it('should render error message when there are duplicate page names', async () => {
-        const elementBookAppInstance = await setupEntriesTest([
+        const elementBookAppInstance = await setupPagesTest([
             defineBookPage({
                 parent: undefined,
                 title: 'duplicate title',
@@ -74,23 +74,23 @@ describe(ElementBookApp.tagName, () => {
         const examplePage = defineBookPage({
             parent: undefined,
             title: 'title',
-            elementExamplesCallback({defineExample}) {
+            defineExamples({defineExample}) {
                 defineExample({
                     title: 'duplicate example',
-                    renderCallback() {
+                    render() {
                         return '';
                     },
                 });
                 defineExample({
                     title: 'duplicate example',
-                    renderCallback() {
+                    render() {
                         return '';
                     },
                 });
             },
         });
 
-        const elementBookAppInstance = await setupEntriesTest([
+        const elementBookAppInstance = await setupPagesTest([
             examplePage,
         ]);
 
@@ -101,7 +101,7 @@ describe(ElementBookApp.tagName, () => {
     });
 
     it('should render error message when there are empty page titles', async () => {
-        const elementBookAppInstance = await setupEntriesTest([
+        const elementBookAppInstance = await setupPagesTest([
             defineBookPage({
                 parent: undefined,
                 title: '',

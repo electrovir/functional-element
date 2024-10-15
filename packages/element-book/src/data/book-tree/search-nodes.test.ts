@@ -14,9 +14,9 @@ describe(searchFlattenedNodes.name, () => {
         const childC = defineBookPage({
             parent: childA,
             title: 'child-c',
-            elementExamplesCallback({defineExample}) {
+            defineExamples({defineExample}) {
                 defineExample({
-                    renderCallback() {
+                    render() {
                         return 'yo';
                     },
                     title: 'example A',

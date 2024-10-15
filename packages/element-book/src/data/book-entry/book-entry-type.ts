@@ -1,3 +1,8 @@
+/**
+ * All possible types for element-book entries.
+ *
+ * @category Internal
+ */
 export enum BookEntryType {
     /** A single element example. */
     ElementExample = 'element-example',
@@ -7,6 +12,11 @@ export enum BookEntryType {
     Root = 'root',
 }
 
+/**
+ * A union of all possible element-book entry types.
+ *
+ * @category Internal
+ */
 export type AnyBookEntryType =
     | BookEntryType.ElementExample
     | BookEntryType.Page

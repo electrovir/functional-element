@@ -1,6 +1,6 @@
 import {ElementBookApp, ElementBookSlotName} from 'element-book';
 import {css, defineElementNoInputs, html, listen} from 'element-vir';
-import {entries} from '../../element-book-example/example.book.js';
+import {pages} from '../../element-book-example/example.book.js';
 
 export const VirApp = defineElementNoInputs({
     tagName: 'vir-app',
@@ -47,7 +47,7 @@ export const VirApp = defineElementNoInputs({
                 />
             </label>
             <${ElementBookApp.assign({
-                entries,
+                pages,
                 themeColor: state.themeColor,
                 internalRouterConfig: {
                     useInternalRouter: true,

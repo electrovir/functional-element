@@ -4,10 +4,10 @@ import {html} from 'element-vir';
 export const undefinedInterpolationBookPage = defineBookPage({
     title: 'undefined interpolation',
     parent: undefined,
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         defineExample({
             title: 'undefined',
-            renderCallback() {
+            render() {
                 return html`
                     here: ${undefined}
                 `;
@@ -15,7 +15,7 @@ export const undefinedInterpolationBookPage = defineBookPage({
         });
         defineExample({
             title: 'empty string',
-            renderCallback() {
+            render() {
                 return html`
                     here: ${''}
                 `;
@@ -23,7 +23,7 @@ export const undefinedInterpolationBookPage = defineBookPage({
         });
         defineExample({
             title: 'null',
-            renderCallback() {
+            render() {
                 return html`
                     here: ${null}
                 `;

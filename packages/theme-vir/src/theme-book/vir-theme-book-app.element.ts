@@ -1,7 +1,7 @@
 import {ElementBookApp} from 'element-book';
 import {css, defineElementNoInputs, html} from 'element-vir';
 import {createTheme} from '../create-theme/create-theme.js';
-import {createThemeBookEntries} from './theme-book-entries.js';
+import {createThemeBookPages} from './theme-book-pages.js';
 
 export const VirThemeBookApp = defineElementNoInputs({
     tagName: 'vir-theme-book-app',
@@ -26,7 +26,7 @@ export const VirThemeBookApp = defineElementNoInputs({
     renderCallback({state}) {
         return html`
             <${ElementBookApp.assign({
-                entries: createThemeBookEntries(state.theme),
+                pages: createThemeBookPages(state.theme),
             })}></${ElementBookApp}>
         `;
     },

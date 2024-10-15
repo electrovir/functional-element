@@ -1,4 +1,4 @@
-import {BookPageControlTypeEnum, defineBookPage, definePageControl} from 'element-book';
+import {BookPageControlType, defineBookPage, definePageControl} from 'element-book';
 import {CSSResult, HTMLTemplateResult, css, html} from 'element-vir';
 import {ViraDropdownItem} from 'vira';
 import {dropdownPage} from './vira-dropdown.book.js';
@@ -64,7 +64,7 @@ export const ViraDropdownItemPage = defineBookPage({
     parent: dropdownPage,
     controls: {
         Selected: definePageControl({
-            controlType: BookPageControlTypeEnum.Dropdown,
+            controlType: BookPageControlType.Dropdown,
             initValue: '',
             options: [
                 '',
@@ -73,11 +73,11 @@ export const ViraDropdownItemPage = defineBookPage({
             ],
         }),
         Label: definePageControl({
-            controlType: BookPageControlTypeEnum.Text,
+            controlType: BookPageControlType.Text,
             initValue: '',
         }),
     },
-    elementExamplesCallback({defineExample}) {
+    defineExamples({defineExample}) {
         examples.forEach((example) => {
             defineExample({
                 title: example.title,
@@ -85,7 +85,7 @@ export const ViraDropdownItemPage = defineBookPage({
                     selected: example.inputs.selected || [],
                 },
                 styles: example.customStyle,
-                renderCallback({controls}) {
+                render({controls}) {
                     const finalInputs: typeof ViraDropdownItem.inputsType = {
                         label: controls.Label || example.inputs.label,
                         selected: controls.Selected

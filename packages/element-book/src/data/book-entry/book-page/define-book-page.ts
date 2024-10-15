@@ -11,6 +11,11 @@ import {titleToUrlBreadcrumb} from '../url-breadcrumbs.js';
 import {BookPageControlsInitBase} from './book-page-controls.js';
 import {BookElementExample, BookElementExampleInit, BookPage} from './book-page.js';
 
+/**
+ * The callback type for a book page definition's `defineExample` callback.
+ *
+ * @category Internal
+ */
 export type DefineExampleCallback<
     GlobalValuesType extends GlobalValues = {},
     ControlsInit extends BookPageControlsInitBase = BookPageControlsInitBase,
@@ -18,6 +23,11 @@ export type DefineExampleCallback<
     exampleInit: BookElementExampleInit<GlobalValuesType, ControlsInit, StateInit>,
 ) => void;
 
+/**
+ * Used for `defineExamples` in a book page's init.
+ *
+ * @category Internal
+ */
 export type ElementExamplesDefiner<
     GlobalValuesType extends GlobalValues = {},
     ControlsInit extends BookPageControlsInitBase = BookPageControlsInitBase,
@@ -57,6 +67,11 @@ type CollapseGlobalValuesType<
             : EmptyObject
         : EmptyObject);
 
+/**
+ * The parameters for initializing a new element-book page.
+ *
+ * @category Type
+ */
 export type BookPageInit<
     GlobalValuesType extends GlobalValues,
     ParentPage extends BookPage | undefined,
@@ -68,7 +83,7 @@ export type BookPageInit<
     >,
     'controls' | 'descriptionParagraphs'
 > & {
-    elementExamplesCallback?:
+    defineExamples?:
         | ElementExamplesDefiner<
               CollapseGlobalValuesType<ParentPage, GlobalValuesType>,
               CollapseControlsInit<ParentPage, CurrentControlsInit>
@@ -77,8 +92,10 @@ export type BookPageInit<
 };
 
 /**
- * Allows insertion of the global values type to a page. This is not necessary if you aren't using
- * global values in your element-book instance.
+ * A variant of {@link defineBookPage} that allows you specify what the expected global element-book
+ * values are for the page that you are defining.
+ *
+ * @category Main
  */
 export function defineBookPageWithGlobals<const GlobalValuesType extends GlobalValues = {}>() {
     return <
@@ -91,6 +108,11 @@ export function defineBookPageWithGlobals<const GlobalValuesType extends GlobalV
     };
 }
 
+/**
+ * Define an element-book page. This is how you create new entries for your element-book instance.
+ *
+ * @category Main
+ */
 export function defineBookPage<
     const GlobalValuesType extends GlobalValues = {},
     const ParentPage extends BookPage | undefined = undefined,
@@ -109,8 +131,8 @@ export function defineBookPage<
 
     const alreadyTakenElementExampleNames = new Set<string>();
 
-    if (pageInit.elementExamplesCallback) {
-        pageInit.elementExamplesCallback({
+    if (pageInit.defineExamples) {
+        pageInit.defineExamples({
             defineExample(elementExampleInit) {
                 const newExample: BookElementExample<any, any, any> = {
                     ...elementExampleInit,

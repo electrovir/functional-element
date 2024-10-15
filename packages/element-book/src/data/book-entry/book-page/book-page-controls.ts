@@ -1,24 +1,38 @@
 import type {EmptyObject} from 'type-fest';
 
-export type BookPageControl<ControlType extends BookPageControlTypeEnum = BookPageControlTypeEnum> =
-    {
-        controlType: ControlType;
-        initValue: BookPageControlValueType[ControlType];
-        /** The name and label for the control. */
-        controlName: string;
-    } & (ControlType extends BookPageControlTypeEnum.Dropdown
-        ? {
-              options: string[];
-          }
-        : EmptyObject);
+/**
+ * Adds a control to an element-book page.
+ *
+ * @category Internal
+ */
+export type BookPageControl<ControlType extends BookPageControlType = BookPageControlType> = {
+    controlType: ControlType;
+    initValue: BookPageControlValueType[ControlType];
+    /** The name and label for the control. */
+    controlName: string;
+} & (ControlType extends BookPageControlType.Dropdown
+    ? {
+          options: string[];
+      }
+    : EmptyObject);
 
-export type BookPageControlInit<ControlType extends BookPageControlTypeEnum> = Omit<
+/**
+ * Initialization options for an element-book page control.
+ *
+ * @category Internal
+ */
+export type BookPageControlInit<ControlType extends BookPageControlType> = Omit<
     BookPageControl<ControlType>,
     // 'controlName' will be inserted later by the page
     'controlName'
 >;
 
-export function isControlInitType<const SpecificControlType extends BookPageControlTypeEnum>(
+/**
+ * Checks and type guards that the input page control init is of the given type.
+ *
+ * @category Internal
+ */
+export function isControlInitType<const SpecificControlType extends BookPageControlType>(
     controlInit: BookPageControlInit<any>,
     specificType: SpecificControlType,
 ): controlInit is BookPageControlInit<SpecificControlType> {
@@ -28,21 +42,43 @@ export function isControlInitType<const SpecificControlType extends BookPageCont
 /**
  * Define a page control. This doesn't do anything fancy (in fact it only returns the input) but it
  * helps immensely with type inference.
+ *
+ * @category Main
  */
-export function definePageControl<const ControlType extends BookPageControlTypeEnum>(
+export function definePageControl<const ControlType extends BookPageControlType>(
     controlInit: BookPageControlInit<ControlType>,
 ) {
     return controlInit;
 }
 
+/**
+ * Maps an object of user-defined controls to their initial values.
+ *
+ * @category Internal
+ */
 export type ControlsToValues<ControlsInit extends BookPageControlsInitBase> = {
     [ControlName in keyof ControlsInit]: ControlsInit[ControlName]['initValue'];
 };
 
-export type BookPageControlsInitBase = Record<string, BookPageControlInit<BookPageControlTypeEnum>>;
+/**
+ * Base type for a arbitrary, user-defined object of page controls.
+ *
+ * @category Internal
+ */
+export type BookPageControlsInitBase = Record<string, BookPageControlInit<BookPageControlType>>;
+/**
+ * Base type for a arbitrary, user-defined object of page control values.
+ *
+ * @category Internal
+ */
 export type BookPageControlsValues = ControlsToValues<BookPageControlsInitBase>;
 
-export enum BookPageControlTypeEnum {
+/**
+ * All the supported page control types. One of these must be chosen when defining a page control.
+ *
+ * @category Main
+ */
+export enum BookPageControlType {
     Checkbox = 'checkbox',
     Color = 'color',
     Dropdown = 'dropdown',
@@ -54,17 +90,28 @@ export enum BookPageControlTypeEnum {
 
 const anySymbol = Symbol('any-type');
 
+/** Specifies the default value for each page control type, as well as its type. */
 const controlValueTypes = {
-    [BookPageControlTypeEnum.Checkbox]: false,
-    [BookPageControlTypeEnum.Color]: '',
-    [BookPageControlTypeEnum.Dropdown]: '',
-    [BookPageControlTypeEnum.Hidden]: anySymbol as any,
-    [BookPageControlTypeEnum.Number]: 0,
-    [BookPageControlTypeEnum.Text]: '',
-} satisfies Readonly<Record<BookPageControlTypeEnum, any>>;
+    [BookPageControlType.Checkbox]: false,
+    [BookPageControlType.Color]: '',
+    [BookPageControlType.Dropdown]: '',
+    [BookPageControlType.Hidden]: anySymbol as any,
+    [BookPageControlType.Number]: 0,
+    [BookPageControlType.Text]: '',
+} satisfies Readonly<Record<BookPageControlType, any>>;
 
+/**
+ * Each page control type mapped to the type of their value.
+ *
+ * @category Internal
+ */
 export type BookPageControlValueType = typeof controlValueTypes;
 
+/**
+ * Checks that the given control init object is valid.
+ *
+ * @category Internal
+ */
 export function checkControls(
     controlsInit: BookPageControlsInitBase | undefined,
     pageName: string,
