@@ -22,10 +22,32 @@ describe(defineElementNoInputs.name, () => {
         });
     });
 
+    it('blocks init return', () => {
+        defineElementNoInputs({
+            tagName: `some-tag-${randomString()}`,
+            // @ts-expect-error: this callback should not return anything
+            init() {
+                return 'hi';
+            },
+            render() {
+                return 'hi';
+            },
+        });
+        defineElementNoInputs({
+            tagName: `some-tag-${randomString()}`,
+            // @ts-expect-error: this callback should not return anything
+            cleanup() {
+                return 'hi';
+            },
+            render({state}) {
+                return 'hi';
+            },
+        });
+    });
+
     it('does not infer render output type from init callback', () => {
         defineElementNoInputs({
             tagName: `some-tag-${randomString()}`,
-            // render callback must return something
             init() {
                 return undefined;
             },

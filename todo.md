@@ -1,1 +1,2 @@
--   convert `stateInitStatic` into a function named `stateInit`
+-   convert `stateInitStatic` into a function named `stateInit` or collapse it as the return of `init`
+    -   I can't get this to work, TS won't correctly infer the state type

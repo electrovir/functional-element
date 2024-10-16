@@ -55,7 +55,7 @@ export type InitCallback<
         CssVarKeys,
         SlotNames
     >,
-) => void;
+) => undefined | void;
 
 export type UpdateStateCallback<StateInit extends PropertyInitMapBase> = (
     newState: Partial<AllowElementVirStateSetup<StateInit>>,

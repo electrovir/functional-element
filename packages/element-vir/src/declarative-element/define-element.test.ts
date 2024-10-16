@@ -128,8 +128,10 @@ describe(defineElement.name, () => {
         defineElement()({
             tagName: `some-tag-${randomString()}`,
             // init callback does not need to return something
+
+            // @ts-expect-error: init cannot be async
             // eslint-disable-next-line @typescript-eslint/require-await
-            async init({host}) {
+            async init() {
                 return undefined;
             },
             render() {
@@ -138,10 +140,12 @@ describe(defineElement.name, () => {
         });
         defineElement()({
             tagName: `some-tag-2-${randomString()}`,
-            init({host}) {
+            init() {
                 return undefined;
             },
-            render() {
+            // @ts-expect-error: render cannot be async
+            // eslint-disable-next-line @typescript-eslint/require-await
+            async render() {
                 return 'hello';
             },
         });
