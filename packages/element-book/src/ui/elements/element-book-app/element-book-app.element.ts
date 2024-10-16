@@ -1,5 +1,5 @@
 import {check} from '@augment-vir/assert';
-import {extractErrorMessage} from '@augment-vir/common';
+import {extractErrorMessage, makeWritable} from '@augment-vir/common';
 import {waitForAnimationFrame} from '@augment-vir/web';
 import {css, defineElement, defineElementEvent, html, listen} from 'element-vir';
 import {
@@ -14,7 +14,6 @@ import {
     BookFullRoute,
     defaultBookFullRoute,
     extractSearchQuery,
-    type ValidBookPaths,
 } from '../../../routing/book-routing.js';
 import {ColorTheme, colorThemeCssVars, setThemeCssVars} from '../../color-theme/color-theme.js';
 import {ThemeConfig, createTheme} from '../../color-theme/create-color-theme.js';
@@ -28,7 +27,12 @@ import {ElementBookConfig} from './element-book-config.js';
 import {getCurrentNodes} from './get-current-nodes.js';
 import {GlobalValues} from './global-values.js';
 
-type ColorThemeState = {config: ThemeConfig | undefined; theme: ColorTheme};
+/**
+ * Current color theme state used inside of {@link ElementBookApp}.
+ *
+ * @category Internal
+ */
+export type ColorThemeState = {config: ThemeConfig | undefined; theme: ColorTheme};
 
 /**
  * The element-book app itself. Instantiate one of these where you want your element-book pages to
@@ -170,7 +174,7 @@ export const ElementBookApp = defineElement<ElementBookConfig>()({
                 inputs.elementBookRoutePaths &&
                 !check.jsonEquals(inputs.elementBookRoutePaths, state.currentRoute.paths)
             ) {
-                updateRoutes({paths: inputs.elementBookRoutePaths as ValidBookPaths});
+                updateRoutes({paths: makeWritable(inputs.elementBookRoutePaths)});
             }
 
             if (inputs.internalRouterConfig?.useInternalRouter && !state.router) {

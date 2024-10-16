@@ -13,7 +13,7 @@ export type BookEntry = BookPage | BookRoot | BookElementExample;
 /**
  * Check if the input is a book entry of the given type.
  *
- * @category Internal
+ * @internal
  */
 export function isBookEntry<const SpecificType extends BookEntryType>(
     entry: unknown,

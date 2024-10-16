@@ -3,8 +3,18 @@ import {CSSResult} from 'element-vir';
 import {SingleCssVarDefinition, defineCssVars, setCssVarValue} from 'lit-css-vars';
 import {NestedType} from '../../util/type.js';
 
+/**
+ * A single background and foreground color pairing.
+ *
+ * @category Internal
+ */
 export type ColorPair = {background: CSSResult; foreground: CSSResult};
 
+/**
+ * Color pairs for everything used by the element-book app.
+ *
+ * @category Internal
+ */
 export type ColorTheme = {
     nav: {
         hover: ColorPair;
@@ -30,6 +40,11 @@ type CssResultToCssVar<StartingPoint> = {
 
 type ColorThemeCssVars = CssResultToCssVar<ColorTheme>;
 
+/**
+ * All color theme CSS vars for the element-book app.
+ *
+ * @category Internal
+ */
 export const colorThemeCssVars = defineCssVars({
     'element-book-nav-hover-background-color': 'magenta',
     'element-book-nav-hover-foreground-color': 'magenta',
@@ -74,6 +89,11 @@ const colorThemeCssVarMapping: ColorThemeCssVars = {
     },
 };
 
+/**
+ * Sets a new color theme's CSS vars on the given HTML element for the element-book app.
+ *
+ * @category Internal
+ */
 export function setThemeCssVars(element: HTMLElement, theme: ColorTheme) {
     recursiveSetThemeCssVars(element, theme, colorThemeCssVarMapping);
 }

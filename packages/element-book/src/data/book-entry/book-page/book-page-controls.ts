@@ -30,7 +30,7 @@ export type BookPageControlInit<ControlType extends BookPageControlType> = Omit<
 /**
  * Checks and type guards that the input page control init is of the given type.
  *
- * @category Internal
+ * @internal
  */
 export function isControlInitType<const SpecificControlType extends BookPageControlType>(
     controlInit: BookPageControlInit<any>,
@@ -66,6 +66,7 @@ export type ControlsToValues<ControlsInit extends BookPageControlsInitBase> = {
  * @category Internal
  */
 export type BookPageControlsInitBase = Record<string, BookPageControlInit<BookPageControlType>>;
+
 /**
  * Base type for a arbitrary, user-defined object of page control values.
  *
@@ -90,8 +91,12 @@ export enum BookPageControlType {
 
 const anySymbol = Symbol('any-type');
 
-/** Specifies the default value for each page control type, as well as its type. */
-const controlValueTypes = {
+/**
+ * Specifies the default value for each page control type, as well as its type.
+ *
+ * @category Internal
+ */
+export const controlValueTypes = {
     [BookPageControlType.Checkbox]: false,
     [BookPageControlType.Color]: '',
     [BookPageControlType.Dropdown]: '',
@@ -110,7 +115,7 @@ export type BookPageControlValueType = typeof controlValueTypes;
 /**
  * Checks that the given control init object is valid.
  *
- * @category Internal
+ * @internal
  */
 export function checkControls(
     controlsInit: BookPageControlsInitBase | undefined,

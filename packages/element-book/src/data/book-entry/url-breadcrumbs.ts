@@ -4,7 +4,7 @@ import {BookEntry} from './book-entry.js';
 /**
  * Create a list of URL breadcrumbs for the given element-book entry.
  *
- * @category Internal
+ * @internal
  */
 export function listUrlBreadcrumbs(entry: BookEntry, includeSelf: boolean): string[] {
     const entryBreadcrumb = titleToUrlBreadcrumb(entry.title);
@@ -24,7 +24,7 @@ export function listUrlBreadcrumbs(entry: BookEntry, includeSelf: boolean): stri
 /**
  * Convert an element-book entry's title to a URL-safe breadcrumb title.
  *
- * @category Internal
+ * @internal
  */
 export function titleToUrlBreadcrumb(title: string): string {
     return collapseWhiteSpace(title).toLowerCase().replaceAll(/\s/g, '-');
@@ -34,7 +34,7 @@ export function titleToUrlBreadcrumb(title: string): string {
  * Check if a full list of URL breadcrumbs (`searchIn`) starts with the subset list of URL
  * breadcrumbs (`searchFor`).
  *
- * @category Internal
+ * @internal
  */
 export function doBreadcrumbsStartWith({
     searchFor,

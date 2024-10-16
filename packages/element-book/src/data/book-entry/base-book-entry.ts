@@ -1,5 +1,10 @@
 import {BookEntryType} from './book-entry-type.js';
 
+/**
+ * Base properties for all book entry types.
+ *
+ * @category Internal
+ */
 export type BaseBookEntry = {
     /**
      * Title for the entry. This is used to create breadcrumbs and URL paths. Each title must be

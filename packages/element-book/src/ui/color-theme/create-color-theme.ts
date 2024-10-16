@@ -30,6 +30,11 @@ function colorsObjectToCssResult<const Colors extends NestedColors>(
     }) as NestedColorsToCssResult<Colors>;
 }
 
+/**
+ * The default theme color.
+ *
+ * @category Internal
+ */
 export const defaultThemeStartColor = 'dodgerblue';
 
 type BackForeGroundColor = 'black' | 'white';
@@ -51,11 +56,21 @@ function createColorPair({
     };
 }
 
+/**
+ * Theme style options for the element-book app.
+ *
+ * @category Internal
+ */
 export enum ThemeStyle {
     Dark = 'dark',
     Light = 'light',
 }
 
+/**
+ * Theme configuration options for the element-book app.
+ *
+ * @category Internal
+ */
 export type ThemeConfig = PartialWithUndefined<{
     themeColor: string;
     themeStyle: ThemeStyle;
@@ -87,6 +102,11 @@ const faintBackgroundColors = {
     },
 } as const;
 
+/**
+ * Creates a theme from the given theme configuration.
+ *
+ * @category Internal
+ */
 export function createTheme({
     themeColor: inputThemeColor = defaultThemeStartColor,
     themeStyle = ThemeStyle.Light,
