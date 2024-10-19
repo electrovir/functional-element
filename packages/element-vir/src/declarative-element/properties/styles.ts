@@ -7,11 +7,21 @@ import {type PropertyInitMapBase} from './element-properties.js';
 import {type FlattenElementVirStateSetup} from './element-vir-state-setup.js';
 import {type HostClassNamesMap, type HostClassesInitMap} from './host-classes.js';
 
+/**
+ * A host class instance to be referenced inside of an element definition's `styles` callback.
+ *
+ * @category Internal
+ */
 export type HostClass = {
     selector: CSSResult;
     name: CSSResult;
 };
 
+/**
+ * Input type for an element definition's `styles` callback.
+ *
+ * @category Internal
+ */
 export type StylesCallbackInput<
     TagName extends CustomElementTagName,
     HostClassKeys extends BaseCssPropertyName<TagName>,
@@ -21,13 +31,23 @@ export type StylesCallbackInput<
     cssVars: Readonly<CssVars<TagName, CssVarKeys>>;
 };
 
+/**
+ * The type for an element definition's `styles` callback.
+ *
+ * @category Internal
+ */
 export type StylesCallback<
     TagName extends CustomElementTagName,
     HostClassKeys extends BaseCssPropertyName<TagName>,
     CssVarKeys extends BaseCssPropertyName<TagName>,
 > = (input: StylesCallbackInput<TagName, HostClassKeys, CssVarKeys>) => CSSResult;
 
-export function hostClassNamesToStylesInput<
+/**
+ * Creates the input for an element definition's `styles` callback.
+ *
+ * @category Internal
+ */
+export function createStylesCallbackInput<
     TagName extends CustomElementTagName,
     HostClassKeys extends BaseCssPropertyName<TagName>,
     CssVarKeys extends BaseCssPropertyName<TagName>,
@@ -49,6 +69,11 @@ export function hostClassNamesToStylesInput<
     };
 }
 
+/**
+ * Used inside of an element instance to apply host classes on each render.
+ *
+ * @category Internal
+ */
 export function applyHostClasses<
     TagName extends CustomElementTagName,
     Inputs extends PropertyInitMapBase,

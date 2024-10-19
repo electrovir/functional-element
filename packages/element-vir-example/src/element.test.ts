@@ -4,7 +4,6 @@ import {describe, it} from '@augment-vir/test';
 import {
     DeclarativeElement,
     DeclarativeElementDefinition,
-    EventObjectEventDetailExtractor,
     Observable,
     TemplateResult,
     TypedEvent,
@@ -16,6 +15,7 @@ import {
     html,
     listen,
 } from 'element-vir';
+import {EventDetail} from '../../element-vir/src/declarative-element/properties/element-events.js';
 import {TestChildElement} from './elements/entries/old-test-app/child.element.js';
 import {VirOldTestApp} from './elements/entries/old-test-app/vir-old-test-app.element.js';
 import {VirTestBookApp} from './elements/vir-test-book-app.element.js';
@@ -256,9 +256,13 @@ describe('test elements', () => {
                 const detail: number = event.detail;
                 // @ts-expect-error: event.detail is a number
                 const detailString: string = event.detail;
+                assert
+                    .tsType<EventDetail<typeof TestElement.events.numberEvent>>()
+                    .equals<number>();
+
                 const myEvent: TypedEvent<
                     (typeof TestElement.events.numberEvent)['type'],
-                    EventObjectEventDetailExtractor<typeof TestElement.events.numberEvent>
+                    EventDetail<typeof TestElement.events.numberEvent>
                 > = event;
                 // @ts-expect-error: `event` requires a number
                 const myEventString: TypedEvent<
@@ -272,7 +276,7 @@ describe('test elements', () => {
                 const detailString: string = event.detail;
                 const myEvent: TypedEvent<
                     (typeof TestElement.events.yo)['type'],
-                    EventObjectEventDetailExtractor<typeof TestElement.events.yo>
+                    EventDetail<typeof TestElement.events.yo>
                 > = event;
             });
         }

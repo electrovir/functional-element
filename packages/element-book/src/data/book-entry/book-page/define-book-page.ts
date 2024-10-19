@@ -1,16 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 
 import {check} from '@augment-vir/assert';
-import {
-    SetOptionalAndNullable,
-    Values,
-    type TsRecurse,
-    type TsRecursionTracker,
-    type TsTooMuchRecursion,
-} from '@augment-vir/common';
+import {SetOptionalAndNullable, Values} from '@augment-vir/common';
 import {PropertyInitMapBase} from 'element-vir';
 import type {EmptyObject} from 'type-fest';
 import {GlobalValues} from '../../../ui/elements/element-book-app/global-values.js';
+import {InfiniteRecursionLimiter} from '../../../util/type.js';
 import {BookEntryType} from '../book-entry-type.js';
 import {titleToUrlBreadcrumb} from '../url-breadcrumbs.js';
 import {BookPageControlsInitBase} from './book-page-controls.js';
@@ -38,49 +33,39 @@ export type ElementExamplesDefiner<
     ControlsInit extends BookPageControlsInitBase = BookPageControlsInitBase,
 > = (params: {defineExample: DefineExampleCallback<GlobalValuesType, ControlsInit>}) => void;
 
-/**
- * Collapse all current and ancestor controls into a single level object.
- *
- * @category Internal
- */
-export type CollapseControlsInit<
+type CollapseControlsInit<
     ParentPage extends BookPage | undefined,
     CurrentControlsInit extends BookPageControlsInitBase,
     /** Prevent infinite recursion TypeScript errors. */
-    Depth extends TsRecursionTracker = 70,
+    RecursionDepth = InfiniteRecursionLimiter,
 > = CurrentControlsInit &
-    (Depth extends TsTooMuchRecursion
-        ? EmptyObject
-        : ParentPage extends BookPage<
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                infer GlobalValuesType,
-                infer GrandParentPage,
-                infer ParentControls
-            >
-          ? CollapseControlsInit<GrandParentPage, ParentControls, TsRecurse<Depth>>
-          : EmptyObject);
+    (RecursionDepth extends [any, ...infer RemainingDepth]
+        ? ParentPage extends BookPage<
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              infer GlobalValuesType,
+              infer GrandParentPage,
+              infer ParentControls
+          >
+            ? CollapseControlsInit<GrandParentPage, ParentControls, RemainingDepth>
+            : EmptyObject
+        : EmptyObject);
 
-/**
- * Collapses all ancestor global values into a single level object.
- *
- * @category Internal
- */
-export type CollapseGlobalValuesType<
+type CollapseGlobalValuesType<
     ParentPage extends BookPage | undefined,
     GlobalValuesType extends GlobalValues,
     /** Prevent infinite recursion TypeScript errors. */
-    Depth extends TsRecursionTracker = 70,
+    RecursionDepth = InfiniteRecursionLimiter,
 > = GlobalValuesType &
-    (Depth extends TsTooMuchRecursion
-        ? EmptyObject
-        : ParentPage extends BookPage<
-                infer GlobalValuesType,
-                infer GrandParentPage,
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                infer ParentControls
-            >
-          ? CollapseGlobalValuesType<GrandParentPage, GlobalValuesType, TsRecurse<Depth>>
-          : EmptyObject);
+    (RecursionDepth extends [any, ...infer RemainingDepth]
+        ? ParentPage extends BookPage<
+              infer GlobalValuesType,
+              infer GrandParentPage,
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              infer ParentControls
+          >
+            ? CollapseGlobalValuesType<GrandParentPage, GlobalValuesType, RemainingDepth>
+            : EmptyObject
+        : EmptyObject);
 
 /**
  * The parameters for initializing a new element-book page.

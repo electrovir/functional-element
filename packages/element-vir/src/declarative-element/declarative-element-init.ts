@@ -9,6 +9,12 @@ import {type HostClassesInitMap} from './properties/host-classes.js';
 import {type StylesCallback} from './properties/styles.js';
 import {type InitCallback, type RenderCallback} from './render-callback.js';
 
+/**
+ * Initialization for an element-vir declarative element. This defines all the pieces required for
+ * rendering the element.
+ *
+ * @category Internal
+ */
 export type DeclarativeElementInit<
     TagName extends CustomElementTagName,
     Inputs extends PropertyInitMapBase,

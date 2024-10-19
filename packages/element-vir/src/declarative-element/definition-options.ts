@@ -1,3 +1,8 @@
+/**
+ * Extra options for defining elements. These should be used very rarely.
+ *
+ * @category Internal
+ */
 export type DeclarativeElementDefinitionOptions = {
     /** For internal use only. */
     ignoreUnsetInputs: boolean;
@@ -8,6 +13,11 @@ export type DeclarativeElementDefinitionOptions = {
     allowPolymorphicState: boolean;
 };
 
+/**
+ * Default values for {@link DeclarativeElementDefinitionOptions}.
+ *
+ * @internal
+ */
 export const defaultDeclarativeElementDefinitionOptions: DeclarativeElementDefinitionOptions = {
     ignoreUnsetInputs: true,
     allowPolymorphicState: false,

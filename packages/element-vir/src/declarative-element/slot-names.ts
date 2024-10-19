@@ -1,11 +1,19 @@
 import {ArrayElement} from '@augment-vir/common';
 
-/** Type safe mapping of slot names to themselves. */
+/**
+ * Type safe mapping of slot names to themselves.
+ *
+ * @category Internal
+ */
 export type SlotNameMap<SlotNames extends ReadonlyArray<string>> = Readonly<{
     [SlotName in ArrayElement<SlotNames>]: SlotName;
 }>;
 
-/** Converts an array of slot names into a `SlotNameMap`. */
+/**
+ * Converts an array of slot names into a `SlotNameMap`.
+ *
+ * @category Internal
+ */
 export function createSlotNamesMap<SlotNames extends ReadonlyArray<string>>(
     slotNames: SlotNames | undefined,
 ): SlotNameMap<SlotNames> {

@@ -2,7 +2,16 @@ import {check} from '@augment-vir/assert';
 import {extractErrorMessage} from '@augment-vir/common';
 import {AsyncProp} from './async-prop.js';
 
-// overload for when resolutionRender and errorRender are both provided
+/**
+ * Given a {@link AsyncProp} instance, call and return the output of the `resolutionRender` parameter
+ * once the {@link AsyncProp} has been resolved, call and return the output of the `errorRender`
+ * parameter if the {@link AsyncProp} errored out, return the `fallback` parameter in all other
+ * cases.
+ *
+ * This is the overload for when `resolutionRender` and `errorRender` are both provided.
+ *
+ * @category Async
+ */
 export function renderAsync<
     T,
     FallbackResult,
@@ -14,28 +23,64 @@ export function renderAsync<
     resolutionRender: (resolved: Awaited<T>) => ResolutionRenderResult,
     errorRender: (error: Error) => ErrorRenderResult,
 ): FallbackResult | ResolutionRenderResult | ErrorRenderResult;
-// overload for when resolutionRender is provided but errorRender is not
+/**
+ * Given a {@link AsyncProp} instance, call and return the output of the `resolutionRender` parameter
+ * once the {@link AsyncProp} has been resolved, call and return the output of the `errorRender`
+ * parameter if the {@link AsyncProp} errored out, return the `fallback` parameter in all other
+ * cases.
+ *
+ * This is the overload for when `resolutionRender` is provided but `errorRender` is not.
+ *
+ * @category Async
+ */
 export function renderAsync<T, FallbackResult, ResolutionRenderResult = never>(
     asyncProp: Pick<AsyncProp<T, any>, 'value'>,
     fallback: FallbackResult,
     resolutionRender: (resolved: Awaited<T>) => ResolutionRenderResult,
     errorRender?: undefined,
 ): FallbackResult | ResolutionRenderResult | string;
-// overload for when resolutionRender is not provided but errorRender is
+/**
+ * Given a {@link AsyncProp} instance, call and return the output of the `resolutionRender` parameter
+ * once the {@link AsyncProp} has been resolved, call and return the output of the `errorRender`
+ * parameter if the {@link AsyncProp} errored out, return the `fallback` parameter in all other
+ * cases.
+ *
+ * This is the overload for when `resolutionRender` is not provided but `errorRender` is.
+ *
+ * @category Async
+ */
 export function renderAsync<T, FallbackResult, ErrorRenderResult = never>(
     asyncProp: Pick<AsyncProp<T, any>, 'value'>,
     fallback: FallbackResult,
     resolutionRender: undefined,
     errorRender: (error: Error) => ErrorRenderResult,
 ): FallbackResult | Awaited<T> | ErrorRenderResult;
-// overload for when neither resolutionRender or errorRender are provided
+/**
+ * Given a {@link AsyncProp} instance, call and return the output of the `resolutionRender` parameter
+ * once the {@link AsyncProp} has been resolved, call and return the output of the `errorRender`
+ * parameter if the {@link AsyncProp} errored out, return the `fallback` parameter in all other
+ * cases.
+ *
+ * This is the overload for when neither `resolutionRender` or `errorRender` are provided.
+ *
+ * @category Async
+ */
 export function renderAsync<T, FallbackResult>(
     asyncProp: Pick<AsyncProp<T, any>, 'value'>,
     fallback: FallbackResult,
     resolutionRender?: undefined,
     errorRender?: undefined,
 ): FallbackResult | Awaited<T> | string;
-// full function type
+/**
+ * Given a {@link AsyncProp} instance, call and return the output of the `resolutionRender` parameter
+ * once the {@link AsyncProp} has been resolved, call and return the output of the `errorRender`
+ * parameter if the {@link AsyncProp} errored out, return the `fallback` parameter in all other
+ * cases.
+ *
+ * This is the full function definition and implementation.
+ *
+ * @category Async
+ */
 export function renderAsync<
     T,
     FallbackResult,

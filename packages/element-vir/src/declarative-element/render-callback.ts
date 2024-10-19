@@ -17,6 +17,11 @@ import {
 } from './properties/element-vir-state-setup.js';
 import {type SlotNameMap} from './slot-names.js';
 
+/**
+ * Type for the `render` element definition method.
+ *
+ * @category Internal
+ */
 export type RenderCallback<
     TagName extends CustomElementTagName = any,
     Inputs extends PropertyInitMapBase = any,
@@ -37,6 +42,11 @@ export type RenderCallback<
     >,
 ) => HtmlInterpolation;
 
+/**
+ * Type for the `init` and `cleanup` element definition methods.
+ *
+ * @category Internal
+ */
 export type InitCallback<
     TagName extends CustomElementTagName,
     Inputs extends PropertyInitMapBase,
@@ -57,10 +67,20 @@ export type InitCallback<
     >,
 ) => undefined | void;
 
+/**
+ * Type for the `updateState` render parameter.
+ *
+ * @category Internal
+ */
 export type UpdateStateCallback<StateInit extends PropertyInitMapBase> = (
     newState: Partial<AllowElementVirStateSetup<StateInit>>,
 ) => void;
 
+/**
+ * The full parameters object passed to `render`, `init`, and `cleanup` element definition methods.
+ *
+ * @category Internal
+ */
 export type RenderParams<
     TagName extends CustomElementTagName,
     Inputs extends PropertyInitMapBase,
@@ -84,6 +104,7 @@ export type RenderParams<
         SlotNames
     >;
     slotNames: SlotNameMap<SlotNames>;
+    /** Dispatch an event from the current element. */
     dispatch: <EventTypeName extends keyof EventsInit>(
         event:
             | TypedEvent<
@@ -95,6 +116,12 @@ export type RenderParams<
     inputs: Readonly<Inputs>;
 };
 
+/**
+ * This is used to create the parameters passed to the `render`, `init`, and `cleanup` element
+ * definition methods whenever they are called.
+ *
+ * @category Internal
+ */
 export function createRenderParams<
     TagName extends CustomElementTagName,
     Inputs extends PropertyInitMapBase,

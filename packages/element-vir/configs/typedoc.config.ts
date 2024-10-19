@@ -13,8 +13,9 @@ export const typeDocConfig: Partial<TypeDocOptions> = {
     ],
     excludeInternal: true,
     excludeReferences: true,
+
     blockTags: [
-        /** The default tags we use. */
+        /** Default tags in use. */
         '@category',
         '@default',
         '@example',
@@ -24,6 +25,7 @@ export const typeDocConfig: Partial<TypeDocOptions> = {
         '@see',
 
         /** Used by lit, and despite my attempts to exclude lit, this is still needed. */
+        // cspell:ignore nocollapse
         '@nocollapse',
     ],
     exclude: [
@@ -41,7 +43,11 @@ export const typeDocConfig: Partial<TypeDocOptions> = {
     ],
     defaultCategory: 'MISSING CATEGORY',
     categoryOrder: [
-        'Main',
+        'Element Definition',
+        'Directives',
+        'Async',
+        'Test',
+        'Util',
         'Internal',
     ],
 };

@@ -1,5 +1,5 @@
 import {assert, waitUntil} from '@augment-vir/assert';
-import {DeferredPromise, randomString, typedMap, wait} from '@augment-vir/common';
+import {DeferredPromise, randomString, typedMap, wait, waitValue} from '@augment-vir/common';
 import {describe, it, testWeb} from '@augment-vir/test';
 import {isObservableBase, noUpdate} from 'observavir';
 import {nothing} from '../../lit-exports/all-lit-exports.js';
@@ -54,6 +54,7 @@ describe(asyncProp.name, () => {
                         return Promise.resolve({something: 4});
                     },
                 }),
+                myProp: asyncProp({defaultValue: waitValue({seconds: 10}, 'value')}),
                 syncProp: {value: 'hi'},
             },
             render({state, updateState}) {

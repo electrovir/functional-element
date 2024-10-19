@@ -4,11 +4,20 @@ import {type DeclarativeElement} from '../declarative-element.js';
 import {type PropertyInitMapBase} from './element-properties.js';
 import {isElementVirStateSetup, stateSetupKey} from './element-vir-state-setup.js';
 
+/**
+ * Used for a map of all observables registered to an element instance.
+ *
+ * @category Internal
+ */
 export type ObservableListenerMap<OriginalPropertyMap extends PropertyInitMapBase> = Partial<
     Record<keyof OriginalPropertyMap, ObservableListener<any> | undefined>
 >;
 
-/** Binds the given property key as a reactive property on the given element. */
+/**
+ * Binds the given property key as a reactive property on the given element.
+ *
+ * @category Internal
+ */
 export function bindReactiveProperty(element: HTMLElement, propertyKey: PropertyKey) {
     if (!(propertyKey in element)) {
         property()(element, propertyKey);
@@ -34,6 +43,12 @@ function assertValidPropertyName<PropertyInitGeneric extends PropertyInitMapBase
     }
 }
 
+/**
+ * Creates an internal proxy for setting inputs and state properties and then updating them on the
+ * element itself so they will trigger lit's change detection.
+ *
+ * @category Internal
+ */
 export function createElementPropertyProxy<PropertyInitGeneric extends PropertyInitMapBase>(
     element: DeclarativeElement,
     shouldAlreadyExist: boolean,

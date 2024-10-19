@@ -2,7 +2,7 @@ import {assert, waitUntil} from '@augment-vir/assert';
 import {mapObjectValues, randomString} from '@augment-vir/common';
 import {describe, it, testWeb} from '@augment-vir/test';
 import {extractElementText, queryThroughShadow, waitForAnimationFrame} from '@augment-vir/web';
-import {html, listen, testIdBy} from 'element-vir';
+import {html, listen, testIdSelector} from 'element-vir';
 import {Element24Icon} from '../../icons/index.js';
 import {mockOptions} from './dropdown.mock.js';
 import {viraDropdownOptionsTestIds} from './vira-dropdown-options.element.js';
@@ -31,10 +31,12 @@ async function setupDropdownTest(inputs?: Partial<(typeof ViraDropdown)['inputsT
 
     assert.instanceOf(instance, ViraDropdown);
 
-    const triggerElement = instance.shadowRoot.querySelector(testIdBy(viraDropdownTestIds.trigger));
+    const triggerElement = instance.shadowRoot.querySelector(
+        testIdSelector(viraDropdownTestIds.trigger),
+    );
     assert.instanceOf(triggerElement, HTMLElement);
 
-    assert.isNull(instance.shadowRoot.querySelector(testIdBy(viraDropdownTestIds.options)));
+    assert.isNull(instance.shadowRoot.querySelector(testIdSelector(viraDropdownTestIds.options)));
     assert.isEmpty(events.openChange);
     assert.isEmpty(events.selectedChange);
 
@@ -44,12 +46,12 @@ async function setupDropdownTest(inputs?: Partial<(typeof ViraDropdown)['inputsT
         triggerElement,
         queryByTestId: mapObjectValues(viraDropdownTestIds, (testIdKey, testId) => {
             return () => {
-                return instance.shadowRoot.querySelector(testIdBy(testId));
+                return instance.shadowRoot.querySelector(testIdSelector(testId));
             };
         }),
         async toggle(this: void) {
             const optionsExisted: boolean = !!instance.shadowRoot.querySelector(
-                testIdBy(viraDropdownTestIds.options),
+                testIdSelector(viraDropdownTestIds.options),
             );
 
             await testWeb.click(triggerElement);
@@ -57,7 +59,7 @@ async function setupDropdownTest(inputs?: Partial<(typeof ViraDropdown)['inputsT
             await waitUntil.isTruthy(
                 () => {
                     const optionsExistNow = !!instance.shadowRoot.querySelector(
-                        testIdBy(viraDropdownTestIds.options),
+                        testIdSelector(viraDropdownTestIds.options),
                     );
 
                     return optionsExisted !== optionsExistNow;
@@ -96,9 +98,13 @@ describe(ViraDropdown.tagName, () => {
         const {instance, toggle, events, queryByTestId} = await setupDropdownTest();
 
         await toggle();
-        const options = queryThroughShadow(instance, testIdBy(viraDropdownOptionsTestIds.option), {
-            all: true,
-        });
+        const options = queryThroughShadow(
+            instance,
+            testIdSelector(viraDropdownOptionsTestIds.option),
+            {
+                all: true,
+            },
+        );
 
         assert.isLengthExactly(options, mockOptions.length);
         assert.isDefined(options[1]);

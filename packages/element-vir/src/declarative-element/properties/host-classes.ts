@@ -5,19 +5,11 @@ import {PropertyInitMapBase} from './element-properties.js';
 import {FlattenElementVirStateSetup} from './element-vir-state-setup.js';
 import {WithTagName} from './tag-name.js';
 
-export type HostClassToggleCallbackInput<
-    Inputs extends PropertyInitMapBase,
-    StateInit extends PropertyInitMapBase,
-> = {
-    state: Readonly<FlattenElementVirStateSetup<StateInit>>;
-    inputs: Readonly<Inputs>;
-};
-
-export type HostClassToggleCallback<
-    Inputs extends PropertyInitMapBase,
-    StateInit extends PropertyInitMapBase,
-> = (inputs: HostClassToggleCallbackInput<Inputs, StateInit>) => boolean;
-
+/**
+ * Base init map for defining host classes in an element definition.
+ *
+ * @category Internal
+ */
 export type HostClassesInitMap<
     TagName extends CustomElementTagName,
     HostClassKeys extends BaseCssPropertyName<TagName>,
@@ -29,19 +21,29 @@ export type HostClassesInitMap<
      * Callback to determine when host class should be enabled (based on current inputs and state),
      * or just undefined to mark that this host class name will only be manually applied.
      */
-    HostClassToggleCallback<Inputs, StateInit> | false
+    | ((inputs: {
+          state: Readonly<FlattenElementVirStateSetup<StateInit>>;
+          inputs: Readonly<Inputs>;
+      }) => boolean)
+    | false
 >;
 
-export type HostClassName<
-    TagName extends string,
-    HostClassPropName extends string,
-> = `${TagName}-${HostClassPropName}`;
-
+/**
+ * Creates a mapping of host class keys (as defined in an element definition) to their runtime host
+ * class names.
+ *
+ * @category Internal
+ */
 export type HostClassNamesMap<TagName extends string, HostClassKeys extends string> = Record<
     HostClassKeys,
     WithTagName<TagName, string>
 >;
 
+/**
+ * Maps element definition host class definitions to their runtime host class name equivalents.
+ *
+ * @category Internal
+ */
 export function createHostClassNamesMap<
     TagName extends CustomElementTagName,
     HostClassKeys extends BaseCssPropertyName<TagName>,

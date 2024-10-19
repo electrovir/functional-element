@@ -22,6 +22,12 @@ import {
 } from './render-callback.js';
 import {type SlotNameMap} from './slot-names.js';
 
+/**
+ * The `host` type for a declarative element. This references a declarative element instance's
+ * top-level HTML element and always contains a shadow root (wherein the element is rendered).
+ *
+ * @category Internal
+ */
 export type DeclarativeElementHost<
     TagName extends CustomElementTagName = any,
     Inputs extends PropertyInitMapBase = any,
@@ -49,6 +55,11 @@ export type DeclarativeElementHost<
     'shadowRoot'
 >;
 
+/**
+ * The full definition for a declarative element.
+ *
+ * @category Internal
+ */
 export type DeclarativeElementDefinition<
     TagName extends CustomElementTagName = any,
     Inputs extends PropertyInitMapBase = any,
@@ -86,6 +97,11 @@ export type DeclarativeElementDefinition<
         >;
     };
 
+/**
+ * Abstract class base for all declarative elements.
+ *
+ * @category Internal
+ */
 export abstract class DeclarativeElement<
     TagName extends CustomElementTagName = any,
     Inputs extends PropertyInitMapBase = any,
@@ -95,6 +111,19 @@ export abstract class DeclarativeElement<
     CssVarKeys extends BaseCssPropertyName<TagName> = any,
     SlotNames extends ReadonlyArray<string> = any,
 > extends LitElement {
+    /**
+     * Assign inputs to an element instantiation. Use only on the opening tag.
+     *
+     * @example
+     *
+     * ```ts
+     * import {html} from 'element-vir';
+     *
+     * const myTemplate = html`
+     *     <${MyElement.assign({input1: 'a', input2: 'b'})}></${MyElement}>
+     * `;
+     * ```
+     */
     public static readonly assign: StaticDeclarativeElementProperties<
         CustomElementTagName,
         PropertyInitMapBase,
@@ -237,6 +266,10 @@ export abstract class DeclarativeElement<
     public abstract _lastRenderedProps: Readonly<
         Pick<RenderParams<any, Inputs, StateInit, any, any, any, any>, 'inputs' | 'state'>
     >;
+    /**
+     * Calls all destroy methods on all state properties, if they exist. This is automatically
+     * called whenever the element is detached.
+     */
     public abstract destroy(): void;
     public abstract override render(): unknown;
     public abstract readonly instanceState: FlattenElementVirStateSetup<StateInit>;
@@ -244,6 +277,11 @@ export abstract class DeclarativeElement<
         StateInit & Inputs
     >;
     public abstract readonly instanceInputs: Inputs;
+    /**
+     * Used to assign inputs to the given element. This can be externally called as an API for
+     * setting inputs on an element reference, though this is discouraged. Inputs should typically
+     * be called using the `.assign()` method on an element definition inside of an HTML template.
+     */
     public abstract assignInputs(
         inputs: EmptyObject extends Required<Inputs> ? never : Partial<Inputs>,
     ): void;
@@ -260,6 +298,11 @@ export abstract class DeclarativeElement<
     >;
 }
 
+/**
+ * The assign inputs method of a declarative element.
+ *
+ * @category Internal
+ */
 export type AssignMethod<Inputs extends PropertyInitMapBase> =
     IsAny<Inputs> extends true
         ? any
@@ -269,6 +312,11 @@ export type AssignMethod<Inputs extends PropertyInitMapBase> =
                 inputsObject: IsEmptyObject<Required<Inputs>> extends true ? never : Inputs,
             ) => MinimalDefinitionWithInputs;
 
+/**
+ * All static properties on a declarative element. These all come from the element's definition.
+ *
+ * @category Internal
+ */
 export type StaticDeclarativeElementProperties<
     TagName extends CustomElementTagName,
     Inputs extends PropertyInitMapBase,

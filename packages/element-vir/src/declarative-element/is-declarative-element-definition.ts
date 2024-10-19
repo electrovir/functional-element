@@ -26,12 +26,19 @@ const expectedStaticProperties = getObjectTypedKeys({
     Record<keyof StaticDeclarativeElementProperties<any, any, any, any, any, any, any>, ''>
 >);
 
+/**
+ * Asserts that the given input is a declarative element definition.
+ *
+ * @category Util
+ * @see
+ * - {@link isDeclarativeElementDefinition}
+ */
 export function assertDeclarativeElementDefinition(
     input: unknown,
     failMessage?: string | undefined,
 ): asserts input is DeclarativeElementDefinition {
     if (!check.isFunction(input)) {
-        throw new AssertionError('input is not an element constructor', failMessage);
+        throw new AssertionError('Input is not a declarative element constructor', failMessage);
     }
     expectedStaticProperties.forEach((expectedProperty) => {
         if (!check.hasKey(input, expectedProperty)) {
@@ -39,6 +46,14 @@ export function assertDeclarativeElementDefinition(
         }
     });
 }
+
+/**
+ * Checks that the given input is a declarative element definition.
+ *
+ * @category Util
+ * @see
+ * - {@link assertDeclarativeElementDefinition}
+ */
 export function isDeclarativeElementDefinition(
     input: unknown,
 ): input is DeclarativeElementDefinition {

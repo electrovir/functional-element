@@ -1,16 +1,53 @@
+import type {MaybePromise} from '@augment-vir/common';
 import {directive, Directive, PartInfo} from '../../lit-exports/all-lit-exports.js';
 import {assertIsElementPartInfo} from './directive-helpers.js';
 
+/**
+ * Callback called by the {@link onResize} directive.
+ *
+ * @category Internal
+ */
 export type OnResizeCallback = (
-    /** Only these two properties are supported in all major modern browsers */
-    size: Readonly<Pick<ResizeObserverEntry, 'target' | 'contentRect'>>,
+    size: Readonly<
+        Pick<
+            ResizeObserverEntry,
+            /** Only these two properties are supported in all major modern browsers */
+            'target' | 'contentRect'
+        >
+    >,
     element: Element,
-) => void;
+) => MaybePromise<void>;
 
 const directiveName = 'onResize';
 
+/**
+ * A directive that fires its listener any time the element that it's attached to is resized. This
+ * uses the [built-in `ResizeObserver`
+ * API](https://developer.mozilla.org/docs/Web/API/ResizeObserver), so it is very efficient.
+ *
+ * @category Directives
+ * @example
+ *
+ * ```ts
+ * import {html, defineElementNoInputs, onResize} from 'element-vir';
+ *
+ * const MyElement = defineElementNoInputs({
+ *     tagName: 'my-element',
+ *     render() {
+ *         return html`
+ *             <div
+ *                 ${onResize((size, element) => {
+ *                     console.log('resized!', element, size);
+ *                 })}
+ *             >
+ *                 Some div
+ *             </div>
+ *         `;
+ *     },
+ * });
+ * ```
+ */
 export const onResize = directive(
-    /** @internal */
     class extends Directive {
         element: Element | undefined;
         readonly resizeObserver = new ResizeObserver((entries) => this.fireCallback(entries));
@@ -30,7 +67,7 @@ export const onResize = directive(
                     `${directiveName} observation triggered but the first entry was empty.`,
                 );
             }
-            this.callback?.(
+            void this.callback?.(
                 {target: resizeEntry.target, contentRect: resizeEntry.contentRect},
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 this.element!,

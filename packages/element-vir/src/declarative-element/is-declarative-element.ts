@@ -4,6 +4,8 @@ import {DeclarativeElement} from './declarative-element.js';
 /**
  * Checks if the input is an instance of a DeclarativeElement, the super class of all custom
  * elements defined with element-vir.
+ *
+ * @category Util
  */
 export function isDeclarativeElement(input: unknown): input is DeclarativeElement {
     const markerProperties: ReadonlyArray<keyof DeclarativeElement> = [
@@ -16,6 +18,8 @@ export function isDeclarativeElement(input: unknown): input is DeclarativeElemen
 /**
  * Checks if the input is an instance of a DeclarativeElement, the super class of all custom
  * elements defined with element-vir.
+ *
+ * @category Util
  */
 export function assertIsDeclarativeElement(input: unknown): asserts input is DeclarativeElement {
     if (!isDeclarativeElement(input)) {

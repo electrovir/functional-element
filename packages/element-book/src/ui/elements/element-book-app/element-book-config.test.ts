@@ -1,4 +1,5 @@
 import {describe, it} from '@augment-vir/test';
+import {BookMainRoute} from '../../../routing/book-routing.js';
 import {ElementBookConfig} from './element-book-config.js';
 
 describe('ElementBookConfig', () => {
@@ -8,7 +9,7 @@ describe('ElementBookConfig', () => {
         // it's fine with elementBookRoutePaths and everything else
         acceptsElementBookConfig({
             pages: [],
-            elementBookRoutePaths: [],
+            elementBookRoutePaths: [BookMainRoute.Book],
             themeColor: 'blue',
         });
         // it's fine with elementBookRoutePaths and everything else
@@ -26,7 +27,7 @@ describe('ElementBookConfig', () => {
                 internalRouterConfig: {
                     useInternalRouter: true,
                 },
-                elementBookRoutePaths: [],
+                elementBookRoutePaths: [BookMainRoute.Book],
                 themeColor: 'blue',
             },
         );

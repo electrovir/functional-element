@@ -1,5 +1,10 @@
 import {NonEmptyString} from '../util/type.js';
 
+/**
+ * A custom event with strict types for details and the event's `type` property.
+ *
+ * @category Internal
+ */
 export class TypedEvent<
     EventTypeNameGeneric extends string = '',
     EventDetailGeneric = undefined,
@@ -21,12 +26,21 @@ export class TypedEvent<
     }
 }
 
-export type DefinedTypedEventNameDefinition<EventDetailGeneric> = <
-    EventTypeNameGeneric extends string,
->(
+/**
+ * A function that defines a typed event, used for defining element events in an element's
+ * definition.
+ *
+ * @category Internal
+ */
+export type DefineEvent<EventDetailGeneric> = <EventTypeNameGeneric extends string>(
     eventType: NonEmptyString<EventTypeNameGeneric>,
 ) => DefinedTypedEvent<EventTypeNameGeneric, EventDetailGeneric>;
 
+/**
+ * A concrete typed event definition.
+ *
+ * @category Internal
+ */
 export type DefinedTypedEvent<EventTypeNameGeneric extends string, EventDetailGeneric> = (new (
     eventValue: EventDetailGeneric,
 ) => TypedEvent<EventTypeNameGeneric, EventDetailGeneric>) & {
@@ -34,10 +48,25 @@ export type DefinedTypedEvent<EventTypeNameGeneric extends string, EventDetailGe
 };
 
 /**
- * Defined a typed event. Make sure to use currying and call this function twice! Typescript's
- * generic restrictions require this setup to get the types right without excessive verbosity.
+ * Define a stand-alone typed event that can be emitted and listened to inside of HTML templates.
  *
- * Example: const myCustomEvent = defineTypedEvent<number>()('my-custom-event')
+ * Make sure to use currying and call this function twice! (This is required by TypeScript's type
+ * parameter inference system.)
+ *
+ * @category Element Definition
+ * @example
+ *
+ * ```ts
+ * import {defineTypedEvent} from 'element-vir';
+ *
+ * const myCustomEvent = defineTypedEvent<number>()('my-custom-event');
+ *
+ * const myCustomEvent2 = defineTypedEvent<// the event's `.detail` type
+ * number>()(
+ *     // the event's `.type` string
+ *     'my-custom-event2',
+ * );
+ * ```
  */
 export function defineTypedEvent<EventDetailGeneric>() {
     return <

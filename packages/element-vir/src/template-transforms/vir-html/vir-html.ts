@@ -9,6 +9,8 @@ import {mapHtmlValues, transformHtmlTemplate} from './html-transform.js';
  *
  * Wraps lit-html's html tagged template and enables interpolations of
  * `DeclarativeElementDefinition` for tag names.
+ *
+ * @category Element Definition
  */
 export function html(
     inputTemplateStrings: TemplateStringsArray,

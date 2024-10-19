@@ -34,10 +34,16 @@ import {PropertyInitMapBase} from './properties/element-properties.js';
 import {FlattenElementVirStateSetup} from './properties/element-vir-state-setup.js';
 import {HostClassNamesMap, createHostClassNamesMap} from './properties/host-classes.js';
 import {bindReactiveProperty, createElementPropertyProxy} from './properties/property-proxy.js';
-import {applyHostClasses, hostClassNamesToStylesInput} from './properties/styles.js';
+import {applyHostClasses, createStylesCallbackInput} from './properties/styles.js';
 import {RenderParams, createRenderParams} from './render-callback.js';
 import {createSlotNamesMap} from './slot-names.js';
 
+/**
+ * Verifies that the given {@link DeclarativeElementInit} for an element definition without inputs
+ * does not have any state properties that clash with built-in HTML element properties.
+ *
+ * @category Internal
+ */
 export type VerifiedElementNoInputsInit<
     TagName extends CustomElementTagName,
     Inputs extends PropertyInitMapBase,
@@ -59,6 +65,25 @@ export type VerifiedElementNoInputsInit<
           >
         : 'ERROR: Cannot define an element state property that clashes with native HTMLElement properties.';
 
+/**
+ * Defines an element without any inputs.
+ *
+ * @category Element Definition
+ * @example
+ *
+ * ```ts
+ * import {defineElementNoInputs, html} from 'element-vir';
+ *
+ * const MyElement = defineElementNoInputs({
+ *     tagName: 'my-element',
+ *     render() {
+ *         return html`
+ *             <p>hi</p>
+ *         `;
+ *     },
+ * });
+ * ```
+ */
 export function defineElementNoInputs<
     const TagName extends CustomElementTagName = '-',
     Inputs extends PropertyInitMapBase = {},
@@ -123,6 +148,7 @@ export function defineElementNoInputs<
     >;
     type ThisElementInstance = InstanceType<ThisElementStaticClass>;
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!init.render || typeof init.render === 'string') {
         throw new Error(`Failed to define element '${init.tagName}': render is not a function`);
     }
@@ -160,7 +186,7 @@ export function defineElementNoInputs<
 
     const calculatedStyles =
         typeof init.styles === 'function'
-            ? init.styles(hostClassNamesToStylesInput({hostClassNames, cssVars}))
+            ? init.styles(createStylesCallbackInput({hostClassNames, cssVars}))
             : init.styles || css``;
 
     const typedRenderCallback: StaticDeclarativeElementProperties<

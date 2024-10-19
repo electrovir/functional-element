@@ -1,6 +1,11 @@
 import {collapseWhiteSpace} from '@augment-vir/common';
 import type {TemplateResult, unsafeHTML, unsafeSVG} from '../lit-exports/all-lit-exports.js';
 
+/**
+ * Converts an HTML or SVG template into a raw string.
+ *
+ * @category Util
+ */
 export function convertTemplateToString(
     template:
         | TemplateResult

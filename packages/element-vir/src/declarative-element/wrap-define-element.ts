@@ -9,12 +9,21 @@ import {BaseCssPropertyName} from './properties/css-properties.js';
 import {EventsInitMap} from './properties/element-events.js';
 import {PropertyInitMapBase} from './properties/element-properties.js';
 
+/**
+ * Options for {@link wrapDefineElement}.
+ *
+ * @category Internal
+ */
 export type WrapDefineElementOptions<
     TagNameRequirement extends CustomElementTagName = CustomElementTagName,
     InputsRequirement extends PropertyInitMapBase = {},
     StateInitRequirement extends PropertyInitMapBase = {},
     EventsInitRequirement extends EventsInitMap = {},
 > = PartialWithNullable<{
+    /**
+     * An optional callback which asserts that an element definition init object given to the
+     * wrapped element definition functions is valid.
+     */
     assertInputs: (
         inputInit: DeclarativeElementInit<
             TagNameRequirement,
@@ -26,6 +35,10 @@ export type WrapDefineElementOptions<
             ReadonlyArray<string>
         >,
     ) => void;
+    /**
+     * An optional callback which transforms a element definition init object given to the wrapped
+     * element definition.
+     */
     transformInputs: (
         inputInit: DeclarativeElementInit<
             TagNameRequirement,
@@ -47,6 +60,18 @@ export type WrapDefineElementOptions<
     >;
 }>;
 
+/**
+ * Wraps {@link defineElement} and {@link defineElementNoInputs} in a superset of requirements. For
+ * example:
+ *
+ * - You could create element definition functions that require all elements to start with a common
+ *   prefix, like `vir-`.
+ * - You could create element definition functions that require all elements to have _at least_ a
+ *   specified set of input properties.
+ * - Etc.
+ *
+ * @category Element Definition
+ */
 export function wrapDefineElement<
     TagNameRequirement extends CustomElementTagName = CustomElementTagName,
     InputsRequirement extends PropertyInitMapBase = {},
@@ -59,6 +84,7 @@ export function wrapDefineElement<
     };
 
     return {
+        /** A wrapped function for defining an element with inputs. */
         defineElement: <Inputs extends InputsRequirement>() => {
             return <
                 const TagName extends TagNameRequirement,
@@ -94,6 +120,7 @@ export function wrapDefineElement<
                 );
             };
         },
+        /** A wrapped function for defining an element without inputs. */
         defineElementNoInputs: <
             const TagName extends TagNameRequirement,
             Inputs extends InputsRequirement,

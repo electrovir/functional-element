@@ -9,6 +9,13 @@ import {BaseCssPropertyName} from './properties/css-properties.js';
 import {EventsInitMap} from './properties/element-events.js';
 import {PropertyInitMapBase} from './properties/element-properties.js';
 
+/**
+ * Verifies that the given {@link DeclarativeElementInit} for an element definition with inputs does
+ * not have any state or input properties that clash with built-in HTML element properties, or state
+ * / input properties that clash with each other.
+ *
+ * @category Internal
+ */
 export type VerifiedElementInit<
     TagName extends CustomElementTagName,
     Inputs extends PropertyInitMapBase,
@@ -32,6 +39,27 @@ export type VerifiedElementInit<
             : 'ERROR: Cannot define an element input property that clashes with native HTMLElement properties.'
         : "ERROR: Cannot define an element state property that clashes with the element's input properties.";
 
+/**
+ * Defines an element with inputs. If the element actually has no inputs, use
+ * {@link defineElementNoInputs} instead. Note that this function must be called twice, due to
+ * TypeScript type inference limitations.
+ *
+ * @category Element Definition
+ * @example
+ *
+ * ```ts
+ * import {defineElement, html} from 'element-vir';
+ *
+ * const MyElement = defineElement<{username: string}>()({
+ *     tagName: 'my-element',
+ *     render({inputs}) {
+ *         return html`
+ *             <p>hi: ${inputs.username}</p>
+ *         `;
+ *     },
+ * });
+ * ```
+ */
 export function defineElement<Inputs extends PropertyInitMapBase = {}>() {
     return <
         const TagName extends CustomElementTagName,

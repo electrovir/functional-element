@@ -4,6 +4,15 @@ import {MinimalElementDefinition} from '../minimal-element-definition.js';
 import {getTransformedTemplate} from '../transform-template.js';
 import {transformCssTemplate} from './css-transform.js';
 
+/**
+ * A template literal tag used to define styles for element definitions. In particular, this is used
+ * for the `styles` property in an element definitions init object.
+ *
+ * For security reasons, only literal string or number values may be interpolated inside of this
+ * taggedTemplate. To incorporate non-literal values, wrap the value in a call to `unsafeCSS`.
+ *
+ * @category Element Definition
+ */
 export function css(
     inputTemplateStrings: TemplateStringsArray,
     ...inputValues: (number | CSSResultGroup | MinimalElementDefinition | CSSResult)[]
