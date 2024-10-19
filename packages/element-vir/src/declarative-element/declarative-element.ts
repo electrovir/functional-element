@@ -152,15 +152,6 @@ export abstract class DeclarativeElement<
         BaseCssPropertyName<CustomElementTagName>,
         ReadonlyArray<string>
     >['styles'];
-    public static readonly isStrictInstance: StaticDeclarativeElementProperties<
-        CustomElementTagName,
-        PropertyInitMapBase,
-        PropertyInitMapBase,
-        EventsInitMap,
-        BaseCssPropertyName<CustomElementTagName>,
-        BaseCssPropertyName<CustomElementTagName>,
-        ReadonlyArray<string>
-    >['isStrictInstance'];
     public static readonly render: StaticDeclarativeElementProperties<
         CustomElementTagName,
         PropertyInitMapBase,
@@ -356,17 +347,6 @@ export type StaticDeclarativeElementProperties<
     readonly inputsType: Inputs;
     readonly stateType: Readonly<FlattenElementVirStateSetup<StateInit>>;
     readonly updateStateType: UpdateStateCallback<StateInit>;
-    readonly isStrictInstance: (
-        element: unknown,
-    ) => element is DeclarativeElement<
-        TagName,
-        Inputs,
-        StateInit,
-        EventsInit,
-        HostClassKeys,
-        CssVarKeys,
-        SlotNames
-    >;
     readonly hostClasses: HostClassNamesMap<string, HostClassKeys>;
     readonly cssVars: CssVars<TagName, CssVarKeys>;
 

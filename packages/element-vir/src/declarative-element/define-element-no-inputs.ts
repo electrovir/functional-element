@@ -239,8 +239,6 @@ export function defineElementNoInputs<
 
         public static override readonly assign = typedAssignCallback as any;
 
-        // this gets set below in Object.defineProperties
-        public static override readonly isStrictInstance: any = () => false;
         public static override readonly events: StaticDeclarativeElementProperties<
             TagName,
             Inputs,
@@ -445,12 +443,6 @@ export function defineElementNoInputs<
                 capitalizeFirstLetter: true,
             }),
             writable: true,
-        },
-        isStrictInstance: {
-            value: (element: unknown) => {
-                return element instanceof anonymousClass;
-            },
-            writable: false,
         },
     });
 

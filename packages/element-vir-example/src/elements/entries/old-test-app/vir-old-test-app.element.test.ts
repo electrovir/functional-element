@@ -49,7 +49,7 @@ describe(VirOldTestApp.tagName, () => {
     }
 
     function getAppElement(context: Element) {
-        if (VirOldTestApp.isStrictInstance(context)) {
+        if (context instanceof VirOldTestApp) {
             return context;
         }
         const appElement = context.querySelector(VirOldTestApp.tagName);
