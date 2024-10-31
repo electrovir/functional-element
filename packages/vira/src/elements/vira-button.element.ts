@@ -9,11 +9,23 @@ import {noNativeFormStyles} from '../styles/native-styles.js';
 import {defineViraElement} from './define-vira-element.js';
 import {ViraIcon} from './vira-icon.element.js';
 
+/**
+ * Button styles available for {@link ViraButton}.
+ *
+ * @category Button
+ */
 export enum ViraButtonStyle {
     Default = 'vira-button-default',
     Outline = 'vira-button-outline',
 }
 
+/**
+ * A custom button with default styling.
+ *
+ * @category Button
+ * @category Elements
+ * @see https://electrovir.github.io/element-vir/vira/book/elements/vira-button
+ */
 export const ViraButton = defineViraElement<{
     text?: string;
     icon?: undefined | Pick<ViraIconSvg, 'svgTemplate'>;

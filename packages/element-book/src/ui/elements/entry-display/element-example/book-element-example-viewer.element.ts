@@ -23,7 +23,7 @@ export const BookElementExampleViewer = defineBookElement<{
 
             if (
                 /** This is a check to make sure the input entry _does_ match the expected type. */
-
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 !inputs.elementExampleNode.entry.render ||
                 typeof inputs.elementExampleNode.entry.render === 'string'
             ) {

@@ -4,6 +4,7 @@ import {describe, it} from '@augment-vir/test';
 import {
     DeclarativeElement,
     DeclarativeElementDefinition,
+    EventDetail,
     Observable,
     TemplateResult,
     TypedEvent,
@@ -15,7 +16,6 @@ import {
     html,
     listen,
 } from 'element-vir';
-import {EventDetail} from '../../element-vir/src/declarative-element/properties/element-events.js';
 import {TestChildElement} from './elements/entries/old-test-app/child.element.js';
 import {VirOldTestApp} from './elements/entries/old-test-app/vir-old-test-app.element.js';
 import {VirTestBookApp} from './elements/vir-test-book-app.element.js';

@@ -1,5 +1,10 @@
 import {css} from 'element-vir';
 
+/**
+ * A chunk of CSS that disables user selection.
+ *
+ * @category Styles
+ */
 export const noUserSelect = css`
     /* iOS Safari */
     -webkit-touch-callout: none;

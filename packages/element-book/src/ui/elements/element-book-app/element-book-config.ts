@@ -31,9 +31,9 @@ export type OptionalConfig = {
          * Set this internal router config if element-book is intended to be the current website's
          * entire web app. Meaning, you're not embedded element-book within another website.
          *
-         * In this case, element-book will create its own internal router for managing the URL. In other
-         * cases, when element-book is embedded in another website, use the elementBookRoutePaths input
-         * property instead.
+         * In this case, element-book will create its own internal router for managing the URL. In
+         * other cases, when element-book is embedded in another website, use the
+         * elementBookRoutePaths input property instead.
          */
         internalRouterConfig: Readonly<{
             useInternalRouter: true;

@@ -41,6 +41,11 @@ import {
 import {ViraDropdownOption} from './vira-dropdown-item.element.js';
 import {ViraDropdownOptions} from './vira-dropdown-options.element.js';
 
+/**
+ * Test ids for {@link ViraDropdown}.
+ *
+ * @category Internal
+ */
 export const viraDropdownTestIds = {
     trigger: 'dropdown-trigger',
     icon: 'dropdown-icon',
@@ -48,6 +53,13 @@ export const viraDropdownTestIds = {
     options: 'dropdown-options',
 };
 
+/**
+ * The main dropdown element that should be use directly.
+ *
+ * @category Dropdown
+ * @category Elements
+ * @see https://electrovir.github.io/element-vir/vira/book/elements/dropdown/vira-dropdown
+ */
 export const ViraDropdown = defineViraElement<
     {
         options: ReadonlyArray<Readonly<ViraDropdownOption>>;

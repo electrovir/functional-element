@@ -2,6 +2,11 @@ import {wrapInTry} from '@augment-vir/common';
 import {Format} from 'colorjs.io/types/src/space';
 import {Color, ColorTypes} from '../re-exports/colorjs-io.js';
 
+/**
+ * Asserts that the given color type is valid.
+ *
+ * @category Internal
+ */
 export function getAssertedValidColor(input: ColorTypes | undefined) {
     try {
         if (!input) {
@@ -17,6 +22,11 @@ export function getAssertedValidColor(input: ColorTypes | undefined) {
     }
 }
 
+/**
+ * The colorjs format for CSS RGB colors.
+ *
+ * @category Internal
+ */
 export const rgbCssColorFormat: Format = {
     name: 'rgb',
     coords: [

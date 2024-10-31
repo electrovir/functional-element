@@ -37,7 +37,7 @@ describe(assertDeclarativeElementDefinition.name, () => {
                 5,
             ],
             throws: {
-                matchMessage: 'input is not an element constructor',
+                matchMessage: 'Input is not a declarative element constructor',
             },
         },
         {

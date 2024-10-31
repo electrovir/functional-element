@@ -2,6 +2,13 @@ import {html} from 'element-vir';
 import {viraIconCssVars} from '../icon-css-vars.js';
 import {defineIcon} from '../icon-svg.js';
 
+/**
+ * An open eye icon.
+ *
+ * @category Icon
+ * @category SVG
+ * @see https://electrovir.github.io/element-vir/vira/book/icons/eyeopen24icon
+ */
 export const EyeOpen24Icon = defineIcon({
     name: 'EyeOpen24Icon',
     svgTemplate: html`
@@ -20,5 +27,3 @@ export const EyeOpen24Icon = defineIcon({
         </svg>
     `,
 });
-
-// xml:space="preserve"

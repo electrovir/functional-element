@@ -14,7 +14,20 @@ export const typeDocConfig: Partial<TypeDocOptions> = {
     intentionallyNotExported: [],
     defaultCategory: 'MISSING CATEGORY',
     categoryOrder: [
-        'Main',
+        ...[
+            'Button',
+            'Collapsible',
+            'Dropdown',
+            'Icon',
+            'Image',
+            'Input',
+            'Link',
+        ].sort(),
+        'CSS Vars',
+        'Elements',
+        'Pop Up',
+        'Styles',
+        'SVG',
         'Internal',
     ],
 };

@@ -2,6 +2,13 @@ import {html} from 'element-vir';
 import {viraIconCssVars} from '../icon-css-vars.js';
 import {defineIcon} from '../icon-svg.js';
 
+/**
+ * A closed or disable eye icon.
+ *
+ * @category Icon
+ * @category SVG
+ * @see https://electrovir.github.io/element-vir/vira/book/icons/eyeclosed24icon
+ */
 export const EyeClosed24Icon = defineIcon({
     name: 'EyeClosed24Icon',
     svgTemplate: html`

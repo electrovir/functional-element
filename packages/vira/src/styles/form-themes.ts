@@ -1,6 +1,12 @@
 import {defineCssVars} from 'lit-css-vars';
 import {viraFocusCssVars} from './focus.js';
 
+/**
+ * CSS vars for vira form elements.
+ *
+ * @category CSS Vars
+ * @category Styles
+ */
 export const viraFormCssVars = defineCssVars({
     'vira-form-border-color': '#cccccc',
     'vira-form-background-color': 'white',

@@ -30,6 +30,11 @@ export * from './icon-svgs/status-failure-24.icon.js';
 export * from './icon-svgs/status-in-progress-24.icon.js';
 export * from './icon-svgs/status-success-24.icon.js';
 
+/**
+ * All Vira icons in an object mapped by their icon name.
+ *
+ * @category Icon
+ */
 export const allIconsByName = {
     Check24Icon,
     ChevronUp24Icon,

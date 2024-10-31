@@ -14,6 +14,11 @@ import {
     listenToGlobal,
 } from 'typed-event-target';
 
+/**
+ * A type used for representing a rectangle's position.
+ *
+ * @category Internal
+ */
 export type PositionRect = {
     top: number;
     left: number;
@@ -21,6 +26,11 @@ export type PositionRect = {
     bottom: number;
 };
 
+/**
+ * The default empty {@link PositionRect}, with all values set to 0.
+ *
+ * @category Internal
+ */
 export const emptyPositionRect: PositionRect = {
     top: 0,
     left: 0,
@@ -28,6 +38,11 @@ export const emptyPositionRect: PositionRect = {
     bottom: 0,
 };
 
+/**
+ * Options for {@link PopUpManager}.
+ *
+ * @category Pop Up
+ */
 export type PopUpManagerOptions = {
     /**
      * The minimum number of pixels for allowing the pop-up to go downwards. If the downward
@@ -64,6 +79,11 @@ export type PopUpManagerOptions = {
     supportNavigation: boolean;
 };
 
+/**
+ * Output type from {@link PopUpManager.showPopUp}
+ *
+ * @category Pop Up
+ */
 export type ShowPopUpResult = {
     /**
      * Indicates if the "pop up" should pop in the downwards direction or not. If not, it should pop
@@ -74,11 +94,32 @@ export type ShowPopUpResult = {
     positions: Record<'root' | 'container' | 'diff', PositionRect>;
 };
 
+/**
+ * An event fired from {@link PopUpManager} when the pop up should be hidden.
+ *
+ * @category Pop Up
+ */
 export class HidePopUpEvent extends defineTypedEvent('hide-pop-up') {}
+/**
+ * An event fired from {@link PopUpManager} when an individual item in the pop up has been selected
+ * by the user.
+ *
+ * @category Pop Up
+ */
 export class NavSelectEvent extends defineTypedCustomEvent<Coords>()('nav-select') {}
 
+/**
+ * All events that can be emitted by {@link PopUpManager}.
+ *
+ * @category Internal
+ */
 export type PopUpManagerEvents = HidePopUpEvent | NavSelectEvent;
 
+/**
+ * A "pop up" manager for items that pop up from the HTML page, like dropdowns or menus.
+ *
+ * @category Pop Up
+ */
 export class PopUpManager {
     private listenTarget = new ListenTarget<PopUpManagerEvents>();
     private options: PopUpManagerOptions = {
@@ -170,6 +211,7 @@ export class PopUpManager {
         ];
     }
 
+    /** Listen to events emitted from a {@link PopUpManager} instance. */
     public listen<
         const EventDefinition extends Readonly<{
             type: ExtractEventTypes<PopUpManagerEvents>;
@@ -184,11 +226,13 @@ export class PopUpManager {
         return this.listenTarget.listen(event, listener, options);
     }
 
+    /** Trigger removal or hiding of the pop up. */
     public removePopUp() {
         this.cleanupCallbacks.forEach((callback) => callback());
         this.listenTarget.dispatch(new HidePopUpEvent());
     }
 
+    /** Trigger showing the pop up. */
     public showPopUp(
         rootElement: HTMLElement,
         options?: Partial<PopUpManagerOptions> | undefined,
@@ -244,6 +288,12 @@ export class PopUpManager {
         };
     }
 
+    /**
+     * Cleanup and destroy the {@link PopUpManager} instance. This:
+     *
+     * - Removes the existing pop up
+     * - Cleans up all internal and external listeners
+     */
     public destroy() {
         this.removePopUp();
         this.listenTarget.destroy();

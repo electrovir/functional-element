@@ -33,7 +33,12 @@ export type ElementExamplesDefiner<
     ControlsInit extends BookPageControlsInitBase = BookPageControlsInitBase,
 > = (params: {defineExample: DefineExampleCallback<GlobalValuesType, ControlsInit>}) => void;
 
-type CollapseControlsInit<
+/**
+ * Collapses all element-book control inits into a single flag object.
+ *
+ * @category Internal
+ */
+export type CollapseControlsInit<
     ParentPage extends BookPage | undefined,
     CurrentControlsInit extends BookPageControlsInitBase,
     /** Prevent infinite recursion TypeScript errors. */
@@ -50,7 +55,12 @@ type CollapseControlsInit<
             : EmptyObject
         : EmptyObject);
 
-type CollapseGlobalValuesType<
+/**
+ * Collapses all element-book global values into a single flag object.
+ *
+ * @category Internal
+ */
+export type CollapseGlobalValuesType<
     ParentPage extends BookPage | undefined,
     GlobalValuesType extends GlobalValues,
     /** Prevent infinite recursion TypeScript errors. */

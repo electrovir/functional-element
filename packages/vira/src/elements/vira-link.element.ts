@@ -3,6 +3,14 @@ import {FullRoute, SpaRouter} from 'spa-router-vir';
 import {RequireExactlyOne} from 'type-fest';
 import {defineViraElement} from './define-vira-element.js';
 
+/**
+ * A hyperlink wrapper element that can be configured to emit route change events rather than just
+ * being a raw link.
+ *
+ * @category Link
+ * @category Elements
+ * @see https://electrovir.github.io/element-vir/vira/book/elements/vira-link
+ */
 export const ViraLink = defineViraElement<
     RequireExactlyOne<{
         /**

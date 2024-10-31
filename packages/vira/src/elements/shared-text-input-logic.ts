@@ -1,5 +1,10 @@
 import {extractEventTarget} from '@augment-vir/web';
 
+/**
+ * Inputs shared between the multiple input elements.
+ *
+ * @category Internal
+ */
 export type SharedTextInputElementInputs = {
     value: string;
     /** Shown when no other text is present. Input restrictions do not apply to this property. */
@@ -37,6 +42,11 @@ function doesMatch({input, matcher}: {input: string; matcher: string | RegExp}):
     }
 }
 
+/**
+ * Inputs used to check if the current input element value is allowed.
+ *
+ * @category Internal
+ */
 export type IsAllowedInputs = {
     value: string;
     allowed: string | RegExp | undefined;
@@ -60,6 +70,11 @@ function isAllowed({value, allowed, blocked}: IsAllowedInputs) {
     return isAllowedCharacter && !isBlockedCharacter;
 }
 
+/**
+ * Filters out blocked text from an input element's value.
+ *
+ * @category Internal
+ */
 export function filterTextInputValue(inputs: IsAllowedInputs): {
     filtered: string;
     blocked: string;
@@ -90,6 +105,11 @@ export function filterTextInputValue(inputs: IsAllowedInputs): {
     };
 }
 
+/**
+ * A function to be called when an input element's value changes.
+ *
+ * @category Internal
+ */
 export function textInputListener({
     inputs,
     filteredValue,

@@ -1,5 +1,10 @@
 import {css, unsafeCSS} from 'element-vir';
 
+/**
+ * A function that generates CSS to hide scrollbars for the given CSS selector.
+ *
+ * @category Styles
+ */
 export function hideScrollbars(selector: string) {
     return css`
         ${unsafeCSS(selector)} {

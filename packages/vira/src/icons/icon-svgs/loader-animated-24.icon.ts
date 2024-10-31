@@ -19,6 +19,13 @@ const animatedLoaderStyles = css`
     }
 `;
 
+/**
+ * A variation of {@link Loader24Icon} that spins on its own.
+ *
+ * @category Icon
+ * @category SVG
+ * @see https://electrovir.github.io/element-vir/vira/book/icons/loaderanimated24icon
+ */
 export const LoaderAnimated24Icon = defineIcon({
     name: 'LoaderAnimated24Icon',
     svgTemplate: html`

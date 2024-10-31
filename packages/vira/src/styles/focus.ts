@@ -3,6 +3,12 @@ import {css, unsafeCSS} from 'element-vir';
 import {defineCssVars} from 'lit-css-vars';
 import {viraBorders} from './border.js';
 
+/**
+ * CSS vars for Vira focus colors.
+ *
+ * @category CSS Vars
+ * @category Styles
+ */
 export const viraFocusCssVars = defineCssVars({
     'vira-focus-outline-color': '#59b1ff',
     'vira-focus-outline-border-radius': css`calc(${viraBorders['vira-form-input-radius'].value} + 4px)`,
@@ -11,8 +17,10 @@ export const viraFocusCssVars = defineCssVars({
 /**
  * Create styles that look like an outline for the given selector.
  *
- * It is recommended to use the pseudo selectors ":focus:focus-visible:not(:active)" to preventing
- * clicking from creating focus styles in Chrome.
+ * It is recommended to use the pseudo selector chain ":focus:focus-visible:not(:active)" to
+ * preventing clicking an element from creating focus styles in Chrome.
+ *
+ * @category Styles
  */
 export function createFocusStyles({
     selector,

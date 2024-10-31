@@ -2,6 +2,13 @@ import {html} from 'element-vir';
 import {viraIconCssVars} from '../icon-css-vars.js';
 import {defineIcon} from '../icon-svg.js';
 
+/**
+ * A status icon with an x that indicates something failed (like a build pipeline).
+ *
+ * @category Icon
+ * @category SVG
+ * @see https://electrovir.github.io/element-vir/vira/book/icons/statusfailure24icon
+ */
 export const StatusFailure24Icon = defineIcon({
     name: 'StatusFailure24Icon',
     svgTemplate: html`

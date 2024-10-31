@@ -27,12 +27,25 @@ import {ViraIcon} from './vira-icon.element.js';
 
 export * from './shared-text-input-logic.js';
 
+/**
+ * Input types for {@link ViraInput}.
+ *
+ * @category Input
+ */
 export enum ViraInputType {
     Default = 'text',
     Password = 'password',
     Email = 'email',
 }
 
+/**
+ * A single line input element with all listeners properly attached. Multiple types are allowed with
+ * {@link ViraInputType}.
+ *
+ * @category Input
+ * @category Elements
+ * @see https://electrovir.github.io/element-vir/vira/book/elements/vira-input
+ */
 export const ViraInput = defineViraElement<
     {
         icon?: undefined | Pick<ViraIconSvg, 'svgTemplate'>;
@@ -290,6 +303,9 @@ export const ViraInput = defineViraElement<
               `
             : '';
 
+        const shouldBlockBrowserHelps =
+            inputs.disableBrowserHelps || inputs.type !== ViraInputType.Default;
+
         return html`
             <label>
                 ${iconTemplate}
@@ -309,10 +325,10 @@ export const ViraInput = defineViraElement<
                 <input
                     type=${calculateEffectiveInputType(inputs.type, state.showPassword)}
                     style=${forcedInputWidthStyles}
-                    autocomplete=${inputs.disableBrowserHelps ? 'off' : ''}
-                    autocorrect=${inputs.disableBrowserHelps ? 'off' : ''}
-                    autocapitalize=${inputs.disableBrowserHelps ? 'off' : ''}
-                    spellcheck=${inputs.disableBrowserHelps ? 'false' : ''}
+                    autocomplete=${shouldBlockBrowserHelps ? 'off' : ''}
+                    autocorrect=${shouldBlockBrowserHelps ? 'off' : ''}
+                    autocapitalize=${shouldBlockBrowserHelps ? 'off' : ''}
+                    spellcheck=${shouldBlockBrowserHelps ? 'false' : ''}
                     ?disabled=${inputs.disabled}
                     .value=${filteredValue}
                     ${listen('input', (event) => {

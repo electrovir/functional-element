@@ -11,6 +11,10 @@ import {ViraIcon} from './vira-icon.element.js';
  *
  * Use CSS properties to constrain the image. In particular, set `min-height` and `min-width` on
  * this to control the size of the loader and error slots.
+ *
+ * @category Image
+ * @category Elements
+ * @see https://electrovir.github.io/element-vir/vira/book/elements/vira-image
  */
 export const ViraImage = defineViraElement<{
     /** The URL of the image to load. This is passed directly to the `<img>` element. */

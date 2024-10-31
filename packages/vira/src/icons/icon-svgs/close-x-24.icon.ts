@@ -2,6 +2,13 @@ import {html} from 'element-vir';
 import {viraIconCssVars} from '../icon-css-vars.js';
 import {defineIcon} from '../icon-svg.js';
 
+/**
+ * An x icon meant to be used as a "close" button.
+ *
+ * @category Icon
+ * @category SVG
+ * @see https://electrovir.github.io/element-vir/vira/book/icons/closex24icon
+ */
 export const CloseX24Icon = defineIcon({
     name: 'CloseX24Icon',
     svgTemplate: html`

@@ -2,6 +2,13 @@ import {html} from 'element-vir';
 import {viraIconCssVars} from '../icon-css-vars.js';
 import {defineIcon} from '../icon-svg.js';
 
+/**
+ * A static loading icon.
+ *
+ * @category Icon
+ * @category SVG
+ * @see https://electrovir.github.io/element-vir/vira/book/icons/loader24icon
+ */
 export const Loader24Icon = defineIcon({
     name: 'Loader24Icon',
     svgTemplate: html`

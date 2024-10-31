@@ -6,17 +6,28 @@ import {noUserSelect, viraAnimationDurations} from '../../styles/index.js';
 import {defineViraElement} from '../define-vira-element.js';
 import {ViraIcon} from '../vira-icon.element.js';
 
+/**
+ * An individual option for ViraDropdown.
+ *
+ * @category Dropdown
+ */
 export type ViraDropdownOption = {
     /** Each `id` must be unique across all options. */
     id: PropertyKey;
     label: string;
 } & PartialWithUndefined<{
-    disabled?: boolean | undefined;
-    hoverText?: string | undefined;
+    disabled: boolean;
+    hoverText: string;
     /** An optional custom template for this option. */
-    template?: HTMLTemplateResult | undefined;
+    template: HTMLTemplateResult;
 }>;
 
+/**
+ * An element for an individual item in the ViraDropdown menu.
+ *
+ * @category Dropdown
+ * @category Elements
+ */
 export const ViraDropdownItem = defineViraElement<{
     label: string;
     selected: boolean;

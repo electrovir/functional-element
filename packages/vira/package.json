@@ -31,7 +31,9 @@
     "types": "src/index.ts",
     "scripts": {
         "compile": "virmator compile",
-        "test": "virmator test web"
+        "docs": "virmator docs",
+        "test": "virmator test web",
+        "test:docs": "virmator docs check"
     },
     "dependencies": {
         "@augment-vir/assert": "^30.2.0",

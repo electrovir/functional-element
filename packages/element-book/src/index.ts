@@ -15,3 +15,4 @@ export * from './ui/elements/element-book-app/element-book-app-slots.js';
 export * from './ui/elements/element-book-app/element-book-app.element.js';
 export * from './ui/elements/element-book-app/element-book-config.js';
 export * from './ui/elements/element-book-app/global-values.js';
+export * from './util/type.js';

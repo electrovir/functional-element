@@ -2,6 +2,13 @@ import {css, defineElementEvent, html, listen, onResize} from 'element-vir';
 import {noNativeFormStyles, viraAnimationDurations} from '../styles/index.js';
 import {defineViraElement} from './define-vira-element.js';
 
+/**
+ * A wrapper element that can collapse and expand to fit its content dynamically and efficiently.
+ *
+ * @category Collapsible
+ * @category Elements
+ * @see https://electrovir.github.io/element-vir/vira/book/elements/vira-collapsible-wrapper
+ */
 export const ViraCollapsibleWrapper = defineViraElement<{expanded: boolean}>()({
     tagName: 'vira-collapsible-wrapper',
     hostClasses: {

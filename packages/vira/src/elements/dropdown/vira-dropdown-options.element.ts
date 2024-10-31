@@ -16,10 +16,21 @@ import {viraShadows} from '../../styles/shadows.js';
 import {defineViraElement} from '../define-vira-element.js';
 import {ViraDropdownItem, ViraDropdownOption} from './vira-dropdown-item.element.js';
 
+/**
+ * Test ids for {@link ViraDropdownOptions}.
+ *
+ * @category Internal
+ */
 export const viraDropdownOptionsTestIds = {
     option: 'dropdown-option',
 };
 
+/**
+ * The dropdown menu portion of `ViraDropdown`.
+ *
+ * @category Dropdown
+ * @category Elements
+ */
 export const ViraDropdownOptions = defineViraElement<
     Readonly<{
         /** All dropdown options to show to the user. */

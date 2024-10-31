@@ -2,6 +2,13 @@ import {css} from 'element-vir';
 import {ViraIconSvg} from '../icons/icon-svg.js';
 import {defineViraElement} from './define-vira-element.js';
 
+/**
+ * An element that renders a single {@link ViraIconSvg}.
+ *
+ * @category Icon
+ * @category Elements
+ * @see https://electrovir.github.io/element-vir/vira/book/elements/vira-icon
+ */
 export const ViraIcon = defineViraElement<{
     icon: Pick<ViraIconSvg, 'svgTemplate'> | undefined;
     /** Ignores the given icon's embedded size and causes the <svg> element to fill its parent. */

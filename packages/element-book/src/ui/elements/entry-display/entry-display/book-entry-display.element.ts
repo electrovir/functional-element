@@ -106,7 +106,7 @@ export const BookEntryDisplay = defineBookElement<{
                 inputs.showLoading,
                 html`
                     <div
-                        ${onDomCreated((element) => {
+                        ${onDomCreated(() => {
                             dispatch(new events.loadingRender(true));
                         })}
                         class="loading"

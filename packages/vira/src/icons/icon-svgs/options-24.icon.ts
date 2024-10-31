@@ -2,6 +2,13 @@ import {html} from 'element-vir';
 import {viraIconCssVars} from '../icon-css-vars.js';
 import {defineIcon} from '../icon-svg.js';
 
+/**
+ * An icon that represents configuration options.
+ *
+ * @category Icon
+ * @category SVG
+ * @see https://electrovir.github.io/element-vir/vira/book/icons/options24icon
+ */
 export const Options24Icon = defineIcon({
     name: 'Options24Icon',
     svgTemplate: html`

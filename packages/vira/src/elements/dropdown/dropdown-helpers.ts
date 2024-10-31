@@ -2,6 +2,11 @@ import {joinWithFinalConjunction} from '@augment-vir/common';
 import {PopUpManager, ShowPopUpResult} from '../../util/pop-up-manager.js';
 import {ViraDropdownOption} from './vira-dropdown-item.element.js';
 
+/**
+ * Filters an array of {@link ViraDropdownOption} based on the given selection.
+ *
+ * @category Internal
+ */
 export function filterToSelectedOptions({
     selected,
     options,
@@ -27,6 +32,11 @@ export function filterToSelectedOptions({
     }
 }
 
+/**
+ * Verifies that all options have unique ids.
+ *
+ * @category Internal
+ */
 export function assertUniqueIdProps(options: ReadonlyArray<Readonly<{id: PropertyKey}>>) {
     const usedIds = new Set<PropertyKey>();
     const duplicateIds: PropertyKey[] = [];
@@ -45,7 +55,14 @@ export function assertUniqueIdProps(options: ReadonlyArray<Readonly<{id: Propert
     }
 }
 
+/**
+ * Creates a new array of selections based on the current selection and new selection id. This
+ * behaves differently when multi select is enabled, hence this function.
+ *
+ * @category Internal
+ */
 export function createNewSelection(
+    /** The id of the option that should be newly selected. */
     id: PropertyKey,
     currentSelection: ReadonlyArray<PropertyKey>,
     isMultiSelect: boolean,
@@ -63,6 +80,11 @@ export function createNewSelection(
     }
 }
 
+/**
+ * Handles toggles pop up state for `ViraDropdown`.
+ *
+ * @category Internal
+ */
 export function triggerPopUpState(
     {open, emitEvent}: {open: boolean; emitEvent: boolean},
     {

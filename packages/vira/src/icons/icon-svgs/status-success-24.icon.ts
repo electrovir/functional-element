@@ -2,6 +2,13 @@ import {html} from 'element-vir';
 import {viraIconCssVars} from '../icon-css-vars.js';
 import {defineIcon} from '../icon-svg.js';
 
+/**
+ * A status icon that indicates success.
+ *
+ * @category Icon
+ * @category SVG
+ * @see https://electrovir.github.io/element-vir/vira/book/icons/statussuccess24icon
+ */
 export const StatusSuccess24Icon = defineIcon({
     name: 'StatusSuccess24Icon',
     svgTemplate: html`

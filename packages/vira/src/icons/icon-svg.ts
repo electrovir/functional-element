@@ -3,11 +3,21 @@ import {TemplateResult, html} from 'element-vir';
 import {getAssertedValidColor} from '../styles/color.js';
 import {viraIconCssVars} from './icon-css-vars.js';
 
+/**
+ * An individual Vira icon SVG definition.
+ *
+ * @category Icon
+ */
 export type ViraIconSvg = {
     name: string;
     svgTemplate: TemplateResult;
 };
 
+/**
+ * A function used to define an individual Vira icon SVG.
+ *
+ * @category Icon
+ */
 export function defineIcon({
     name,
     svgTemplate,
@@ -23,6 +33,12 @@ export function defineIcon({
     return iconSvg;
 }
 
+/**
+ * Wraps an existing icon with a specific color and outputs another icon that can be used anywhere
+ * the original icon can be used.
+ *
+ * @category Icon
+ */
 export function createColoredIcon(
     icon: ViraIconSvg,
     colors: Partial<Record<keyof typeof viraIconCssVars, string>>,
