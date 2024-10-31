@@ -29,13 +29,18 @@ const buildPackageInfos: ReadonlyArray<Readonly<BuildPackageInfo>> = [
         copyFrom: 'dist-book',
         copyTo: 'vira',
     },
+    {
+        packagePath: 'vira',
+        copyFrom: 'dist-docs',
+        copyTo: join('vira', 'docs'),
+    },
 ];
 
 async function buildPackagePage(buildInfo: Readonly<BuildPackageInfo>): Promise<void> {
     const packagePath = join(packagesDir, buildInfo.packagePath);
     try {
         log.info(`Building ${packagePath}...`);
-        await runShellCommand('npm run build:pages', {
+        await runShellCommand('npm run build', {
             cwd: packagePath,
         });
 

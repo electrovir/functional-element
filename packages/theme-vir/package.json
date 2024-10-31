@@ -1,6 +1,6 @@
 {
     "name": "theme-vir",
-    "version": "22.2.2",
+    "version": "23.0.0",
     "private": true,
     "description": "Create an entire web theme.",
     "keywords": [
@@ -39,22 +39,22 @@
         "test:docs": "virmator docs check"
     },
     "dependencies": {
-        "@augment-vir/assert": "^30.2.0",
+        "@augment-vir/assert": "^30.3.0",
         "@augment-vir/common": "^30.3.0"
     },
     "devDependencies": {
-        "@augment-vir/test": "^30.2.0",
+        "@augment-vir/test": "^30.3.0",
         "@web/dev-server-esbuild": "^1.0.2",
         "@web/test-runner": "^0.19.0",
         "@web/test-runner-commands": "^0.9.0",
         "@web/test-runner-playwright": "^0.11.0",
         "@web/test-runner-visual-regression": "^0.10.0",
-        "element-book": "*",
-        "element-vir": "*",
+        "element-book": "^23.0.0",
+        "element-vir": "^23.0.0",
         "esbuild": "^0.24.0",
         "istanbul-smart-text-reporter": "^1.1.5",
         "typescript": "5.6.3",
-        "vite": "^5.4.8",
+        "vite": "^5.4.10",
         "vite-tsconfig-paths": "^5.0.1"
     },
     "peerDependencies": {

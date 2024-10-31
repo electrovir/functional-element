@@ -1,6 +1,6 @@
 {
     "name": "@electrovir/scripts",
-    "version": "22.2.2",
+    "version": "23.0.0",
     "private": true,
     "license": "(MIT or CC0 1.0)",
     "author": {
@@ -21,12 +21,12 @@
         "@augment-vir/common": "^30.3.0",
         "@augment-vir/node": "^30.3.0",
         "prettier": "^3.3.3",
-        "tsx": "^4.19.1"
+        "tsx": "^4.19.2"
     },
     "devDependencies": {
-        "@types/node": "^22.7.5",
+        "@types/node": "^22.8.5",
         "markdown-code-example-inserter": "^3.0.0",
-        "typedoc": "^0.26.8",
+        "typedoc": "^0.26.10",
         "typescript": "5.6.3"
     },
     "engines": {
