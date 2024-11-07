@@ -42,6 +42,7 @@ async function buildPackagePage(buildInfo: Readonly<BuildPackageInfo>): Promise<
         log.info(`Building ${packagePath}...`);
         await runShellCommand('npm run build', {
             cwd: packagePath,
+            rejectOnError: true,
         });
 
         const copyFromDir = join(packagePath, buildInfo.copyFrom);

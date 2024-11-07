@@ -11,9 +11,11 @@ export default defineConfig(
             ...baseConfig,
             base: '/element-vir/vira',
             build: {
+                ...baseConfig.build,
                 outDir: join(basePaths.cwd, 'dist-book'),
             },
             resolve: {
+                ...baseConfig.resolve,
                 alias: {
                     'element-vir': resolve('../element-vir/src/index.ts'),
                     'element-book': resolve('../element-book/src/index.ts'),
