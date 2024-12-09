@@ -39,12 +39,12 @@
         "test:docs": "virmator docs check"
     },
     "dependencies": {
-        "@augment-vir/assert": "^30.3.0",
-        "@augment-vir/common": "^30.3.0"
+        "@augment-vir/assert": "^31.0.1",
+        "@augment-vir/common": "^31.0.1"
     },
     "devDependencies": {
-        "@augment-vir/test": "^30.3.0",
-        "@web/dev-server-esbuild": "^1.0.2",
+        "@augment-vir/test": "^31.0.1",
+        "@web/dev-server-esbuild": "^1.0.3",
         "@web/test-runner": "^0.19.0",
         "@web/test-runner-commands": "^0.9.0",
         "@web/test-runner-playwright": "^0.11.0",
@@ -53,9 +53,9 @@
         "element-vir": "^23.0.0",
         "esbuild": "^0.24.0",
         "istanbul-smart-text-reporter": "^1.1.5",
-        "typescript": "5.6.3",
-        "vite": "^5.4.10",
-        "vite-tsconfig-paths": "^5.0.1"
+        "typescript": "5.7.2",
+        "vite": "^6.0.3",
+        "vite-tsconfig-paths": "^5.1.4"
     },
     "peerDependencies": {
         "element-book": ">=17",
