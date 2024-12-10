@@ -219,8 +219,8 @@ export const MyWithAssignment = defineElementNoInputs({
 
 There are two other callbacks you can define that are sort of similar to lifecycle callbacks. They are much simpler than lifecycle callbacks however.
 
--   `init`: called right before the first render and has all state and inputs setup. (This is similar to `connectedCallback` in standard HTMLElement classes but is fired much later, after inputs are assigned, to avoid race conditions.)
--   `cleanup`: called when an element is removed from the DOM. (This is the same as the `disconnectedCallback` in standard HTMLElement classes.)
+- `init`: called right before the first render and has all state and inputs setup. (This is similar to `connectedCallback` in standard HTMLElement classes but is fired much later, after inputs are assigned, to avoid race conditions.)
+- `cleanup`: called when an element is removed from the DOM. (This is the same as the `disconnectedCallback` in standard HTMLElement classes.)
 
 <!-- example-link: src/readme-examples/my-with-cleanup-callback.element.ts -->
 
@@ -369,8 +369,8 @@ Host classes can be defined and used with type safety. Host classes are used to 
 
 Host classes are defined by passing an object to `hostClasses` at element definition time. Each property name in the `hostClasses` object creates a host class name (note that host class names must start with the element's tag name). Each value in the `hostClasses` object defines behavior for the host class:
 
--   if the value is a callback, that host class will automatically be applied if the callback returns true after a render is executed.
--   if the value is `false`, the host class is never automatically applied, it must be manually applied by consumers.
+- if the value is a callback, that host class will automatically be applied if the callback returns true after a render is executed.
+- if the value is `false`, the host class is never automatically applied, it must be manually applied by consumers.
 
 Apply host classes in the element's stylesheet by using a callback for the styles property:
 

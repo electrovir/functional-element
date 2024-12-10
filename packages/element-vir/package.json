@@ -1,6 +1,6 @@
 {
     "name": "element-vir",
-    "version": "23.0.0",
+    "version": "23.1.0",
     "keywords": [
         "custom",
         "web",
@@ -40,12 +40,12 @@
     "dependencies": {
         "@augment-vir/assert": "^31.0.1",
         "@augment-vir/common": "^31.0.1",
-        "date-vir": "^7.0.2",
+        "date-vir": "^7.0.3",
         "lit": "^3.2.1",
-        "lit-css-vars": "^3.0.10",
+        "lit-css-vars": "^3.0.11",
         "lit-html": "^3.2.1",
         "object-shape-tester": "^3.1.4",
-        "observavir": "^2.0.3",
+        "observavir": "^2.0.4",
         "typed-event-target": "^4.0.2"
     },
     "devDependencies": {
@@ -56,9 +56,9 @@
         "@web/test-runner-commands": "^0.9.0",
         "@web/test-runner-playwright": "^0.11.0",
         "@web/test-runner-visual-regression": "^0.10.0",
-        "html-spec-tags": "^2.2.1",
+        "html-spec-tags": "^2.2.2",
         "istanbul-smart-text-reporter": "^1.1.5",
-        "markdown-code-example-inserter": "^3.0.2",
+        "markdown-code-example-inserter": "^3.0.3",
         "type-fest": "^4.30.0",
         "typedoc": "^0.27.4",
         "typescript": "5.7.2",

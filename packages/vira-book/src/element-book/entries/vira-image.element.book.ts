@@ -22,15 +22,21 @@ export const viraImageBookPage = defineBookPage({
         }> = [
             {
                 title: 'simple image',
-                inputs: {imageUrl: '/bolt.png'},
+                inputs: {imageUrl: '/element-vir/vira/bolt.png'},
             },
             {
                 title: 'infinite loading',
-                inputs: {imageUrl: '/bolt.png', _debugLoadDelay: {milliseconds: Infinity}},
+                inputs: {
+                    imageUrl: '/element-vir/vira/bolt.png',
+                    _debugLoadDelay: {milliseconds: Infinity},
+                },
             },
             {
                 title: 'custom loading',
-                inputs: {imageUrl: '/bolt.png', _debugLoadDelay: {milliseconds: Infinity}},
+                inputs: {
+                    imageUrl: '/element-vir/vira/bolt.png',
+                    _debugLoadDelay: {milliseconds: Infinity},
+                },
                 styles: css`
                     border-radius: 32px;
                 `,
@@ -94,7 +100,7 @@ export const viraImageBookPage = defineBookPage({
             },
             {
                 title: 'disproportionate dimensions',
-                inputs: {imageUrl: '/bolt.png'},
+                inputs: {imageUrl: '/element-vir/vira/bolt.png'},
                 styles: css`
                     width: 25px;
                     height: 200px;
@@ -102,7 +108,10 @@ export const viraImageBookPage = defineBookPage({
             },
             {
                 title: 'dominant height',
-                inputs: {imageUrl: '/bolt.png', dominantDimension: 'height'},
+                inputs: {
+                    imageUrl: '/element-vir/vira/bolt.png',
+                    dominantDimension: 'height',
+                },
                 styles: css`
                     width: 25px;
                     height: 200px;
@@ -111,7 +120,7 @@ export const viraImageBookPage = defineBookPage({
             {
                 title: 'long loading',
                 inputs: {
-                    imageUrl: '/bolt.png',
+                    imageUrl: '/element-vir/vira/bolt.png',
                     _debugLoadDelay: {milliseconds: 2000},
                 },
                 styles: css`

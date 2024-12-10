@@ -10,8 +10,8 @@ npm i element-book
 
 ## Terminology
 
--   **Page**: a group of pages and / or element examples. Pages can be infinitely nested.
--   **Element Example**: an individual element example with independent state, styles, title, etc.
+- **Page**: a group of pages and / or element examples. Pages can be infinitely nested.
+- **Element Example**: an individual element example with independent state, styles, title, etc.
 
 ## Usage
 

@@ -1,6 +1,6 @@
 {
     "name": "vira",
-    "version": "23.0.0",
+    "version": "23.1.0",
     "description": "A simple and highly versatile design system using element-vir.",
     "keywords": [
         "design",
@@ -41,10 +41,10 @@
         "@augment-vir/common": "^31.0.1",
         "@augment-vir/web": "^31.0.1",
         "colorjs.io": "^0.5.2",
-        "date-vir": "^7.0.2",
-        "device-navigation": "^3.0.1",
-        "lit-css-vars": "^3.0.10",
-        "observavir": "^2.0.3",
+        "date-vir": "^7.0.3",
+        "device-navigation": "^3.0.2",
+        "lit-css-vars": "^3.0.11",
+        "observavir": "^2.0.4",
         "page-active": "^1.0.0",
         "spa-router-vir": "^4.0.4",
         "type-fest": "^4.30.0",
@@ -59,14 +59,14 @@
         "@web/test-runner-visual-regression": "^0.10.0",
         "esbuild": "^0.24.0",
         "istanbul-smart-text-reporter": "^1.1.5",
-        "markdown-code-example-inserter": "^3.0.2",
+        "markdown-code-example-inserter": "^3.0.3",
         "typedoc": "^0.27.4",
         "typescript": "5.7.2",
         "vite": "^6.0.3",
         "vite-tsconfig-paths": "^5.1.4"
     },
     "peerDependencies": {
-        "element-vir": "^23.0.0"
+        "element-vir": "^23.1.0"
     },
     "engines": {
         "node": ">=22"
