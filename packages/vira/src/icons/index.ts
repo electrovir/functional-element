@@ -1,5 +1,3 @@
-/** This file is automatically updated by update-icon-exports.ts */
-
 import {Chat24Icon} from './icon-svgs/chat-24.icon.js';
 import {Check24Icon} from './icon-svgs/check-24.icon.js';
 import {ChevronUp24Icon} from './icon-svgs/chevron-up-24.icon.js';
@@ -22,9 +20,12 @@ import {StatusSuccess24Icon} from './icon-svgs/status-success-24.icon.js';
 
 export * from './icon-css-vars.js';
 export * from './icon-svg.js';
+export * from './icon-svgs/chat-24.icon.js';
 export * from './icon-svgs/check-24.icon.js';
 export * from './icon-svgs/chevron-up-24.icon.js';
 export * from './icon-svgs/close-x-24.icon.js';
+export * from './icon-svgs/commit-24.icon.js';
+export * from './icon-svgs/document-24.icon.js';
 export * from './icon-svgs/element-16.icon.js';
 export * from './icon-svgs/element-24.icon.js';
 export * from './icon-svgs/eye-closed-24.icon.js';
@@ -32,6 +33,9 @@ export * from './icon-svgs/eye-open-24.icon.js';
 export * from './icon-svgs/loader-24.icon.js';
 export * from './icon-svgs/loader-animated-24.icon.js';
 export * from './icon-svgs/options-24.icon.js';
+export * from './icon-svgs/pencil-24.icon.js';
+export * from './icon-svgs/shield-24.icon.js';
+export * from './icon-svgs/star-24.icon.js';
 export * from './icon-svgs/status-failure-24.icon.js';
 export * from './icon-svgs/status-in-progress-24.icon.js';
 export * from './icon-svgs/status-success-24.icon.js';

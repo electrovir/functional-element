@@ -1,5 +1,3 @@
-/** This file is automatically updated by update-index-exports.ts */
-
 export * from './define-vira-element.js';
 export * from './dropdown/vira-dropdown-item.element.js';
 export * from './dropdown/vira-dropdown-options.element.js';

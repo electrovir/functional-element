@@ -1,6 +1,6 @@
 {
     "name": "theme-vir",
-    "version": "23.1.0",
+    "version": "23.1.1",
     "private": true,
     "description": "Create an entire web theme.",
     "keywords": [
@@ -49,8 +49,8 @@
         "@web/test-runner-commands": "^0.9.0",
         "@web/test-runner-playwright": "^0.11.0",
         "@web/test-runner-visual-regression": "^0.10.0",
-        "element-book": "^23.1.0",
-        "element-vir": "^23.1.0",
+        "element-book": "^23.1.1",
+        "element-vir": "^23.1.1",
         "esbuild": "^0.24.0",
         "istanbul-smart-text-reporter": "^1.1.5",
         "typescript": "5.7.2",
