@@ -1,4 +1,4 @@
-import {wrapInTry} from '@augment-vir/common';
+import {stringify} from '@augment-vir/common';
 import {Format} from 'colorjs.io/types/src/space';
 import {Color, ColorTypes} from '../re-exports/colorjs-io.js';
 
@@ -14,11 +14,7 @@ export function getAssertedValidColor(input: ColorTypes | undefined) {
         }
         return new Color(input);
     } catch {
-        const stringInput = String(input);
-        const inputForMessage: string = stringInput.toLowerCase().match(/\[\s*object\s+object\s*\]/)
-            ? wrapInTry(() => JSON.stringify(input), {fallbackValue: stringInput})
-            : stringInput;
-        throw new Error(`Invalid color: ${inputForMessage}`);
+        throw new Error(`Invalid color: ${stringify(input)}`);
     }
 }
 

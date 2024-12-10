@@ -74,9 +74,9 @@ export const ViraInput = defineViraElement<
         'vira-input-clear-button-hover-color': '#ff0000',
         'vira-input-clear-button-active-color': '#b30000',
 
-        // eslint-disable-next-line sonarjs/no-hardcoded-credentials
+        // eslint-disable-next-line sonarjs/no-hardcoded-passwords
         'vira-input-show-password-button-hover-color': '#0a89ff',
-        // eslint-disable-next-line sonarjs/no-hardcoded-credentials
+        // eslint-disable-next-line sonarjs/no-hardcoded-passwords
         'vira-input-show-password-button-active-color': '#0261ba',
 
         'vira-input-padding-horizontal': '10px',

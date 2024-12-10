@@ -61,7 +61,6 @@ export function createElementPropertyProxy<PropertyInitGeneric extends PropertyI
     const elementAsProps = element as DeclarativeElement & PropertyInitGeneric;
 
     function verifyProperty(propertyKey: PropertyKey) {
-        // eslint-disable-next-line sonarjs/no-selector-parameter
         if (shouldAlreadyExist) {
             assertValidPropertyName(propertyKey, element, element.tagName);
         } else {

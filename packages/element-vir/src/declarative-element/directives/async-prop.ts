@@ -30,7 +30,6 @@ export type AsyncProp<Value, Params> = Omit<
  *
  * @category Internal
  */
-// eslint-disable-next-line sonarjs/no-redeclare
 export const AsyncProp: Constructor<
     AsyncProp<unknown, unknown>,
     ConstructorParameters<typeof InternalAsyncPropClass<unknown, unknown>>

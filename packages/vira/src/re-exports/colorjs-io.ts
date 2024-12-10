@@ -16,5 +16,4 @@ export type Color = typeof ColorImport;
  *
  * @category Internal
  */
-// eslint-disable-next-line sonarjs/no-redeclare
 export const Color: Color = ColorImport;

@@ -17,6 +17,8 @@ export default [
              * Turn off or on specific rules. See {@link defineEslintConfig} for which plugins are
              * already enabled.
              */
+            'sonarjs/no-unused-vars': 'off',
+            'sonarjs/prefer-regexp-exec': 'off',
         },
     },
 ];

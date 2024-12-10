@@ -67,7 +67,6 @@ export function createNewSelection(
     currentSelection: ReadonlyArray<PropertyKey>,
     isMultiSelect: boolean,
 ): PropertyKey[] {
-    // eslint-disable-next-line sonarjs/no-selector-parameter
     if (isMultiSelect) {
         return currentSelection.includes(id)
             ? currentSelection.filter((entry) => entry !== id)
